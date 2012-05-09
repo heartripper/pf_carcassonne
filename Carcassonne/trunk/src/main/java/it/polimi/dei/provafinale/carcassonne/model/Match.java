@@ -12,13 +12,13 @@ import java.util.Random;
 
 public class Match {
 
-	private CardGrid grid;
-	private ArrayList<Card> stack;
+	private TileGrid grid;
+	private TileStack stack;
 	private PlayerCircularArray players;
 	private ArrayList<Entity> entities;
 
 	// Turn
-	private Card firstCard;
+	private Card firstTile;
 	private Card currentCard;
 	private Player currentPlayer;
 	private int turnCount = 0;
@@ -30,15 +30,15 @@ public class Match {
 	 *            - an int that indicates the number of players.
 	 */
 	public Match(int numPlayers) {
-		this.grid = new CardGrid();
+		this.grid = new TileGrid();
 		this.entities = new ArrayList<Entity>();
-		this.stack = CardReader.readCards();
+		this.stack = new TileStack();
+		this.players = new PlayerCircularArray(numPlayers);
 
 		// Add cards #0 to the grid.
-		firstCard = stack.get(0);
-		addCardToGame(firstCard, new Coord(0, 0));
-		stack.remove(0);
-		this.players = new PlayerCircularArray(numPlayers);
+		firstTile = stack.getInitialTile();
+		grid.putTile(firstTile, new Coord(0, 0));
+		updateEntities(firstTile);
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class Match {
 	 * @return true if there is at least a card in the stack, false instead.
 	 */
 	public boolean hasMoreCards() {
-		return (stack.size() != 0);
+		return stack.hasMoreTiles();
 	}
 
 	/**
@@ -77,20 +77,25 @@ public class Match {
 	public Card getCurrentCard() {
 		return currentCard;
 	}
-	
-	public Card getFirstCard(){
-		return firstCard;
+
+	/**
+	 * Gives the initial tile.
+	 * 
+	 * @return the initial tile
+	 * */
+	public Card getFirstCard() {
+		return firstTile;
 	}
-	
+
 	/**
 	 * Starts a new turn setting the player and drawing a card.
 	 * */
 	public void startTurn() {
 		turnCount++;
-		this.currentCard = drawCard();
+		this.currentCard = stack.drawTile();
 		this.currentPlayer = players.next();
-	}	
-	
+	}
+
 	/**
 	 * Rotates current card (The one current player has drew).
 	 * 
@@ -108,7 +113,12 @@ public class Match {
 	 *         with the position).
 	 * */
 	public boolean putCurrentCard(Coord coord) {
-		return addCardToGame(currentCard, coord);
+		boolean added = grid.putTile(currentCard, coord);
+		if (!added)
+			return false;
+
+		updateEntities(currentCard);
+		return true;
 	}
 
 	/**
@@ -128,10 +138,10 @@ public class Match {
 	public boolean addCoin(SidePosition position) {
 		Side destination = currentCard.getSide(position);
 		Entity entity = destination.getEntity();
-		
-		if(entity == null || !entity.acceptCoin())
+
+		if (entity == null || !entity.acceptCoin())
 			return false;
-		else{
+		else {
 			currentPlayer.removeCoin();
 			return destination.setPlayerCoin(currentPlayer);
 		}
@@ -182,21 +192,6 @@ public class Match {
 	// Private Methods
 
 	/**
-	 * Randomly choose and then remove a card from the stack. After that return
-	 * the card.
-	 * 
-	 * @return the drew card.
-	 */
-	private Card drawCard() {
-		int size = stack.size();
-		Random rand = new Random();
-		int randomIndex = rand.nextInt(size);
-		Card drewCard = stack.get(randomIndex);
-		stack.remove(randomIndex);
-		return drewCard;
-	}
-
-	/**
 	 * Check the compatibility of the card with the given position.
 	 * 
 	 * @param card
@@ -207,18 +202,18 @@ public class Match {
 	 * @return true if the card is correctly added to the grid, false if it is
 	 *         impossible to add.
 	 */
-	private boolean addCardToGame(Card card, Coord coord) {
-		// If card is not compatible with the passed position, return false
-		if (!grid.checkCardCompatibility(card, coord)) {
-			return false;
-		}
-		// Add card to grid and update card status.
-		grid.setCard(coord, card);
-		card.setLocationInfo(grid, coord);
-		// Update game entity after the insertion of the new card.
-		updateEntities(card);
-		return true;
-	}
+	// private boolean addCardToGame(Card card, Coord coord) {
+	// // If card is not compatible with the passed position, return false
+	// if (!grid.isCardCompatible(card, coord)) {
+	// return false;
+	// }
+	// // Add card to grid and update card status.
+	// grid.setCard(coord, card);
+	// card.setLocationInfo(grid, coord);
+	// // Update game entity after the insertion of the new card.
+	// updateEntities(card);
+	// return true;
+	// }
 
 	/**
 	 * Update the entities (cities, roads, fields) present on the grid after a
@@ -324,6 +319,6 @@ public class Match {
 	public String toString() {
 		return String.format("TURN %s - Player: %s\n"
 				+ "Remaining cards: %s - %s\n\n%s", turnCount, currentPlayer,
-				stack.size(), players, grid);
+				stack.remainingTilesNumber(), players, grid);
 	}
 }

@@ -15,7 +15,7 @@ import java.util.Map;
  * */
 public class Card {
 
-	private CardGrid grid;
+	private TileGrid grid;
 	private Coord cardCoord;
 	private Map<SidePosition, Side> sides;
 	private boolean[][] links;
@@ -84,7 +84,7 @@ public class Card {
 	 * @param coord
 	 *            - a Coord where the card is collocate.
 	 */
-	public void setLocationInfo(CardGrid grid, Coord coord) {
+	public void setLocationInfo(TileGrid grid, Coord coord) {
 		this.grid = grid;
 		this.cardCoord = coord;
 	}
@@ -188,7 +188,7 @@ public class Card {
 		offset = SidePosition.getOffsetForPosition(position);
 
 		Coord neighborCoord = cardCoord.add(offset);
-		return grid.getCard(neighborCoord);
+		return grid.getTile(neighborCoord);
 	}
 
 	/**
