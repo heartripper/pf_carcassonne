@@ -119,6 +119,17 @@ public class Card {
 	}
 
 	/**
+	 * Tries to add a coin to the side corresponding to the given position in
+	 * the current card.
+	 * 
+	 * @return true if the coin was added, false if it couldn't be added.
+	 * */
+	public void addFollower(SidePosition position, PlayerColor color) {
+		Side side = getSide(position);
+		side.setFollower(color);
+	}
+	
+	/**
 	 * Gives the string representing this card, according to project
 	 * specification.
 	 * 
