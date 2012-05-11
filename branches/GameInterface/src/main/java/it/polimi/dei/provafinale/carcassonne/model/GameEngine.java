@@ -1,7 +1,9 @@
 package it.polimi.dei.provafinale.carcassonne.model;
 
+import it.polimi.dei.provafinale.carcassonne.model.card.Card;
 import it.polimi.dei.provafinale.carcassonne.model.card.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.player.Player;
+import it.polimi.dei.provafinale.carcassonne.model.player.PlayerColor;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,7 +19,9 @@ public class GameEngine {
 	private static GameEngine instance;
 
 	private Match match;
-
+	private PlayerColor currentPlayer;
+	private Card currentTile;
+	
 	private BufferedReader input;
 
 	/**
@@ -80,20 +84,15 @@ public class GameEngine {
 		int playersNumber = readPlayersNumber();
 		match = new Match(playersNumber);
 
-		for (int i = 0; i < playersNumber; i++) {
-			Player player = new Player();
-			match.addPlayer(player);
-		}
-
 		while (match.hasMoreCards()) {
 			// Starts the turn
-			match.startTurn();
-
+			currentPlayer = match.getNextPlayer().getColor();
+			currentTile = match.drawCard();
+			
 			System.out.println(match);
-			System.out.println("Player " + match.getCurrentPlayer() + " turn"
-					+ ":");
+			System.out.printf("Player %s turn:\n", currentPlayer);
 			// show card.
-			System.out.println(match.getCurrentCard());
+			System.out.println(currentTile);
 
 			boolean endTurn = false;
 			boolean cardAdded = false;
@@ -115,7 +114,7 @@ public class GameEngine {
 					System.out.println("Inserted invalid command.");
 				}  
 			}
-			System.out.println(match.endTurn());
+			System.out.println(match.checkForCompletedEntities(currentTile));
 		}
 
 		// When the match is finished...
@@ -134,8 +133,8 @@ public class GameEngine {
 	}
 
 	private void manageCardRotation() {
-		match.rotateCurrentCard();
-		System.out.println("Rotated card:\n" + match.getCurrentCard());
+		currentTile.rotate();
+		System.out.println("Rotated card:\n" + currentTile);
 		return;
 	}
 
@@ -144,33 +143,25 @@ public class GameEngine {
 		int x = Integer.parseInt(split[0]);
 		int y = Integer.parseInt(split[1]);
 
-		boolean added = match.putCurrentCard(new Coord(x, y));
-
-		if (added) {
+		if (match.putTile(currentTile, new Coord(x,y))) {
 			System.out.printf("Card put in %s,%s.\n", x, y);
+			return true;
 		} else {
 			System.out.println("Invalid position for card.");
+			return false;
 		}
-
-		return added;
 	}
 
 	private boolean manageCoinPositioning(String command) {
 		try {
 			SidePosition position = SidePosition.valueOf(command);
-			boolean added = match.addFollower(position);
-			if (added) {
+			if (match.addFollower(currentTile, position, currentPlayer)) {
 				System.out.println("Coin was added to specific position.");
 				return true;
 			} else {
-				if (match.getCurrentPlayer().hasFollowers()) {
-					System.out.println("You can't add a coin there.");
-				} else {
-					System.out.println("You have no more coin to add.");
-				}
+				System.out.println("You cant' add a coin there.");
 				return false;
 			}
-
 		} catch (Exception e) {
 			System.out.println("You entered an invalid position.");
 			return false;
@@ -179,8 +170,7 @@ public class GameEngine {
 
 	private String readCommand() {
 		try {
-			Player current = match.getCurrentPlayer();
-			System.out.printf("(Player %s) Insert command:\n", current);
+			System.out.printf("(Player %s) Insert command:\n", currentPlayer);
 			String c = input.readLine();
 			return c;
 		} catch (IOException ioe) {
