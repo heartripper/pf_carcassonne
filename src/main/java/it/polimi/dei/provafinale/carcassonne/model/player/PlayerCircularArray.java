@@ -18,6 +18,9 @@ public class PlayerCircularArray {
 	public PlayerCircularArray(int num) {
 		players = new Player[num];
 		size = num;
+		for(int i = 0; i < size; i++)
+			players[i] = new Player();
+	
 		position = 0;
 		currIndex = 0;
 	}
