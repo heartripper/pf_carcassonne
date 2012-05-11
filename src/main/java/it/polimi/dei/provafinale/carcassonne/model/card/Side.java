@@ -108,11 +108,11 @@ public class Side {
 		String base;
 		if (entity == null)
 			base = type.getRepresentation();
-		else {
+		else
 			base = entity.toString();
-			if (follower != null)
-				base += (":" + follower.toString());
-		}
+		
+		if (follower != null)
+			base += (":" + follower.toString());
 		// TODO?: make function pad
 		int spaceToFill = 5 - base.length();
 		while (spaceToFill > 0) {

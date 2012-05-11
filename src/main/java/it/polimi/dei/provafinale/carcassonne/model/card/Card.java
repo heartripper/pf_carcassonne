@@ -45,19 +45,22 @@ public class Card {
 
 	private void setSide(String name, String value) {
 		SidePosition position = SidePosition.valueOf(name);
-		String sideType;
+		String sideType = null;
+		PlayerColor follower = null;
 		if (value.indexOf(",") == -1) {
 			sideType = value;
 		} else {
 			String[] split = value.split(",");
 			sideType = split[0];
-			
+			follower = PlayerColor.valueOf(split[1]);
 		}
 
 		// TODO: manage coin in representation (SERVER)
 		EntityType type = EntityType.valueOf(sideType);
 		Side side = new Side(this, type);
 		sides.put(position, side);
+		if(follower != null)
+			side.setFollower(follower);
 	}
 
 	private void setLink(String name, String value) {
