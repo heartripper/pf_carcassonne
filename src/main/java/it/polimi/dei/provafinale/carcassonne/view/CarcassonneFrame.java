@@ -5,7 +5,6 @@ import it.polimi.dei.provafinale.carcassonne.view.menu.MenuPanel;
 import java.awt.CardLayout;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 
 
@@ -16,8 +15,6 @@ public class CarcassonneFrame extends JFrame{
 		
 	public CarcassonneFrame(){
 		super("Carcassonne");
-		
-		WindowClose windowClose = new WindowClose();
 		
 		mainLayout = new CardLayout(0, 0);
 		setLayout(mainLayout);
