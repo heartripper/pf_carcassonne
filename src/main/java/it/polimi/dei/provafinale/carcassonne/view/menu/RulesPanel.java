@@ -10,12 +10,7 @@ import javax.swing.JEditorPane;
 public class RulesPanel extends JPanel {
 
 	public RulesPanel() {
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		JPanel panel = new JPanel();
-		add(panel);
-
-/*
 		String intro;
 		intro = "Carcassonne è un gioco a turni da 2 a 5 giocatori in cui ogni giocatore dovrà contribuire alla costruzione di un paesaggio ispirato alla cittadina medievale francese di Carcassonne. Durante il suo turno ogni giocatore ha la possibilità di aggiungere al paesaggio strade, città e campi allo scopo di guadagnare punti vittoria. I punti vittoria serviranno per determinare il vincitore a fine partita. \nQueste regole propongono una versione semplificata della terza edizione del gioco originale. Per chi ha già conoscenza del gioco originale le uniche differenze consistono nell’impossibilità di posizionare segnalini nei campi, nell’assenza di tessere scudo e nell’assenza di tessere monastero.\n";
 		String materiale_a_disposizione;
@@ -25,7 +20,7 @@ public class RulesPanel extends JPanel {
 		String preparazione_del_gioco;
 		preparazione_del_gioco = "Preparazione del gioco \nCercare nella pila delle tessere la tessera iniziale e posizionarla scoperta al centro dell'area di gioco. Mischiare le restanti tessere e tenerle coperte. \nOgni giocatore avrà a disposizione davanti a sé i 7 segnalini di controllo per utilizzarli durante la partita. \nSelezionare il giocatore che inizierà per primo a giocare. \n";
 		String svolgimento_del_gioco_intro;
-		svolgimento_del_gioco_intro = "Svolgimento del gioco \nIl gioco procede a turni, a partire dal primo giocatore, si procederà in senso orario. Ad ogni turno, il giocatore attivo compie le seguenti azioni in questo preciso ordine: \n1) pesca una tessera territorio coperta e la posizione nell'area di gioco; \n2) opzionalmente, posiziona uno dei suoi segnalini di controllo sulla tessera appena messa in gioco; \n3) se il posizionamento della tessera ha completato strade o città, sono conteggiati i punti vittoria corrispondenti e i segnalini di controllo posizionati su di esse saranno nuovamente disponibili. \n";
+		svolgimento_del_gioco_intro = "Svolgimento del gioco \nIl gioco procede a turni, a partire dal primo giocatore, si procederà in senso orario. Ad ogni turno, il giocatore attivo compie le seguenti azioni in questo preciso ordine: \n1) pesca una tessera territorio coperta e la posizione nell'area di gioco; \n2) opzionalmente, posiziona uno dei suoi segnalini di controllo sulla tessera appena messa in gioco; \n3) se il posizionamento della tessera ha completato strade o città, sono conteggiati i punti vittoria corrispondenti e i segnalini di controllo posizionati su di esse saranno nuovamente disponibili. \n ";
 		String svolgimento_del_gioco_Azione1;
 		svolgimento_del_gioco_Azione1 = "Azione 1: Posizionamento delle tessere \nPescare una tessera, mostrarla a tutti i giocatori, quindi metterla nell'area del gioco attenendosi alle seguenti regole: \n-la nuova tessera deve avere almeno un lato in contatto con il lato di una delle tessere già in gioco; \n-la nuova tessera va posizionata in modo che città, strade e campi siano contigui a quelli della/e tessera/e con cui è in contatto (ad esempio una strada non può finire in un campo, oppure una città non può attaccarsi ad un campo senza chiudere le mura). \nSe per un qualche motivo la tessera pescata non avesse possibili posizionamenti legali questa è scartata e sostituita con un'altra. \n";
 		String svolgimento_del_gioco_Azione2;
@@ -36,8 +31,20 @@ public class RulesPanel extends JPanel {
 		fine_del_gioco = "Non appena viene posizionata l'ultima tessera il gioco termina e si procede con il conteggio dei punti relativi alle strade e città non completate, i quali si sommeranno ai punti guadagnati durante la partita. \n";
 		
 		String unified = intro + materiale_a_disposizione + scopo_del_gioco + preparazione_del_gioco + svolgimento_del_gioco_intro + svolgimento_del_gioco_Azione1 + svolgimento_del_gioco_Azione2 + svolgimento_del_gioco_Azione3 + fine_del_gioco;
-*/
 		
+		JTextArea textArea = new JTextArea (unified);
+
+		textArea.setFocusable (false);
+		textArea.setEditable (false);
+		textArea.setLineWrap (true);
+		textArea.setWrapStyleWord (true);
+
+		JScrollPane scrollPane = new JScrollPane (textArea,
+		                                          JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+		                                          JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+
+		add (scrollPane);
 	}
 
 }
