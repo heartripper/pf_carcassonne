@@ -7,7 +7,6 @@ import java.awt.CardLayout;
 import javax.swing.JFrame;
 
 
-
 public class CarcassonneFrame extends JFrame{
 	
 	private CardLayout mainLayout;
@@ -25,7 +24,8 @@ public class CarcassonneFrame extends JFrame{
 		setSize(800,600);
 		
 		addWindowListener(new WindowClose());
-		
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        
 		setVisible(true);
 	}
 		
