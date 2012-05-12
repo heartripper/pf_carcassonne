@@ -1,4 +1,5 @@
 package it.polimi.dei.provafinale.carcassonne.view;
+import it.polimi.dei.provafinale.carcassonne.controller.WindowClose;
 import it.polimi.dei.provafinale.carcassonne.view.menu.MenuPanel;
 
 import java.awt.CardLayout;
@@ -16,6 +17,8 @@ public class CarcassonneFrame extends JFrame{
 	public CarcassonneFrame(){
 		super("Carcassonne");
 		
+		WindowClose windowClose = new WindowClose();
+		
 		mainLayout = new CardLayout(0, 0);
 		setLayout(mainLayout);
 		
@@ -23,7 +26,9 @@ public class CarcassonneFrame extends JFrame{
 		add(menu, "menu");
 		
 		setSize(800,600);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		addWindowListener(new WindowClose());
+		
 		setVisible(true);
 	}
 		
