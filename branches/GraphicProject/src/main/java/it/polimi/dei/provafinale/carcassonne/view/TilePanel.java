@@ -1,19 +1,34 @@
 package it.polimi.dei.provafinale.carcassonne.view;
 
+import it.polimi.dei.provafinale.carcassonne.model.card.Card;
+import it.polimi.dei.provafinale.carcassonne.model.card.Side;
+import it.polimi.dei.provafinale.carcassonne.model.card.SidePosition;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
 public class TilePanel extends JPanel {
-	public TilePanel() {
+	
+
+	
+	private static final Color FIELD_COLOR = new Color(88,155,39);
+	private static final Color CITY_COLOR = new Color(116,89,31);
+	private static final Color ROAD_COLOR = new Color(239,209,125);
+	
+	private Card tile;
+	
+	public TilePanel(Card tile) {
+		this.tile = tile;
 	}
 
-	private Polygon getSingleEntityTriangle(SidePosition position) {
+	private Polygon getMultipleEntityTriangle(SidePosition position) {
 
 		int width = getWidth();
 		int height = getHeight();
@@ -40,7 +55,7 @@ public class TilePanel extends JPanel {
 		}
 	}
 
-	private Polygon getMultipleEntityTriangle(SidePosition position) {
+	private Polygon getSingleEntityTriangle(SidePosition position) {
 
 		int width = getWidth();
 		int height = getHeight();
@@ -78,19 +93,19 @@ public class TilePanel extends JPanel {
 		switch (position) {
 		case N:
 			p = new Point(7 * width / 16, 0);
-			d = new Dimension(1 * width / 8, 3 * height / 8);
+			d = new Dimension(1 * width / 8, 7 * height / 16);
 			return new Rectangle(p, d);
 		case E:
-			p = new Point(5 * width / 8, 7 * height / 16);
-			d = new Dimension(3 * width / 8, 1 * height / 8);
+			p = new Point(9 * width / 16, 7 * height / 16);
+			d = new Dimension(7 * width / 16, 1 * height / 8);
 			return new Rectangle(p, d);
 		case S:
-			p = new Point(7 * width / 16, 5 * height / 8);
-			d = new Dimension(1 * width / 8, 3 * height / 8);
+			p = new Point(7 * width / 16, 9 * height / 16);
+			d = new Dimension(1 * width / 8, 7 * height / 16);
 			return new Rectangle(p, d);
 		case O:
 			p = new Point(0, 7 * height / 16);
-			d = new Dimension(3 * width / 8, 1 * height / 8);
+			d = new Dimension(7 * width / 16, 1 * height / 8);
 			return new Rectangle(p, d);
 		default:
 			return null;
@@ -110,16 +125,64 @@ public class TilePanel extends JPanel {
 
 		return new Rectangle(p, d);
 	}
-
+	
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponents(g);
 
-		Rectangle r = getCentralRectangle();
-		g.setColor(Color.RED);
-		// g.fillPolygon(getMultipleEntityTriangle(SidePosition.S));
-		g.fillRect((int) r.getX(), (int) r.getY(), (int) r.getWidth(),
-				(int) r.getHeight());
+		ArrayList<SidePosition> sidesToPaint = new ArrayList<SidePosition>();
+		
+		for(SidePosition pos : SidePosition.values()){
+			sidesToPaint.add(pos);
+		}
+		
+		g.setColor(FIELD_COLOR);
+		g.fillRect(0, 0, getWidth(), getHeight());
+		
+		for (SidePosition position: sidesToPaint){
+			Side currentSide = tile.getSide(position);
+			ArrayList<Side> sides = tile.sidesLinkedTo(currentSide);
+			int sidesSize = sides.size();
+			switch(currentSide.getType()){
+			
+			case S:
+				Rectangle road = getRectangle(position);
+				g.setColor(ROAD_COLOR);
+				g.fillRect((int)road.getX(), (int)road.getY(), (int)road.getWidth(), (int)road.getHeight());
+				//There is a side with an entity related to mine
+				if(sidesSize != 0){
+					Rectangle centralRoad = getCentralRectangle();
+					g.setColor(ROAD_COLOR);
+					g.fillRect((int)centralRoad.getX(), (int)centralRoad.getY(), (int)centralRoad.getWidth(), (int)centralRoad.getHeight());
+				}
+				break;
+				
+			case C:
+				//There is a side with an entity related to mine
+				if(sidesSize != 0){
+					SidePosition oppositePosition = position.getOpposite();
+					for (Side tmp: sides){
+						if(tile.getSidePosition(tmp) == oppositePosition){
+							Rectangle centralCity = getCentralRectangle();
+							g.setColor(CITY_COLOR);
+							g.fillRect((int)centralCity.getX(), (int)centralCity.getY(), (int)centralCity.getWidth(), (int)centralCity.getHeight());	
+						}	
+					}
+					Polygon city = getMultipleEntityTriangle(position);
+					g.setColor(CITY_COLOR);
+					g.fillPolygon(city);
+				}
+				else{
+					Polygon city = getSingleEntityTriangle(position);
+					g.setColor(CITY_COLOR);
+					g.fillPolygon(city);
+				}
+				break;
+				
+			default: 
+				break;
+			}	
+		}
 	}
 
 }
