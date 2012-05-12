@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 public class MainClass {
 	public static void main(String[] args) {
 		//ViewManager.getInstance();
-		JFrame frame = new JFrame();
+		CarcassonneFrame frame = new CarcassonneFrame();
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
