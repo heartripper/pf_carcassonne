@@ -22,9 +22,9 @@ public class CarcassonneFrame extends JFrame{
 		add(menu, "menu");
 		
 		setSize(800,600);
-		
-		addWindowListener(new WindowClose());
+	
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowClose());
         
 		setVisible(true);
 	}
