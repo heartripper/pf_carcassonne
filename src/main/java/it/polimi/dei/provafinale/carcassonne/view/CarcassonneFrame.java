@@ -3,6 +3,9 @@ import it.polimi.dei.provafinale.carcassonne.controller.WindowClose;
 import it.polimi.dei.provafinale.carcassonne.view.menu.MenuPanel;
 
 import java.awt.CardLayout;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
@@ -27,11 +30,11 @@ public class CarcassonneFrame extends JFrame{
         addWindowListener(new WindowClose());
         
 		setVisible(true);
+
 	}
 		
 	public void changeMenuPanel(String panelName){
 		menu.changePanel(panelName);
 	}
-		
 		
 }

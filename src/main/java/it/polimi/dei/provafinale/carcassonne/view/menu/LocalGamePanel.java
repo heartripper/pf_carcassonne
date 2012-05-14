@@ -10,12 +10,15 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 
 
 public class LocalGamePanel extends JPanel {
 	public LocalGamePanel() {
+		
+		setBackground(new Color(0,0,0,0));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		JPanel titlePanel = new JPanel();

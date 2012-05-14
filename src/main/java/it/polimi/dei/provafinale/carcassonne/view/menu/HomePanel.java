@@ -1,6 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.view.menu;
 import it.polimi.dei.provafinale.carcassonne.controller.MenuPanelSwitcher;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -15,6 +16,7 @@ import javax.swing.JPanel;
 public class HomePanel extends JPanel{
 	public HomePanel() {
 
+		setBackground(new Color(0,0,0,0));
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		add(Box.createVerticalGlue());
 		
