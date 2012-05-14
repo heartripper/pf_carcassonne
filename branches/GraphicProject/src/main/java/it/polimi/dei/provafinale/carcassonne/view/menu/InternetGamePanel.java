@@ -7,6 +7,8 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -16,6 +18,8 @@ import javax.swing.JTextField;
 public class InternetGamePanel extends JPanel {
 	private JTextField textField;
 	public InternetGamePanel() {
+		
+		setBackground(new Color(0,0,0,0));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		JPanel titlePanel = new JPanel();

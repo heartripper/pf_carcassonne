@@ -5,11 +5,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 
 public class RulesPanel extends JPanel {
 
 	public RulesPanel() {
+		
+		setBackground(new Color(0,0,0,0));
 		
 		String intro;
 		intro = "Carcassonne è un gioco a turni da 2 a 5 giocatori in cui ogni giocatore dovrà contribuire alla costruzione di un paesaggio ispirato alla cittadina medievale francese di Carcassonne. Durante il suo turno ogni giocatore ha la possibilità di aggiungere al paesaggio strade, città e campi allo scopo di guadagnare punti vittoria. I punti vittoria serviranno per determinare il vincitore a fine partita. \nQueste regole propongono una versione semplificata della terza edizione del gioco originale. Per chi ha già conoscenza del gioco originale le uniche differenze consistono nell’impossibilità di posizionare segnalini nei campi, nell’assenza di tessere scudo e nell’assenza di tessere monastero.\n\n";

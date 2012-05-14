@@ -9,10 +9,6 @@ public class MainClass {
 		//ViewManager.getInstance();
 		CarcassonneFrame frame = new CarcassonneFrame();
 		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		Card c = new Card("N=C S=C O=S E=S NS=1 NE=0 NO=0 OE=0 SE=0 SO=0");
-		
-		frame.add(new TilePanel(c));
+	
 	}
 }
