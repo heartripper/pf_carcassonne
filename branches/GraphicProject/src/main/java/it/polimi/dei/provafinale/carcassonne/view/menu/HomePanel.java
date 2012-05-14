@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 
 
 public class HomePanel extends JPanel{
+	
 	public HomePanel() {
 
 		setBackground(new Color(0,0,0,0));
@@ -21,35 +22,49 @@ public class HomePanel extends JPanel{
 		add(Box.createVerticalGlue());
 		
 		//Local game
+		
 		JPanel localGamePanel = new JPanel();
 		localGamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		localGamePanel.setBackground(new Color(0,0,0,0));
+		add(Box.createRigidArea(new Dimension(0,15)));
+		add(localGamePanel);
+
 		JButton btnLocalGame = new JButton("Local Game");
-		localGamePanel.add(btnLocalGame);
+		btnLocalGame.setForeground(Color.BLACK);
+		btnLocalGame.setBackground(Color.WHITE);
 		btnLocalGame.setFont(new Font("Papyrus", Font.PLAIN, 40));
 		btnLocalGame.addActionListener(new MenuPanelSwitcher("LocalGamePanel"));
-		
-		add(localGamePanel);
-		add(Box.createRigidArea(new Dimension(0,15)));
+		localGamePanel.add(btnLocalGame);
 		
 		//Internet Game
+		
 		JPanel internetGamePanel = new JPanel();
+		internetGamePanel.setBackground(new Color(0,0,0,0));
+		add(Box.createRigidArea(new Dimension(0,15)));
+		add(internetGamePanel);
+		
 		JButton btnInternetGame = new JButton("Internet Game");
-		internetGamePanel.add(btnInternetGame);
+		btnInternetGame.setBackground(Color.WHITE);
+		btnInternetGame.setForeground(Color.BLACK);
 		btnInternetGame.setFont(new Font("Papyrus", Font.PLAIN, 40));
 		btnInternetGame.addActionListener(new MenuPanelSwitcher("InternetGamePanel"));
-		
-		add(internetGamePanel);
-		add(Box.createRigidArea(new Dimension(0,15)));
+		internetGamePanel.add(btnInternetGame);
+
 				
 		//Rules
+		
 		JPanel rulesPanel = new JPanel();
+		rulesPanel.setBackground(new Color(0,0,0,0));
 		rulesPanel.setBorder(null);
+		add(Box.createVerticalGlue());
+		add(rulesPanel);
+		
 		JButton btnRules = new JButton("Rules");
-		rulesPanel.add(btnRules);
+		btnRules.setBackground(Color.WHITE);
+		btnRules.setForeground(Color.BLACK);
 		btnRules.setFont(new Font("Papyrus", Font.PLAIN, 40));
 		btnRules.addActionListener(new MenuPanelSwitcher("RulesPanel"));
+		rulesPanel.add(btnRules);
 		
-		add(rulesPanel);
-		add(Box.createVerticalGlue());
 	}
 }

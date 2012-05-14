@@ -2,7 +2,7 @@ package it.polimi.dei.provafinale.carcassonne.view;
 
 public class ViewManager{
 	
-	private static ViewManager instance;
+	private static ViewManager instance = null;
 	private CarcassonneFrame frame;
 	
 	private ViewManager(){
