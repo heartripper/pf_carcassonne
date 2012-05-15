@@ -21,7 +21,7 @@ public class GameEngine {
 	private Match match;
 	private PlayerColor currentPlayer;
 	private Card currentTile;
-	
+
 	private BufferedReader input;
 
 	/**
@@ -83,12 +83,12 @@ public class GameEngine {
 	public void startGame() {
 		int playersNumber = readPlayersNumber();
 		match = new Match(playersNumber);
-
+		
 		while (match.hasMoreCards()) {
 			// Starts the turn
 			currentPlayer = match.getNextPlayer().getColor();
 			currentTile = match.drawCard();
-			
+
 			System.out.println(match);
 			System.out.printf("Player %s turn:\n", currentPlayer);
 			// show card.
@@ -106,13 +106,18 @@ public class GameEngine {
 					manageCardRotation();
 				} else if (cardAdded && command.equals("passo")) {
 					endTurn = true;
-				} else if (command.matches("[-]??[0-9]+,[-]??[0-9]+")) { //?? means 0 or 1 times.
+				} else if (command.matches("[-]??[0-9]+,[-]??[0-9]+")) { // ??
+																			// means
+																			// 0
+																			// or
+																			// 1
+																			// times.
 					cardAdded = manageCardPositioning(command);
 				} else if (command.matches("[NESO]") && cardAdded) {
 					endTurn = manageCoinPositioning(command);
 				} else {
 					System.out.println("Inserted invalid command.");
-				}  
+				}
 			}
 			System.out.println(match.checkForCompletedEntities(currentTile));
 		}
@@ -143,7 +148,7 @@ public class GameEngine {
 		int x = Integer.parseInt(split[0]);
 		int y = Integer.parseInt(split[1]);
 
-		if (match.putTile(currentTile, new Coord(x,y))) {
+		if (match.putTile(currentTile, new Coord(x, y))) {
 			System.out.printf("Card put in %s,%s.\n", x, y);
 			return true;
 		} else {
@@ -155,7 +160,7 @@ public class GameEngine {
 	private boolean manageCoinPositioning(String command) {
 		try {
 			SidePosition position = SidePosition.valueOf(command);
-			if (match.addFollower(currentTile, position, currentPlayer)) {
+			if (match.putFollower(currentTile, position, currentPlayer)) {
 				System.out.println("Coin was added to specific position.");
 				return true;
 			} else {

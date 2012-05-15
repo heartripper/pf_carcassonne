@@ -45,9 +45,12 @@ public class PlayerCircularArray {
 	 * @return the next Player that have to play.
 	 */
 	public Player getNext() {
-		Player p = players[position++];
-		if (position == size)
-			position = 0;
+		while(!players[position].isActive()){
+			position = (position + 1) % size;
+		}
+		
+		Player p = players[position];
+		position = (position + 1) % size;
 		return p;
 	}
 
@@ -55,8 +58,17 @@ public class PlayerCircularArray {
 	 * @param color the color of the player to return;
 	 * @return the Player corresponding to given color
 	 * */
-	public Player getByIndex(int index){
+	public Player getByColor(PlayerColor color){
+		int index = PlayerColor.indexOf(color);
 		return players[index];
+	}
+	
+	public int getSize(){
+		int i = 0;
+		for(Player p : players)
+			if(p.isActive())
+				i++;
+		return i;
 	}
 	
 	/**

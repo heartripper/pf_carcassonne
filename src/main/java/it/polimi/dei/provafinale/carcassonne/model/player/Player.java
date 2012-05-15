@@ -7,6 +7,7 @@ public class Player implements Comparable<Player> {
 	private int score;
 	private int id;
 	private int followers;
+	private boolean active = true;
 
 	/**
 	 * Constructor: Create a new instance of Player.
@@ -106,5 +107,13 @@ public class Player implements Comparable<Player> {
 	@Override
 	public String toString() {
 		return color.getFullName();
+	}
+	
+	public boolean isActive(){
+		return active;
+	}
+	
+	public void setInactive(){
+		active = false;
 	}
 }
