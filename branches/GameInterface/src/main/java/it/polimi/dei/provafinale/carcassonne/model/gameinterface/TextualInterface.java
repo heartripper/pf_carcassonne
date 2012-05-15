@@ -120,30 +120,30 @@ public class TextualInterface implements GameInterface {
 		case UPDATE:
 			if (cardAdded) {
 				out.printf("Player %s added follower.\n", currentPlayer);
-				
+
 				int index = msg.payload.indexOf(",");
-				String spos = String.valueOf(msg.payload.charAt(index-3));
-				String scol = String.valueOf(msg.payload.charAt(index+1));
-				
+				String spos = String.valueOf(msg.payload.charAt(index - 3));
+				String scol = String.valueOf(msg.payload.charAt(index + 1));
+
 				SidePosition pos = SidePosition.valueOf(spos);
 				PlayerColor col = PlayerColor.valueOf(scol);
-				
+
 				currentCard.addFollower(pos, col);
-				
+
 			} else {
 				String[] split = msg.payload.split(",");
-				//TODO ask to fix protocol
+				// TODO ask to fix protocol
 				String sx;
 				String sy;
-				
-				if(split.length == 4){
+
+				if (split.length == 4) {
 					sx = split[2];
 					sy = split[3];
-				}else{
+				} else {
 					sx = split[1];
 					sy = split[2];
 				}
-				
+
 				int x = Integer.parseInt(sx.trim());
 				int y = Integer.parseInt(sy.trim());
 				grid.putTile(currentCard, new Coord(x, y));
