@@ -132,8 +132,8 @@ public class Card {
 		String northPlayer = getFollowerRep(SidePosition.N);
 		String southSide = getSideRep(SidePosition.S);
 		String southPlayer = getFollowerRep(SidePosition.S);
-		String westSide = getSideRep(SidePosition.O);
-		String westPlayer = getFollowerRep(SidePosition.O);
+		String westSide = getSideRep(SidePosition.W);
+		String westPlayer = getFollowerRep(SidePosition.W);
 		String eastSide = getSideRep(SidePosition.E);
 		String eastPlayer = getFollowerRep(SidePosition.E);
 
@@ -252,7 +252,7 @@ public class Card {
 		if (cardCoord != null) {
 			return;
 		}
-		Side tmp1 = sides.get(SidePosition.O), tmp2;
+		Side tmp1 = sides.get(SidePosition.W), tmp2;
 		for (int i = 0; i < 4; i++) {
 			SidePosition currentPos = SidePosition.valueOf(i);
 			tmp2 = sides.get(currentPos);
@@ -284,7 +284,7 @@ public class Card {
 		String north = getSide(SidePosition.N).toString();
 		String east = getSide(SidePosition.E).toString();
 		String south = getSide(SidePosition.S).toString();
-		String west = getSide(SidePosition.O).toString();
+		String west = getSide(SidePosition.W).toString();
 		String linkNE = (links[0][1] ? "\\" : " ");
 		String linkNS = (links[0][2] ? "|" : " ");
 		String linkNO = (links[0][3] ? "/" : " ");

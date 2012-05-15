@@ -109,7 +109,7 @@ public class GameEngine {
 					endTurn = true;
 				} else if (command.matches("[-]??[0-9]+,[-]??[0-9]+")) { //?? means 0 or 1 times.
 					cardAdded = manageCardPositioning(command);
-				} else if (command.matches("[NESO]") && cardAdded) {
+				} else if (command.matches("[NESW]") && cardAdded) {
 					endTurn = manageCoinPositioning(command);
 				} else {
 					System.out.println("Inserted invalid command.");
