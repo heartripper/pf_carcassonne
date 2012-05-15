@@ -4,7 +4,7 @@ import it.polimi.dei.provafinale.carcassonne.model.Coord;
 
 public enum SidePosition {
 	// Side position are stored using the convention N=1, E=2, S=3, O=4
-	N(0), E(1), S(2), O(3);
+	N(0), E(1), S(2), W(3);
 
 	int index;
 
