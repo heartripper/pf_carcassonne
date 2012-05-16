@@ -6,9 +6,6 @@ import javax.swing.JFrame;
 
 public class MainClass {
 	public static void main(String[] args) {
-		//ViewManager.getInstance();
-		CarcassonneFrame frame = new CarcassonneFrame();
-		frame.setVisible(true);
-	
+		ViewManager.getInstance();
 	}
 }

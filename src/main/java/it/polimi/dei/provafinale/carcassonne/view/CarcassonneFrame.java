@@ -1,40 +1,43 @@
 package it.polimi.dei.provafinale.carcassonne.view;
+
 import it.polimi.dei.provafinale.carcassonne.controller.WindowClose;
 import it.polimi.dei.provafinale.carcassonne.view.menu.MenuPanel;
 
-import java.awt.CardLayout;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
-
 import javax.swing.JFrame;
-
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
 
 public class CarcassonneFrame extends JFrame{
 	
-	private CardLayout mainLayout;
-	private MenuPanel menu;
+	public static final String MENUPANEL = "menupanel";
+	public static final String GAMEPANEL = "gamepanel";
+	
+	private MenuPanel menuPanel;
+	private JPanel gamePanel;
+	
+	public CarcassonneFrame() {
 		
-	public CarcassonneFrame(){
+		//TODO AGGIUNGERE ICONA GIOCO NEL PROFILO DELLA FINESTRA
+		
 		super("Carcassonne");
 		
-		mainLayout = new CardLayout(0, 0);
-		setLayout(mainLayout);
-		
-		menu = new MenuPanel();
-		add(menu, "menu");
-		
-		setSize(800,600);
-	
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowClose());
         
 		setVisible(true);
+		setSize(600, 300);
+		
+		
+		setLayout(new CardLayout(0, 0));
+		menuPanel = new MenuPanel();
+		add(menuPanel, MENUPANEL);
+		menuPanel.setVisible(true);
+		
+		repaint();
+	}
 
+	public void changeMenuPanel(String destination) {
+		menuPanel.changeMenuPanel(destination);
 	}
-		
-	public void changeMenuPanel(String panelName){
-		menu.changePanel(panelName);
-	}
-		
 }

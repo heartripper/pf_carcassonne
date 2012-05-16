@@ -1,82 +1,86 @@
 package it.polimi.dei.provafinale.carcassonne.view.menu;
+
 import it.polimi.dei.provafinale.carcassonne.controller.MenuPanelSwitcher;
 
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
-import java.awt.BorderLayout;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
-
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
 import javax.swing.JTextField;
-
-
+import javax.swing.JButton;
+import java.awt.Component;
+import javax.swing.Box;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Dimension;
+import java.awt.CardLayout;
+import java.awt.LayoutManager;
+import java.awt.event.ActionListener;
 
 public class InternetGamePanel extends JPanel {
 	private JTextField textField;
 	public InternetGamePanel() {
-		
-		setBackground(new Color(0,0,0,0));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		JPanel titlePanel = new JPanel();
-		titlePanel.setLayout(new BorderLayout(0, 0));
-		titlePanel.setBackground(new Color(0,0,0,0));
-		add(titlePanel);
+		Component verticalGlue01 = Box.createVerticalGlue();
+		add(verticalGlue01);
 		
-		//new Internet game
+		JPanel titlePanel = new JPanel();
+		add(titlePanel);
+		titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.X_AXIS));
 		
 		JLabel lblNewInternetGame = new JLabel("NEW INTERNET GAME");
-		lblNewInternetGame.setForeground(Color.WHITE);
-		lblNewInternetGame.setFont(new Font("Papyrus", Font.BOLD, 30));
-		lblNewInternetGame.setHorizontalAlignment(SwingConstants.CENTER);
-		titlePanel.add(lblNewInternetGame, BorderLayout.CENTER);
+		titlePanel.add(lblNewInternetGame);
 		
-		//server IP address
+		Component verticalStrut_1 = Box.createVerticalStrut(20);
+		add(verticalStrut_1);
 		
-		JPanel serverIpPanel = new JPanel();
-		serverIpPanel.setBackground(new Color(0,0,0,0));
-		add(serverIpPanel);
+		JPanel insertServerIpAddressPanel = new JPanel();
+		insertServerIpAddressPanel.setPreferredSize(new Dimension(10, 0));
+		add(insertServerIpAddressPanel);
+		LayoutManager layout = new FlowLayout();
+		insertServerIpAddressPanel.setLayout(layout);
 		
-		JLabel lblServerIpAddress = new JLabel("Server IP address:");
-		lblServerIpAddress.setForeground(Color.WHITE);
-		lblServerIpAddress.setFont(new Font("Papyrus", Font.PLAIN, 20));
-		serverIpPanel.add(lblServerIpAddress);
+		Component horizontalGlue01 = Box.createHorizontalGlue();
+		insertServerIpAddressPanel.add(horizontalGlue01);
 		
-		//text field
+		JLabel lblInsertServerIp = new JLabel("Insert server IP address:");
+		insertServerIpAddressPanel.add(lblInsertServerIp);
 		
 		textField = new JTextField();
-		textField.setFont(new Font("Papyrus", Font.PLAIN, 20));
+		insertServerIpAddressPanel.add(textField);
 		textField.setColumns(10);
-		serverIpPanel.add(textField);
 		
-		//join game
+		Component horizontalGlue02 = Box.createHorizontalGlue();
+		insertServerIpAddressPanel.add(horizontalGlue02);
+		
+		Component verticalStrut = Box.createVerticalStrut(20);
+		add(verticalStrut);
 		
 		JPanel joinGamePanel = new JPanel();
-		joinGamePanel.setLayout(new BorderLayout(0, 0));
-		joinGamePanel.setBackground(new Color(0,0,0,0));
 		add(joinGamePanel);
+		joinGamePanel.setLayout(new BoxLayout(joinGamePanel, BoxLayout.X_AXIS));
 		
-		JButton btnJoinGame = new JButton("Join Game");
-		btnJoinGame.setForeground(Color.WHITE);
-		btnJoinGame.setFont(new Font("Papyrus", Font.PLAIN, 23));
-		joinGamePanel.add(btnJoinGame, BorderLayout.CENTER);
+		Component horizontalGlue03 = Box.createHorizontalGlue();
+		joinGamePanel.add(horizontalGlue03);
 		
-		//back to home
+		JButton btnJoinGame = new JButton("Join Game!");
+		joinGamePanel.add(btnJoinGame);
 		
-		JPanel goHomePanel = new JPanel();
-		goHomePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-		goHomePanel.setBackground(new Color(0,0,0,0));
-		add(goHomePanel);
+		Component horizontalGlue04 = Box.createHorizontalGlue();
+		joinGamePanel.add(horizontalGlue04);
 		
-		JButton btnBackToHome = new JButton("Back to Home");
-		btnBackToHome.setForeground(Color.WHITE);
-		btnBackToHome.setFont(new Font("Papyrus", Font.PLAIN, 15));
-		btnBackToHome.addActionListener(new MenuPanelSwitcher("HomePanel"));
-		goHomePanel.add(btnBackToHome);
+		Component verticalGlue02 = Box.createVerticalGlue();
+		add(verticalGlue02);
+		
+		JPanel backToHomePanel = new JPanel();
+		add(backToHomePanel);
+		backToHomePanel.setLayout(new BoxLayout(backToHomePanel, BoxLayout.X_AXIS));
+		
+		JButton btnBackToHome = new JButton("Back to home");
+		backToHomePanel.add(btnBackToHome);
+		ActionListener home = new MenuPanelSwitcher(MenuPanel.HOMEPANEL);
+		btnBackToHome.addActionListener(home);
 	}
 
 }
