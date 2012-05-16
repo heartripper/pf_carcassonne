@@ -62,8 +62,8 @@ public class Match {
 	 * 
 	 * @return current player.
 	 */
-	public Player getNextPlayer() {
-		return players.getNext();
+	public PlayerColor getNextPlayer() {
+		return players.getNext().getColor();
 	}
 
 	/**
@@ -120,10 +120,10 @@ public class Match {
 	 * @param card
 	 *            - a Card that has been added to the grid.
 	 */
-	public String checkForCompletedEntities(Card card) {
-		String report = "";
+	public ArrayList<Card> checkForCompletedEntities(Card card) {
 		ArrayList<Entity> checkedEntities = new ArrayList<Entity>();
-
+		ArrayList<Card> updatedTiles = new ArrayList<Card>();
+		
 		for (SidePosition position : SidePosition.values()) {
 			Entity entity = card.getSide(position).getEntity();
 
@@ -131,13 +131,11 @@ public class Match {
 				continue;
 
 			checkedEntities.add(entity);
-
 			if (entity.isComplete()) {
-				report += String.format(" - %s is completed.\n", entity);
-				report += handleFinalizedEntity(entity);
+				updatedTiles.addAll(finalizeEntityAndUpdate(entity));
 			}
 		}
-		return report;
+		return updatedTiles;
 	}
 
 	/**
@@ -146,12 +144,10 @@ public class Match {
 	 * 
 	 * @return a report of performed action
 	 */
-	public String finalizeMatch() {
-		String report = "";
+	public void finalizeMatch() {
 		for (Entity e : entities) {
-			report += handleFinalizedEntity(e);
+			finalizeEntityAndUpdate(e);
 		}
-		return report;
 	}
 
 	/**
@@ -160,8 +156,8 @@ public class Match {
 	 * 
 	 * @return an Array of Player sorted by score.
 	 */
-	public Player[] getPlayerChart() {
-		return players.getChart();
+	public int[] getScores() {
+		return players.getScores();
 	}
 
 	/**
@@ -175,9 +171,9 @@ public class Match {
 			throws NotEnoughPlayersException {
 		Player p = players.getByColor(color);
 		p.setInactive();
-		//TODO remove followers.
-		
-		if(players.getSize() < 2)
+		// TODO remove followers.
+
+		if (players.getSize() < 2)
 			throw new NotEnoughPlayersException();
 	}
 
@@ -245,20 +241,19 @@ public class Match {
 			entity.addMember(side);
 	}
 
-	private String handleFinalizedEntity(Entity entity) {
-		String report = "";
+	private ArrayList<Card> finalizeEntityAndUpdate(Entity entity) {
+		// Give corresponding score to entity owners
 		int score = entity.getScore();
 		int[] followers = entity.countFollowers(playersNumber);
-		report += giveScoreToOwners(followers, score);
+		giveScoreToOwners(followers, score);
+		// return followers to owners
 		returnFollowers(followers);
-		entity.finalizeEntity();
-
-		return report;
+		// Remove followers from entity and return a list of updated cards.
+		return entity.removeFollowers();
 	}
 
-	private String giveScoreToOwners(int[] followers, int score) {
+	private void giveScoreToOwners(int[] followers, int score) {
 		int max = 0;
-		String report = "";
 
 		for (int f : followers) {
 			if (f > max)
@@ -266,18 +261,15 @@ public class Match {
 		}
 
 		if (max == 0)
-			return report;
+			return;
 
 		for (int i = 0; i < followers.length; i++) {
 			if (followers[i] == max) {
 				PlayerColor color = PlayerColor.valueOf(i);
 				Player p = players.getByColor(color);
-				report += String.format(" - Player %s gets %s points.\n", p,
-						score);
 				p.addScore(score);
 			}
 		}
-		return report;
 	}
 
 	private void returnFollowers(int[] followers) {
