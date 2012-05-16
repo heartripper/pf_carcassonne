@@ -1,86 +1,80 @@
 package it.polimi.dei.provafinale.carcassonne.view.menu;
+
 import it.polimi.dei.provafinale.carcassonne.controller.MenuPanelSwitcher;
 
 import javax.swing.JPanel;
-import javax.swing.BoxLayout;
-import java.awt.BorderLayout;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import javax.swing.BoxLayout;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
+
+import javax.swing.Box;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 
-
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
-
-
 public class LocalGamePanel extends JPanel {
-	
 	public LocalGamePanel() {
-		
-		setBackground(new Color(0,0,0,0));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		JPanel titlePanel = new JPanel();
-		titlePanel.setLayout(new BorderLayout(0, 0));
-		titlePanel.setBackground(new Color(0,0,0,0));
-		add(titlePanel);
+		Component verticalGlue01 = Box.createVerticalGlue();
+		add(verticalGlue01);
 		
-		//new local game
+		JPanel titlePanel = new JPanel();
+		add(titlePanel);
+		titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.X_AXIS));
 		
 		JLabel lblNewLocalGame = new JLabel("NEW LOCAL GAME");
-		lblNewLocalGame.setForeground(Color.WHITE);
-		lblNewLocalGame.setFont(new Font("Papyrus", Font.BOLD, 30));
-		lblNewLocalGame.setHorizontalAlignment(SwingConstants.CENTER);
-		titlePanel.add(lblNewLocalGame, BorderLayout.CENTER);
+		titlePanel.add(lblNewLocalGame);
 		
-		//select players number (Label)
+		Component verticalStrut_1 = Box.createVerticalStrut(20);
+		add(verticalStrut_1);
 		
 		JPanel selectPlayersNumberPanel = new JPanel();
-		selectPlayersNumberPanel.setBackground(new Color(0,0,0,0));
 		add(selectPlayersNumberPanel);
+		selectPlayersNumberPanel.setLayout(new FlowLayout());
 		
-		JLabel lblSelectPlayersNumber = new JLabel("Select players number:");
-		lblSelectPlayersNumber.setForeground(Color.WHITE);
-		lblSelectPlayersNumber.setFont(new Font("Papyrus", Font.PLAIN, 20));
-		selectPlayersNumberPanel.add(lblSelectPlayersNumber);
+		Component horizontalGlue01 = Box.createHorizontalGlue();
+		selectPlayersNumberPanel.add(horizontalGlue01);
 		
-		//select players number (ComboBox)
+		JLabel lblInsertPlayersNumber = new JLabel("Insert players number:");
+		selectPlayersNumberPanel.add(lblInsertPlayersNumber);
 		
-		String[] data = {"2", "3", "4", "5"};
+		String[] data = {"2", "3", "4", "5"}; 
 		JComboBox comboBox = new JComboBox(data);
-		comboBox.setForeground(Color.BLACK);
-		comboBox.setBackground(Color.WHITE);
-		comboBox.setFont(new Font("Papyrus", Font.PLAIN, 20));
 		selectPlayersNumberPanel.add(comboBox);
 		
-		//play the game
+		Component horizontalGlue02 = Box.createHorizontalGlue();
+		selectPlayersNumberPanel.add(horizontalGlue02);
 		
-		JPanel playTheGamePanel = new JPanel();
-		playTheGamePanel.setLayout(new BorderLayout(0, 0));
-		playTheGamePanel.setBackground(new Color(0,0,0,0));
-		add(playTheGamePanel);
+		Component verticalStrut = Box.createVerticalStrut(20);
+		add(verticalStrut);
 		
-		JButton btnPlayTheGame = new JButton("Play the Game");
-		btnPlayTheGame.setForeground(Color.BLACK);
-		btnPlayTheGame.setBackground(Color.WHITE);
-		btnPlayTheGame.setFont(new Font("Papyrus", Font.PLAIN, 23));
-		playTheGamePanel.add(btnPlayTheGame, BorderLayout.CENTER);
+		JPanel playGamePanel = new JPanel();
+		add(playGamePanel);
+		playGamePanel.setLayout(new BoxLayout(playGamePanel, BoxLayout.X_AXIS));
 		
-		//back to home
+		Component horizontalGlue03 = Box.createHorizontalGlue();
+		playGamePanel.add(horizontalGlue03);
+		
+		JButton btnPlayGame = new JButton("Play Game!");
+		playGamePanel.add(btnPlayGame);
+		
+		Component horizontalGlue = Box.createHorizontalGlue();
+		playGamePanel.add(horizontalGlue);
+		
+		Component verticalGlue02 = Box.createVerticalGlue();
+		add(verticalGlue02);
 		
 		JPanel backToHomePanel = new JPanel();
-		backToHomePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-		backToHomePanel.setBackground(new Color(0,0,0,0));
 		add(backToHomePanel);
+		backToHomePanel.setLayout(new BoxLayout(backToHomePanel, BoxLayout.X_AXIS));
 		
-		JButton btnBackToHome = new JButton("Back to Home");
-		btnBackToHome.setForeground(Color.BLACK);
-		btnBackToHome.setBackground(Color.WHITE);
-		btnBackToHome.setFont(new Font("Papyrus", Font.PLAIN, 15));
-		btnBackToHome.addActionListener(new MenuPanelSwitcher("HomePanel"));
+		JButton btnBackToHome = new JButton("Back to home");
 		backToHomePanel.add(btnBackToHome);
+		ActionListener home = new MenuPanelSwitcher(MenuPanel.HOMEPANEL);
+		btnBackToHome.addActionListener(home);
+		
 	}
 
 }
