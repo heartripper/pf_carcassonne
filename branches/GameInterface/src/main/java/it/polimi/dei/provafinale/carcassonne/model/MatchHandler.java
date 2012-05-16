@@ -12,173 +12,196 @@ import it.polimi.dei.provafinale.carcassonne.model.server.PlayersDisconnectedExc
 
 public class MatchHandler implements Runnable {
 
-	private GameInterface gameInterface;
 	private Match match;
-
-	// Placed here to be shared between startGame and handler methods.
-	private PlayerColor currentPlayerColor;
+	private PlayerColor currentPlayer;
 	private Card currentTile;
+	private boolean currentPlayerDisconnected;
+	private boolean currentTileAdded;
+	private boolean currentTurnEnd;
 
-	/**
-	 * Initializes the match handler with a game interface. The game interface
-	 * allows the game handler to communicate with who handles the communication
-	 * with the user in a standard way. Can be run in a separate Thread (runs
-	 * automatically) or in the main thread (you have to call <b>startGame</b>
-	 * method after initialization to start the game).
-	 * 
-	 * @param gameInterface
-	 *            - a game interface.
-	 * */
+	private GameInterface gameInterface;
+
 	public MatchHandler(GameInterface gameInterface) {
 		this.gameInterface = gameInterface;
 	}
 
-	/**
-	 * Handles the match flow. Initializes the game, manages each turn and then
-	 * finalizes the match.
-	 */
 	public void startGame() {
-		int numPlayers = gameInterface.askPlayerNumber();
-		match = new Match(numPlayers);
+		int playerNumber = gameInterface.askPlayerNumber();
+		match = new Match(playerNumber);
 
-		// Initialize match with first card:
-		String payload = match.getFirstTile().getRepresentation();
-		sendMessage(new Message(MessageType.INIT, payload));
+		// Initialize players
+		String firstTileRep = match.getFirstTile().toString();
+		sendMessage(new Message(MessageType.START, firstTileRep));
 
 		while (match.hasMoreCards()) {
-			// Initialize turn
-			currentPlayerColor = match.getNextPlayer().getColor();
 			currentTile = match.drawCard();
+			currentPlayer = match.getNextPlayer();
 
-			// Send all player who will be the next playing.
-			sendMessage(new Message(MessageType.TURN,
-					currentPlayerColor.toString()));
+			// Send turn information
+			sendMessage(new Message(MessageType.TURN, currentPlayer.toString()));
 
-			// Send current player his card.
-			sendMessage(new Message(MessageType.PROX,
-					currentTile.getRepresentation()));
+			// Send card information to currentPlayer
+			String currentTileRep = currentTile.toString();
+			sendMessage(new Message(MessageType.NEXT, currentTileRep));
 
-			boolean cardAdded = false, endTurn = false;
-			while (!endTurn) {
-				Message cmd;
-				try {
-					cmd = gameInterface.readFromPlayer(currentPlayerColor);
-				} catch (PlayersDisconnectedException pde) {
-					handleDisconnection(pde);
+			currentTurnEnd = false;
+			currentTileAdded = false;
+			while (!currentTurnEnd && !currentPlayerDisconnected) {
+				Message req = readFromCurrentPlayer();
+				if (currentPlayerDisconnected)
 					break;
-				}
 
-				if (cmd == null)
-					continue;
-
-				Message response;
-				if (cmd.type == MessageType.ROTATION && !cardAdded) {
-					response = manageTileRotation();
-				} else if (cmd.type == MessageType.PASS && cardAdded) {
-					break;
-				} else if (cmd.type == MessageType.PUT_TILE && !cardAdded) {
-					response = manageTilePositioning(cmd.payload);
-					if (response.type == MessageType.UPDATE)
-						cardAdded = true;
-				} else if (cmd.type == MessageType.PUT_FOLLOWER && cardAdded) {
-					response = manageFollowerPositioning(cmd.payload);
-					if (response.type == MessageType.UPDATE)
-						endTurn = true;
+				Message resp;
+				if (req.type == MessageType.ROTATION && !currentTileAdded) {
+					resp = handleTileRotation();
+				} else if (req.type == MessageType.PLACE && !currentTileAdded) {
+					resp = handleTilePlacing(req.payload);
+				} else if (req.type == MessageType.FOLLOWER && currentTileAdded) {
+					resp = handleFollowerPlacing(req.payload);
+					currentTurnEnd = (resp.type == MessageType.UPDATE);
+				} else if (req.type == MessageType.PASS && currentTileAdded) {
+					resp = handlePass();
+					currentTurnEnd = true;
 				} else {
-					response = new Message(MessageType.INVALID_MOVE, null);
+					resp = new Message(MessageType.INVALID_MOVE, null);
 				}
 
-				endTurn = sendMessage(response);
+				sendMessage(resp);
 			}
 
-			// Once the turn has ended check for completed entities.
-			match.checkForCompletedEntities(currentTile);
+			// Turn end
+			handleTurnEnd();
 		}
-
-		// When the match is finished...
-		match.finalizeMatch();
-
-		// TODO Send result to players (how is this handled in protocol??)
+		// Match end
+		handleMatchEnd();
 	}
 
-	// Helpers to manage turn operations
-	private Message manageTileRotation() {
+	// Helpers to manage turn
+	private Message handleTileRotation() {
 		currentTile.rotate();
-		String payload = currentTile.getRepresentation();
+		String payload = currentTile.toString();
 		return new Message(MessageType.ROTATION, payload);
 	}
 
-	private Message manageTilePositioning(String payload) {
-		// Retrieves coordinate from payload.
-		// We are sure payload in the x,y form.
+	private Message handleTilePlacing(String payload) {
 		String[] split = payload.split(",");
 		int x = Integer.parseInt(split[0].trim());
 		int y = Integer.parseInt(split[1].trim());
 
-		// Tries to put the tile into the game.
+		Message resp;
 		if (match.putTile(currentTile, new Coord(x, y))) {
-			// If success, send update message.
-			String update = String.format("%s, %s, %s",
-					currentTile.getRepresentation(), x, y);
-			return new Message(MessageType.UPDATE, update);
+			String update = getUpdateTileMsg(currentTile);
+			resp = new Message(MessageType.PLACE, update);
+			currentTileAdded = true;
 		} else {
-			// If fail, send invalid move message.
-			return new Message(MessageType.INVALID_MOVE, null);
+			resp = new Message(MessageType.INVALID_MOVE, null);
 		}
+
+		return resp;
 	}
 
-	private Message manageFollowerPositioning(String payload) {
-		SidePosition pos = SidePosition.valueOf(payload.trim());
-		// Tries to add a follower for the current player on given side.
-		boolean added = match.putFollower(currentTile, pos, currentPlayerColor);
-		if (added) {
-			// If success remove follower and send update message.
-			String update = currentTile.getRepresentation();
-			return new Message(MessageType.UPDATE, update);
+	private Message handleFollowerPlacing(String payload) {
+		SidePosition position = SidePosition.valueOf(payload);
+		Message response;
+		if (match.putFollower(currentTile, position, currentPlayer)) {
+			String update = getUpdateTileMsg(currentTile);
+			response = new Message(MessageType.UPDATE, update);
 		} else {
-			return new Message(MessageType.INVALID_MOVE, null);
+			response = new Message(MessageType.INVALID_MOVE, null);
 		}
+
+		return response;
 	}
 
-	// Helpers to send and read messages.
-	private boolean sendMessage(Message msg) {
-		try {
-			switch (msg.type) {
-			case INIT:
-			case TURN:
-			case UPDATE:
-				gameInterface.sendAllPlayer(msg);
-				break;
-			default:
-				gameInterface.sendPlayer(currentPlayerColor, msg);
-				break;
-			}
-			return true;
-		} catch (PlayersDisconnectedException pde) {
-			handleDisconnection(pde);
-			// If current player is among those who disconnected return false so
-			// the caller can go on to next player.
-			return pde.getDisconnectedPlayers().contains(currentPlayerColor);
-		}
+	private Message handlePass(){
+		String update = getUpdateTileMsg(currentTile);
+		return new Message(MessageType.UPDATE, update);
 	}
 	
-	private void handleDisconnection(PlayersDisconnectedException pde) {
-		ArrayList<PlayerColor> discPlayerColors = pde.getDisconnectedPlayers();
+	private void handleTurnEnd() {
+		// Send tiles updates.
+		ArrayList<Card> updatedTile = match
+				.checkForCompletedEntities(currentTile);
+		for (Card c : updatedTile) {
+			Message msg = new Message(MessageType.UPDATE, getUpdateTileMsg(c));
+			sendMessage(msg);
+		}
+
+		// Send scores update.
+		Message msg = new Message(MessageType.SCORE, getScoreMsg());
+		sendMessage(msg);
+	}
+
+	private void handleMatchEnd() {
+		Message msg = new Message(MessageType.END, getScoreMsg());
+		sendMessage(msg);
+	}
+
+	private String getUpdateTileMsg(Card tile) {
+		String rep = tile.toString();
+		Coord c = tile.getCoordinates();
+		String update = String.format("%s, %s, %s", rep, c.getX(), c.getY());
+		return update;
+	}
+
+	private String getScoreMsg() {
+		int[] scores = match.getScores();
+		String payload = "";
+		for (int i = 0; i < scores.length; i++) {
+			PlayerColor color = PlayerColor.valueOf(i);
+			payload += String.format("%s=%s, ", color, scores[i]);
+		}
+		return payload.trim();
+	}
+
+	// helpers to send messages.
+	private void sendMessage(Message msg) {
 		try {
-			for (PlayerColor color : discPlayerColors)
-				match.removePlayer(color);
-		} catch (NotEnoughPlayersException nep) {
-			// TODO: what happens when there is just one player?
-			System.out.println("There aren't enough players to play.");
-			System.exit(1); // Just crash for now;
+			switch (msg.type) {
+			case START:
+			case TURN:
+			case UPDATE:
+			case SCORE:
+			case END:
+				gameInterface.sendAllPlayer(msg);
+				return;
+			default:
+				gameInterface.sendPlayer(currentPlayer, msg);
+				return;
+			}
+		} catch (PlayersDisconnectedException e) {
+			handleDisconnection(e);
 		}
 	}
 
-	/**
-	 * Wrapper to automatically run startGame method when run in a thread.
-	 * */
+	//Reads a message from current player.
+	private Message readFromCurrentPlayer() {
+		try {
+			return gameInterface.readFromPlayer(currentPlayer);
+		} catch (PlayersDisconnectedException pde) {
+			handleDisconnection(pde);
+			return null;
+		}
+	}
+
+	private void handleDisconnection(PlayersDisconnectedException pde) {
+		if (pde.getDisconnectedPlayers().contains(currentPlayer))
+			currentPlayerDisconnected = true;
+
+		try {
+			for (PlayerColor c : pde.getDisconnectedPlayers())
+				match.removePlayer(c);
+		} catch (NotEnoughPlayersException nep) {
+			// TODO: what to do when there are not enough player left
+			System.out.println("There are not enough players left.");
+			System.exit(1);
+		}
+	}
+
+	// Runnable methods
 	@Override
 	public void run() {
 		this.startGame();
 	}
+
 }
