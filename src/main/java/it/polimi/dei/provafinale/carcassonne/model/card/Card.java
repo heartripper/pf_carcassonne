@@ -5,7 +5,6 @@ import it.polimi.dei.provafinale.carcassonne.model.entity.Entity;
 import it.polimi.dei.provafinale.carcassonne.model.entity.EntityType;
 import it.polimi.dei.provafinale.carcassonne.model.player.PlayerColor;
 
-import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,10 +48,10 @@ public class Card {
 		SidePosition position = SidePosition.valueOf(name);
 		String sideType = null;
 		PlayerColor follower = null;
-		if (value.indexOf(",") == -1) {
+		if (value.indexOf("-") == -1) {
 			sideType = value;
 		} else {
-			String[] split = value.split(",");
+			String[] split = value.split("-");
 			sideType = split[0];
 			follower = PlayerColor.valueOf(split[1]);
 		}
@@ -203,7 +202,7 @@ public class Card {
 	 * @return true if there is an entity that links side1 and side2 of the
 	 *         card, false instead.
 	 */
-	private boolean sideLinked(SidePosition side1, SidePosition side2) {
+	public boolean sideLinked(SidePosition side1, SidePosition side2) {
 		int index1 = side1.getIndex();
 		int index2 = side2.getIndex();
 		return links[index1][index2];
@@ -216,7 +215,7 @@ public class Card {
 		if (cardCoord != null) {
 			return;
 		}
-		Side tmp1 = sides.get(SidePosition.O), tmp2;
+		Side tmp1 = sides.get(SidePosition.W), tmp2;
 		for (int i = 0; i < 4; i++) {
 			SidePosition currentPos = SidePosition.valueOf(i);
 			tmp2 = sides.get(currentPos);
@@ -245,16 +244,17 @@ public class Card {
 	 * 
 	 * @return the String representing this card.
 	 * */
-	public String getRepresentation() {
+	@Override
+	public String toString() {
 		String representation = "";
-		String sideFormat = "N=%s%s S=%s%s O=%s%s E=%s%s ";
+		String sideFormat = "N=%s%s S=%s%s W=%s%s E=%s%s ";
 
 		String northSide = getSideRep(SidePosition.N);
 		String northPlayer = getFollowerRep(SidePosition.N);
 		String southSide = getSideRep(SidePosition.S);
 		String southPlayer = getFollowerRep(SidePosition.S);
-		String westSide = getSideRep(SidePosition.O);
-		String westPlayer = getFollowerRep(SidePosition.O);
+		String westSide = getSideRep(SidePosition.W);
+		String westPlayer = getFollowerRep(SidePosition.W);
 		String eastSide = getSideRep(SidePosition.E);
 		String eastPlayer = getFollowerRep(SidePosition.E);
 
@@ -262,7 +262,7 @@ public class Card {
 				southSide, southPlayer, westSide, westPlayer, eastSide,
 				eastPlayer);
 
-		String linkFormat = "NS=%s NE=%s NO=%s OE=%s SE=%s SO=%s";
+		String linkFormat = "NS=%s NE=%s NW=%s WE=%s SE=%s SW=%s";
 		String linkNE = (links[0][1] ? "1" : "0");
 		String linkNS = (links[0][2] ? "1" : "0");
 		String linkNO = (links[0][3] ? "1" : "0");
@@ -285,45 +285,6 @@ public class Card {
 		if (col == null)
 			return "";
 		else
-			return "," + col.toString();
+			return "-" + col.toString();
 	}
-	
-	/**
-	 * Return the array of string representation of Card.
-	 * 
-	 * @return the String[] representation of a card with its sides and links.
-	 */
-	public String[] getArrayRep() {
-		String north = getSide(SidePosition.N).toString();
-		String east = getSide(SidePosition.E).toString();
-		String south = getSide(SidePosition.S).toString();
-		String west = getSide(SidePosition.O).toString();
-		String linkNE = (links[0][1] ? "\\" : " ");
-		String linkNS = (links[0][2] ? "|" : " ");
-		String linkNO = (links[0][3] ? "/" : " ");
-		String linkES = (links[1][2] ? "/" : " ");
-		String linkEO = (links[1][3] ? "-" : " ");
-		String linkSO = (links[2][3] ? "\\" : " ");
-		String[] representation = { "+#############+",
-				String.format("#    %s    #", north),
-				String.format("#    %s %s %s    #", linkNO, linkNS, linkNE),
-				String.format("#%s %s %s#", west, linkEO, east),
-				String.format("#    %s %s %s    #", linkSO, linkNS, linkES),
-				String.format("#    %s    #", south), "+#############+" };
-		return representation;
-	}
-
-	/**
-	 * Return the string representation of Card.
-	 */
-	@Override
-	public String toString() {
-		String rep = "";
-		String[] repArray = getArrayRep();
-		for (String s : repArray) {
-			rep += (s + "\n");
-		}
-		return rep;
-	}
-
 }

@@ -125,71 +125,8 @@ public class TileGrid {
 		return hasNeighbor;
 	}
 
-	// Textual representation logic.
-
-	/**
-	 * The representation of an empty tile.
-	 * 
-	 * @return an array of String composing a placeholder for a cell with no
-	 *         neighbor Tiles.
-	 */
-	private String[] getWhiteSpace() {
-		String[] whiteSpace = { "               ", "               ",
-				"               ", "               ", "               ",
-				"               ", "               " };
-		return whiteSpace;
+	public int[] getBounds(){
+		int[] bounds = {upperEdge, rightEdge, lowerEdge, leftEdge};
+		return bounds;
 	}
-
-	/**
-	 * The representation of an empty tile with its coordinate.
-	 * 
-	 * @param coord
-	 *            - a Coord.
-	 * @return an array of lines composing the placeholder for a cell with
-	 *         neighbors Tiles.
-	 */
-	private String[] getPlaceHolder(Coord coord) {
-		String[] placeHolder = { "+.............+", ".             .",
-				".             .",
-				String.format(".   %s   .", coord.toString()),
-				".             .", ".             .", "+.............+" };
-		return placeHolder;
-	}
-
-	/**
-	 * Return the string representation of TileGrid.
-	 */
-	public String toString() {
-		String gridOutput = "";
-		for (int j = upperEdge + 1; j >= lowerEdge - 1; j--) {
-			String[] lines = { "", "", "", "", "", "", "" };
-			for (int i = leftEdge - 1; i <= rightEdge + 1; i++) {
-				Coord currentCoord = new Coord(i, j);
-				String[] rep = null;
-				if (grid.containsKey(currentCoord)) {
-					rep = grid.get(currentCoord).getArrayRep();
-				} else {
-					for (SidePosition position : SidePosition.values()) {
-						Coord neighborCoord = currentCoord.add(SidePosition
-								.getOffsetForPosition(position));
-						if (grid.containsKey(neighborCoord)) {
-							rep = getPlaceHolder(currentCoord);
-							break;
-						}
-					}
-				}
-				if (rep == null) {
-					rep = getWhiteSpace();
-				}
-				for (int k = 0; k < lines.length; k++) {
-					lines[k] += rep[k];
-				}
-			}
-			for (String s : lines) {
-				gridOutput += (s + "\n");
-			}
-		}
-		return gridOutput;
-	}
-
 }
