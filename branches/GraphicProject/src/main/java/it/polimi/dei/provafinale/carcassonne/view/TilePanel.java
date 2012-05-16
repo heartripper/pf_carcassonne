@@ -3,6 +3,7 @@ package it.polimi.dei.provafinale.carcassonne.view;
 import it.polimi.dei.provafinale.carcassonne.model.card.Card;
 import it.polimi.dei.provafinale.carcassonne.model.card.Side;
 import it.polimi.dei.provafinale.carcassonne.model.card.SidePosition;
+import it.polimi.dei.provafinale.carcassonne.model.player.PlayerColor;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,8 +17,6 @@ import javax.swing.JPanel;
 
 public class TilePanel extends JPanel {
 	
-
-	
 	private static final Color FIELD_COLOR = new Color(88,155,39);
 	private static final Color CITY_COLOR = new Color(116,89,31);
 	private static final Color ROAD_COLOR = new Color(239,209,125);
@@ -28,6 +27,7 @@ public class TilePanel extends JPanel {
 		this.tile = tile;
 	}
 
+	//Print small triangle (city)
 	private Polygon getMultipleEntityTriangle(SidePosition position) {
 
 		int width = getWidth();
@@ -55,6 +55,7 @@ public class TilePanel extends JPanel {
 		}
 	}
 
+	//Print big triangle (city)
 	private Polygon getSingleEntityTriangle(SidePosition position) {
 
 		int width = getWidth();
@@ -82,6 +83,7 @@ public class TilePanel extends JPanel {
 		}
 	}
 
+	//Print rectangle (road)
 	private Rectangle getRectangle(SidePosition position) {
 
 		int width = getWidth();
@@ -112,6 +114,7 @@ public class TilePanel extends JPanel {
 		}
 	}
 
+	//Print central rectangle (central road)
 	private Rectangle getCentralRectangle() {
 
 		int width = getWidth();
@@ -122,8 +125,39 @@ public class TilePanel extends JPanel {
 
 		p = new Point(7 * width / 16, 7 * height / 16);
 		d = new Dimension(1 * width / 8, 1 * height / 8);
-
+		
 		return new Rectangle(p, d);
+	}
+	
+	private Rectangle getFollowerSquare(SidePosition position){
+	
+		int width = getWidth();
+		int height = getHeight();
+		
+		Point p;
+		Dimension d;
+		
+		switch (position) {
+		case N:
+			p = new Point(7 * width / 16, 3 * height / 16);
+			d = new Dimension(1 * width / 8, 1 * height / 8);
+			return new Rectangle(p, d);
+		case E:
+			p = new Point(11 * width / 16, 7 * height / 16);
+			d = new Dimension(1 * width / 8, 1 * height / 8);
+			return new Rectangle(p, d);
+		case S:
+			p = new Point(7 * width / 16, 11 * height / 16);
+			d = new Dimension(1 * width / 8, 1 * height / 8);
+			return new Rectangle(p, d);
+		case O:
+			p = new Point(3 * width / 16, 7 * height / 16);
+			d = new Dimension(1 * width / 8, 1 * height / 8);
+			return new Rectangle(p, d);
+		default:
+			return null;
+		}
+		
 	}
 	
 	@Override
@@ -131,7 +165,6 @@ public class TilePanel extends JPanel {
 		super.paintComponents(g);
 
 		ArrayList<SidePosition> sidesToPaint = new ArrayList<SidePosition>();
-		
 		for(SidePosition pos : SidePosition.values()){
 			sidesToPaint.add(pos);
 		}
@@ -182,6 +215,13 @@ public class TilePanel extends JPanel {
 			default: 
 				break;
 			}	
+			
+			PlayerColor follower = currentSide.getFollower();
+			if(follower != null){
+				Rectangle squareFollower = getFollowerSquare(position);
+				g.setColor(follower.getColor());
+				g.fillRect((int)squareFollower.getX(), (int)squareFollower.getY(), (int)squareFollower.getWidth(), (int)squareFollower.getHeight());
+			}
 		}
 	}
 
