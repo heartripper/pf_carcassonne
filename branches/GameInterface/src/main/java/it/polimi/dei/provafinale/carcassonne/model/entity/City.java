@@ -140,10 +140,17 @@ public class City extends Entity {
 	 * Removes followers from entity;
 	 */
 	@Override
-	public void finalizeEntity() {
+	public ArrayList<Card> removeFollowers() {
+		ArrayList<Card> updatedCards = new ArrayList<Card>();
 		for (Side s : members) {
-			s.setFollower(null);
+			if(s.getFollower() != null){
+				s.setFollower(null);
+				Card c = s.getOwnerCard();
+				if(!updatedCards.contains(c))
+					updatedCards.add(c);
+			}
 		}
+		return updatedCards;
 	}
 
 	/**
