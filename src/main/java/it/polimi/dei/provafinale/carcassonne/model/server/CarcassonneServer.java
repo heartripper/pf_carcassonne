@@ -1,7 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne.model.server;
 
 import it.polimi.dei.provafinale.carcassonne.model.MatchHandler;
-import it.polimi.dei.provafinale.carcassonne.model.gameinterface.ServerGameInterface;
 import it.polimi.dei.provafinale.carcassonne.model.player.PlayerColor;
 
 import java.io.IOException;
