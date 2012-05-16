@@ -1,7 +1,5 @@
 package it.polimi.dei.provafinale.carcassonne.model.player;
 
-import java.util.Arrays;
-
 public class PlayerCircularArray {
 
 	private Player players[];
@@ -76,10 +74,12 @@ public class PlayerCircularArray {
 	 * 
 	 * @return an array of Players, sorted by score.
 	 */
-	public Player[] getChart() {
-		Player[] chart = players.clone();
-		Arrays.sort(chart);
-		return chart;
+	public int[] getScores(){
+		int[] scores = new int[size];
+		for(int i = 0; i<size; i++){
+			scores[i] = players[i].getScore();
+		}
+		return scores;
 	}
 
 	/**
