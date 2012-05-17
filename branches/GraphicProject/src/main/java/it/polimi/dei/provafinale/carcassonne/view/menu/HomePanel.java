@@ -5,6 +5,8 @@ import it.polimi.dei.provafinale.carcassonne.controller.MenuPanelSwitcher;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
 
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -17,13 +19,19 @@ import java.awt.event.ActionEvent;
 import java.awt.Component;
 
 public class HomePanel extends JPanel {
-	public HomePanel() {
+	
+	private Image background;
+	
+	public HomePanel(Image background) {
+		this.background = background;
+		
 		BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
 		setLayout(layout);
 
 		Component verticalGlue01 = Box.createVerticalGlue();
 		
 		JPanel newLocalGamePanel = new JPanel();
+		newLocalGamePanel.setBackground(new Color(0,0,0,0));
 		newLocalGamePanel.setLayout(new BoxLayout(newLocalGamePanel,
 				BoxLayout.X_AXIS));
 		JButton btnNewLocalGame = new JButton("New Local Game");
@@ -34,6 +42,7 @@ public class HomePanel extends JPanel {
 		Component verticalStrut = Box.createVerticalStrut(20);
 		
 		JPanel newInternetGamePanel = new JPanel();
+		newInternetGamePanel.setBackground(new Color(0,0,0,0));
 		newInternetGamePanel.setLayout(new BoxLayout(newInternetGamePanel,
 				BoxLayout.X_AXIS));
 
@@ -52,7 +61,12 @@ public class HomePanel extends JPanel {
 		add(verticalGlue02);
 		
 		repaint();
-		
+	}
+	
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		int width = getWidth();
+		g.drawImage(background, (width-778)/2, 0, null);
 	}
 
 }

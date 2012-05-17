@@ -20,23 +20,24 @@ public class MenuPanel extends JPanel {
 	private CardLayout menuLayout;
 	private JPanel menuContainer;
 	
-	private Image banner;
-	private Image background;
-	
 	public MenuPanel() {
+		
+		String path = "src/main/resources/background.png";
+		Image background = Toolkit.getDefaultToolkit().createImage(path);
+		
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel bannerPanel = new BannerPanel();
 		add(bannerPanel, BorderLayout.NORTH);
 		
-		menuContainer = new MenuContainer();
+		menuContainer = new JPanel();
 		add(menuContainer, BorderLayout.CENTER);
 		
 		menuLayout = new CardLayout(0,0);
 		menuContainer.setLayout(menuLayout);
-		menuContainer.add(new HomePanel(), HOMEPANEL);
-		menuContainer.add(new LocalGamePanel(), LOCALGAMEPANEL);
-		menuContainer.add(new InternetGamePanel(), INTERNETGAMEPANEL);
+		menuContainer.add(new HomePanel(background), HOMEPANEL);
+		menuContainer.add(new LocalGamePanel(background), LOCALGAMEPANEL);
+		menuContainer.add(new InternetGamePanel(background), INTERNETGAMEPANEL);
 		
 		setVisible(true);
 	}
