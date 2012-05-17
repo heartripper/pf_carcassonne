@@ -10,22 +10,32 @@ import javax.swing.JButton;
 import java.awt.Component;
 import javax.swing.Box;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Dimension;
 import java.awt.CardLayout;
+import java.awt.Image;
 import java.awt.LayoutManager;
 import java.awt.event.ActionListener;
 
 public class InternetGamePanel extends JPanel {
+	
 	private JTextField textField;
-	public InternetGamePanel() {
+	
+	private Image background;
+	
+	public InternetGamePanel(Image background) {
+		this.background = background;
+		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		Component verticalGlue01 = Box.createVerticalGlue();
 		add(verticalGlue01);
 		
 		JPanel titlePanel = new JPanel();
+		titlePanel.setBackground(new Color(0,0,0,0));
 		add(titlePanel);
 		titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.X_AXIS));
 		
@@ -36,6 +46,7 @@ public class InternetGamePanel extends JPanel {
 		add(verticalStrut_1);
 		
 		JPanel insertServerIpAddressPanel = new JPanel();
+		insertServerIpAddressPanel.setBackground(new Color(0,0,0,0));
 		insertServerIpAddressPanel.setPreferredSize(new Dimension(10, 0));
 		add(insertServerIpAddressPanel);
 		LayoutManager layout = new FlowLayout();
@@ -58,6 +69,7 @@ public class InternetGamePanel extends JPanel {
 		add(verticalStrut);
 		
 		JPanel joinGamePanel = new JPanel();
+		joinGamePanel.setBackground(new Color(0,0,0,0));
 		add(joinGamePanel);
 		joinGamePanel.setLayout(new BoxLayout(joinGamePanel, BoxLayout.X_AXIS));
 		
@@ -74,6 +86,7 @@ public class InternetGamePanel extends JPanel {
 		add(verticalGlue02);
 		
 		JPanel backToHomePanel = new JPanel();
+		backToHomePanel.setBackground(new Color(0,0,0,0));
 		add(backToHomePanel);
 		backToHomePanel.setLayout(new BoxLayout(backToHomePanel, BoxLayout.X_AXIS));
 		
@@ -81,6 +94,12 @@ public class InternetGamePanel extends JPanel {
 		backToHomePanel.add(btnBackToHome);
 		ActionListener home = new MenuPanelSwitcher(MenuPanel.HOMEPANEL);
 		btnBackToHome.addActionListener(home);
+	}
+	
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		int width = getWidth();
+		g.drawImage(background, (width-778)/2, 0, null);
 	}
 
 }
