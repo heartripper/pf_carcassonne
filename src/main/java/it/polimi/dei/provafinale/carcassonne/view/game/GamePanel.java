@@ -12,8 +12,12 @@ import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import java.awt.FlowLayout;
+import javax.swing.JTextField;
+import javax.swing.JRadioButton;
+import javax.swing.JComboBox;
 
 public class GamePanel extends JPanel {
+	private JTextField coordTextField;
 	public GamePanel() {
 		setLayout(new BorderLayout(0, 0));
 		
@@ -46,6 +50,48 @@ public class GamePanel extends JPanel {
 		notificationPanel.setPreferredSize(new Dimension(195, 10));
 		add(notificationPanel, BorderLayout.EAST);
 		notificationPanel.setLayout(new BoxLayout(notificationPanel, BoxLayout.Y_AXIS));
+		
+		JPanel turnOfPanel = new JPanel();
+		notificationPanel.add(turnOfPanel);
+		
+		JLabel label = new JLabel("");
+		turnOfPanel.add(label);
+		
+		JPanel currenTilePanel = new JPanel();
+		notificationPanel.add(currenTilePanel);
+		
+		JPanel rotatePanel = new JPanel();
+		notificationPanel.add(rotatePanel);
+		
+		JButton btnRotateCard = new JButton("Rotate Card");
+		rotatePanel.add(btnRotateCard);
+		
+		JPanel insertCoordPanel = new JPanel();
+		notificationPanel.add(insertCoordPanel);
+		
+		JLabel lblInsertCoordinates = new JLabel("Insert Coordinates (x,y):");
+		insertCoordPanel.add(lblInsertCoordinates);
+		
+		coordTextField = new JTextField();
+		insertCoordPanel.add(coordTextField);
+		coordTextField.setColumns(10);
+		
+		JButton btnPut = new JButton("Put!");
+		insertCoordPanel.add(btnPut);
+		
+		JPanel followerPanel = new JPanel();
+		notificationPanel.add(followerPanel);
+		followerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JLabel lblFollower = new JLabel("Follower:");
+		followerPanel.add(lblFollower);
+		
+		String[] followerOptions = {"none", "north", "east", "south", "west"};
+		JComboBox optionsComboBox = new JComboBox(followerOptions);
+		followerPanel.add(optionsComboBox);
+		
+		JButton btnPut_1 = new JButton("Put!");
+		followerPanel.add(btnPut_1);
 		
 		JPanel bottomPanel = new JPanel();
 		add(bottomPanel, BorderLayout.SOUTH);
