@@ -22,5 +22,9 @@ public class TilesPanel extends JScrollPane{
 		tilesPainter = new TilesPainter(grid);
 		panel.add(tilesPainter, BorderLayout.CENTER);
 	}
+	
+	public void updateRepresentation(){
+		tilesPainter.updateRepresentation();
+	}
 
 }
