@@ -13,7 +13,7 @@ import it.polimi.dei.provafinale.carcassonne.model.card.TileGrid;
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 
-public class GridPainter extends JLabel {
+public class TilesPainter extends JLabel {
 
 	private TileGrid grid;
 
@@ -28,40 +28,41 @@ public class GridPainter extends JLabel {
 	private String pathCard = "src/main/resources/card.png";
 	private Image cardImg;
 
-	public GridPainter(TileGrid grid) {
+	public TilesPainter(TileGrid grid) {
 		this.grid = grid;
 		placeHolder = Toolkit.getDefaultToolkit().createImage(pathPlaceHolder);
 		cardImg = Toolkit.getDefaultToolkit().createImage(pathCard);
 	}
 
+	public void updateRepresentation(){
+		int[] bounds = grid.getBounds();
+		int vertTile = 3 + bounds[2] - bounds[0];
+		int horTile = 3 + bounds[1] - bounds[3];
+		
+		currOffsetX = 1 + ( - bounds[3]);
+		currOffsetY = 1 + ( - bounds[0]);
+		
+		setDimension(horTile * TILE_DIM, vertTile * TILE_DIM);
+	}
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		paintTile(g);
+	}
+	
+	public void paintTile(Graphics g){
 		System.out.println("Paint!");
 		int[] bounds = grid.getBounds();
-		int vertTile = bounds[0] - bounds[2];
-		int horTile = bounds[1] - bounds[3];
-
-		currOffsetX = -(bounds[3] - 1);
-		currOffsetY = -(bounds[0] - 1);
-
-		setDimension(horTile * TILE_DIM, vertTile * TILE_DIM);
 
 		for (int j = bounds[0] - 1; j <= bounds[2] + 1; j++) {
-			for (int i = bounds[3] - 1; i <= bounds[3] + 1; i++) {
+			for (int i = bounds[3] - 1; i <= bounds[1] + 1; i++) {
 				Coord c = new Coord(i, j);
 				Card tile = grid.getTile(c);
 				if (tile != null) {
 					printCard(g, tile);
-				} else {
-					for (SidePosition position : SidePosition.values()) {
-						Coord offset = SidePosition
-								.getOffsetForPosition(position);
-						if (grid.getTile(c.add(offset)) != null) {
+				} else if(grid.hasNeighborForCoord(c)){
 							printPlaceHolder(g, i, j);
-							break;
-						}
-					}
 				}
 			}
 		}
@@ -80,7 +81,7 @@ public class GridPainter extends JLabel {
 		g.drawImage(placeHolder, x, y, TILE_DIM, TILE_DIM, null);
 	}
 
-	private void setDimension(int x, int y) {
+	public void setDimension(int x, int y) {
 		Dimension d = new Dimension(x, y);
 		setSize(d);
 		setPreferredSize(d);

@@ -125,6 +125,16 @@ public class TileGrid {
 		return hasNeighbor;
 	}
 
+	public boolean hasNeighborForCoord(Coord coord){
+		for(SidePosition pos : SidePosition.values()){
+			Coord offset = SidePosition.getOffsetForPosition(pos);
+			if(grid.containsKey(coord.add(offset)))
+				return true;
+		}
+		return false;
+	}
+	
+	
 	// Textual representation logic.
 
 	/**
