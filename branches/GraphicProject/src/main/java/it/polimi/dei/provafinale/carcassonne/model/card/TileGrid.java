@@ -7,10 +7,10 @@ import java.util.HashMap;
 public class TileGrid {
 
 	HashMap<Coord, Card> grid;
-	private int upperEdge;
-	private int rightEdge;
-	private int lowerEdge;
-	private int leftEdge;
+	private int upperEdge = 0;
+	private int rightEdge = 0;
+	private int lowerEdge = 0;
+	private int leftEdge = 0;
 
 	/**
 	 * Constructor: create a new instance of CardGrid.
@@ -70,8 +70,8 @@ public class TileGrid {
 		// Updating bounds of area to represent.
 		rightEdge = (x > rightEdge ? x : rightEdge);
 		leftEdge = (x < leftEdge ? x : leftEdge);
-		upperEdge = (y > upperEdge ? y : upperEdge);
-		lowerEdge = (y < lowerEdge ? y : lowerEdge);
+		upperEdge = (y < upperEdge ? y : upperEdge);
+		lowerEdge = (y > lowerEdge ? y : lowerEdge);
 
 		// Insert into the tile its position and a reference to the grid to find
 		// its neighbors.
@@ -140,6 +140,11 @@ public class TileGrid {
 		return whiteSpace;
 	}
 
+	public int[] getBounds(){
+		int[] bounds = {upperEdge, rightEdge, lowerEdge, leftEdge};
+		return bounds;
+	}
+	
 	/**
 	 * The representation of an empty tile with its coordinate.
 	 * 
