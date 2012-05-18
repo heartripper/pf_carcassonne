@@ -41,6 +41,7 @@ public class MainClass {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 600);
 		
+		
 		TileGrid grid = new TileGrid();
 		grid.putTile(new Card("N=N S=C O=S E=S NS=0 NE=0 NO=0 OE=1 SE=0 SO=0"), new Coord(0, 0));
 		grid.putTile(new Card("N=C S=C O=N E=N NS=0 NE=0 NO=0 OE=0 SE=0 SO=0"), new Coord(0, -1));
@@ -48,6 +49,8 @@ public class MainClass {
 		grid.putTile(new Card("N=C S=C O=S E=S NS=0 NE=0 NO=0 OE=0 SE=0 SO=0"), new Coord(-1,0));
 			
 		TilesPanel tilesPanel = new TilesPanel(grid);
+		
+		frame.add(tilesPanel);
 		
 		try{
 			Thread.sleep(1);
