@@ -15,9 +15,12 @@ import java.awt.FlowLayout;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JComboBox;
+import java.awt.Component;
+import javax.swing.Box;
 
 public class GamePanel extends JPanel {
-	private JTextField coordTextField;
+	private JTextField xTextField;
+	private JTextField yTextField;
 	public GamePanel() {
 		setLayout(new BorderLayout(0, 0));
 		
@@ -51,47 +54,55 @@ public class GamePanel extends JPanel {
 		add(notificationPanel, BorderLayout.EAST);
 		notificationPanel.setLayout(new BoxLayout(notificationPanel, BoxLayout.Y_AXIS));
 		
-		JPanel turnOfPanel = new JPanel();
-		notificationPanel.add(turnOfPanel);
-		
-		JLabel label = new JLabel("");
-		turnOfPanel.add(label);
-		
-		JPanel currenTilePanel = new JPanel();
-		notificationPanel.add(currenTilePanel);
+		JPanel cardPanel = new JPanel();
+		notificationPanel.add(cardPanel);
 		
 		JPanel rotatePanel = new JPanel();
 		notificationPanel.add(rotatePanel);
 		
-		JButton btnRotateCard = new JButton("Rotate Card");
-		rotatePanel.add(btnRotateCard);
+		JButton btnRotate = new JButton("Rotate");
+		rotatePanel.add(btnRotate);
 		
-		JPanel insertCoordPanel = new JPanel();
-		notificationPanel.add(insertCoordPanel);
+		JPanel insertCoordinatesPanel = new JPanel();
+		notificationPanel.add(insertCoordinatesPanel);
+		insertCoordinatesPanel.setLayout(new BoxLayout(insertCoordinatesPanel, BoxLayout.Y_AXIS));
 		
-		JLabel lblInsertCoordinates = new JLabel("Insert Coordinates (x,y):");
-		insertCoordPanel.add(lblInsertCoordinates);
+		JLabel lblInsertCoordinates = new JLabel("Insert coordinates");
+		insertCoordinatesPanel.add(lblInsertCoordinates);
 		
-		coordTextField = new JTextField();
-		insertCoordPanel.add(coordTextField);
-		coordTextField.setColumns(10);
+		JPanel xyPanel = new JPanel();
+		insertCoordinatesPanel.add(xyPanel);
+		xyPanel.setLayout(new BoxLayout(xyPanel, BoxLayout.X_AXIS));
 		
-		JButton btnPut = new JButton("Put!");
-		insertCoordPanel.add(btnPut);
+		JLabel lblX = new JLabel("x:");
+		xyPanel.add(lblX);
+		
+		xTextField = new JTextField();
+		xyPanel.add(xTextField);
+		xTextField.setColumns(10);
+		
+		JLabel lblY = new JLabel("y:");
+		xyPanel.add(lblY);
+		
+		yTextField = new JTextField();
+		xyPanel.add(yTextField);
+		yTextField.setColumns(10);
 		
 		JPanel followerPanel = new JPanel();
 		notificationPanel.add(followerPanel);
-		followerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JLabel lblFollower = new JLabel("Follower:");
 		followerPanel.add(lblFollower);
 		
 		String[] followerOptions = {"none", "north", "east", "south", "west"};
-		JComboBox optionsComboBox = new JComboBox(followerOptions);
-		followerPanel.add(optionsComboBox);
+		JComboBox comboBox = new JComboBox(followerOptions);
+		followerPanel.add(comboBox);
 		
-		JButton btnPut_1 = new JButton("Put!");
-		followerPanel.add(btnPut_1);
+		JPanel putPanel = new JPanel();
+		notificationPanel.add(putPanel);
+		
+		JButton btnPut = new JButton("Put!");
+		putPanel.add(btnPut);
 		
 		JPanel bottomPanel = new JPanel();
 		add(bottomPanel, BorderLayout.SOUTH);
