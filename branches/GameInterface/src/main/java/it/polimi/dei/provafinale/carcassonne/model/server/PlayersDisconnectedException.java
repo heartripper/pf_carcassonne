@@ -6,6 +6,8 @@ import it.polimi.dei.provafinale.carcassonne.model.player.PlayerColor;
 
 public class PlayersDisconnectedException extends Exception {
 	
+	private static final long serialVersionUID = 1L;
+	
 	private ArrayList<PlayerColor> colors;
 	
 	public PlayersDisconnectedException(PlayerColor color){
