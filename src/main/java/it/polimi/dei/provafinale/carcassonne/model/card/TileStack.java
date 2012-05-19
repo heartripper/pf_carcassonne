@@ -13,14 +13,18 @@ import java.util.Random;
  * */
 public class TileStack {
 
+	private static ArrayList<Card> readTileStack = null;
+	
 	private static final String FILE_PATH = "src/main/resources/carcassonne.dat";
 
 	private ArrayList<Card> tiles;
 	private Card initialTile;
 
 	public TileStack() {
+		if(readTileStack == null)
+			readTileStack = readTiles();
 		tiles = new ArrayList<Card>();
-		readTiles();
+		tiles.addAll(readTileStack);
 		initialTile = tiles.get(0);
 		tiles.remove(0);
 	}
@@ -71,7 +75,8 @@ public class TileStack {
 	 * Reads tile representation from carcassonne.dat, creates a new Tile for
 	 * each representation and then put the new tile into tile list.
 	 * */
-	private void readTiles() {
+	private ArrayList<Card> readTiles() {
+		ArrayList<Card> stack = new ArrayList<Card>();
 		try {
 			FileReader fr = new FileReader(new File(FILE_PATH));
 			BufferedReader input = new BufferedReader(fr);
@@ -81,12 +86,13 @@ public class TileStack {
 			while (line != null) {
 				// Card creation
 				Card tile = new Card(line);
-				tiles.add(tile);
+				stack.add(tile);
 				line = input.readLine(); // Go on to next line
 			}
 		} catch (IOException e) {
 			// TODO: throw exception
 			System.out.println("Error opening tile file.");
 		}
+		return stack;
 	}
 }
