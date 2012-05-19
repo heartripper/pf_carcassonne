@@ -101,7 +101,7 @@ public class MatchHandler implements Runnable {
 	}
 
 	private Message handleFollowerPlacing(String payload) {
-		SidePosition position = SidePosition.valueOf(payload);
+		SidePosition position = SidePosition.valueOf(payload.trim());
 		Message response;
 		if (match.putFollower(currentTile, position, currentPlayer)) {
 			String update = getUpdateTileMsg(currentTile);
@@ -133,6 +133,7 @@ public class MatchHandler implements Runnable {
 	}
 
 	private void handleMatchEnd() {
+		match.finalizeMatch();
 		Message msg = new Message(MessageType.END, getScoreMsg());
 		sendMessage(msg);
 	}
