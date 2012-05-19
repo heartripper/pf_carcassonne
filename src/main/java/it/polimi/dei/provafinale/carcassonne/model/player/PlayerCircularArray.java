@@ -1,7 +1,5 @@
 package it.polimi.dei.provafinale.carcassonne.model.player;
 
-import java.util.Arrays;
-
 public class PlayerCircularArray {
 
 	private Player players[];
@@ -18,6 +16,9 @@ public class PlayerCircularArray {
 	public PlayerCircularArray(int num) {
 		players = new Player[num];
 		size = num;
+		for(int i = 0; i < size; i++)
+			players[i] = new Player();
+	
 		position = 0;
 		currIndex = 0;
 	}
@@ -42,9 +43,12 @@ public class PlayerCircularArray {
 	 * @return the next Player that have to play.
 	 */
 	public Player getNext() {
-		Player p = players[position++];
-		if (position == size)
-			position = 0;
+		while(!players[position].isActive()){
+			position = (position + 1) % size;
+		}
+		
+		Player p = players[position];
+		position = (position + 1) % size;
 		return p;
 	}
 
@@ -52,8 +56,17 @@ public class PlayerCircularArray {
 	 * @param color the color of the player to return;
 	 * @return the Player corresponding to given color
 	 * */
-	public Player getByIndex(int index){
+	public Player getByColor(PlayerColor color){
+		int index = PlayerColor.indexOf(color);
 		return players[index];
+	}
+	
+	public int getSize(){
+		int i = 0;
+		for(Player p : players)
+			if(p.isActive())
+				i++;
+		return i;
 	}
 	
 	/**
@@ -61,10 +74,12 @@ public class PlayerCircularArray {
 	 * 
 	 * @return an array of Players, sorted by score.
 	 */
-	public Player[] getChart() {
-		Player[] chart = players.clone();
-		Arrays.sort(chart);
-		return chart;
+	public int[] getScores(){
+		int[] scores = new int[size];
+		for(int i = 0; i<size; i++){
+			scores[i] = players[i].getScore();
+		}
+		return scores;
 	}
 
 	/**

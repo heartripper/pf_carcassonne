@@ -14,9 +14,10 @@ import java.util.Map;
  * 0, East = 1, South = 2, <west = 3.
  * */
 public class Card {
-
+	//Reference to container grid
 	private TileGrid grid;
 	private Coord cardCoord;
+	
 	private Map<SidePosition, Side> sides;
 	private boolean[][] links;
 
@@ -47,15 +48,14 @@ public class Card {
 		SidePosition position = SidePosition.valueOf(name);
 		String sideType = null;
 		PlayerColor follower = null;
-		if (value.indexOf(",") == -1) {
+		if (value.indexOf("-") == -1) {
 			sideType = value;
 		} else {
-			String[] split = value.split(",");
+			String[] split = value.split("-");
 			sideType = split[0];
 			follower = PlayerColor.valueOf(split[1]);
 		}
 
-		// TODO: manage coin in representation (SERVER)
 		EntityType type = EntityType.valueOf(sideType);
 		Side side = new Side(this, type);
 		sides.put(position, side);
@@ -119,54 +119,16 @@ public class Card {
 	}
 
 	/**
-	 * Gives the string representing this card, according to project
-	 * specification.
+	 * Tries to add a coin to the side corresponding to the given position in
+	 * the current card.
 	 * 
-	 * @return the String representing this card.
+	 * @return true if the coin was added, false if it couldn't be added.
 	 * */
-	public String getRepresentation() {
-		String representation = "";
-		String sideFormat = "N=%s%s S=%s%s O=%s%s E=%s%s ";
-
-		String northSide = getSideRep(SidePosition.N);
-		String northPlayer = getFollowerRep(SidePosition.N);
-		String southSide = getSideRep(SidePosition.S);
-		String southPlayer = getFollowerRep(SidePosition.S);
-		String westSide = getSideRep(SidePosition.W);
-		String westPlayer = getFollowerRep(SidePosition.W);
-		String eastSide = getSideRep(SidePosition.E);
-		String eastPlayer = getFollowerRep(SidePosition.E);
-
-		representation += String.format(sideFormat, northSide, northPlayer,
-				southSide, southPlayer, westSide, westPlayer, eastSide,
-				eastPlayer);
-
-		String linkFormat = "NS=%s NE=%s NO=%s OE=%s SE=%s SO=%s";
-		String linkNE = (links[0][1] ? "1" : "0");
-		String linkNS = (links[0][2] ? "1" : "0");
-		String linkNO = (links[0][3] ? "1" : "0");
-		String linkES = (links[1][2] ? "1" : "0");
-		String linkEO = (links[1][3] ? "1" : "0");
-		String linkSO = (links[2][3] ? "1" : "0");
-
-		representation += String.format(linkFormat, linkNS, linkNE,
-				linkNO, linkEO, linkES, linkSO);
-		
-		return representation;
+	public void addFollower(SidePosition position, PlayerColor color) {
+		Side side = getSide(position);
+		side.setFollower(color);
 	}
-
-	private String getSideRep(SidePosition pos) {
-		return getSide(pos).getType().toString();
-	}
-
-	private String getFollowerRep(SidePosition pos) {
-		PlayerColor col = getSide(pos).getFollower();
-		if (col == null)
-			return "";
-		else
-			return "," + col.toString();
-	}
-
+	
 	/**
 	 * Gives this card's coordinates.
 	 * 
@@ -194,6 +156,7 @@ public class Card {
 		return grid.getTile(neighborCoord);
 	}
 
+	//TODO: Remove this.
 	/**
 	 * Give a list of the sides of a card that are available to accept coins.
 	 * 
@@ -239,7 +202,7 @@ public class Card {
 	 * @return true if there is an entity that links side1 and side2 of the
 	 *         card, false instead.
 	 */
-	private boolean sideLinked(SidePosition side1, SidePosition side2) {
+	public boolean sideLinked(SidePosition side1, SidePosition side2) {
 		int index1 = side1.getIndex();
 		int index2 = side2.getIndex();
 		return links[index1][index2];
@@ -276,41 +239,52 @@ public class Card {
 	}
 
 	/**
-	 * Return the array of string representation of Card.
+	 * Gives the string representing this card, according to project
+	 * specification.
 	 * 
-	 * @return the String[] representation of a card with its sides and links.
-	 */
-	public String[] getArrayRep() {
-		String north = getSide(SidePosition.N).toString();
-		String east = getSide(SidePosition.E).toString();
-		String south = getSide(SidePosition.S).toString();
-		String west = getSide(SidePosition.W).toString();
-		String linkNE = (links[0][1] ? "\\" : " ");
-		String linkNS = (links[0][2] ? "|" : " ");
-		String linkNO = (links[0][3] ? "/" : " ");
-		String linkES = (links[1][2] ? "/" : " ");
-		String linkEO = (links[1][3] ? "-" : " ");
-		String linkSO = (links[2][3] ? "\\" : " ");
-		String[] representation = { "+#############+",
-				String.format("#    %s    #", north),
-				String.format("#    %s %s %s    #", linkNO, linkNS, linkNE),
-				String.format("#%s %s %s#", west, linkEO, east),
-				String.format("#    %s %s %s    #", linkSO, linkNS, linkES),
-				String.format("#    %s    #", south), "+#############+" };
-		return representation;
-	}
-
-	/**
-	 * Return the string representation of Card.
-	 */
+	 * @return the String representing this card.
+	 * */
 	@Override
 	public String toString() {
-		String rep = "";
-		String[] repArray = getArrayRep();
-		for (String s : repArray) {
-			rep += (s + "\n");
-		}
-		return rep;
+		String representation = "";
+		String sideFormat = "N=%s%s S=%s%s W=%s%s E=%s%s ";
+
+		String northSide = getSideRep(SidePosition.N);
+		String northPlayer = getFollowerRep(SidePosition.N);
+		String southSide = getSideRep(SidePosition.S);
+		String southPlayer = getFollowerRep(SidePosition.S);
+		String westSide = getSideRep(SidePosition.W);
+		String westPlayer = getFollowerRep(SidePosition.W);
+		String eastSide = getSideRep(SidePosition.E);
+		String eastPlayer = getFollowerRep(SidePosition.E);
+
+		representation += String.format(sideFormat, northSide, northPlayer,
+				southSide, southPlayer, westSide, westPlayer, eastSide,
+				eastPlayer);
+
+		String linkFormat = "NS=%s NE=%s NW=%s WE=%s SE=%s SW=%s";
+		String linkNE = (links[0][1] ? "1" : "0");
+		String linkNS = (links[0][2] ? "1" : "0");
+		String linkNO = (links[0][3] ? "1" : "0");
+		String linkES = (links[1][2] ? "1" : "0");
+		String linkEO = (links[1][3] ? "1" : "0");
+		String linkSO = (links[2][3] ? "1" : "0");
+
+		representation += String.format(linkFormat, linkNS, linkNE,
+				linkNO, linkEO, linkES, linkSO);
+		
+		return representation;
+	}
+	
+	private String getSideRep(SidePosition pos) {
+		return getSide(pos).getType().toString();
 	}
 
+	private String getFollowerRep(SidePosition pos) {
+		PlayerColor col = getSide(pos).getFollower();
+		if (col == null)
+			return "";
+		else
+			return "-" + col.toString();
+	}
 }

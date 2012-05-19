@@ -6,6 +6,7 @@ import it.polimi.dei.provafinale.carcassonne.model.entity.EntityFactory;
 import it.polimi.dei.provafinale.carcassonne.model.entity.EntityType;
 import it.polimi.dei.provafinale.carcassonne.model.player.Player;
 import it.polimi.dei.provafinale.carcassonne.model.player.PlayerCircularArray;
+import it.polimi.dei.provafinale.carcassonne.model.player.PlayerColor;
 
 import java.util.ArrayList;
 
@@ -15,14 +16,9 @@ public class Match {
 	private TileStack stack;
 	private PlayerCircularArray players;
 	private ArrayList<Entity> entities;
-	private int playersNumber;
 
-	// Turn management
-	
 	private Card firstTile;
-	private Card currentCard;
-	private Player currentPlayer;
-	private int turnCount = 0;
+	private int playersNumber;
 
 	/**
 	 * Constructor: creates a new match for a given number of players.
@@ -30,12 +26,13 @@ public class Match {
 	 * @param playersNumber
 	 *            - an int that indicates the number of players.
 	 */
-	public Match(int playersNumber) {
+	public Match(int numPlayers) {
 		this.grid = new TileGrid();
 		this.entities = new ArrayList<Entity>();
 		this.stack = new TileStack();
-		this.players = new PlayerCircularArray(playersNumber);
-		this.playersNumber = playersNumber;
+		this.players = new PlayerCircularArray(numPlayers);
+
+		this.playersNumber = numPlayers;
 
 		// Add cards #0 to the grid.
 		firstTile = stack.getInitialTile();
@@ -44,17 +41,13 @@ public class Match {
 	}
 
 	/**
-	 * Add a player to the game.
+	 * Gives the initial tile.
 	 * 
-	 * @param player
-	 *            - a Player to add to the game.
-	 * @return true if the player has been added correctly, false instead.
-	 */
-	public boolean addPlayer(Player player) {
-		return players.add(player);
+	 * @return the initial tile
+	 * */
+	public Card getFirstTile() {
+		return firstTile;
 	}
-
-	// Turn management
 
 	/**
 	 * Used to determine if there are still cards in the stack.
@@ -69,42 +62,15 @@ public class Match {
 	 * 
 	 * @return current player.
 	 */
-	public Player getCurrentPlayer() {
-		return currentPlayer;
+	public PlayerColor getNextPlayer() {
+		return players.getNext().getColor();
 	}
 
 	/**
 	 * @return the current card.
 	 **/
-	public Card getCurrentCard() {
-		return currentCard;
-	}
-
-	/**
-	 * Gives the initial tile.
-	 * 
-	 * @return the initial tile
-	 * */
-	public Card getFirstCard() {
-		return firstTile;
-	}
-
-	/**
-	 * Starts a new turn setting the player and drawing a card.
-	 * */
-	public void startTurn() {
-		turnCount++;
-		this.currentCard = stack.drawTile();
-		this.currentPlayer = players.getNext();
-	}
-
-	/**
-	 * Rotates current card (The one current player has drew).
-	 * 
-	 * @return the current card
-	 * */
-	public void rotateCurrentCard() {
-		currentCard.rotate();
+	public Card drawCard() {
+		return stack.drawTile();
 	}
 
 	/**
@@ -113,45 +79,63 @@ public class Match {
 	 * @return true if the card was added (this means the card was compatible
 	 *         with the position).
 	 * */
-	public boolean putCurrentCard(Coord coord) {
-		boolean added = grid.putTile(currentCard, coord);
+	public boolean putTile(Card tile, Coord coord) {
+		boolean added = grid.putTile(tile, coord);
 		if (!added)
 			return false;
 
-		updateEntities(currentCard);
+		updateEntities(tile);
 		return true;
 	}
 
 	/**
-	 * Tries to add a coin to the side corresponding to the given position in
-	 * the current card.
+	 * Adds a follower of a color on a position of a card. If that operation
+	 * succeeds removes a follower from player represented by that color.
 	 * 
-	 * @return true if the coin was added, false if it couldn't be added.
+	 * @param tile
+	 *            - the card to add the follower on
+	 * @param position
+	 *            - the position to put the follower at
+	 * @param color
+	 *            - the color of the player owning the follower
+	 * 
 	 * */
-	public boolean addFollower(SidePosition position) {
-		Side side = currentCard.getSide(position);
-		Entity entity = side.getEntity();
-
-		if (entity == null || !entity.acceptFollowers())
+	public boolean putFollower(Card tile, SidePosition position,
+			PlayerColor color) {
+		Entity e = tile.getSide(position).getEntity();
+		if (e == null || !e.acceptFollowers())
 			return false;
-		else {
-			currentPlayer.removeFollower();
-			side.setFollower(currentPlayer.getColor());
-			return true;
-		}
+
+		tile.addFollower(position, color);
+		Player p = players.getByColor(color);
+		p.removeFollower();
+		return true;
 	}
 
 	/**
-	 * Ends current turn checking if any entities have been completed during
-	 * current turn. If so adds resulting score to owners and finalizes them
+	 * Check if modified entities (the ones card sides belong to) are now
+	 * complete. If an entity is complete finalizes (See Entity.finalize()) it
+	 * and give its owners the resutling score.
 	 * 
-	 * @return a report containing details of performed actions.
-	 * */
-	public String endTurn() {
-		String report = checkForCompletedEntities(currentCard);
-		currentPlayer = null;
-		currentCard = null;
-		return report;
+	 * @param card
+	 *            - a Card that has been added to the grid.
+	 */
+	public ArrayList<Card> checkForCompletedEntities(Card card) {
+		ArrayList<Entity> checkedEntities = new ArrayList<Entity>();
+		ArrayList<Card> updatedTiles = new ArrayList<Card>();
+		
+		for (SidePosition position : SidePosition.values()) {
+			Entity entity = card.getSide(position).getEntity();
+
+			if (entity == null || checkedEntities.contains(entity))
+				continue;
+
+			checkedEntities.add(entity);
+			if (entity.isComplete()) {
+				updatedTiles.addAll(finalizeEntityAndUpdate(entity));
+			}
+		}
+		return updatedTiles;
 	}
 
 	/**
@@ -160,12 +144,10 @@ public class Match {
 	 * 
 	 * @return a report of performed action
 	 */
-	public String finalizeMatch() {
-		String report = "";
+	public void finalizeMatch() {
 		for (Entity e : entities) {
-			report += handleFinalizedEntity(e);
+			finalizeEntityAndUpdate(e);
 		}
-		return report;
 	}
 
 	/**
@@ -174,8 +156,25 @@ public class Match {
 	 * 
 	 * @return an Array of Player sorted by score.
 	 */
-	public Player[] getPlayerChart() {
-		return players.getChart();
+	public int[] getScores() {
+		return players.getScores();
+	}
+
+	/**
+	 * Removes a player from the match (removes him from player list and removes
+	 * all his followers).
+	 * 
+	 * @param color
+	 *            - the color of the player to remove.
+	 */
+	public void removePlayer(PlayerColor color)
+			throws NotEnoughPlayersException {
+		Player p = players.getByColor(color);
+		p.setInactive();
+		// TODO remove followers.
+
+		if (players.getSize() < 2)
+			throw new NotEnoughPlayersException();
 	}
 
 	// Private Methods
@@ -242,81 +241,51 @@ public class Match {
 			entity.addMember(side);
 	}
 
-	/**
-	 * Check if modified entities (the ones card sides belong to) are now
-	 * complete. If an entity is complete finalizes (See Entity.finalize()) it
-	 * and give its owners the resutling score.
-	 * 
-	 * @param card
-	 *            - a Card that has been added to the grid.
-	 */
-	private String checkForCompletedEntities(Card card) {
-		String report = "";
-		ArrayList<Entity> checkedEntities = new ArrayList<Entity>();
-
-		for (SidePosition position : SidePosition.values()) {
-			Entity entity = card.getSide(position).getEntity();
-
-			if (entity == null || checkedEntities.contains(entity))
-				continue;
-
-			checkedEntities.add(entity);
-
-			if (entity.isComplete()) {
-				report += String.format(" - %s is completed.\n", entity);
-				report += handleFinalizedEntity(entity);
-			}
-		}
-		return report;
-	}
-
-	private String handleFinalizedEntity(Entity entity){
-		String report = "";
+	private ArrayList<Card> finalizeEntityAndUpdate(Entity entity) {
+		// Give corresponding score to entity owners
 		int score = entity.getScore();
 		int[] followers = entity.countFollowers(playersNumber);
-		report += giveScoreToOwners(followers, score);
+		giveScoreToOwners(followers, score);
+		// return followers to owners
 		returnFollowers(followers);
-		entity.finalizeEntity();
-		
-		return report;
+		// Remove followers from entity and return a list of updated cards.
+		return entity.removeFollowers();
 	}
-	
-	private String giveScoreToOwners(int[] followers, int score) {
+
+	private void giveScoreToOwners(int[] followers, int score) {
 		int max = 0;
-		String report = "";
-		
+
 		for (int f : followers) {
 			if (f > max)
 				max = f;
 		}
 
-		if(max == 0)
-			return report;
-		
+		if (max == 0)
+			return;
+
 		for (int i = 0; i < followers.length; i++) {
-			if (followers[i] == max){
-				Player p = players.getByIndex(i);
-				report += String.format(" - Player %s gets %s points.\n", p, score);
+			if (followers[i] == max) {
+				PlayerColor color = PlayerColor.valueOf(i);
+				Player p = players.getByColor(color);
 				p.addScore(score);
 			}
 		}
-		return report;
 	}
 
 	private void returnFollowers(int[] followers) {
 		for (int i = 0; i < playersNumber; i++) {
-			Player p = players.getByIndex(i);
+			PlayerColor color = PlayerColor.valueOf(i);
+			Player p = players.getByColor(color);
 			p.addFollowers(followers[i]);
 		}
 	}
-	
+
 	/**
 	 * Return the string representation of Match
 	 */
 	@Override
 	public String toString() {
-		return String.format("TURN %s - Player: %s\n"
-				+ "Remaining cards: %s - %s\n\n%s", turnCount, currentPlayer,
+		return String.format("Remaining cards: %s - %s\n\n%s",
 				stack.remainingTilesNumber(), players, grid);
 	}
 }
