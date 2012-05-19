@@ -58,7 +58,7 @@ public class TextualInterface implements GameInterface {
 				MessageType type;
 				String payload;
 				if (line.equals("ruota")) {
-					type = MessageType.ROTATION;
+					type = MessageType.ROTATE;
 					payload = null;
 				} else if (line.equals("passo")) {
 					type = MessageType.PASS;
@@ -89,7 +89,7 @@ public class TextualInterface implements GameInterface {
 		case NEXT:
 			message = manageNext(msg.payload);
 			break;
-		case ROTATION:
+		case ROTATED:
 			message = manageTileRotation(color, msg);
 			break;
 		case PLACE:

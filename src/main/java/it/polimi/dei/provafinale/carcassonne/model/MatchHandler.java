@@ -52,7 +52,7 @@ public class MatchHandler implements Runnable {
 					break;
 
 				Message resp;
-				if (req.type == MessageType.ROTATION && !currentTileAdded) {
+				if (req.type == MessageType.ROTATE && !currentTileAdded) {
 					resp = handleTileRotation();
 				} else if (req.type == MessageType.PLACE && !currentTileAdded) {
 					resp = handleTilePlacing(req.payload);
@@ -80,7 +80,7 @@ public class MatchHandler implements Runnable {
 	private Message handleTileRotation() {
 		currentTile.rotate();
 		String payload = currentTile.toString();
-		return new Message(MessageType.ROTATION, payload);
+		return new Message(MessageType.ROTATED, payload);
 	}
 
 	private Message handleTilePlacing(String payload) {
