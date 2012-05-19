@@ -2,9 +2,11 @@ package it.polimi.dei.provafinale.carcassonne.model.client;
 
 import it.polimi.dei.provafinale.carcassonne.model.Coord;
 import it.polimi.dei.provafinale.carcassonne.model.card.Card;
+import it.polimi.dei.provafinale.carcassonne.model.card.Side;
 import it.polimi.dei.provafinale.carcassonne.model.card.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.card.TileGrid;
 import it.polimi.dei.provafinale.carcassonne.model.player.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.model.textinterface.TileGridRepresenter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,16 +27,19 @@ public class CarcassonneClient {
 	private int port;
 	private String matchName;
 
-	private PlayerColor color;
+	private PlayerColor clientColor;
+	private PlayerColor currentPlayer;
 	private TileGrid grid;
-	private Card currentTile;
-	
+	private TileGridRepresenter gridRepresenter;
+
 	private BufferedReader input;
 
 	public CarcassonneClient(String address, int port) {
 		this.address = address;
 		this.port = port;
+
 		this.grid = new TileGrid();
+		this.gridRepresenter = new TileGridRepresenter(grid);
 		this.input = new BufferedReader(new InputStreamReader(System.in));
 
 		connect();
@@ -54,35 +59,33 @@ public class CarcassonneClient {
 	}
 
 	public void start() {
-		if(in == null)
+		if (in == null)
 			return;
-		
+
 		String[] startMsg = readFromServer();
 
-		if (startMsg[0].equals("inizio")) {
+		if (startMsg[0].equals("start")) {
 			initialize(startMsg[1]);
-			System.out.println("Match joined. You are player " + color);
+			System.out.println("Match joined. You are player " + clientColor);
 		} else {
-			protocolOrderError("inizio", startMsg[0]);
+			protocolOrderError("start", startMsg[0]);
 		}
 
 		boolean endGame = false;
-		String[] msg = null;
 		while (!endGame) {
-			if (msg == null)
-				msg = readFromServer();
+			String[] msg = readFromServer();
 
-			if (msg[0].equals("turno")) {
-				PlayerColor col = PlayerColor.valueOf(msg[1].trim());
+			if (msg[0].equals("turn")) {
+				currentPlayer = PlayerColor.valueOf(msg[1].trim());
 				System.out.println("New turn:");
-				System.out.println(grid);
-				if (col == color) {
+				System.out.println(gridRepresenter.getRepresentation());
+				if (currentPlayer == clientColor) {
 					manageMyTurn();
-					msg = null;
 				} else {
-					msg = manageOtherPlayerTurn(col);
+					manageOtherPlayerTurn();
 				}
-			} else if (msg[0].equals("fine")) {
+			} else if (msg[0].equals("end")) {
+				System.out.println("End game;\nScore: " + msg[1]);
 				endGame = true;
 			} else {
 				protocolOrderError("turno' or 'fine", msg[0]);
@@ -96,145 +99,156 @@ public class CarcassonneClient {
 		String name = values[1].trim();
 		String col = values[2].trim();
 
-		System.out.println(card);
-
 		grid.putTile(new Card(card), new Coord(0, 0));
 		matchName = name;
-		color = PlayerColor.valueOf(col);
+		clientColor = PlayerColor.valueOf(col);
 	}
 
 	// Player turn management
 	private void manageMyTurn() {
 		String[] msg = readFromServer();
-		if (!msg[0].equals("prox")) {
-			protocolOrderError("prox", msg[0]);
+		if (!msg[0].equals("next")) {
+			protocolOrderError("next", msg[0]);
 		}
 
-		currentTile = new Card(msg[1].trim());
-		System.out.println("It's your turn; your card:");
-		System.out.println(currentTile);
+		Card tile = new Card(msg[1].trim());
 
-		boolean endTurn = false, cardAdded = false;
+		System.out.println("It's your turn; your card:");
+		System.out.println(gridRepresenter.getTileRepresentation(tile));
+
+		boolean endTurn = false, currentTileAdded = false;
 		while (!endTurn) {
 			String command = readFromPlayer();
-			if (command.equals("ruota") && !cardAdded) {
+			if (command.equals("rotate")) {
 				manageCardRotation();
-			} else if (command.equals("passo")) {
+			} else if (command.equals("pass") && currentTileAdded) {
 				managePass();
 				endTurn = true;
 			} else if (command.matches("[-]??[0-9]+,[-]??[0-9]+")) {
-				cardAdded = manageCardPositioning(command);
-			} else if (command.length() == 1 && cardAdded) {
-				if (manageCoinPositioning(command))
-					endTurn = true;
+				currentTileAdded = manageTilePositioning(command);
+			} else if (command.matches("[NESW]")) {
+				endTurn = manageFollower(command);
 			} else {
-				System.out.println("Comando inserito non valido.");
+				System.out.println("You inserted an invalid command.");
 			}
+		}
+		
+		String[] command = readFromServer();
+		while(command[0].equals("update")){
+			handleUpdate(command[1]);
+			command = readFromServer();
+		}
+		
+		if(command[0].equals("score")){
+			updateScore(command[1]);
+		}else{
+			protocolOrderError("update' or 'score", command[0]);
 		}
 	}
 
 	private void manageCardRotation() {
-		sendToServer("ruota");
+		sendToServer("rotate");
 		String[] response = readFromServer();
-		if (!response[0].equals("ruotata")) {
-			protocolOrderError("ruotata", response[0]);
+		if (!response[0].equals("rotated")) {
+			protocolOrderError("rotated", response[0]);
 		}
-		currentTile = new Card(response[1].trim());
-		System.out.println("Rotated card:\n" + currentTile);
+		Card tile = new Card(response[1].trim());
+		System.out.println("Rotated card:");
+		System.out.println(gridRepresenter.getTileRepresentation(tile));
 	}
 
 	private void managePass() {
-		sendToServer("passo");
+		sendToServer("pass");
 	}
 
-	private boolean manageCardPositioning(String command) {
+	private boolean manageTilePositioning(String command) {
 		String[] split = command.split(",");
 		int x = Integer.parseInt(split[0]);
 		int y = Integer.parseInt(split[1]);
-		Coord coord = new Coord(x,y);
-		
-		sendToServer(String.format("posiziona: %s, %s", x, y));
+
+		sendToServer(String.format("place: %s, %s", x, y));
 		String[] response = readFromServer();
 
-		if (response[0].equals("mossa non valida")) {
-			System.out
-					.println("Card is not compatible with the position you entered");
+		if (response[0].equals("move not valid")) {
+			System.out.println("You entered and invalid position for the card.");
 			return false;
-		} else if (response[0].equals("aggiorna")) {
-			grid.putTile(currentTile, coord);
-			System.out.printf("Card put into (%s,%s).\n", x, y);
+		} else if (response[0].equals("update")) {
+			System.out.println("Tile put at given position.");
+			handleUpdate(response[1]);
 			return true;
 		} else {
-			protocolOrderError("mossa non valida' or 'aggiorna", response[0]);
+			protocolOrderError("move not valid' or 'update", response[0]);
 			return false;
 		}
 	}
 
-	private boolean manageCoinPositioning(String command) {
-		SidePosition pos;
-		try {
-			pos = SidePosition.valueOf(command);
-		} catch (Exception e) {
-			System.out.println("Error: invalid side.");
-			return false;
-		}
-
-		sendToServer(String.format("pedina: %s", pos));
+	private boolean manageFollower(String command) {
+		SidePosition pos = SidePosition.valueOf(command.trim());
+		sendToServer(String.format("tile: %s", pos));
 		String[] response = readFromServer();
 
-		if (response[0].equals("mossa non valida")) {
+		if (response[0].equals("move not valid")) {
 			System.out.println("You can't add a coin on that side.");
 			return false;
-		} else if (response[0].equals("aggiorna")) {
-			currentTile.addFollower(pos, color);
+		} else if (response[0].equals("update")) {
+			handleUpdate(response[1]);
 			return true;
 		} else {
-			protocolOrderError("mossa non valida' or 'aggiorna", response[0]);
+			protocolOrderError("move not valid' or 'update", response[0]);
 			return false;
 		}
 	}
 
-	private String[] manageOtherPlayerTurn(PlayerColor col) {
-		System.out.printf("Player %s turn.\n", col);
-		String[] update1 = readFromServer();
-
-		Card tile;
-		
-		if (update1[0].equals("aggiorna")) {
-			String[] payload = update1[1].split(",");
-			tile = new Card(payload[0].trim());
-			int x = Integer.parseInt(payload[1].trim());
-			int y = Integer.parseInt(payload[2].trim());
-			Coord coord = new Coord(x, y);
-
-			grid.putTile(tile, coord);
-			System.out.println(String.format("Player %s put card\n%s in %s",
-					col, tile, coord));
-		}else if(update1[0].equals("turno")){
-			return update1;
-		}else{
-			protocolOrderError("aggiorna' or 'turno", update1[0]);
-			return null;
+	private void manageOtherPlayerTurn() {
+		System.out.printf("Player %s turn.\n", currentPlayer);
+		// During other player turn we will receive only updates;
+		//The first is the tile added by player.
+		//The others are changes caused by player moves.
+		String message[] = readFromServer();
+		while (message[0].equals("update")) {
+			handleUpdate(message[1]);
+			message = readFromServer();
 		}
 
-		String[] update2 = readFromServer();
-		if (update2[0].equals("turno")) {
-			return update2;
-		} else if (update2[0].equals("aggiorna")) {
-			int index = update2[1].indexOf(",");
-			String spos = String.valueOf(update2[1].charAt(index - 3));
-			SidePosition pos = SidePosition.valueOf(spos);
-			tile.addFollower(pos, col);
-			System.out.println("Player " + col + "added coin.");
+		// When score messages arrives, turn has ended.
+		if (message[0].equals("score")) {
+			updateScore(message[1]);
 		} else {
-			protocolOrderError("turno' or 'aggiorna", update2[0]);
+			protocolOrderError("score' or 'update", message[0]);
 		}
-		return null;
+
+		return;
+	}
+
+	private void updateScore(String string) {
+		System.out.println("Score: " + string);
+	}
+
+	// Handles update
+	private void handleUpdate(String payload) {
+		String[] split = payload.split(",");
+		Card tile = new Card(split[0].trim());
+		int x = Integer.parseInt(split[1].trim());
+		int y = Integer.parseInt(split[2].trim());
+		Coord coord = new Coord(x, y);
+		Card oldTile = grid.getTile(coord);
+		if (oldTile == null) {
+			grid.putTile(tile, coord);
+			System.out.printf("Player %s put tile into %s.\n", currentPlayer,
+					coord);
+		} else {
+			for (SidePosition pos : SidePosition.values()) {
+				Side oldSide = oldTile.getSide(pos);
+				PlayerColor newFollower = tile.getSide(pos).getFollower();
+				oldSide.setFollower(newFollower);
+			}
+		}
 	}
 
 	private void sendToServer(String msg) {
 		try {
 			out.writeObject(msg);
+			out.flush();
 		} catch (IOException ioe) {
 			System.out.println("Lost connection with server.");
 			reconnectOrDie();
@@ -289,7 +303,8 @@ public class CarcassonneClient {
 			out = new ObjectOutputStream(socket.getOutputStream());
 			in = new ObjectInputStream(socket.getInputStream());
 
-			sendToServer(String.format("riconnetti: %s, %s", color, matchName));
+			sendToServer(String.format("riconnetti: %s, %s", clientColor,
+					matchName));
 			return true;
 		} catch (IOException e) {
 			return false;
