@@ -6,31 +6,21 @@ import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
-import java.awt.Font;
 import javax.swing.BoxLayout;
 import java.awt.Dimension;
 import java.awt.Color;
-import java.awt.GridLayout;
 
-import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import java.awt.FlowLayout;
 
-import javax.swing.JFrame;
 import javax.swing.JTextField;
-import javax.swing.JRadioButton;
 import javax.swing.JComboBox;
-import java.awt.Component;
-import javax.swing.Box;
-import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.MatteBorder;
-import java.awt.CardLayout;
 
 public class GamePanel extends JPanel {
 
+	private static final long serialVersionUID = 4955959778710528121L;
+	
 	private JPanel tilesArea;
 	private PlayerPanel[] playerPanels;
 	private JPanel players;

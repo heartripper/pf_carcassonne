@@ -2,14 +2,12 @@ package it.polimi.dei.provafinale.carcassonne.view.game;
 
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 
-import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 
 public class PlayerPanel extends JPanel {

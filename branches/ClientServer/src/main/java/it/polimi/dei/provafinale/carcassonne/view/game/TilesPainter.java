@@ -6,11 +6,7 @@ import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.TileGrid;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 
 public class TilesPainter extends JLabel {
@@ -18,49 +14,28 @@ public class TilesPainter extends JLabel {
 	private static final long serialVersionUID = -2603074766780325918L;
 
 	private TileGrid grid;
-
 	private final int TILE_DIM = 125;
-
 	private int currOffsetX;
 	private int currOffsetY;
-
-	private String pathPlaceHolder = "src/main/resources/placeholder.png";
-	private Image placeHolder;
-
-	private String pathCard = "src/main/resources/card.png";
-	private Image cardImg;
+	
+	private TilePainter tilePainter = TilePainter.getInstance();
 
 	public TilesPainter(TileGrid grid) {
 		this.grid = grid;
-		//TODO: improve this
-
-		try {
-			placeHolder = ImageIO.read(new File(pathPlaceHolder));
-			cardImg = ImageIO.read(new File(pathCard));
-		} catch (IOException e) {
-			System.out.println("Error reading cards.");
-		}
 	}
 
 	public void updateRepresentation(){
 		int[] bounds = grid.getBounds();
 		int vertTile = 3 + bounds[2] - bounds[0];
 		int horTile = 3 + bounds[1] - bounds[3];
-		
 		currOffsetX = 1 + ( - bounds[3]);
 		currOffsetY = 1 + ( - bounds[0]);
-		
 		setDimension(horTile * TILE_DIM, vertTile * TILE_DIM);
 	}
 	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		paintTile(g);
-	}
-	
-	public void paintTile(Graphics g){
-		System.out.println("Paint!");
 		int[] bounds = grid.getBounds();
 
 		for (int j = bounds[0] - 1; j <= bounds[2] + 1; j++) {
@@ -70,7 +45,7 @@ public class TilesPainter extends JLabel {
 				if (tile != null) {
 					printCard(g, tile);
 				} else if(grid.hasNeighborForCoord(c)){
-							printPlaceHolder(g, i, j);
+					printPlaceHolder(g, i, j);
 				}
 			}
 		}
@@ -80,13 +55,13 @@ public class TilesPainter extends JLabel {
 		Coord coord = tile.getCoordinates();
 		int x = (currOffsetX + coord.getX()) * TILE_DIM;
 		int y = (currOffsetY + coord.getY()) * TILE_DIM;
-		g.drawImage(cardImg, x, y, TILE_DIM, TILE_DIM, null);
+		tilePainter.paintTile(tile.toString(), g, x, y);
 	}
 
 	private void printPlaceHolder(Graphics g, int i, int j) {
 		int x = (currOffsetX + i) * TILE_DIM;
 		int y = (currOffsetY + j) * TILE_DIM;
-		g.drawImage(placeHolder, x, y, TILE_DIM, TILE_DIM, null);
+		tilePainter.paintPlaceHolder(g, x, y);
 	}
 
 	public void setDimension(int x, int y) {
