@@ -1,10 +1,14 @@
 package it.polimi.dei.provafinale.carcassonne.model.gamelogic.player;
 
+import java.awt.Color;
+
 public enum PlayerColor {
 
-	R("Rosso"), B("Blu"), V("Verde"), G("Giallo"), N("Nero");
+	R("Rosso", Color.RED), B("Blu", Color.BLUE), V("Verde", Color.GREEN), G(
+			"Giallo", Color.YELLOW), N("Nero", Color.BLACK);
 
 	private String fullName;
+	private Color color;
 
 	/**
 	 * Give the color corresponding to the id of a player.
@@ -42,8 +46,9 @@ public enum PlayerColor {
 	 * @param fullName
 	 *            - the full name of a color.
 	 */
-	PlayerColor(String fullName) {
+	PlayerColor(String fullName, Color color) {
 		this.fullName = fullName;
+		this.color = color;
 	}
 
 	/**
@@ -55,4 +60,12 @@ public enum PlayerColor {
 		return fullName;
 	}
 
+	/**
+	 * Gives the Color corresponding to the player.
+	 * 
+	 * @return the color corresponding to this player.
+	 * */
+	public Color getColor() {
+		return color;
+	}
 }
