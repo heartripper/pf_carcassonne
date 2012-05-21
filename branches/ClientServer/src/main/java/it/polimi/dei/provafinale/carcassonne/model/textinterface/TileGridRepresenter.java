@@ -118,11 +118,11 @@ public class TileGridRepresenter {
 		String linkSW = (tile.sideLinked(SidePosition.S, SidePosition.W) ? "\\"
 				: " ");
 		String[] representation = { "+#############+",
-				String.format("#    %s    #", north),
-				String.format("#    %s %s %s    #", linkNW, linkNS, linkNE),
-				String.format("#%s %s %s#", west, linkEW, east),
-				String.format("#    %s %s %s    #", linkSW, linkNS, linkES),
-				String.format("#    %s    #", south), "+#############+" };
+				String.format("#     %s     #", north),
+				String.format("#   %s  %s  %s   #", linkNW, linkNS, linkNE),
+				String.format("#%s   %s   %s#", west, linkEW, east),
+				String.format("#   %s  %s  %s   #", linkSW, linkNS, linkES),
+				String.format("#     %s     #", south), "+#############+" };
 		return representation;
 	}
 }
