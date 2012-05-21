@@ -1,6 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne;
 
-import it.polimi.dei.provafinale.carcassonne.model.client.CarcassonneClient;
+import it.polimi.dei.provafinale.carcassonne.controller.client.CarcassonneClient;
 
 public class MainClient {
 	public static void main(String[] args) {
