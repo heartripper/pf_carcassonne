@@ -1,11 +1,11 @@
 package it.polimi.dei.provafinale.carcassonne.model.client;
 
-import it.polimi.dei.provafinale.carcassonne.model.Coord;
-import it.polimi.dei.provafinale.carcassonne.model.card.Card;
-import it.polimi.dei.provafinale.carcassonne.model.card.Side;
-import it.polimi.dei.provafinale.carcassonne.model.card.SidePosition;
-import it.polimi.dei.provafinale.carcassonne.model.card.TileGrid;
-import it.polimi.dei.provafinale.carcassonne.model.player.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Side;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.SidePosition;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.TileGrid;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.model.textinterface.TileGridRepresenter;
 
 import java.io.BufferedReader;
@@ -51,7 +51,7 @@ public class CarcassonneClient {
 			out = new ObjectOutputStream(socket.getOutputStream());
 			in = new ObjectInputStream(socket.getInputStream());
 
-			sendToServer("connetti");
+			sendToServer("connect");
 
 		} catch (IOException e) {
 			System.out.println("Comunication error.");

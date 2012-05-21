@@ -7,7 +7,7 @@ import java.util.Vector;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.GameInterface;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.Message;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.MessageType;
-import it.polimi.dei.provafinale.carcassonne.model.player.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 
 public class ServerGameInterface implements GameInterface {
 
@@ -51,28 +51,7 @@ public class ServerGameInterface implements GameInterface {
 	public void sendPlayer(PlayerColor color, Message msg)
 			throws PlayersDisconnectedException {
 		PlayerConnection pc = getConnectionByColor(color);
-		String response = msg.toProtocolMessage();
-		
-//		String response = null;
-//		switch (msg.type) {
-//		case NEXT:
-//			response = "next: " + msg.payload;
-//			break;
-//		case ROTATED:
-//			response = "rotated: " + msg.payload;
-//			break;
-//		case PLACE:
-//			response = "update: " + msg.payload;
-//			break;
-//		case INVALID_MOVE:
-//			response = "move not valid";
-//			break;
-//		default:
-//			System.out.println("Error: received a global message.");
-//			System.exit(1);
-//			return;
-//		}
-
+		String response = msg.toProtocolMessage();		
 		sendStringToPlayer(response, pc);
 	}
 
@@ -85,29 +64,6 @@ public class ServerGameInterface implements GameInterface {
 			String response = msg.toProtocolMessage();
 			sendStringToAllPlayer(response);
 		}
-		
-//		switch (msg.type) {
-//		case START:
-//			initPlayers(msg.payload);
-//			return;
-//		case TURN:
-//			response = "turn: " + msg.payload;
-//			break;
-//		case UPDATE:
-//			response = "update: " + msg.payload;
-//			break;
-//		case SCORE:
-//			response = "score: " + msg.payload;
-//			break;
-//		case END:
-//			response = "end: " + msg.payload;
-//			break;
-//		default:
-//			System.out.println("Error: received a non global message.");
-//			return;
-//		}
-		
-
 	}
 
 	// Helper methods

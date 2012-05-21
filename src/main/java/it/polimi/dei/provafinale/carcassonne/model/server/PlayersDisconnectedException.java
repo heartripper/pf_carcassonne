@@ -2,7 +2,7 @@ package it.polimi.dei.provafinale.carcassonne.model.server;
 
 import java.util.ArrayList;
 
-import it.polimi.dei.provafinale.carcassonne.model.player.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 
 public class PlayersDisconnectedException extends Exception {
 	

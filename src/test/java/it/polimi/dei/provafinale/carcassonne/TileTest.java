@@ -2,11 +2,11 @@ package it.polimi.dei.provafinale.carcassonne;
 
 import java.util.ArrayList;
 
-import it.polimi.dei.provafinale.carcassonne.model.card.Card;
-import it.polimi.dei.provafinale.carcassonne.model.card.Side;
-import it.polimi.dei.provafinale.carcassonne.model.card.SidePosition;
-import it.polimi.dei.provafinale.carcassonne.model.entity.EntityType;
-import it.polimi.dei.provafinale.carcassonne.model.player.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Side;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.SidePosition;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.entity.EntityType;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 
 import org.junit.*;
 import static org.junit.Assert.*;

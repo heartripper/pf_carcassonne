@@ -1,11 +1,14 @@
 package it.polimi.dei.provafinale.carcassonne.model.client;
 
-import java.io.IOException;
-
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.Message;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 
 public interface ClientInterface {
-	public void connect() throws IOException;
-	public void sendMessage(Message msg) throws IOException;
-	public Message readMessage() throws IOException;
+	public void connect() throws ConnectionLostException;
+
+	public void sendMessage(Message msg) throws ConnectionLostException;
+
+	public Message readMessage() throws ConnectionLostException;
+	
+	public void reconnect(String matchName, PlayerColor color) throws ConnectionLostException;
 }

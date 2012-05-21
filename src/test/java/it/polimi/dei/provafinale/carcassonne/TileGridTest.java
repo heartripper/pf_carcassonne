@@ -1,8 +1,8 @@
 package it.polimi.dei.provafinale.carcassonne;
 
-import it.polimi.dei.provafinale.carcassonne.model.Coord;
-import it.polimi.dei.provafinale.carcassonne.model.card.Card;
-import it.polimi.dei.provafinale.carcassonne.model.card.TileGrid;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.TileGrid;
 
 import org.junit.*;
 import static org.junit.Assert.*;

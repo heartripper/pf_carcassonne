@@ -1,7 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.model.server;
 
 import it.polimi.dei.provafinale.carcassonne.model.MatchHandler;
-import it.polimi.dei.provafinale.carcassonne.model.player.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -50,9 +50,9 @@ public class CarcassonneServer {
 
 				String request[] = ((String) input.readObject()).split(":");
 
-				if (request[0].equals("connetti")) {
+				if (request[0].equals("connect")) {
 					connectPlayer(pc);
-				} else if (request[0].equals("riconnetti")) {
+				} else if (request[0].equals("reconnect")) {
 					reconnectPlayer(pc, request[1]);
 				}
 
