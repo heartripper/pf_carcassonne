@@ -9,6 +9,8 @@ import javax.swing.JScrollPane;
 
 public class TilesPanel extends JScrollPane{
 	
+	private static final long serialVersionUID = -2364217759081024054L;
+	
 	private TilesPainter tilesPainter;
 	
 	public TilesPanel(TileGrid grid){
@@ -25,5 +27,4 @@ public class TilesPanel extends JScrollPane{
 	public void updateRepresentation(){
 		tilesPainter.updateRepresentation();
 	}
-
 }
