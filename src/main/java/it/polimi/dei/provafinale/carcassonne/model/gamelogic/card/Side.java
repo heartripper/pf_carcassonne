@@ -105,24 +105,11 @@ public class Side {
 	 */
 	@Override
 	public String toString() {
-		String base;
-		if (entity == null)
-			base = type.getRepresentation();
+		String rep = (type == EntityType.N ? " " : type.toString());
+		if(follower == null)
+			return String.format(" %s ", rep);
 		else
-			base = entity.toString();
-		
-		if (follower != null)
-			base += (":" + follower.toString());
-		// TODO?: make function pad
-		int spaceToFill = 5 - base.length();
-		while (spaceToFill > 0) {
-			if (spaceToFill % 2 == 0)
-				base = base + " ";
-			else
-				base = " " + base;
-			spaceToFill--;
-		}
-		return base;
+			return String.format("%s:%s", rep, follower.toString());
 	}
 
 }
