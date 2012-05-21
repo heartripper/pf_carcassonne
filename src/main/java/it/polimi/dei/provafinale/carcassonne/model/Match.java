@@ -80,10 +80,10 @@ public class Match {
 	 *         with the position).
 	 * */
 	public boolean putTile(Card tile, Coord coord) {
-		boolean added = grid.putTile(tile, coord);
-		if (!added)
+		if(!grid.isTileCompatible(tile, coord))
 			return false;
 
+		grid.putTile(tile, coord);
 		updateEntities(tile);
 		return true;
 	}

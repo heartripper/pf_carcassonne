@@ -27,21 +27,16 @@ public class TileGridRepresenter {
 				Card currentTile = grid.getTile(currentCoord);
 				String[] rep = null;
 
+				//Find out current representation
 				if (currentTile != null) {
 					rep = getTileArrayRepresentation(currentTile);
-				} else {
-					for (SidePosition position : SidePosition.values()) {
-						Coord neighborCoord = currentCoord.add(SidePosition
-								.getOffsetForPosition(position));
-						if (grid.getTile(neighborCoord) != null) {
-							rep = getPlaceHolder(currentCoord);
-							break;
-						}
-					}
-				}
-				if (rep == null) {
+				} else if(grid.hasNeighborForCoord(currentCoord)){
+					rep = getPlaceHolder(currentCoord);
+				}else{
 					rep = getWhiteSpace();
 				}
+				
+				//Copy tile representation into line representation
 				for (int k = 0; k < lines.length; k++) {
 					lines[k] += rep[k];
 				}

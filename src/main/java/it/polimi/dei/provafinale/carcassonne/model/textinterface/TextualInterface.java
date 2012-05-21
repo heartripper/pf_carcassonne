@@ -57,10 +57,10 @@ public class TextualInterface implements GameInterface {
 				String line = in.readLine();
 				MessageType type;
 				String payload;
-				if (line.equals("ruota")) {
+				if (line.equals("rotate")) {
 					type = MessageType.ROTATE;
 					payload = null;
-				} else if (line.equals("passo")) {
+				} else if (line.equals("pass")) {
 					type = MessageType.PASS;
 					payload = null;
 				} else if (line.matches("[-]??[0-9]+,[-]??[0-9]+")) {
@@ -70,14 +70,14 @@ public class TextualInterface implements GameInterface {
 					type = MessageType.FOLLOWER;
 					payload = line;
 				} else {
-					out.println("Command not understood.");
+					out.println("Command not understood.\n");
 					continue;
 				}
 
 				// Return response
 				return new Message(type, payload);
 			} catch (IOException e) {
-				out.println("Error reading input.");
+				out.println("Error reading input.\n");
 			}
 		}
 	}
@@ -122,7 +122,6 @@ public class TextualInterface implements GameInterface {
 			return;
 
 		case UPDATE:
-			System.out.println(msg.type + " " + msg.payload);
 			manageTileUpdate(msg.payload);
 			return;
 
@@ -138,7 +137,7 @@ public class TextualInterface implements GameInterface {
 
 	// Helpers
 	private String manageCardPlacing(String payload) {
-		return "Tile added to game.";
+		return "Tile added to game.\n";
 	}
 
 	private String manageTileRotation(PlayerColor color, Message msg) {
@@ -151,7 +150,7 @@ public class TextualInterface implements GameInterface {
 		Card tile = new Card(payload);
 		tileAdded = false;
 		String tileRep = gridRepresenter.getTileRepresentation(tile);
-		return String.format("Your card:\n%s", tileRep);
+		return String.format("Your card:\n%s\n", tileRep);
 	}
 
 	private void manageTileUpdate(String msg) {
