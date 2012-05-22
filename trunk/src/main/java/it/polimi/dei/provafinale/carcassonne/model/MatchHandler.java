@@ -149,12 +149,12 @@ public class MatchHandler implements Runnable {
 
 	private String getScoreMsg() {
 		int[] scores = match.getScores();
-		String payload = "";
+		StringBuilder payload = new StringBuilder();
 		for (int i = 0; i < scores.length; i++) {
 			PlayerColor color = PlayerColor.valueOf(i);
-			payload += String.format("%s=%s, ", color, scores[i]);
+			payload.append(String.format("%s=%s, ", color, scores[i]));
 		}
-		return payload.trim();
+		return payload.toString().trim();
 	}
 
 	// helpers to send messages.

@@ -17,11 +17,14 @@ public class TileGridRepresenter {
 	 * Return the string representation of TileGrid.
 	 */
 	public String getRepresentation() {
-		String gridOutput = "";
+		StringBuilder gridOutput = new StringBuilder();
 		int[] bounds = grid.getBounds();
 
 		for (int j = bounds[2] + 1; j >= bounds[0] - 1; j--) {
-			String[] lines = { "", "", "", "", "", "", "" };
+			StringBuilder[] lines = new StringBuilder[7];
+			for (int i = 0;  i <lines.length; i++){
+				lines[i] = new StringBuilder("");
+			}
 			for (int i = bounds[3] - 1; i <= bounds[1] + 1; i++) {
 				Coord currentCoord = new Coord(i, j);
 				Card currentTile = grid.getTile(currentCoord);
@@ -38,14 +41,14 @@ public class TileGridRepresenter {
 				
 				//Copy tile representation into line representation
 				for (int k = 0; k < lines.length; k++) {
-					lines[k] += rep[k];
+					lines[k].append(rep[k]);
 				}
 			}
-			for (String s : lines) {
-				gridOutput += (s + "\n");
+			for (StringBuilder s : lines) {
+				gridOutput.append(s.toString() + "\n");
 			}
 		}
-		return gridOutput;
+		return gridOutput.toString();
 	}
 
 	/**

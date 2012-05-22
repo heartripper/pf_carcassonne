@@ -2,7 +2,7 @@ package it.polimi.dei.provafinale.carcassonne.model.gamelogic.player;
 
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 
-public class Player implements Comparable<Player> {
+public class Player {
 
 	private static int count = 0;
 	private PlayerColor color;
@@ -94,13 +94,6 @@ public class Player implements Comparable<Player> {
 	 */
 	public String getStatus() {
 		return String.format("%s: %s , %s", color.getFullName(), score, followers);
-	}
-
-	/**
-	 * Compare the scores of two players.
-	 */
-	public int compareTo(Player otherPlayer) {
-		return (otherPlayer.score - score);
 	}
 
 	/**

@@ -84,19 +84,4 @@ public class PlayerCircularArray {
 		return scores;
 	}
 
-	/**
-	 * Return the string representation of Player.
-	 */
-	@Override
-	public String toString() {
-		String rep = "";
-		for (int i = 0; i < size; i++) {
-			Player p = players[i];
-			rep += p.getStatus();
-			if (i != size - 1) {
-				rep += " | ";
-			}
-		}
-		return rep;
-	}
 }

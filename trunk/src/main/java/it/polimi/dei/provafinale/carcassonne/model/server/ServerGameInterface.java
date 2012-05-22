@@ -176,7 +176,7 @@ public class ServerGameInterface implements GameInterface {
 			PlayerConnection pc) {
 		int connectionIndex = PlayerColor.indexOf(color);
 		playerConnections.set(connectionIndex, pc);
-		notify();
+		notifyAll();
 	}
 
 	/***
