@@ -2,12 +2,14 @@ package it.polimi.dei.provafinale.carcassonne.model;
 
 import java.util.ArrayList;
 
-import it.polimi.dei.provafinale.carcassonne.model.card.Card;
-import it.polimi.dei.provafinale.carcassonne.model.card.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.GameInterface;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.Message;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.MessageType;
-import it.polimi.dei.provafinale.carcassonne.model.player.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Match;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.SidePosition;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.model.server.PlayersDisconnectedException;
 
 public class MatchHandler implements Runnable {
@@ -52,7 +54,7 @@ public class MatchHandler implements Runnable {
 					break;
 
 				Message resp;
-				if (req.type == MessageType.ROTATION && !currentTileAdded) {
+				if (req.type == MessageType.ROTATE && !currentTileAdded) {
 					resp = handleTileRotation();
 				} else if (req.type == MessageType.PLACE && !currentTileAdded) {
 					resp = handleTilePlacing(req.payload);
@@ -80,7 +82,7 @@ public class MatchHandler implements Runnable {
 	private Message handleTileRotation() {
 		currentTile.rotate();
 		String payload = currentTile.toString();
-		return new Message(MessageType.ROTATION, payload);
+		return new Message(MessageType.ROTATED, payload);
 	}
 
 	private Message handleTilePlacing(String payload) {

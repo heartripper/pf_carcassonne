@@ -1,9 +1,9 @@
 package it.polimi.dei.provafinale.carcassonne.model.textinterface;
 
-import it.polimi.dei.provafinale.carcassonne.model.Coord;
-import it.polimi.dei.provafinale.carcassonne.model.card.Card;
-import it.polimi.dei.provafinale.carcassonne.model.card.SidePosition;
-import it.polimi.dei.provafinale.carcassonne.model.card.TileGrid;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.SidePosition;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.TileGrid;
 
 public class TileGridRepresenter {
 
@@ -20,28 +20,23 @@ public class TileGridRepresenter {
 		String gridOutput = "";
 		int[] bounds = grid.getBounds();
 
-		for (int j = bounds[0] + 1; j >= bounds[2] - 1; j--) {
+		for (int j = bounds[2] + 1; j >= bounds[0] - 1; j--) {
 			String[] lines = { "", "", "", "", "", "", "" };
 			for (int i = bounds[3] - 1; i <= bounds[1] + 1; i++) {
 				Coord currentCoord = new Coord(i, j);
 				Card currentTile = grid.getTile(currentCoord);
 				String[] rep = null;
 
+				//Find out current representation
 				if (currentTile != null) {
 					rep = getTileArrayRepresentation(currentTile);
-				} else {
-					for (SidePosition position : SidePosition.values()) {
-						Coord neighborCoord = currentCoord.add(SidePosition
-								.getOffsetForPosition(position));
-						if (grid.getTile(neighborCoord) != null) {
-							rep = getPlaceHolder(currentCoord);
-							break;
-						}
-					}
-				}
-				if (rep == null) {
+				} else if(grid.hasNeighborForCoord(currentCoord)){
+					rep = getPlaceHolder(currentCoord);
+				}else{
 					rep = getWhiteSpace();
 				}
+				
+				//Copy tile representation into line representation
 				for (int k = 0; k < lines.length; k++) {
 					lines[k] += rep[k];
 				}
@@ -123,11 +118,11 @@ public class TileGridRepresenter {
 		String linkSW = (tile.sideLinked(SidePosition.S, SidePosition.W) ? "\\"
 				: " ");
 		String[] representation = { "+#############+",
-				String.format("#    %s    #", north),
-				String.format("#    %s %s %s    #", linkNW, linkNS, linkNE),
-				String.format("#%s %s %s#", west, linkEW, east),
-				String.format("#    %s %s %s    #", linkSW, linkNS, linkES),
-				String.format("#    %s    #", south), "+#############+" };
+				String.format("#     %s     #", north),
+				String.format("#   %s  %s  %s   #", linkNW, linkNS, linkNE),
+				String.format("#%s   %s   %s#", west, linkEW, east),
+				String.format("#   %s  %s  %s   #", linkSW, linkNS, linkES),
+				String.format("#     %s     #", south), "+#############+" };
 		return representation;
 	}
 }
