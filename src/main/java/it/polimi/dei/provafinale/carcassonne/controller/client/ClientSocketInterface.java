@@ -31,7 +31,7 @@ public class ClientSocketInterface implements ClientInterface {
 
 			sendToServer("connect");
 		}catch(IOException ioe){
-			//TODO: we got disconnected from the server.
+			throw new ConnectionLostException();
 		}
 	}
 
