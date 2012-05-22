@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.print.DocFlavor.INPUT_STREAM;
+
 /**
  * Class to represent the tile stack. Contains methods to draw a tile, get the
  * initial tile and verify if there are still tiles to draw.
@@ -21,10 +23,7 @@ public class TileStack {
 	private Card initialTile;
 
 	public TileStack() {
-		if(readTileStack == null)
-			readTileStack = readTiles();
-		tiles = new ArrayList<Card>();
-		tiles.addAll(readTileStack);
+		tiles = readTiles();
 		initialTile = tiles.get(0);
 		tiles.remove(0);
 	}
@@ -75,8 +74,11 @@ public class TileStack {
 	 * Reads tile representation from carcassonne.dat, creates a new Tile for
 	 * each representation and then put the new tile into tile list.
 	 * */
-	private ArrayList<Card> readTiles() {
-		ArrayList<Card> stack = new ArrayList<Card>();
+	private synchronized ArrayList<Card> readTiles() {
+		if(readTileStack != null)
+			return readTileStack;
+		
+		readTileStack = new ArrayList<Card>();
 		try {
 			FileReader fr = new FileReader(new File(FILE_PATH));
 			BufferedReader input = new BufferedReader(fr);
@@ -86,13 +88,14 @@ public class TileStack {
 			while (line != null) {
 				// Card creation
 				Card tile = new Card(line);
-				stack.add(tile);
+				readTileStack.add(tile);
 				line = input.readLine(); // Go on to next line
 			}
+			input.close();
 		} catch (IOException e) {
 			// TODO: throw exception
 			System.out.println("Error opening tile file.");
 		}
-		return stack;
+		return readTileStack;
 	}
 }

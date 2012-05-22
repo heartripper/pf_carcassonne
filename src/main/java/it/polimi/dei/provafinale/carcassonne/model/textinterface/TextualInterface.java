@@ -39,7 +39,11 @@ public class TextualInterface implements GameInterface {
 		while (true) {
 			out.println("Please insert a number between 2 and 5:");
 			try {
-				num = Integer.parseInt(in.readLine());
+				String line = in.readLine();
+				if (line == null) {
+					continue;
+				}
+				num = Integer.parseInt(line);
 				if (num >= 2 && num <= 5) {
 					return num;
 				}
@@ -55,6 +59,9 @@ public class TextualInterface implements GameInterface {
 			try {
 				out.printf("(%s) Please insert command:\n", player);
 				String line = in.readLine();
+				if (line == null) {
+					continue;
+				}
 				MessageType type;
 				String payload;
 				if (line.equals("rotate")) {
