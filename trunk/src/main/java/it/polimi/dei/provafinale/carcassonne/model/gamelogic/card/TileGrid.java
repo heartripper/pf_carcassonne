@@ -28,8 +28,9 @@ public class TileGrid {
 	public boolean hasNeighborForCoord(Coord coord) {
 		for (SidePosition pos : SidePosition.values()) {
 			Coord offset = SidePosition.getOffsetForPosition(pos);
-			if (grid.containsKey(coord.add(offset)))
+			if (grid.containsKey(coord.add(offset))) {
 				return true;
+			}
 		}
 		return false;
 	}
@@ -46,18 +47,18 @@ public class TileGrid {
 	 */
 	public boolean isTileCompatible(Card tile, Coord coord) {
 		// If the cell is already in use we can't put a tile there
-		if (grid.get(coord) != null)
+		if (grid.get(coord) != null) {
 			return false;
-
+		}
 		// The first tile that goes into (0,0) is the initial tile and is
 		// compatible by default.
-		if (coord.getX() == 0 && coord.getY() == 0)
+		if (coord.getX() == 0 && coord.getY() == 0) {
 			return true;
-
+		}
 		// Check that we have at least one neighbor
-		if (!hasNeighborForCoord(coord))
+		if (!hasNeighborForCoord(coord)) {
 			return false;
-
+		}
 		// Check that all sides matches
 		for (SidePosition position : SidePosition.values()) {
 			Coord offset = SidePosition.getOffsetForPosition(position);
@@ -66,8 +67,9 @@ public class TileGrid {
 				Side currentSide = tile.getSide(position);
 				SidePosition oppositePosition = position.getOpposite();
 				Side oppositeSide = neighborTile.getSide(oppositePosition);
-				if (currentSide.getType() != oppositeSide.getType())
+				if (currentSide.getType() != oppositeSide.getType()) {
 					return false;
+				}
 			}
 		}
 
@@ -141,8 +143,9 @@ public class TileGrid {
 	 * */
 	public Card getTileNeighbor(Card card, SidePosition position) {
 		Coord coord = card.getCoordinates();
-		if (coord == null)
+		if (coord == null){
 			return null;
+		}
 		Coord offset = SidePosition.getOffsetForPosition(position);
 		return grid.get(coord.add(offset));
 	}

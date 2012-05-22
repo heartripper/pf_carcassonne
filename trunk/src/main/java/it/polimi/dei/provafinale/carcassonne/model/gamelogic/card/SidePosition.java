@@ -54,10 +54,11 @@ public enum SidePosition {
 	 */
 	public static SidePosition valueOf(int index) {
 		SidePosition[] positions = SidePosition.values();
-		if (index >= 0 && index < positions.length)
+		if (index >= 0 && index < positions.length) {
 			return positions[index];
-		else
+		} else {
 			return null;
+		}
 	}
 
 	/**

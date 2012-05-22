@@ -63,20 +63,22 @@ public class Side {
 	public Card getOwnerCard() {
 		return ownerCard;
 	}
-	
+
 	/**
 	 * Give the side opposite to the current one.
 	 * 
 	 * @return a Side.
 	 */
 	public Side getOppositeSide() {
-		if (ownerCard == null)
+		if (ownerCard == null) {
 			return null;
+		}
 		SidePosition position = ownerCard.getSidePosition(this);
 		SidePosition oppositePosition = position.getOpposite();
 		Card oppositeCard = ownerCard.getNeighbor(position);
-		if (oppositeCard == null)
+		if (oppositeCard == null) {
 			return null;
+		}
 		return oppositeCard.getSide(oppositePosition);
 	}
 
@@ -106,10 +108,11 @@ public class Side {
 	@Override
 	public String toString() {
 		String rep = (type == EntityType.N ? " " : type.toString());
-		if(follower == null)
+		if (follower == null) {
 			return String.format(" %s ", rep);
-		else
+		} else {
 			return String.format("%s:%s", rep, follower.toString());
+		}
 	}
 
 }

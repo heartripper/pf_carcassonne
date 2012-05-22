@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-import javax.print.DocFlavor.INPUT_STREAM;
-
 /**
  * Class to represent the tile stack. Contains methods to draw a tile, get the
  * initial tile and verify if there are still tiles to draw.
@@ -75,9 +73,9 @@ public class TileStack {
 	 * each representation and then put the new tile into tile list.
 	 * */
 	private synchronized ArrayList<Card> readTiles() {
-		if(readTileStack != null)
+		if(readTileStack != null){
 			return readTileStack;
-		
+		}
 		readTileStack = new ArrayList<Card>();
 		try {
 			FileReader fr = new FileReader(new File(FILE_PATH));

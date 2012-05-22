@@ -14,10 +14,10 @@ import java.util.Map;
  * 0, East = 1, South = 2, <west = 3.
  * */
 public class Card {
-	//Reference to container grid
+	// Reference to container grid
 	private TileGrid grid;
 	private Coord cardCoord;
-	
+
 	private Map<SidePosition, Side> sides;
 	private boolean[][] links;
 
@@ -31,7 +31,7 @@ public class Card {
 	public Card(String rep) {
 		sides = new HashMap<SidePosition, Side>();
 		links = new boolean[4][4];
-		
+
 		String[] descriptors = rep.split(" ");
 		for (String desc : descriptors) {
 			String split[] = desc.split("=");
@@ -59,14 +59,15 @@ public class Card {
 		EntityType type = EntityType.valueOf(sideType);
 		Side side = new Side(this, type);
 		sides.put(position, side);
-		if(follower != null)
+		if (follower != null) {
 			side.setFollower(follower);
+		}
 	}
 
 	private void setLink(String name, String value) {
-		if (Integer.parseInt(value) == 0)
+		if (Integer.parseInt(value) == 0) {
 			return;
-
+		}
 		String start = String.valueOf(name.charAt(0));
 		String end = String.valueOf(name.charAt(1));
 
@@ -111,10 +112,11 @@ public class Card {
 	 * @return the SidePosition of the given Side of the card.
 	 */
 	public SidePosition getSidePosition(Side side) {
-		for (SidePosition position : sides.keySet())
+		for (SidePosition position : sides.keySet()) {
 			if (sides.get(position) == side) {
 				return position;
 			}
+		}
 		return null;
 	}
 
@@ -128,7 +130,7 @@ public class Card {
 		Side side = getSide(position);
 		side.setFollower(color);
 	}
-	
+
 	/**
 	 * Gives this card's coordinates.
 	 * 
@@ -147,16 +149,16 @@ public class Card {
 	 */
 	public Card getNeighbor(SidePosition position) {
 		Coord offset;
-		if (grid == null || cardCoord == null)
+		if (grid == null || cardCoord == null) {
 			return null;
-
+		}
 		offset = SidePosition.getOffsetForPosition(position);
 
 		Coord neighborCoord = cardCoord.add(offset);
 		return grid.getTile(neighborCoord);
 	}
 
-	//TODO: Remove this.
+	// TODO: Remove this.
 	/**
 	 * Give a list of the sides of a card that are available to accept coins.
 	 * 
@@ -167,8 +169,9 @@ public class Card {
 		ArrayList<SidePosition> sides = new ArrayList<SidePosition>();
 		for (SidePosition position : SidePosition.values()) {
 			Entity entity = getSide(position).getEntity();
-			if (entity != null && entity.acceptFollowers())
+			if (entity != null && entity.acceptFollowers()) {
 				sides.add(position);
+			}
 		}
 		return sides;
 	}
@@ -270,21 +273,22 @@ public class Card {
 		String linkEO = (links[1][3] ? "1" : "0");
 		String linkSO = (links[2][3] ? "1" : "0");
 
-		representation += String.format(linkFormat, linkNS, linkNE,
-				linkNO, linkEO, linkES, linkSO);
-		
+		representation += String.format(linkFormat, linkNS, linkNE, linkNO,
+				linkEO, linkES, linkSO);
+
 		return representation;
 	}
-	
+
 	private String getSideRep(SidePosition pos) {
 		return getSide(pos).getType().toString();
 	}
 
 	private String getFollowerRep(SidePosition pos) {
 		PlayerColor col = getSide(pos).getFollower();
-		if (col == null)
+		if (col == null) {
 			return "";
-		else
+		} else {
 			return "-" + col.toString();
+		}
 	}
 }
