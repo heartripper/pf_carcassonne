@@ -60,13 +60,11 @@ public class TileGridRepresenter {
 	 * */
 	public String getTileRepresentation(Card tile) {
 		String[] arrayRep = getTileArrayRepresentation(tile);
-		String representation = "";
+		StringBuilder representation = new StringBuilder();
 		for (int i = 0; i < arrayRep.length; i++) {
-			representation += arrayRep[i];
-			if (i != arrayRep.length - 1)
-				representation += "\n";
+			representation.append(arrayRep[i] + "\n");
 		}
-		return representation;
+		return representation.toString();
 	}
 
 	/**
