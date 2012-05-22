@@ -11,7 +11,7 @@ public class TilesPanel extends JScrollPane{
 	
 	private static final long serialVersionUID = -2364217759081024054L;
 	
-	private TilesPainter tilesPainter;
+	private TileGridPainter tilesPainter;
 	
 	public TilesPanel(TileGrid grid){
 		super();
@@ -20,7 +20,7 @@ public class TilesPanel extends JScrollPane{
 		panel.setLayout(new BorderLayout());
 		setViewportView(panel);
 		
-		tilesPainter = new TilesPainter(grid);
+		tilesPainter = new TileGridPainter(grid);
 		panel.add(tilesPainter, BorderLayout.CENTER);
 	}
 	
