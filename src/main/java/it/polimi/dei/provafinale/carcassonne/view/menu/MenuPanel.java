@@ -1,13 +1,12 @@
 package it.polimi.dei.provafinale.carcassonne.view.menu;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class MenuPanel extends JPanel {
 
@@ -16,15 +15,20 @@ public class MenuPanel extends JPanel {
 	public static final String INTERNETGAMEPANEL = "internetgamepanel";
 	public static final String LOCALGAMEPANEL = "localgamepanel";
 	public static final String HOMEPANEL = "homepanel";
-
+	
 	private CardLayout menuLayout;
 	private JPanel menuContainer;
 	
 	public MenuPanel() {
 		
 		String path = "src/main/resources/background.png";
-		Image background = Toolkit.getDefaultToolkit().createImage(path);
+		BufferedImage background = null;
 		
+		try{
+		background = ImageIO.read(new File(path));
+		}catch(IOException e){
+			System.out.println("Error reading images.");
+		}
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel bannerPanel = new BannerPanel();
@@ -45,5 +49,4 @@ public class MenuPanel extends JPanel {
 	public void changeMenuPanel(String destination){
 		menuLayout.show(menuContainer, destination);
 	}
-
 }
