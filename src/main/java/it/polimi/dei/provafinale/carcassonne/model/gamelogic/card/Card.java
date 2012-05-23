@@ -1,14 +1,13 @@
 package it.polimi.dei.provafinale.carcassonne.model.gamelogic.card;
 
+import it.polimi.dei.provafinale.carcassonne.Constants;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.entity.Entity;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.entity.EntityType;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Class representing cards. Sides are represented using the convention North =
@@ -19,8 +18,11 @@ public class Card {
 	private TileGrid grid;
 	private Coord cardCoord;
 
-	private Map<SidePosition, Side> sides;
-	private boolean[][] links;
+	private Side[] sides;
+	private List<SideConnection> connections;
+
+	private final SidePosition[] representationOrder = { SidePosition.N,
+			SidePosition.S, SidePosition.W, SidePosition.E };
 
 	/**
 	 * Constructor: create a new Card entity.
@@ -30,8 +32,8 @@ public class Card {
 	 *            specification
 	 */
 	public Card(String rep) {
-		sides = new HashMap<SidePosition, Side>();
-		links = new boolean[4][4];
+		sides = new Side[Constants.SIDES_NUMBER];
+		connections = new ArrayList<SideConnection>();
 
 		String[] descriptors = rep.split(" ");
 		for (String desc : descriptors) {
@@ -40,13 +42,13 @@ public class Card {
 			if (name.length() == 1) {
 				setSide(name, value);
 			} else {
-				setLink(name, value);
+				setConnection(name, value);
 			}
 		}
 	}
 
 	private void setSide(String name, String value) {
-		SidePosition position = SidePosition.valueOf(name);
+		int posIndex = SidePosition.valueOf(name).getIndex();
 		String sideType = null;
 		PlayerColor follower = null;
 		if (value.indexOf("-") == -1) {
@@ -59,26 +61,22 @@ public class Card {
 
 		EntityType type = EntityType.valueOf(sideType);
 		Side side = new Side(this, type);
-		sides.put(position, side);
+		sides[posIndex] = side;
 		if (follower != null) {
 			side.setFollower(follower);
 		}
 	}
 
-	private void setLink(String name, String value) {
+	private void setConnection(String name, String value) {
 		if (Integer.parseInt(value) == 0) {
 			return;
 		}
 		String start = String.valueOf(name.charAt(0));
 		String end = String.valueOf(name.charAt(1));
 
-		SidePosition startPos = SidePosition.valueOf(start);
-		SidePosition endPos = SidePosition.valueOf(end);
-
-		int s = startPos.getIndex();
-		int e = endPos.getIndex();
-
-		links[s][e] = links[e][s] = true;
+		Side side1 = getSide(SidePosition.valueOf(start));
+		Side side2 = getSide(SidePosition.valueOf(end));
+		connections.add(new SideConnection(side1, side2));
 	}
 
 	/**
@@ -101,8 +99,8 @@ public class Card {
 	 *            - a SidePosition of a card.
 	 * @return a Side of the card.
 	 */
-	public Side getSide(SidePosition side) {
-		return sides.get(side);
+	public Side getSide(SidePosition position) {
+		return sides[position.getIndex()];
 	}
 
 	/**
@@ -113,8 +111,8 @@ public class Card {
 	 * @return the SidePosition of the given Side of the card.
 	 */
 	public SidePosition getSidePosition(Side side) {
-		for (SidePosition position : sides.keySet()) {
-			if (sides.get(position) == side) {
+		for (SidePosition position : SidePosition.values()) {
+			if (sides[position.getIndex()] == side) {
 				return position;
 			}
 		}
@@ -185,15 +183,17 @@ public class Card {
 	 *            - a Side.
 	 * @return an ArrayList of Side linked to a given one in the card.
 	 */
-	public List<Side> sidesLinkedTo(Side side) {
-		ArrayList<Side> positions = new ArrayList<Side>();
-		SidePosition startPos = getSidePosition(side);
-		for (SidePosition endPos : SidePosition.values()) {
-			if (startPos != endPos && sideLinked(startPos, endPos)) {
-				positions.add(getSide(endPos));
+	public List<Side> sidesLinkedTo(Side side1) {
+		List<Side> sides = new ArrayList<Side>();
+		for(Side side2 : this.sides){
+			if(side1 != side2){
+				SideConnection connection = new SideConnection(side1, side2);
+				if(connections.contains(connection)){
+					sides.add(side2);
+				}
 			}
 		}
-		return positions;
+		return sides;
 	}
 
 	/**
@@ -206,40 +206,27 @@ public class Card {
 	 * @return true if there is an entity that links side1 and side2 of the
 	 *         card, false instead.
 	 */
-	public boolean sideLinked(SidePosition side1, SidePosition side2) {
-		int index1 = side1.getIndex();
-		int index2 = side2.getIndex();
-		return links[index1][index2];
+	public boolean sideLinked(SidePosition start, SidePosition end) {
+		Side side1 = getSide(start);
+		Side side2 = getSide(end);
+		return connections.contains(new SideConnection(side1, side2));
 	}
 
 	/**
 	 * Rotate the card of 90ï¿½ clock wise.
 	 */
 	public void rotate() {
+		// If tile has already been placed, it can't be rotated
 		if (cardCoord != null) {
 			return;
 		}
-		Side tmp1 = sides.get(SidePosition.W), tmp2;
-		for (int i = 0; i < 4; i++) {
-			SidePosition currentPos = SidePosition.valueOf(i);
-			tmp2 = sides.get(currentPos);
-			sides.remove(currentPos);
-			sides.put(currentPos, tmp1);
-			tmp1 = tmp2;
+
+		int i = sides.length - 1;
+		Side backup = sides[i];
+		for (; i > 0; i--) {
+			sides[i] = sides[i - 1];
 		}
-		boolean[] tmp3 = links[3], tmp4;
-		boolean tmp5, tmp6;
-		for (int i = 0; i < 4; i++) {
-			tmp4 = links[i];
-			links[i] = tmp3;
-			tmp3 = tmp4;
-			tmp5 = links[i][3];
-			for (int j = 0; j < 4; j++) {
-				tmp6 = links[i][j];
-				links[i][j] = tmp5;
-				tmp5 = tmp6;
-			}
-		}
+		sides[0] = backup;
 	}
 
 	/**
@@ -250,46 +237,38 @@ public class Card {
 	 * */
 	@Override
 	public String toString() {
-		String representation = "";
-		String sideFormat = "N=%s%s S=%s%s W=%s%s E=%s%s ";
+		StringBuilder representation = new StringBuilder();
+		// Sides representation
+		for (SidePosition pos : representationOrder) {
+			String rep = String.format("%s=%s ", pos, getSideRep(pos));
+			representation.append(rep);
+		}
+		// Connections representation
+		for (SidePosition pos1 : representationOrder) {
+			for (SidePosition pos2 : representationOrder) {
+				if (pos2.getIndex() <= pos1.getIndex()) {
+					continue;
+				}
+				Side start = getSide(pos1);
+				Side end = getSide(pos2);
+				SideConnection connection = new SideConnection(start, end);
+				boolean connected = connections.contains(connection);
+				int val = (connected ? 1 : 0);
+				String rep = String.format("%s%s=%s ", pos1, pos2, val);
+				representation.append(rep);
+			}
+		}
 
-		String northSide = getSideRep(SidePosition.N);
-		String northPlayer = getFollowerRep(SidePosition.N);
-		String southSide = getSideRep(SidePosition.S);
-		String southPlayer = getFollowerRep(SidePosition.S);
-		String westSide = getSideRep(SidePosition.W);
-		String westPlayer = getFollowerRep(SidePosition.W);
-		String eastSide = getSideRep(SidePosition.E);
-		String eastPlayer = getFollowerRep(SidePosition.E);
-
-		representation += String.format(sideFormat, northSide, northPlayer,
-				southSide, southPlayer, westSide, westPlayer, eastSide,
-				eastPlayer);
-
-		String linkFormat = "NS=%s NE=%s NW=%s WE=%s SE=%s SW=%s";
-		String linkNE = (links[0][1] ? "1" : "0");
-		String linkNS = (links[0][2] ? "1" : "0");
-		String linkNO = (links[0][3] ? "1" : "0");
-		String linkES = (links[1][2] ? "1" : "0");
-		String linkEO = (links[1][3] ? "1" : "0");
-		String linkSO = (links[2][3] ? "1" : "0");
-
-		representation += String.format(linkFormat, linkNS, linkNE, linkNO,
-				linkEO, linkES, linkSO);
-
-		return representation;
+		return representation.toString().trim();
 	}
 
 	private String getSideRep(SidePosition pos) {
-		return getSide(pos).getType().toString();
-	}
-
-	private String getFollowerRep(SidePosition pos) {
-		PlayerColor col = getSide(pos).getFollower();
-		if (col == null) {
-			return "";
-		} else {
-			return "-" + col.toString();
+		String rep = getSide(pos).getType().toString();
+		PlayerColor follower = getSide(pos).getFollower();
+		String col = ( follower == null ? null : follower.toString());
+		if(col != null){
+			rep += ("-" + col);
 		}
+		return rep;
 	}
 }
