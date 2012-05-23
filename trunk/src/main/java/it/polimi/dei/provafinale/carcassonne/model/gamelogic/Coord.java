@@ -51,8 +51,9 @@ public class Coord {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof Coord))
+		if (!(obj instanceof Coord)){
 			return false;
+		}
 		Coord coord = (Coord) obj;
 		return (coord.x == x && coord.y == y);
 	}
