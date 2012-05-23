@@ -23,7 +23,6 @@ public class TextualInterface implements GameInterface {
 
 	private PrintStream out;
 	private BufferedReader in;
-	private boolean tileAdded;
 
 	public TextualInterface(PrintStream out, InputStream in) {
 		this.out = out;
@@ -99,7 +98,7 @@ public class TextualInterface implements GameInterface {
 		case ROTATED:
 			message = manageTileRotation(color, msg);
 			break;
-		case PLACE:
+		case UPDATE_SINGLE:
 			message = manageCardPlacing(msg.payload);
 			break;
 		case INVALID_MOVE:
@@ -149,14 +148,13 @@ public class TextualInterface implements GameInterface {
 
 	private String manageTileRotation(PlayerColor color, Message msg) {
 		Card tile = new Card(msg.payload);
-		String tileRep = gridRepresenter.getTileRepresentation(tile);
+		String tileRep = TileGridRepresenter.getTileRepresentation(tile);
 		return String.format("Tile rotated:\n%s\n", tileRep);
 	}
 
 	private String manageNext(String payload) {
 		Card tile = new Card(payload);
-		tileAdded = false;
-		String tileRep = gridRepresenter.getTileRepresentation(tile);
+		String tileRep = TileGridRepresenter.getTileRepresentation(tile);
 		return String.format("Your card:\n%s\n", tileRep);
 	}
 
@@ -164,18 +162,16 @@ public class TextualInterface implements GameInterface {
 		String[] split = msg.split(",");
 		int x = Integer.parseInt(split[1].trim());
 		int y = Integer.parseInt(split[2].trim());
-		Card tile = new Card(split[0].trim());
-
-		if (!tileAdded) {
-			grid.putTile(tile, new Coord(x, y));
-			tileAdded = true;
-		} else {
-			Card gridTile = grid.getTile(new Coord(x, y));
-			for (SidePosition pos : SidePosition.values()) {
-				PlayerColor newFollower = tile.getSide(pos).getFollower();
-				gridTile.getSide(pos).setFollower(newFollower);
+		Coord c = new Coord(x,y);
+		Card newTile = new Card(split[0].trim());
+		Card oldTile = grid.getTile(c);
+		if(oldTile == null){
+			grid.putTile(newTile, c);
+		}else{
+			for(SidePosition pos : SidePosition.values()){
+				PlayerColor newFollower = newTile.getSide(pos).getFollower();
+				oldTile.getSide(pos).setFollower(newFollower);
 			}
 		}
-
 	}
 }
