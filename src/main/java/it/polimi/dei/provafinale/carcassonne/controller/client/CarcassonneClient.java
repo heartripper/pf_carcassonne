@@ -17,7 +17,7 @@ import java.net.Socket;
 
 public class CarcassonneClient {
 
-	private final int MAX_RECONNECT_ATTEMPTS = 10;
+	private final int maxReconnectAttempts = 10;
 
 	private Socket socket;
 	private ObjectOutputStream out;
@@ -289,7 +289,7 @@ public class CarcassonneClient {
 	}
 
 	private void reconnectOrDie() {
-		for (int i = 0; i < MAX_RECONNECT_ATTEMPTS; i++) {
+		for (int i = 0; i < maxReconnectAttempts; i++) {
 			if (attemptToReconnect()){
 				return;
 			}	

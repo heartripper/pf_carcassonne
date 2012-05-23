@@ -9,12 +9,12 @@ public class CurrentTilePanel extends JPanel{
 	
 	private static final long serialVersionUID = 1677387556314454292L;
 	
-	private final int TILE_DIM = 125;
+	private final int tileDim = 125;
 	private String currentTileRep;
 	private TilePainter tilePainter = TilePainter.getInstance();
 	
 	public CurrentTilePanel(){
-		Dimension d = new Dimension(TILE_DIM, TILE_DIM);
+		Dimension d = new Dimension(tileDim, tileDim);
 		setMaximumSize(d);
 		setMinimumSize(d);
 	}
