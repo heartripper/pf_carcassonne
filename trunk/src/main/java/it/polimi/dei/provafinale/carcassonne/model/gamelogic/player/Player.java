@@ -46,8 +46,9 @@ public class Player {
 	 * Remove one coin from the player's ones.
 	 */
 	public void removeFollower() {
-		if (followers > 0)
+		if (followers > 0){
 			followers--;
+		}
 	}
 
 	/**

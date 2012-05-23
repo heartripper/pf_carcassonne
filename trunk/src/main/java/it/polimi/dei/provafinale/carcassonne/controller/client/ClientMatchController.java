@@ -34,8 +34,9 @@ public class ClientMatchController implements Runnable {
 	@Override
 	public void run() {
 		Message startMsg = readFromServer();
-		if (startMsg.type != MessageType.START)
+		if (startMsg.type != MessageType.START){
 			protocolOrderError("start", startMsg.type);
+		}
 		initializeMatch(startMsg.payload);
 
 		while (!endGame) {

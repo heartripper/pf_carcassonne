@@ -11,8 +11,9 @@ public class Message {
 
 	public String toProtocolMessage() {
 		String msg = type.toString();
-		if (payload != null)
+		if (payload != null){
 			msg += (": " + payload);
+		}
 		return msg;
 	}
 

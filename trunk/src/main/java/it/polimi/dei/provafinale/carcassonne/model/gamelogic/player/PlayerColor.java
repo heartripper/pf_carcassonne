@@ -34,9 +34,11 @@ public enum PlayerColor {
 	 * */
 	public static int indexOf(PlayerColor color) {
 		PlayerColor[] values = values();
-		for (int i = 0; i < values.length; i++)
-			if (values[i] == color)
+		for (int i = 0; i < values.length; i++){
+			if (values[i] == color){
 				return i;
+			}
+		}
 		return -1;
 	}
 

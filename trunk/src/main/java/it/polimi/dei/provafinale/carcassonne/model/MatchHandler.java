@@ -50,9 +50,9 @@ public class MatchHandler implements Runnable {
 			currentTileAdded = false;
 			while (!currentTurnEnd && !currentPlayerDisconnected) {
 				Message req = readFromCurrentPlayer();
-				if (currentPlayerDisconnected)
+				if (currentPlayerDisconnected){
 					break;
-
+				}
 				Message resp;
 				if (req.type == MessageType.ROTATE && !currentTileAdded) {
 					resp = handleTileRotation();
@@ -188,9 +188,9 @@ public class MatchHandler implements Runnable {
 	}
 
 	private void handleDisconnection(PlayersDisconnectedException pde) {
-		if (pde.getDisconnectedPlayers().contains(currentPlayer))
+		if (pde.getDisconnectedPlayers().contains(currentPlayer)){
 			currentPlayerDisconnected = true;
-
+		}
 		try {
 			for (PlayerColor c : pde.getDisconnectedPlayers())
 				match.removePlayer(c);

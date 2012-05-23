@@ -23,9 +23,9 @@ public class TilePainter {
 	private static TilePainter instance = null;
 	
 	public static TilePainter getInstance(){
-		if(instance == null)
+		if(instance == null){
 			instance = new TilePainter();
-		
+		}
 		return instance;
 	}
 	

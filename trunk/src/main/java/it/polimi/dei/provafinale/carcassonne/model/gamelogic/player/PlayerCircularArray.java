@@ -33,8 +33,9 @@ public class PlayerCircularArray {
 	 * @return true if a new Player is added to the game, false instead.
 	 */
 	public boolean add(Player player) {
-		if (currIndex >= size)
+		if (currIndex >= size){
 			return false;
+		}
 		players[currIndex++] = player;
 		return true;
 	}
@@ -65,9 +66,11 @@ public class PlayerCircularArray {
 	
 	public int getSize(){
 		int i = 0;
-		for(Player p : players)
-			if(p.isActive())
+		for(Player p : players){
+			if(p.isActive()){
 				i++;
+			}
+		}
 		return i;
 	}
 	

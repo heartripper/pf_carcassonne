@@ -71,8 +71,9 @@ public class ServerGameInterface implements GameInterface {
 			throws PlayersDisconnectedException {
 		PlayersDisconnectedException pde = null;
 		for (PlayerConnection pc : playerConnections) {
-			if (!pc.isActive())
+			if (!pc.isActive()){
 				continue;
+			}
 			int connectionIndex = playerConnections.indexOf(pc);
 			PlayerColor color = PlayerColor.valueOf(connectionIndex);
 			String protocolMessage = String.format("start: %s, %s, %s",
@@ -81,14 +82,17 @@ public class ServerGameInterface implements GameInterface {
 				sendStringToPlayer(protocolMessage, pc);
 			} catch (PlayersDisconnectedException e) {
 				ArrayList<PlayerColor> disc = e.getDisconnectedPlayers();
-				if (pde == null)
+				if (pde == null){
 					pde = new PlayersDisconnectedException(disc);
-				else
+				}
+				else{
 					pde.add(disc);
+				}
 			}
 
-			if (pde != null)
+			if (pde != null){
 				throw pde;
+			}
 		}
 	}
 	
@@ -109,20 +113,24 @@ public class ServerGameInterface implements GameInterface {
 			throws PlayersDisconnectedException {
 		PlayersDisconnectedException pde = null;
 		for (PlayerConnection pc : playerConnections) {
-			if (!pc.isActive())
+			if (!pc.isActive()){
 				continue;
+			}
 			try {
 				sendStringToPlayer(msg, pc);
 			} catch (PlayersDisconnectedException e) {
 				ArrayList<PlayerColor> disc = e.getDisconnectedPlayers();
-				if (pde == null)
+				if (pde == null){
 					pde = new PlayersDisconnectedException(disc);
-				else
+				}
+				else{
 					pde.add(disc);
+				}
 			}
 		}
-		if (pde != null)
+		if (pde != null){
 			throw pde;
+		}
 	}
 
 	private String readStringFromPlayer(PlayerConnection pc)
