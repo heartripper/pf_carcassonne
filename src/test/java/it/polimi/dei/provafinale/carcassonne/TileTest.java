@@ -1,6 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Side;
@@ -39,19 +40,19 @@ public class TileTest {
 	@Test
 	public void testLinks(){
 		Side north = tile.getSide(SidePosition.N);
-		ArrayList<Side> ns = tile.sidesLinkedTo(north);
+		List<Side> ns = tile.sidesLinkedTo(north);
 		assertTrue(ns.size() == 0);
 		
 		Side south = tile.getSide(SidePosition.S);
-		ArrayList<Side> ss = tile.sidesLinkedTo(south);
+		List<Side> ss = tile.sidesLinkedTo(south);
 		assertTrue(ss.size() == 0);
 		
 		Side east = tile.getSide(SidePosition.E);
-		ArrayList<Side> es = tile.sidesLinkedTo(east);
+		List<Side> es = tile.sidesLinkedTo(east);
 		assertTrue(es.size() == 1);
 		
 		Side west = tile.getSide(SidePosition.W);
-		ArrayList<Side> ws = tile.sidesLinkedTo(west);
+		List<Side> ws = tile.sidesLinkedTo(west);
 		assertTrue(ws.size() == 1);
 	}
 	
