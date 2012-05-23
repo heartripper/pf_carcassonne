@@ -192,8 +192,9 @@ public class MatchHandler implements Runnable {
 			currentPlayerDisconnected = true;
 		}
 		try {
-			for (PlayerColor c : pde.getDisconnectedPlayers())
+			for (PlayerColor c : pde.getDisconnectedPlayers()){
 				match.removePlayer(c);
+			}
 		} catch (NotEnoughPlayersException nep) {
 			// TODO: what to do when there are not enough player left
 			System.out.println("There are not enough players left.");

@@ -34,10 +34,11 @@ public class Road extends Entity {
 		if (completed){
 			return true;
 		}
-		for (Side m : members)
+		for (Side m : members){
 			if (m.getOppositeSide() == null){
 				return false;
 			}
+		}
 		completed = true;
 		return true;
 	}
