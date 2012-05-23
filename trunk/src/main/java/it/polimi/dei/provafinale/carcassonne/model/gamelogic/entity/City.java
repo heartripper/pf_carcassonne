@@ -6,6 +6,7 @@ import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class City extends Entity {
@@ -13,7 +14,7 @@ public class City extends Entity {
 	private static int cityCount = 0;
 
 	private EntityType type = EntityType.C;
-	private ArrayList<Side> members;
+	private List<Side> members;
 	private boolean completed = false;
 	private boolean hasFollower = false;
 	private int id;
@@ -38,7 +39,7 @@ public class City extends Entity {
 	 * Obtain the side/sides of a city.
 	 */
 	@Override
-	public ArrayList<Side> getMembers() {
+	public List<Side> getMembers() {
 		return members;
 	}
 
@@ -141,7 +142,7 @@ public class City extends Entity {
 	 * Removes followers from entity;
 	 */
 	@Override
-	public ArrayList<Card> removeFollowers() {
+	public List<Card> removeFollowers() {
 		ArrayList<Card> updatedCards = new ArrayList<Card>();
 		for (Side s : members) {
 			if(s.getFollower() != null){

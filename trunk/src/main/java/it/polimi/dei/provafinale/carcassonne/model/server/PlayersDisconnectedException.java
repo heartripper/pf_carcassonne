@@ -1,6 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.model.server;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 
@@ -8,7 +9,7 @@ public class PlayersDisconnectedException extends Exception {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private ArrayList<PlayerColor> colors;
+	private List<PlayerColor> colors;
 	
 	public PlayersDisconnectedException(PlayerColor color){
 		super();
@@ -16,16 +17,16 @@ public class PlayersDisconnectedException extends Exception {
 		colors.add(color);
 	}
 
-	public PlayersDisconnectedException(ArrayList<PlayerColor> colors){
+	public PlayersDisconnectedException(List<PlayerColor> colors){
 		super();
 		this.colors = colors;
 	}
 	
-	public void add(ArrayList<PlayerColor> newColors){
+	public void add(List<PlayerColor> newColors){
 		colors.addAll(newColors);
 	}
 	
-	public ArrayList<PlayerColor> getDisconnectedPlayers(){
+	public List<PlayerColor> getDisconnectedPlayers(){
 		return colors;
 	}
 }

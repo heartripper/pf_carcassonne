@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -18,7 +19,7 @@ public class TilePainter {
 
 	private String tilePath = "src/main/resources/card.png";
 	private BufferedImage tileImage;
-	private HashMap<String, BufferedImage> imgLib;
+	private Map<String, BufferedImage> imgLib;
 	
 	private static TilePainter instance = null;
 	

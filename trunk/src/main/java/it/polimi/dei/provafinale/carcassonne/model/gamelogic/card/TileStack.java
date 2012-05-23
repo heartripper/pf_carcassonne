@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -13,11 +14,11 @@ import java.util.Random;
  * */
 public class TileStack {
 
-	private static ArrayList<Card> readTileStack = null;
+	private static List<Card> readTileStack = null;
 	
 	private static final String FILE_PATH = "src/main/resources/carcassonne.dat";
 
-	private ArrayList<Card> tiles;
+	private List<Card> tiles;
 	private Card initialTile;
 
 	public TileStack() {
@@ -72,10 +73,12 @@ public class TileStack {
 	 * Reads tile representation from carcassonne.dat, creates a new Tile for
 	 * each representation and then put the new tile into tile list.
 	 * */
-	private synchronized ArrayList<Card> readTiles() {
+
+	private synchronized List<Card> readTiles() {
 		if(readTileStack != null){
 			return readTileStack;
 		}
+		
 		readTileStack = new ArrayList<Card>();
 		try {
 			FileReader fr = new FileReader(new File(FILE_PATH));

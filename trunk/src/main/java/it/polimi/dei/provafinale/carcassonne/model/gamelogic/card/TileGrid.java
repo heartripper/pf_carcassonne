@@ -3,10 +3,11 @@ package it.polimi.dei.provafinale.carcassonne.model.gamelogic.card;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class TileGrid {
 
-	HashMap<Coord, Card> grid;
+	Map<Coord, Card> grid;
 	private int upperEdge;
 	private int rightEdge;
 	private int lowerEdge;

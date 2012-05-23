@@ -7,6 +7,7 @@ import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -165,7 +166,7 @@ public class Card {
 	 * @return an ArrayList of SidePosition where is possible to set coins in
 	 *         the card.
 	 */
-	public ArrayList<SidePosition> sidesAcceptingCoin() {
+	public List<SidePosition> sidesAcceptingCoin() {
 		ArrayList<SidePosition> sides = new ArrayList<SidePosition>();
 		for (SidePosition position : SidePosition.values()) {
 			Entity entity = getSide(position).getEntity();
@@ -184,7 +185,7 @@ public class Card {
 	 *            - a Side.
 	 * @return an ArrayList of Side linked to a given one in the card.
 	 */
-	public ArrayList<Side> sidesLinkedTo(Side side) {
+	public List<Side> sidesLinkedTo(Side side) {
 		ArrayList<Side> positions = new ArrayList<Side>();
 		SidePosition startPos = getSidePosition(side);
 		for (SidePosition endPos : SidePosition.values()) {
