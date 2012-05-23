@@ -21,5 +21,9 @@ public class ViewManager{
 		frame.changeMenuPanel(panelName);
 	}
 	
+	public CarcassonneFrame getFrame(){
+		return frame;
+	}
+	
 	
 }
