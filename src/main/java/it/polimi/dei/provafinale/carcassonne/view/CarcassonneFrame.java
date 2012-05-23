@@ -15,6 +15,7 @@ public class CarcassonneFrame extends JFrame{
 	public static final String GAMEPANEL = "gamepanel";
 	
 	private MenuPanel menuPanel;
+	private JPanel gamePanelContainer;
 	private GamePanel gamePanel;
 	private CardLayout mainLayout;
 	
@@ -28,13 +29,18 @@ public class CarcassonneFrame extends JFrame{
         addWindowListener(new WindowClose());
         
 		setVisible(true);
-		setSize(600, 300);
+		setSize(600, 700);
 		
 		mainLayout = new CardLayout(0,0);
 		setLayout(mainLayout);
+		
 		menuPanel = new MenuPanel();
 		add(menuPanel, MENUPANEL);
 		menuPanel.setVisible(true);
+		
+		gamePanelContainer = new JPanel();
+		add(gamePanelContainer, GAMEPANEL);
+		gamePanelContainer.setLayout(new BorderLayout());
 		
 		repaint();
 	}
@@ -44,15 +50,15 @@ public class CarcassonneFrame extends JFrame{
 	}
 	
 	public void setGamePanel(GamePanel gamePanel){
-		if(gamePanel == null){
-			add(gamePanel, GAMEPANEL);
+		if(this.gamePanel == null){
 			this.gamePanel = gamePanel;
+			gamePanelContainer.add(gamePanel, BorderLayout.CENTER);
 		}else{
 			return;
 		}
 	}
 	
 	public void changeMainPanel(String destination){
-		mainLayout.show(this, destination);
+		mainLayout.show(this.getContentPane(), destination);
 	}
 }
