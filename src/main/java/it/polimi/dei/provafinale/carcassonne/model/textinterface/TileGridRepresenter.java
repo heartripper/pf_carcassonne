@@ -58,7 +58,7 @@ public class TileGridRepresenter {
 	 *            - a tile
 	 * @return the textual representation
 	 * */
-	public String getTileRepresentation(Card tile) {
+	public static String getTileRepresentation(Card tile) {
 		String[] arrayRep = getTileArrayRepresentation(tile);
 		StringBuilder representation = new StringBuilder();
 		for (int i = 0; i < arrayRep.length; i++) {
@@ -101,7 +101,7 @@ public class TileGridRepresenter {
 	 * 
 	 * @return the String[] representation of a card with its sides and links.
 	 */
-	private String[] getTileArrayRepresentation(Card tile) {
+	private static String[] getTileArrayRepresentation(Card tile) {
 		String north = tile.getSide(SidePosition.N).toString();
 		String east = tile.getSide(SidePosition.E).toString();
 		String south = tile.getSide(SidePosition.S).toString();
