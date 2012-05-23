@@ -91,8 +91,9 @@ public class Road extends Entity {
 
 	@Override
 	public boolean acceptFollowers() {
-		if (hasFollowers)
+		if (hasFollowers){
 			return false;
+		}
 
 		for (Side s : members) {
 			if (s.getFollower() != null) {
