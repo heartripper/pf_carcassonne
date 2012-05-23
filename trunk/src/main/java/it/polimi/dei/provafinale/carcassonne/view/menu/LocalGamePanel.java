@@ -37,8 +37,8 @@ public class LocalGamePanel extends JPanel {
 		JLabel lblNewLocalGame = new JLabel("NEW LOCAL GAME");
 		titlePanel.add(lblNewLocalGame);
 		
-		Component verticalStrut_1 = Box.createVerticalStrut(20);
-		add(verticalStrut_1);
+		Component verticalStrut01 = Box.createVerticalStrut(20);
+		add(verticalStrut01);
 		
 		JPanel selectPlayersNumberPanel = new JPanel();
 		selectPlayersNumberPanel.setBackground(new Color(0,0,0,0));

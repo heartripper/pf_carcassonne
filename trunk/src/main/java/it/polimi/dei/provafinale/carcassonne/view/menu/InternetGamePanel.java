@@ -45,8 +45,8 @@ public class InternetGamePanel extends JPanel {
 		JLabel lblNewInternetGame = new JLabel("NEW INTERNET GAME");
 		titlePanel.add(lblNewInternetGame);
 
-		Component verticalStrut_1 = Box.createVerticalStrut(20);
-		add(verticalStrut_1);
+		Component verticalStrut01 = Box.createVerticalStrut(20);
+		add(verticalStrut01);
 
 		JPanel serverInfoPanel = new JPanel();
 		serverInfoPanel.setBackground(new Color(0, 0, 0, 0));
@@ -58,12 +58,12 @@ public class InternetGamePanel extends JPanel {
 		Component horizontalGlue01 = Box.createHorizontalGlue();
 		serverInfoPanel.add(horizontalGlue01);
 
-		JPanel IPPanel = new JPanel();
-		IPPanel.setBackground(new Color(0,0,0,0));
+		JPanel ipPanel = new JPanel();
+		ipPanel.setBackground(new Color(0,0,0,0));
 		JLabel lblInsertServerIp = new JLabel("Insert server IP address:");
-		IPPanel.add(lblInsertServerIp);
+		ipPanel.add(lblInsertServerIp);
 		serverIPField = new JTextField();
-		IPPanel.add(serverIPField);
+		ipPanel.add(serverIPField);
 		serverIPField.setColumns(10);
 
 		JPanel portPanel = new JPanel();
@@ -74,7 +74,7 @@ public class InternetGamePanel extends JPanel {
 		portPanel.add(serverPortField);
 		serverPortField.setColumns(10);
 
-		serverInfoPanel.add(IPPanel);
+		serverInfoPanel.add(ipPanel);
 		serverInfoPanel.add(portPanel);
 
 		Component horizontalGlue02 = Box.createHorizontalGlue();
