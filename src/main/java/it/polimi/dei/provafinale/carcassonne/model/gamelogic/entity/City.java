@@ -47,8 +47,9 @@ public class City extends Entity {
 	 */
 	@Override
 	public void addMember(Side side) {
-		if (!members.contains(side))
+		if (!members.contains(side)){
 			members.add(side);
+		}
 	}
 
 	/**
@@ -126,9 +127,9 @@ public class City extends Entity {
 		
 		for(Side s : members){
 			PlayerColor follower = s.getFollower();
-			if(follower == null)
+			if(follower == null){
 				continue;
-			
+			}
 			int index = PlayerColor.indexOf(follower);
 			counter[index]++;
 		}
@@ -146,8 +147,9 @@ public class City extends Entity {
 			if(s.getFollower() != null){
 				s.setFollower(null);
 				Card c = s.getOwnerCard();
-				if(!updatedCards.contains(c))
+				if(!updatedCards.contains(c)){
 					updatedCards.add(c);
+				}
 			}
 		}
 		return updatedCards;

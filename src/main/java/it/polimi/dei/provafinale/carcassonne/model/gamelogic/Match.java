@@ -74,9 +74,9 @@ public class Match {
 	 *         with the position).
 	 * */
 	public boolean putTile(Card tile, Coord coord) {
-		if (!grid.isTileCompatible(tile, coord))
+		if (!grid.isTileCompatible(tile, coord)){
 			return false;
-
+		}
 		grid.putTile(tile, coord);
 		updateEntities(tile);
 		return true;
@@ -97,9 +97,9 @@ public class Match {
 		for (SidePosition position : SidePosition.values()) {
 			Entity entity = card.getSide(position).getEntity();
 
-			if (entity == null || checkedEntities.contains(entity))
+			if (entity == null || checkedEntities.contains(entity)){
 				continue;
-
+			}
 			checkedEntities.add(entity);
 			if (entity.isComplete()) {
 				ArrayList<Card> currentUpdatedTiles = finalizeEntityAndUpdate(entity);
@@ -134,12 +134,14 @@ public class Match {
 	public boolean putFollower(Card tile, SidePosition pos, PlayerColor col){
 		//Check that we can put the follower in given position.
 		Entity e = tile.getSide(pos).getEntity();
-		if (e == null || !e.acceptFollowers())
+		if (e == null || !e.acceptFollowers()){
 			return false;
+		}
 		//check that given player has followers
 		Player p = players.getByColor(col);
-		if(!p.hasFollowers())
+		if(!p.hasFollowers()){
 			return false;
+		}
 		//Add follower on tile and remove it from player
 		tile.addFollower(pos, col);
 		p.removeFollower();
@@ -181,8 +183,9 @@ public class Match {
 		p.setInactive();
 		// TODO remove followers.
 
-		if (players.getSize() < 2)
+		if (players.getSize() < 2){
 			throw new NotEnoughPlayersException();
+		}
 	}
 
 	// Private Methods
@@ -245,8 +248,9 @@ public class Match {
 	 */
 	private void addSideToEntity(Side side, Entity entity) {
 		side.setEntity(entity);
-		if (entity != null)
+		if (entity != null){
 			entity.addMember(side);
+		}
 	}
 
 	private ArrayList<Card> finalizeEntityAndUpdate(Entity entity) {
@@ -265,12 +269,14 @@ public class Match {
 		int max = 0;
 
 		for (int f : followers) {
-			if (f > max)
+			if (f > max){
 				max = f;
+			}
 		}
 
-		if (max == 0)
+		if (max == 0){
 			return;
+		}
 
 		for (int i = 0; i < followers.length; i++) {
 			if (followers[i] == max) {

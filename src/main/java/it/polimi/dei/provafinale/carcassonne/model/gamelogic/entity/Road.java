@@ -30,21 +30,22 @@ public class Road extends Entity {
 
 	@Override
 	public boolean isComplete() {
-		if (completed)
+		if (completed){
 			return true;
-
+		}
 		for (Side m : members)
-			if (m.getOppositeSide() == null)
+			if (m.getOppositeSide() == null){
 				return false;
-
+			}
 		completed = true;
 		return true;
 	}
 
 	@Override
 	public void addMember(Side side) {
-		if (!members.contains(side))
+		if (!members.contains(side)){
 			members.add(side);
+		}
 	}
 
 	@Override
@@ -52,25 +53,26 @@ public class Road extends Entity {
 		Set<Card> cards = new HashSet<Card>();
 		for (Side s : members) {
 			Card card = s.getOwnerCard();
-			if (!cards.contains(card))
+			if (!cards.contains(card)){
 				cards.add(card);
+			}
 		}
 		return cards.size();
 	}
 
 	@Override
 	public Entity enclose(Entity otherEntity) {
-		if (otherEntity.getMembers().size() > this.members.size())
+		if (otherEntity.getMembers().size() > this.members.size()){
 			return otherEntity.enclose(this);
-		else {
+		}else {
 			for (Side s : otherEntity.getMembers()) {
 				s.setEntity(this);
 				this.addMember(s);
 			}
 
-			if (!otherEntity.acceptFollowers())
+			if (!otherEntity.acceptFollowers()){
 				hasFollowers = true;
-
+			}
 			return this;
 		}
 	}
@@ -107,8 +109,9 @@ public class Road extends Entity {
 			if(s.getFollower() != null){
 				s.setFollower(null);
 				Card c = s.getOwnerCard();
-				if(!updatedCards.contains(c))
+				if(!updatedCards.contains(c)){
 					updatedCards.add(c);
+				}
 			}
 		}
 		return updatedCards;
