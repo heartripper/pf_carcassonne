@@ -2,6 +2,7 @@ package it.polimi.dei.provafinale.carcassonne.model.server;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.GameInterface;
@@ -81,7 +82,7 @@ public class ServerGameInterface implements GameInterface {
 			try {
 				sendStringToPlayer(protocolMessage, pc);
 			} catch (PlayersDisconnectedException e) {
-				ArrayList<PlayerColor> disc = e.getDisconnectedPlayers();
+				List<PlayerColor> disc = e.getDisconnectedPlayers();
 				if (pde == null){
 					pde = new PlayersDisconnectedException(disc);
 				}
@@ -119,7 +120,7 @@ public class ServerGameInterface implements GameInterface {
 			try {
 				sendStringToPlayer(msg, pc);
 			} catch (PlayersDisconnectedException e) {
-				ArrayList<PlayerColor> disc = e.getDisconnectedPlayers();
+				List<PlayerColor> disc = e.getDisconnectedPlayers();
 				if (pde == null){
 					pde = new PlayersDisconnectedException(disc);
 				}

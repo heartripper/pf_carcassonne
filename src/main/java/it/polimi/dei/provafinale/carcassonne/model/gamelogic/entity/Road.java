@@ -6,6 +6,7 @@ import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Road extends Entity {
@@ -13,7 +14,7 @@ public class Road extends Entity {
 	private static int roadCount = 0;
 
 	private EntityType type = EntityType.S;
-	private ArrayList<Side> members;
+	private List<Side> members;
 	private boolean completed = false;
 	private boolean hasFollowers = false;
 	private int id;
@@ -78,7 +79,7 @@ public class Road extends Entity {
 	}
 
 	@Override
-	public ArrayList<Side> getMembers() {
+	public List<Side> getMembers() {
 		return members;
 	}
 
@@ -103,7 +104,7 @@ public class Road extends Entity {
 	}
 
 	@Override
-	public ArrayList<Card> removeFollowers() {
+	public List<Card> removeFollowers() {
 		ArrayList<Card> updatedCards = new ArrayList<Card>();
 		for (Side s : members) {
 			if(s.getFollower() != null){

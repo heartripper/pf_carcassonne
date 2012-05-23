@@ -1,6 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.GameInterface;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.Message;
@@ -122,7 +123,7 @@ public class MatchHandler implements Runnable {
 	
 	private void handleTurnEnd() {
 		// Send tiles updates.
-		ArrayList<Card> updatedTile = match
+		List<Card> updatedTile = match
 				.checkForCompletedEntities(currentTile);
 		for (Card c : updatedTile) {
 			Message msg = new Message(MessageType.UPDATE, getUpdateTileMsg(c));

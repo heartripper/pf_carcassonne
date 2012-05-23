@@ -10,13 +10,14 @@ import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerCircul
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Match {
 
 	private TileGrid grid;
 	private TileStack stack;
 	private PlayerCircularArray players;
-	private ArrayList<Entity> entities;
+	private List<Entity> entities;
 
 	private Card firstTile;
 	private int playersNumber;
@@ -90,7 +91,7 @@ public class Match {
 	 * @param card
 	 *            - a Card that has been added to the grid.
 	 */
-	public ArrayList<Card> checkForCompletedEntities(Card card) {
+	public List<Card> checkForCompletedEntities(Card card) {
 		ArrayList<Entity> checkedEntities = new ArrayList<Entity>();
 		ArrayList<Card> updatedTiles = new ArrayList<Card>();
 
@@ -102,7 +103,7 @@ public class Match {
 			}
 			checkedEntities.add(entity);
 			if (entity.isComplete()) {
-				ArrayList<Card> currentUpdatedTiles = finalizeEntityAndUpdate(entity);
+				List<Card> currentUpdatedTiles = finalizeEntityAndUpdate(entity);
 				updatedTiles.addAll(currentUpdatedTiles);
 			}
 		}
@@ -253,7 +254,7 @@ public class Match {
 		}
 	}
 
-	private ArrayList<Card> finalizeEntityAndUpdate(Entity entity) {
+	private List<Card> finalizeEntityAndUpdate(Entity entity) {
 		// Give corresponding score to entity owners
 		int score = entity.getScore();
 		int[] followers = entity.countFollowers(playersNumber);
@@ -261,7 +262,7 @@ public class Match {
 		// return followers to owners
 		returnFollowers(followers);
 		// Remove followers from entity and return a list of updated cards.
-		ArrayList<Card> updates = entity.removeFollowers();
+		List<Card> updates = entity.removeFollowers();
 		return updates;
 	}
 
