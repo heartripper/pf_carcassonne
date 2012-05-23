@@ -11,8 +11,8 @@ import javax.imageio.ImageIO;
 
 public class TilePainter {
 
-	private final int TILE_DIM = 125;
-	private final String TILES_PATH_FORMAT = "src/main/resources/tiles/%s.png";
+	private final int tileDim = 125;
+	private final String tilesPathFormat = "src/main/resources/tiles/%s.png";
 	
 	private BufferedImage tilePlaceHolder;
 	private String placeHolderPath = "src/main/resources/placeholder.png";
@@ -41,18 +41,18 @@ public class TilePainter {
 	}
 
 	public void paintTile(String rep, Graphics g, int x, int y) {
-		g.drawImage(tileImage, x, y, TILE_DIM, TILE_DIM, null);
+		g.drawImage(tileImage, x, y, tileDim, tileDim, null);
 	}
 
 	public void paintPlaceHolder(Graphics g, int x, int y) {
-		g.drawImage(tilePlaceHolder, x, y, TILE_DIM, TILE_DIM, null);
+		g.drawImage(tilePlaceHolder, x, y, tileDim, tileDim, null);
 	}
 	
 	private BufferedImage readImage(String rep){
 		if(imgLib.containsKey(rep)){
 			return imgLib.get(rep);
 		}else{
-			String path = String.format(TILES_PATH_FORMAT, rep);
+			String path = String.format(tilesPathFormat, rep);
 			try{
 				BufferedImage img = ImageIO.read(new File(path));
 				imgLib.put(rep, img);

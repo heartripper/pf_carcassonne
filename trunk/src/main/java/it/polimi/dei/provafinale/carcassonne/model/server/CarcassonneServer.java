@@ -14,8 +14,8 @@ import java.util.Vector;
 
 public class CarcassonneServer {
 
-	private final int MAX_PLAYER_NUMBER = 5;
-	private final int TIMEOUT = 10 * 1000;
+	private final int maxPlayerNumber = 5;
+	private final int timeout = 10 * 1000;
 
 	private ServerSocket serverSocket;
 	private Vector<PlayerConnection> currentPlayerConn;
@@ -76,9 +76,9 @@ public class CarcassonneServer {
 		currentPlayerConn.add(pc);
 		int size = currentPlayerConn.size();
 		showMessage(String.format("Player added to match: %s/%s", size,
-				MAX_PLAYER_NUMBER));
+				maxPlayerNumber));
 
-		if (size == MAX_PLAYER_NUMBER) {
+		if (size == maxPlayerNumber) {
 			showMessage("Creating match...");
 			startMatch();
 			timer.interrupt();
@@ -118,7 +118,7 @@ public class CarcassonneServer {
 		public void run() {
 			while (true) {
 				try {
-					Thread.sleep(TIMEOUT);
+					Thread.sleep(timeout);
 					if (currentPlayerConn.size() >= 2) {
 						showMessage(String.format(
 								"Timeout: starting match with %s players",

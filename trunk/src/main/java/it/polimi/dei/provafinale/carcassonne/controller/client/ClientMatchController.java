@@ -14,8 +14,8 @@ import it.polimi.dei.provafinale.carcassonne.view.game.TilesPanel;
 
 public class ClientMatchController implements Runnable {
 
-	private final int MAX_RECONNECTION_ATTEMPTS = 10;
-	private final int RECONNECTION_INTERVAL = 30 * 1000;
+	private final int maxReconnectionAttempts = 10;
+	private final int reconnectionInterval = 30 * 1000;
 	
 	private Message bufferedMessage = null;
 	private ClientInterface clientInterface;
@@ -278,14 +278,14 @@ public class ClientMatchController implements Runnable {
 
 	private void handleReconnection() {
 		// Notify GUI we lost connection with server
-		for(int i = 0; i< MAX_RECONNECTION_ATTEMPTS; i++){
+		for(int i = 0; i< maxReconnectionAttempts; i++){
 			try{
 				clientInterface.reconnect(matchName, clientPlayerColor);
 				return;
 			}catch(ConnectionLostException cle){
 				//Still can't connect; go on.
 					try {
-						Thread.sleep(RECONNECTION_INTERVAL);
+						Thread.sleep(reconnectionInterval);
 					} catch (InterruptedException e) {
 						// Nothing to do.
 					}
