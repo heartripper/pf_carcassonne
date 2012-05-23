@@ -1,6 +1,5 @@
 package it.polimi.dei.provafinale.carcassonne.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.GameInterface;
@@ -94,7 +93,7 @@ public class MatchHandler implements Runnable {
 		Message resp;
 		if (match.putTile(currentTile, new Coord(x, y))) {
 			String update = getUpdateTileMsg(currentTile);
-			resp = new Message(MessageType.PLACE, update);
+			resp = new Message(MessageType.UPDATE_SINGLE, update);
 			currentTileAdded = true;
 		} else {
 			resp = new Message(MessageType.INVALID_MOVE, null);
