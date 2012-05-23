@@ -7,6 +7,10 @@ import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.TileGrid;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.view.CarcassonneFrame;
+import it.polimi.dei.provafinale.carcassonne.view.ViewManager;
+import it.polimi.dei.provafinale.carcassonne.view.game.GamePanel;
+import it.polimi.dei.provafinale.carcassonne.view.game.TilesPanel;
 
 public class ClientMatchController implements Runnable {
 
@@ -68,7 +72,18 @@ public class ClientMatchController implements Runnable {
 		handleTileUpdate(split[0] + ", 0, 0");
 		matchName = split[1].trim();
 		clientPlayerColor = PlayerColor.valueOf(split[2].trim());
-		// TODO: set player number in GUI
+		int playerNumber = Integer.parseInt(split[3].trim());
+		
+		CarcassonneFrame frame  = ViewManager.getInstance().getFrame();
+		GamePanel game = new GamePanel();
+		
+		game.createPlayerPanels(playerNumber);
+		int index = PlayerColor.indexOf(clientPlayerColor);
+		game.getPlayerPanels()[index].setClientPlayer();
+		game.setTilesPanelGrid(grid);
+		
+		frame.setGamePanel(game);
+		frame.changeMainPanel(CarcassonneFrame.GAMEPANEL);
 	}
 
 	private void setCurrentPlayer(PlayerColor color) {

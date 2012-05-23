@@ -1,6 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.view;
 
 import it.polimi.dei.provafinale.carcassonne.controller.WindowClose;
+import it.polimi.dei.provafinale.carcassonne.view.game.GamePanel;
 import it.polimi.dei.provafinale.carcassonne.view.menu.MenuPanel;
 
 import javax.swing.JFrame;
@@ -14,7 +15,8 @@ public class CarcassonneFrame extends JFrame{
 	public static final String GAMEPANEL = "gamepanel";
 	
 	private MenuPanel menuPanel;
-	private JPanel gamePanel;
+	private GamePanel gamePanel;
+	private CardLayout mainLayout;
 	
 	public CarcassonneFrame() {
 		
@@ -28,8 +30,8 @@ public class CarcassonneFrame extends JFrame{
 		setVisible(true);
 		setSize(600, 300);
 		
-		
-		setLayout(new CardLayout(0, 0));
+		mainLayout = new CardLayout(0,0);
+		setLayout(mainLayout);
 		menuPanel = new MenuPanel();
 		add(menuPanel, MENUPANEL);
 		menuPanel.setVisible(true);
@@ -39,5 +41,18 @@ public class CarcassonneFrame extends JFrame{
 
 	public void changeMenuPanel(String destination) {
 		menuPanel.changeMenuPanel(destination);
+	}
+	
+	public void setGamePanel(GamePanel gamePanel){
+		if(gamePanel == null){
+			add(gamePanel, GAMEPANEL);
+			this.gamePanel = gamePanel;
+		}else{
+			return;
+		}
+	}
+	
+	public void changeMainPanel(String destination){
+		mainLayout.show(this, destination);
 	}
 }

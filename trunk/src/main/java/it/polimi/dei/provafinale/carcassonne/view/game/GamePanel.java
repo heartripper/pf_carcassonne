@@ -97,7 +97,7 @@ public class GamePanel extends JPanel {
 		bottomPanel.add(players, BorderLayout.WEST);
 	}
 
-	public void setPlayers(int num) {
+	public void createPlayerPanels(int num) {
 		this.playerPanels = new PlayerPanel[num];
 		for (int i = 0; i < num; i++) {
 			PlayerPanel p = new PlayerPanel(PlayerColor.valueOf(i));
@@ -106,7 +106,7 @@ public class GamePanel extends JPanel {
 		}
 	}
 
-	public PlayerPanel[] getPlayers() {
+	public PlayerPanel[] getPlayerPanels() {
 		return playerPanels;
 	}
 

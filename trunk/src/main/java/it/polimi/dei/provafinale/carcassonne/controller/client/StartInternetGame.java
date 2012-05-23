@@ -32,6 +32,7 @@ public class StartInternetGame implements ActionListener{
 			ClientMatchController cc = new ClientMatchController(ci);
 			Thread th = new Thread(cc);
 			th.start();
+			
 		}catch(NumberFormatException nfe){
 			gamePanel.getMessageLabel().setText("Please insert a valid port value.");
 		}catch(ConnectionLostException cle){
