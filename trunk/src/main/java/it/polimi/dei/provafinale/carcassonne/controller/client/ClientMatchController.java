@@ -28,6 +28,7 @@ public class ClientMatchController implements Runnable {
 
 	public ClientMatchController(ClientInterface clientInterface) {
 		this.clientInterface = clientInterface;
+		this.grid = new TileGrid();
 	}
 	
 	public synchronized void sendMessage(Message msg) {
