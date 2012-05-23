@@ -19,8 +19,9 @@ public enum MessageType {
 
 	public static MessageType getTypeFor(String type) {
 		for (MessageType t : MessageType.values())
-			if (t.protocolMessage.equals(type))
+			if (t.protocolMessage.equals(type)){
 				return t;
+			}
 		return null;
 	}
 }

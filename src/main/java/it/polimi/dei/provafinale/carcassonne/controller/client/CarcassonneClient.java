@@ -59,8 +59,9 @@ public class CarcassonneClient {
 	}
 
 	public void start() {
-		if (in == null)
+		if (in == null){
 			return;
+		}
 
 		String[] startMsg = readFromServer();
 
@@ -289,8 +290,9 @@ public class CarcassonneClient {
 
 	private void reconnectOrDie() {
 		for (int i = 0; i < MAX_RECONNECT_ATTEMPTS; i++) {
-			if (attemptToReconnect())
+			if (attemptToReconnect()){
 				return;
+			}	
 		}
 
 		System.out.println("Failed to reconnect.");
