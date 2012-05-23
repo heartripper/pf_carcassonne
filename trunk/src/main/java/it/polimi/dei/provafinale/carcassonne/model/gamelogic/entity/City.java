@@ -123,9 +123,9 @@ public class City extends Entity {
 	public int[] countFollowers(int numPlayers){
 		int[] counter = new int[numPlayers];
 		
-		for(int i = 0; i < numPlayers; i++)
+		for(int i = 0; i < numPlayers; i++){
 			counter[i] = 0;
-		
+		}
 		for(Side s : members){
 			PlayerColor follower = s.getFollower();
 			if(follower == null){
