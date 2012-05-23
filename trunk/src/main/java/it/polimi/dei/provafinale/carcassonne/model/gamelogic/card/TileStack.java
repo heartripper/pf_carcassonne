@@ -16,7 +16,7 @@ public class TileStack {
 
 	private static List<Card> readTileStack = null;
 	
-	private static final String FILE_PATH = "src/main/resources/carcassonne.dat";
+	private static final String FILE_PATH = "src/main/resources/carcassonne_mini.dat";
 
 	private List<Card> tiles;
 	private Card initialTile;
