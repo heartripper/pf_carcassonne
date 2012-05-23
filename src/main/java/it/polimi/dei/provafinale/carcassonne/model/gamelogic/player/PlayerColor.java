@@ -19,10 +19,11 @@ public enum PlayerColor {
 	 */
 	public static PlayerColor valueOf(int id) {
 		PlayerColor[] colors = PlayerColor.values();
-		if (id < colors.length && id >= 0)
+		if (id < colors.length && id >= 0){
 			return colors[id];
-		else
+		}else{
 			return null;
+		}
 	}
 
 	/**

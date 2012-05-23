@@ -46,10 +46,11 @@ public class ClientMatchController implements Runnable {
 			case TURN:
 				PlayerColor color = PlayerColor.valueOf(turnMsg.payload);
 				setCurrentPlayer(color);
-				if (color == clientPlayerColor)
+				if (color == clientPlayerColor){
 					manageClientTurn();
-				else
+				}else{
 					handleUpdates();
+				}
 				break;
 			case END:
 				//TODO handle game end;
@@ -122,8 +123,9 @@ public class ClientMatchController implements Runnable {
 		if (response.type == MessageType.ROTATED) {
 			Card rotatedTile = new Card(response.payload.trim());
 			// TODO: Show rotated tile in GUI
-		} else
+		}else{
 			protocolOrderError("rotated", response.type);
+		}
 	}
 
 	private void handleTilePositioning() {
@@ -188,8 +190,9 @@ public class ClientMatchController implements Runnable {
 		int y = Integer.parseInt(split[2].trim());
 		Coord c = new Coord(x, y);
 		Card oldTile = grid.getTile(c);
-		if (oldTile == null)
+		if (oldTile == null){
 			grid.putTile(newTile, c);
+		}
 		else {
 			// Update followers
 			for (SidePosition pos : SidePosition.values()) {
@@ -224,11 +227,12 @@ public class ClientMatchController implements Runnable {
 		while (true) {
 			try {
 				msg = clientInterface.readMessage();
-				if (msg.type == MessageType.LOCK)
+				if (msg.type == MessageType.LOCK){
 					return handleLock(); // Handle lock and returns first
 											// correct message.
-				else
+				}else{
 					return msg;
+				}
 			} catch (ConnectionLostException cle) {
 				handleReconnection();
 			}

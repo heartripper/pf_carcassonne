@@ -26,9 +26,10 @@ public class CurrentTilePanel extends JPanel{
 	}
 	
 	protected void paintComponent(Graphics g){
-		if(currentTileRep == null)
+		if(currentTileRep == null){
 			tilePainter.paintPlaceHolder(g, 0, 0);
-		else
+		}else{
 			tilePainter.paintTile(currentTileRep, g, 0, 0);
+		}
 	}
 }

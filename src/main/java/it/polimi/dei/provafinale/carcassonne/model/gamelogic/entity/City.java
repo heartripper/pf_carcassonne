@@ -73,9 +73,9 @@ public class City extends Entity {
 	 */
 	@Override
 	public Entity enclose(Entity otherEntity) {
-		if (otherEntity.getMembers().size() > this.members.size())
+		if (otherEntity.getMembers().size() > this.members.size()){
 			return otherEntity.enclose(this);
-		else {
+		}else{
 			for (Side s : otherEntity.getMembers()) {
 				s.setEntity(this);
 				this.addMember(s);
