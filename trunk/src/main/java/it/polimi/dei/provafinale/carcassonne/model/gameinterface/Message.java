@@ -18,7 +18,7 @@ public class Message {
 	}
 
 	public static Message createFromProtocolMsg(String msg) {
-		String[] split = msg.split(",");
+		String[] split = msg.split(":");
 		MessageType type = MessageType.getTypeFor(split[0]);
 		return new Message(type, split[1].trim());
 	}
