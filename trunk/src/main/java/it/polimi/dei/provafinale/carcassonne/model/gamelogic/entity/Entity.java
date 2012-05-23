@@ -3,7 +3,6 @@ package it.polimi.dei.provafinale.carcassonne.model.gamelogic.entity;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Side;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Entity {
