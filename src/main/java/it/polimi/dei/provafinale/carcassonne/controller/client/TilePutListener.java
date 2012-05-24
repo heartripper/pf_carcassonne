@@ -19,12 +19,8 @@ public class TilePutListener implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String command = field.getText();
-		if(!command.matches("[-]??[0-9]+,[-]??[0-9]+")){
-			//Command inserted is malformed
-		}else{
-			Message msg = new Message(MessageType.PLACE, command);
-			MatchController.getCurrentMatchController().sendMessage(msg);
-		}
+		Message msg = new Message(MessageType.PLACE, command);
+		MatchController.getCurrentMatchController().sendMessage(msg);
 	}
 
 }
