@@ -1,7 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne.model.server;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -15,15 +14,17 @@ public class ServerGameInterface implements GameInterface {
 	private static final int RECONNECTION_TIMEOUT = 15 * 1000;
 	private Vector<PlayerConnection> playerConnections;
 	private String name;
+	private int numPlayers;
 
 	public ServerGameInterface(Vector<PlayerConnection> playerConnections) {
 		this.playerConnections = playerConnections;
 		this.name = Integer.toHexString(hashCode());
+		this.numPlayers = playerConnections.size();
 	}
 
 	@Override
 	public int askPlayerNumber() {
-		return playerConnections.size();
+		return numPlayers;
 	}
 
 	@Override
@@ -77,8 +78,8 @@ public class ServerGameInterface implements GameInterface {
 			}
 			int connectionIndex = playerConnections.indexOf(pc);
 			PlayerColor color = PlayerColor.valueOf(connectionIndex);
-			String protocolMessage = String.format("start: %s, %s, %s",
-					firstTile, name, color);
+			String protocolMessage = String.format("start: %s, %s, %s, %s",
+					firstTile, name, color, numPlayers);
 			try {
 				sendStringToPlayer(protocolMessage, pc);
 			} catch (PlayersDisconnectedException e) {

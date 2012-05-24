@@ -26,6 +26,10 @@ public class PlayersDisconnectedException extends Exception {
 		colors.addAll(newColors);
 	}
 	
+	public void add(PlayerColor color){
+		colors.add(color);
+	}
+	
 	public List<PlayerColor> getDisconnectedPlayers(){
 		return colors;
 	}
