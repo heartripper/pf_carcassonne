@@ -32,7 +32,7 @@ public class MatchControllerImpl implements Runnable {
 
 	public synchronized void sendMessage(Message msg) {
 		this.bufferedMessage = msg;
-		notify();
+		notifyAll();
 	}
 
 	@Override
