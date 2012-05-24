@@ -26,8 +26,8 @@ public class ClientSocketInterface implements ClientInterface {
 	public void connect() throws ConnectionLostException{
 		try{
 			socket = new Socket(addr, port);
-			in = new ObjectInputStream(socket.getInputStream());
 			out = new ObjectOutputStream(socket.getOutputStream());
+			in = new ObjectInputStream(socket.getInputStream());
 
 			sendToServer("connect");
 		}catch(IOException ioe){
@@ -66,7 +66,9 @@ public class ClientSocketInterface implements ClientInterface {
 
 	private String readFromServer() throws ConnectionLostException {
 		try {
-			return (String) in.readObject();
+			String msg =  (String) in.readObject();
+			System.out.println("SOCKET|READ: " + msg);
+			return msg;
 		} catch (ClassNotFoundException e) {
 			System.out.println("ClassNotFoundExcepion");
 			System.exit(1); // TODO: do something better
