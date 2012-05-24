@@ -224,12 +224,10 @@ public class Match {
 					continue;
 				}
 				sideEntity = oppositeEntity.enclose(currentEntity);
-				if (entities.contains(currentEntity)
-						&& currentEntity != sideEntity) {
+				if (entities.contains(currentEntity) && !currentEntity.equals(sideEntity)) {
 					entities.remove(currentEntity);
 				}
-				if (entities.contains(oppositeEntity)
-						&& oppositeEntity != sideEntity) {
+				if (entities.contains(oppositeEntity) && !oppositeEntity.equals(sideEntity)) {
 					entities.remove(oppositeEntity);
 				}
 			}

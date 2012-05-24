@@ -80,7 +80,7 @@ public class CarcassonneClient {
 				currentPlayer = PlayerColor.valueOf(msg[1].trim());
 				System.out.println("New turn:");
 				System.out.println(gridRepresenter.getRepresentation());
-				if (currentPlayer == clientColor) {
+				if (currentPlayer.equals(clientColor)) {
 					manageMyTurn();
 				} else {
 					manageOtherPlayerTurn();
