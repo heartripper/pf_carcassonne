@@ -2,6 +2,8 @@ package it.polimi.dei.provafinale.carcassonne.controller.client;
 
 import it.polimi.dei.provafinale.carcassonne.Constants;
 import it.polimi.dei.provafinale.carcassonne.view.menu.InternetGamePanel;
+import it.polimi.dei.provafinale.carcassonne.view.viewInterface.GUIViewInterface;
+import it.polimi.dei.provafinale.carcassonne.view.viewInterface.ViewInterface;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,7 +41,9 @@ public class StartInternetGame implements ActionListener{
 
 			ClientInterface ci = new ClientSocketInterface(addr, port);
 			ci.connect();
-			MatchController.startNewMatchController(ci);
+			ViewInterface vi = new GUIViewInterface();
+			
+			MatchController.startNewMatchController(ci, vi);
 			internetGamePanel.setNotifyText(Constants.MATCH_IS_STARTING);
 		}catch(NumberFormatException nfe){
 			internetGamePanel.setNotifyText(Constants.PORT_ERROR);
