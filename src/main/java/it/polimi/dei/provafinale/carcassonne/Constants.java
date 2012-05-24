@@ -6,6 +6,8 @@ public abstract class Constants {
 
 	public final static int TILE_PIXEL_DIMENSION = 125;
 
+	public final static boolean ASK_ON_CLOSE = false;
+	
 	public final static boolean DEBUG_MODE = true;
 	public final static String DEBUG_ADDR = "localhost";
 	public final static int DEBUG_PORT = 12345;
