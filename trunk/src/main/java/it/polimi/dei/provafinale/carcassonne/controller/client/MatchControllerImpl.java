@@ -139,12 +139,18 @@ public class MatchControllerImpl implements Runnable {
 	}
 
 	private void handleTilePositioning() {
+		String coord = bufferedMessage.payload;
+		if(!coord.matches("[-]??[0-9]+,[-]??[0-9]+")){
+			viewInterface.showNotify("Position not valid.");
+		}
+		
 		sendToServer(bufferedMessage);
 		Message response = readFromServer();
 		switch (response.type) {
 		case UPDATE:
 			handleTileUpdate(response.payload);
 			viewInterface.updateGridRepresentation();
+			viewInterface.showNotify("Tile placed.");
 			return;
 		case INVALID_MOVE:
 			viewInterface.showNotify("Card position not valid.");
