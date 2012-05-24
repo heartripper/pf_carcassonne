@@ -70,6 +70,10 @@ public class TextualViewInterface implements ViewInterface {
 				continue;
 			}
 			
+			if(line == null){
+				continue;
+			}
+			
 			Message request;
 			if(line.equals("rotate")){
 				request = new Message(MessageType.ROTATE, null);
