@@ -7,10 +7,8 @@ import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.TileGrid;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
-import it.polimi.dei.provafinale.carcassonne.view.CarcassonneFrame;
 import it.polimi.dei.provafinale.carcassonne.view.ViewManager;
-import it.polimi.dei.provafinale.carcassonne.view.game.GamePanel;
-import it.polimi.dei.provafinale.carcassonne.view.game.PlayerPanel;
+import it.polimi.dei.provafinale.carcassonne.view.viewInterface.ViewInterface;
 
 class MatchControllerImpl implements Runnable {
 
@@ -19,7 +17,7 @@ class MatchControllerImpl implements Runnable {
 
 	private Message bufferedMessage = null;
 	private ClientInterface clientInterface;
-	private GamePanel gamePanel;
+	private ViewInterface viewInterface;
 	private String matchName;
 
 	private TileGrid grid;
@@ -27,8 +25,9 @@ class MatchControllerImpl implements Runnable {
 	private boolean endTurn = false;
 	private PlayerColor clientPlayerColor;
 
-	public MatchControllerImpl(ClientInterface clientInterface) {
-		this.clientInterface = clientInterface;
+	public MatchControllerImpl(ClientInterface ci, ViewInterface vi) {
+		this.clientInterface = ci;
+		this.viewInterface = vi;
 		this.grid = new TileGrid();
 	}
 
@@ -59,8 +58,8 @@ class MatchControllerImpl implements Runnable {
 				}
 				break;
 			case END:
-				updateScore(turnMsg.payload);
-				gamePanel.setMessageText("Game end.");
+				viewInterface.updateScore(turnMsg.payload);
+				viewInterface.showMessage("Game end.");
 				endGame = true;
 				break;
 			default:
@@ -71,7 +70,6 @@ class MatchControllerImpl implements Runnable {
 	}
 
 	private void initializeMatch(String payload) {
-		gamePanel = new GamePanel();
 		// Parse command
 		String[] split = payload.split(",");
 		handleTileUpdate(split[0] + ", 0, 0");
@@ -79,30 +77,20 @@ class MatchControllerImpl implements Runnable {
 		clientPlayerColor = PlayerColor.valueOf(split[2].trim());
 		int playerNumber = Integer.parseInt(split[3].trim());
 
-		// Set game panel
-		gamePanel.setTilesPanelGrid(grid);
-		gamePanel.createPlayerPanels(playerNumber);
-		int index = PlayerColor.indexOf(clientPlayerColor);
-		gamePanel.getPlayerPanels()[index].setClientPlayer();
-		gamePanel.setUIActive(false);
-
-		// Append game panel to frame
-		CarcassonneFrame frame = ViewManager.getInstance().getFrame();
-		frame.setGamePanel(gamePanel);
-		frame.changeMainPanel(CarcassonneFrame.GAMEPANEL);
-		gamePanel.updateTileGridPanel();
+		viewInterface.initialize(grid, playerNumber, clientPlayerColor);
+		viewInterface.updateGridRepresentation();
 	}
 
 	private void setCurrentPlayer(PlayerColor color) {
 		String msg = String.format("It's player %s turn.", color.getFullName());
-		gamePanel.setMessageText(msg);
+		viewInterface.showMessage(msg);
 	}
 
 	// Turn management
 	private void manageClientTurn() {
 		System.out.println("Manage client turn.");
 		Message nextMessage = readFromServer();
-		gamePanel.setCurrentTile(nextMessage.payload.trim());
+		viewInterface.updateCurrentTile(nextMessage.payload.trim());
 
 		endTurn = false;
 		while (!endTurn) {
@@ -131,20 +119,21 @@ class MatchControllerImpl implements Runnable {
 	}
 
 	private synchronized void readFromGUI() {
-		gamePanel.setUIActive(true);
+		viewInterface.setUIActive(true);
 		while (bufferedMessage == null) {
 			try {
 				wait();
-			} catch (InterruptedException ie) {}
+			} catch (InterruptedException ie) {
+			}
 		}
-		gamePanel.setUIActive(false);
+		viewInterface.setUIActive(false);
 	}
 
 	private void handleRotation() {
 		sendToServer(bufferedMessage);
 		Message response = readFromServer();
 		if (response.type == MessageType.ROTATED) {
-			gamePanel.setCurrentTile(response.payload.trim());
+			viewInterface.updateCurrentTile(response.payload.trim());
 		} else {
 			protocolOrderError("rotated", response.type);
 		}
@@ -156,10 +145,10 @@ class MatchControllerImpl implements Runnable {
 		switch (response.type) {
 		case UPDATE:
 			handleTileUpdate(response.payload);
-			gamePanel.updateTileGridPanel();
+			viewInterface.updateGridRepresentation();
 			return;
 		case INVALID_MOVE:
-			gamePanel.setMessageText("Card position not valid.");
+			viewInterface.showMessage("Card position not valid.");
 			return;
 		default:
 			protocolOrderError("update' or 'invalid move", response.type);
@@ -173,11 +162,11 @@ class MatchControllerImpl implements Runnable {
 		switch (response.type) {
 		case UPDATE:
 			handleTileUpdate(response.payload);
-			gamePanel.setMessageText("Follower put on given side.");
+			viewInterface.showMessage("Follower put on given side.");
 			endTurn = true;
 			return;
 		case INVALID_MOVE:
-			gamePanel.setMessageText("You can't add a follower there.");
+			viewInterface.showMessage("You can't add a follower there.");
 			return;
 		default:
 			protocolOrderError("update' or 'invalid move", response.type);
@@ -186,10 +175,10 @@ class MatchControllerImpl implements Runnable {
 	}
 
 	private void manageOtherPlayerTurn() {
-		gamePanel.setUIActive(false);
+		viewInterface.setUIActive(false);
 		handleUpdates();
 	}
-	
+
 	// Helpers
 	private void handleUpdates() {
 		Message msg = null;
@@ -208,10 +197,10 @@ class MatchControllerImpl implements Runnable {
 				protocolOrderError("update' or 'score", msg.type);
 			}
 		}
-		//Update game panel
-		gamePanel.updateTileGridPanel();
-		//Update score
-		updateScore(msg.payload);
+		// Update game panel
+		viewInterface.updateGridRepresentation();
+		// Update score
+		viewInterface.updateScore(msg.payload);
 	}
 
 	private void handleTileUpdate(String command) {
@@ -232,18 +221,6 @@ class MatchControllerImpl implements Runnable {
 		}
 	}
 
-	private void updateScore(String msg){
-		String[] scores = msg.split(",");
-		PlayerPanel[] panels = gamePanel.getPlayerPanels();
-		for(String s : scores){
-			String[] split = s.split("=");
-			PlayerColor color = PlayerColor.valueOf(split[0].trim());
-			int colorIndex = PlayerColor.indexOf(color);
-			int score = Integer.parseInt(split[1].trim());
-			panels[colorIndex].setScore(score);
-		}
-	}
-	
 	private void protocolOrderError(String expected, MessageType received) {
 		System.out.printf(
 				"Protocol order error. Expecting '%s' but received '%s'.\n",
