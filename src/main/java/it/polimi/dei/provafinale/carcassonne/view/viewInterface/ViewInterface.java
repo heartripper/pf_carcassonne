@@ -13,7 +13,7 @@ public interface ViewInterface {
 
 	public abstract void updateScore(String msg);
 
-	public abstract void showMessage(String msg);
+	public abstract void showNotify(String msg);
 	
 	public abstract void setUIActive(boolean enabled);
 }

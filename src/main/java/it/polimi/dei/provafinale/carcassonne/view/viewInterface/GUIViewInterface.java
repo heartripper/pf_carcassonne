@@ -55,7 +55,7 @@ public class GUIViewInterface implements ViewInterface{
 	}
 
 	@Override
-	public void showMessage(String msg) {
+	public void showNotify(String msg) {
 		gamePanel.setMessageText(msg);
 	}
 
