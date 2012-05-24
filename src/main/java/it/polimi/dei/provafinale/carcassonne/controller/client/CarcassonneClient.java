@@ -190,7 +190,7 @@ public class CarcassonneClient {
 		String[] response = readFromServer();
 
 		if (response[0].equals("move not valid")) {
-			System.out.println("You can't add a coin on that side.");
+			System.out.println("You can't add a follower on that side.");
 			return false;
 		} else if (response[0].equals("update")) {
 			handleUpdate(response[1]);
