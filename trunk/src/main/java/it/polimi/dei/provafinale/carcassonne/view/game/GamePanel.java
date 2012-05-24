@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.BoxLayout;
 import java.awt.Dimension;
 import java.awt.Color;
+import java.awt.Graphics;
 
 import javax.swing.JLabel;
 import java.awt.FlowLayout;
@@ -22,13 +23,22 @@ public class GamePanel extends JPanel {
 	private static final long serialVersionUID = 4955959778710528121L;
 	
 	private JPanel tilesArea;
-	private PlayerPanel[] playerPanels;
+	private TilesPanel tilesPanel;
 	private JPanel players;
+	private PlayerPanel[] playerPanels;
+	private CurrentTilePanel currentTilePanel;
+	
+	private JButton rotateButton;
+	private JTextField coordsField;
+	private JButton putTileButton;
+	private JComboBox followerComboBox;
+	private JButton putFollowerButton;
 
 	public GamePanel() {
 		setLayout(new BorderLayout(0, 0));
 
 		tilesArea = new JPanel();
+		tilesArea.setLayout(new BorderLayout());
 		add(tilesArea, BorderLayout.CENTER);
 
 		// Notification panel
@@ -41,36 +51,37 @@ public class GamePanel extends JPanel {
 				BoxLayout.Y_AXIS));
 
 		//Current Tile panel
-		JPanel tilePanel = new JPanel();
+		currentTilePanel = new CurrentTilePanel();
 
 		//Rotate panel
 		JPanel rotatePanel = new JPanel();
 		rotatePanel.setLayout(new BoxLayout(rotatePanel, BoxLayout.X_AXIS));
-		JButton btnRotate = new JButton("Rotate");
-		rotatePanel.add(btnRotate);
+		rotateButton = new JButton("Rotate");
+		rotatePanel.add(rotateButton);
 
 		//Coords panel
 		JPanel coordsPanel = new JPanel();
 		coordsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		JLabel lblInsertCoordinatesxy = new JLabel("Insert coordinates (x,y):");
 		coordsPanel.add(lblInsertCoordinatesxy);
-		JTextField coordsField = new JTextField();
+		coordsField = new JTextField();
 		coordsField.setColumns(10);
 		coordsPanel.add(coordsField);
-		JButton btnPutTile = new JButton("Put tile");
-		coordsPanel.add(btnPutTile);
+		putTileButton = new JButton("Put tile");
+		coordsPanel.add(putTileButton);
 		
 		//Follower panel
 		JPanel followerPanel = new JPanel();
 		JLabel lblFollower = new JLabel("Follower:");
 		followerPanel.add(lblFollower);
 		String[] followerOptions = { "none", "north", "east", "south", "west" };
-		JComboBox comboBox = new JComboBox(followerOptions);
-		followerPanel.add(comboBox);
-		JButton btnPutFollower = new JButton("Put follower");
-		followerPanel.add(btnPutFollower);
+		followerComboBox = new JComboBox(followerOptions);
+		followerPanel.add(followerComboBox);
+		putFollowerButton = new JButton("Put follower");
+		followerPanel.add(putFollowerButton);
 
-		notificationPanel.add(tilePanel);
+		notificationPanel.add(currentTilePanel);
+		currentTilePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		notificationPanel.add(rotatePanel);
 		notificationPanel.add(coordsPanel);
 		notificationPanel.add(followerPanel);
@@ -111,7 +122,25 @@ public class GamePanel extends JPanel {
 	}
 
 	public void setTilesPanelGrid(TileGrid grid) {
-		TilesPanel panel = new TilesPanel(grid);
-		tilesArea.add(panel);
+		tilesPanel = new TilesPanel(grid);
+		tilesArea.add(tilesPanel);
+	}
+	
+	public void updateTileGridPanel(){
+		tilesPanel.updateRepresentation();
+		Graphics g = tilesPanel.getGraphics();
+		tilesPanel.paint(g);
+	}
+	
+	public void setCurrentTile(String rep){
+		currentTilePanel.setCurrentTile(rep);
+	}
+	
+	public void setUIActive(boolean enabled){
+		rotateButton.setEnabled(enabled);
+		coordsField.setEnabled(enabled);
+		putTileButton.setEnabled(enabled);
+		followerComboBox.setEnabled(enabled);
+		putFollowerButton.setEnabled(enabled);
 	}
 }
