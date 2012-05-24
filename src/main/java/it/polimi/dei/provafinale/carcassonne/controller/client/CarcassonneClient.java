@@ -59,7 +59,7 @@ public class CarcassonneClient {
 	}
 
 	public void start() {
-		if (in == null){
+		if (in == null) {
 			return;
 		}
 
@@ -115,7 +115,7 @@ public class CarcassonneClient {
 		Card tile = new Card(msg[1].trim());
 
 		System.out.println("It's your turn; your card:");
-		System.out.println(gridRepresenter.getTileRepresentation(tile));
+		System.out.println(TileGridRepresenter.getTileRepresentation(tile));
 
 		boolean endTurn = false, currentTileAdded = false;
 		while (!endTurn) {
@@ -133,16 +133,16 @@ public class CarcassonneClient {
 				System.out.println("You inserted an invalid command.");
 			}
 		}
-		
+
 		String[] command = readFromServer();
-		while(command[0].equals("update")){
+		while (command[0].equals("update")) {
 			handleUpdate(command[1]);
 			command = readFromServer();
 		}
-		
-		if(command[0].equals("score")){
+
+		if (command[0].equals("score")) {
 			updateScore(command[1]);
-		}else{
+		} else {
 			protocolOrderError("update' or 'score", command[0]);
 		}
 	}
@@ -155,7 +155,7 @@ public class CarcassonneClient {
 		}
 		Card tile = new Card(response[1].trim());
 		System.out.println("Rotated card:");
-		System.out.println(gridRepresenter.getTileRepresentation(tile));
+		System.out.println(TileGridRepresenter.getTileRepresentation(tile));
 	}
 
 	private void managePass() {
@@ -171,7 +171,8 @@ public class CarcassonneClient {
 		String[] response = readFromServer();
 
 		if (response[0].equals("move not valid")) {
-			System.out.println("You entered and invalid position for the card.");
+			System.out
+					.println("You entered and invalid position for the card.");
 			return false;
 		} else if (response[0].equals("update")) {
 			System.out.println("Tile put at given position.");
@@ -203,8 +204,8 @@ public class CarcassonneClient {
 	private void manageOtherPlayerTurn() {
 		System.out.printf("Player %s turn.\n", currentPlayer);
 		// During other player turn we will receive only updates;
-		//The first is the tile added by player.
-		//The others are changes caused by player moves.
+		// The first is the tile added by player.
+		// The others are changes caused by player moves.
 		String message[] = readFromServer();
 		while (message[0].equals("update")) {
 			handleUpdate(message[1]);
@@ -290,9 +291,9 @@ public class CarcassonneClient {
 
 	private void reconnectOrDie() {
 		for (int i = 0; i < maxReconnectAttempts; i++) {
-			if (attemptToReconnect()){
+			if (attemptToReconnect()) {
 				return;
-			}	
+			}
 		}
 
 		System.out.println("Failed to reconnect.");
