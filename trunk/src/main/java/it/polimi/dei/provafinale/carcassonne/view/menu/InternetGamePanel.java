@@ -16,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.ietf.jgss.MessageProp;
+
 import it.polimi.dei.provafinale.carcassonne.controller.MenuPanelSwitcher;
 import it.polimi.dei.provafinale.carcassonne.controller.client.StartInternetGame;
 
@@ -26,6 +28,7 @@ public class InternetGamePanel extends JPanel {
 	private JLabel messageLabel;
 	private JTextField serverIPField;
 	private JTextField serverPortField;
+	private JButton btnJoinGame;
 	
 	private BufferedImage background;
 
@@ -91,7 +94,7 @@ public class InternetGamePanel extends JPanel {
 		Component horizontalGlue03 = Box.createHorizontalGlue();
 		joinGamePanel.add(horizontalGlue03);
 
-		JButton btnJoinGame = new JButton("Join Game!");
+		btnJoinGame = new JButton("Join Game!");
 		joinGamePanel.add(btnJoinGame);
 		btnJoinGame.addActionListener(new StartInternetGame(this));
 
@@ -136,5 +139,11 @@ public class InternetGamePanel extends JPanel {
 	
 	public String getIPFieldValue(){
 		return serverIPField.getText();
+	}
+	
+	public void setUIActive(boolean active){
+		serverIPField.setEnabled(active);
+		serverPortField.setEnabled(active);
+		btnJoinGame.setEnabled(active);
 	}
 }
