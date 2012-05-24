@@ -88,7 +88,6 @@ public class MatchControllerImpl implements Runnable {
 
 	// Turn management
 	private void manageClientTurn() {
-		System.out.println("Manage client turn.");
 		Message nextMessage = readFromServer();
 		viewInterface.updateCurrentTile(nextMessage.payload.trim());
 
