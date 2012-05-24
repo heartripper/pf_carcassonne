@@ -80,9 +80,10 @@ public class TileStack {
 		}
 		
 		readTileStack = new ArrayList<Card>();
+		BufferedReader input = null;
 		try {
 			FileReader fr = new FileReader(new File(FILE_PATH));
-			BufferedReader input = new BufferedReader(fr);
+			input = new BufferedReader(fr);
 			String line;
 
 			line = input.readLine();
@@ -92,10 +93,19 @@ public class TileStack {
 				readTileStack.add(tile);
 				line = input.readLine(); // Go on to next line
 			}
-			input.close();
+
 		} catch (IOException e) {
 			// TODO: throw exception
 			System.out.println("Error opening tile file.");
+		}
+		
+		//Close stream if it has been opened.
+		if(input != null){
+			try{
+				input.close();
+			}catch(IOException e){
+				System.out.println("Error opening tile file.");				
+			} 
 		}
 		return readTileStack;
 	}
