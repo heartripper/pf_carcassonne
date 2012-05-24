@@ -38,7 +38,7 @@ public class TileGridPainter extends JLabel {
 		super.paintComponent(g);
 		int[] bounds = grid.getBounds();
 
-		for (int j = bounds[0] - 1; j <= bounds[2] + 1; j++) {
+		for (int j = bounds[2] + 1; j >= bounds[0] - 1; j--) {
 			for (int i = bounds[3] - 1; i <= bounds[1] + 1; i++) {
 				Coord c = new Coord(i, j);
 				Card tile = grid.getTile(c);
