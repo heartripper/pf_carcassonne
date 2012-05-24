@@ -3,9 +3,7 @@ package it.polimi.dei.provafinale.carcassonne.view.menu;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.LayoutManager;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
@@ -15,8 +13,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import org.ietf.jgss.MessageProp;
 
 import it.polimi.dei.provafinale.carcassonne.controller.MenuPanelSwitcher;
 import it.polimi.dei.provafinale.carcassonne.controller.client.StartInternetGame;
@@ -29,7 +25,7 @@ public class InternetGamePanel extends JPanel {
 	private JTextField serverIPField;
 	private JTextField serverPortField;
 	private JButton btnJoinGame;
-	
+
 	private BufferedImage background;
 
 	public InternetGamePanel(BufferedImage background) {
@@ -62,7 +58,7 @@ public class InternetGamePanel extends JPanel {
 		serverInfoPanel.add(horizontalGlue01);
 
 		JPanel ipPanel = new JPanel();
-		ipPanel.setBackground(new Color(0,0,0,0));
+		ipPanel.setBackground(new Color(0, 0, 0, 0));
 		JLabel lblInsertServerIp = new JLabel("Insert server IP address:");
 		ipPanel.add(lblInsertServerIp);
 		serverIPField = new JTextField();
@@ -70,7 +66,7 @@ public class InternetGamePanel extends JPanel {
 		serverIPField.setColumns(10);
 
 		JPanel portPanel = new JPanel();
-		portPanel.setBackground(new Color(0,0,0,0));
+		portPanel.setBackground(new Color(0, 0, 0, 0));
 		JLabel lblInsertPort = new JLabel("Insert server port:");
 		portPanel.add(lblInsertPort);
 		serverPortField = new JTextField();
@@ -128,20 +124,20 @@ public class InternetGamePanel extends JPanel {
 		int width = getWidth();
 		g.drawImage(background, (width - 778) / 2, 0, null);
 	}
-	
-	public JLabel getMessageLabel(){
+
+	public JLabel getMessageLabel() {
 		return messageLabel;
 	}
-	
-	public String getPortFieldValue(){
+
+	public String getPortFieldValue() {
 		return serverPortField.getText();
 	}
-	
-	public String getIPFieldValue(){
+
+	public String getIPFieldValue() {
 		return serverIPField.getText();
 	}
-	
-	public void setUIActive(boolean active){
+
+	public void setUIActive(boolean active) {
 		serverIPField.setEnabled(active);
 		serverPortField.setEnabled(active);
 		btnJoinGame.setEnabled(active);
