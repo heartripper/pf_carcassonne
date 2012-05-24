@@ -1,45 +1,52 @@
 package it.polimi.dei.provafinale.carcassonne.controller.client;
 
+import it.polimi.dei.provafinale.carcassonne.Constants;
 import it.polimi.dei.provafinale.carcassonne.view.menu.InternetGamePanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JTextField;
-
 public class StartInternetGame implements ActionListener{
 
-	private InternetGamePanel gamePanel;
+	private InternetGamePanel internetGamePanel;
 	
 	public StartInternetGame(InternetGamePanel gamePanel){
-		this.gamePanel = gamePanel;
+		this.internetGamePanel = gamePanel;
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent e) {
+		String addr;
+		int port;
+		
 		try{
-			String addr = gamePanel.getIPFieldValue();
-			String portString = gamePanel.getPortFieldValue();
-			
-			if(addr.equals("") || portString.equals("")){
-				gamePanel.getMessageLabel().setText("Please fill in all fields.");
-				return;
+			internetGamePanel.setUIActive(false);
+			if(Constants.DEBUG_MODE){
+				addr = Constants.DEBUG_ADDR;
+				port = Constants.DEBUG_PORT;
+			} else {
+				addr = internetGamePanel.getIPFieldValue();
+				String portString = internetGamePanel.getPortFieldValue();
+				
+				if(addr.equals("") || portString.equals("")){
+					internetGamePanel.setNotifyText(Constants.FIELDS_ERROR);
+					internetGamePanel.setUIActive(true);
+					return;
+				} else {
+					port = Integer.parseInt(portString);
+				}
 			}
-			
-			int port = Integer.parseInt(portString);
+
 			ClientInterface ci = new ClientSocketInterface(addr, port);
 			ci.connect();
-			ClientMatchController cc = new ClientMatchController(ci);
-			Thread th = new Thread(cc);
-			th.start();
-			
+			MatchController.startNewMatchController(ci);
+			internetGamePanel.setNotifyText(Constants.MATCH_IS_STARTING);
 		}catch(NumberFormatException nfe){
-			gamePanel.getMessageLabel().setText("Please insert a valid port value.");
+			internetGamePanel.setNotifyText(Constants.PORT_ERROR);
+			internetGamePanel.setUIActive(true);
 		}catch(ConnectionLostException cle){
-			gamePanel.getMessageLabel().setText("Connection to server failed.");
+			internetGamePanel.setNotifyText(Constants.CONNECTION_ERROR);
+			internetGamePanel.setUIActive(true);
 		}
 	}
-
-	
-	
 }
