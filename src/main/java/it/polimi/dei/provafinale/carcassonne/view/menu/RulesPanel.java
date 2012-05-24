@@ -10,6 +10,8 @@ import java.awt.Font;
 
 public class RulesPanel extends JPanel {
 
+	private static final long serialVersionUID = -6932041292515337091L;
+
 	public RulesPanel() {
 		
 		setBackground(new Color(0,0,0,0));
