@@ -22,16 +22,16 @@ public class Player {
 	}
 
 	/**
-	 * Check if the player has available coins.
+	 * Check if the player has available followers.
 	 * 
-	 * @return true if the Player has available coins, false instead.
+	 * @return true if the Player has available followers, false instead.
 	 */
 	public boolean hasFollowers() {
 		return followers > 0;
 	}
 
 	/**
-	 * Add one coin to the player's ones.
+	 * Add one follower to the player's ones.
 	 */
 	public void addFollowers(int amount) {
 		followers += amount;
@@ -43,7 +43,7 @@ public class Player {
 	}
 
 	/**
-	 * Remove one coin from the player's ones.
+	 * Remove one follower from the player's ones.
 	 */
 	public void removeFollower() {
 		if (followers > 0){
@@ -91,7 +91,7 @@ public class Player {
 	/**
 	 * Give an overview of the status of a player.
 	 * 
-	 * @return the color, the score and the available coins of the player.
+	 * @return the color, the score and the available followers of the player.
 	 */
 	public String getStatus() {
 		return String.format("%s: %s , %s", color.getFullName(), score, followers);
