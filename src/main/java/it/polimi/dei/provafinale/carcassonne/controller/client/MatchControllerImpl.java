@@ -105,11 +105,9 @@ public class MatchControllerImpl implements Runnable {
 				handleFollowerPositioning();
 				break;
 			case PASS:
-				sendMessage(bufferedMessage);
-				endTurn = true;
+				handlePass();
 				break;
 			}
-			ViewManager.getInstance().updateView();
 			// Consume buffered message;
 			bufferedMessage = null;
 		}
@@ -140,10 +138,10 @@ public class MatchControllerImpl implements Runnable {
 
 	private void handleTilePositioning() {
 		String coord = bufferedMessage.payload;
-		if(!coord.matches("[-]??[0-9]+,[-]??[0-9]+")){
+		if (!coord.matches("[-]??[0-9]+,[-]??[0-9]+")) {
 			viewInterface.showNotify("Position not valid.");
 		}
-		
+
 		sendToServer(bufferedMessage);
 		Message response = readFromServer();
 		switch (response.type) {
@@ -176,6 +174,21 @@ public class MatchControllerImpl implements Runnable {
 		default:
 			protocolOrderError("update' or 'invalid move", response.type);
 			return;
+		}
+	}
+
+	private void handlePass() {
+		sendMessage(bufferedMessage);
+		Message response = readFromServer();
+		switch(response.type){
+		case UPDATE:
+			endTurn = true;
+			break;
+		case INVALID_MOVE:
+			viewInterface.showNotify("You must add your card before passing.");
+			break;
+		default:
+			protocolOrderError("update' or 'invalid move", response.type);
 		}
 	}
 
@@ -272,10 +285,8 @@ public class MatchControllerImpl implements Runnable {
 				update = readFromServer();
 			}
 			return update;
-
 		case UNLOCK:
 			return readFromServer();
-
 		default:
 			protocolOrderError("leave' or 'unlock", msg.type);
 			return null;

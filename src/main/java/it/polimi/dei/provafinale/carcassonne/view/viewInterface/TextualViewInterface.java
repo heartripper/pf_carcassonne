@@ -61,6 +61,7 @@ public class TextualViewInterface implements ViewInterface {
 		}
 
 		while(true){
+			printMessage("Please insert command");
 			String line;
 			try{
 			line = input.readLine();
