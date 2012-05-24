@@ -97,7 +97,7 @@ public class Card {
 	}
 
 	/**
-	 * Find a side (with its entity type, entity, owner and coin) of a card.
+	 * Find a side (with its entity type, entity, owner and follower) of a card.
 	 * 
 	 * @param side
 	 *            - a SidePosition of a card.
@@ -124,10 +124,10 @@ public class Card {
 	}
 
 	/**
-	 * Tries to add a coin to the side corresponding to the given position in
+	 * Tries to add a follower to the side corresponding to the given position in
 	 * the current card.
 	 * 
-	 * @return true if the coin was added, false if it couldn't be added.
+	 * @return true if the follower was added, false if it couldn't be added.
 	 * */
 	public void addFollower(SidePosition position, PlayerColor color) {
 		Side side = getSide(position);
@@ -163,12 +163,12 @@ public class Card {
 
 	// TODO: Remove this.
 	/**
-	 * Give a list of the sides of a card that are available to accept coins.
+	 * Give a list of the sides of a card that are available to accept followers.
 	 * 
-	 * @return an ArrayList of SidePosition where is possible to set coins in
+	 * @return an ArrayList of SidePosition where is possible to set followers in
 	 *         the card.
 	 */
-	public List<SidePosition> sidesAcceptingCoin() {
+	public List<SidePosition> sidesAcceptingFollower() {
 		ArrayList<SidePosition> sides = new ArrayList<SidePosition>();
 		for (SidePosition position : SidePosition.values()) {
 			Entity entity = getSide(position).getEntity();

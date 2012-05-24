@@ -83,11 +83,11 @@ public class Side {
 	}
 
 	/**
-	 * Add a coin to a side.
+	 * Add a follower to a side.
 	 * 
 	 * @param player
 	 *            - a Player which the Card containing the Side belongs to.
-	 * @return true if the Player puts a Coin on the Side, false instead.
+	 * @return true if the Player puts a follower on the Side, false instead.
 	 */
 	public void setFollower(PlayerColor follower) {
 		this.follower = follower;

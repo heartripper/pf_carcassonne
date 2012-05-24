@@ -54,7 +54,7 @@ public class City extends Entity {
 	}
 
 	/**
-	 * Check if a coin can be put on a city.
+	 * Check if a follower can be put on a city.
 	 */
 	public boolean acceptFollowers() {
 		if (hasFollower) {
