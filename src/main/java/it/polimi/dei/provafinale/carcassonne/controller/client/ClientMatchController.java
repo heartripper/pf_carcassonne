@@ -51,7 +51,7 @@ public class ClientMatchController implements Runnable {
 			case TURN:
 				PlayerColor color = PlayerColor.valueOf(turnMsg.payload);
 				setCurrentPlayer(color);
-				if (color == clientPlayerColor){
+				if (color.equals(clientPlayerColor)){
 					manageClientTurn();
 				}else{
 					handleUpdates();
