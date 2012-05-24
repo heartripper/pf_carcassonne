@@ -1,5 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.view;
 
+import java.awt.Graphics;
+
 public class ViewManager{
 	
 	private static ViewManager instance = null;
@@ -25,5 +27,11 @@ public class ViewManager{
 		return frame;
 	}
 	
+	public void updateView(){
+		Graphics g = frame.getGraphics();
+		if(g != null){
+			frame.paint(g);
+		}
+	}
 	
 }
