@@ -1,5 +1,9 @@
 package it.polimi.dei.provafinale.carcassonne.view.game;
 
+import it.polimi.dei.provafinale.carcassonne.controller.client.FollowerPutListener;
+import it.polimi.dei.provafinale.carcassonne.controller.client.PassListener;
+import it.polimi.dei.provafinale.carcassonne.controller.client.TilePutListener;
+import it.polimi.dei.provafinale.carcassonne.controller.client.TileRotateListener;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.TileGrid;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 
@@ -21,18 +25,21 @@ import javax.swing.border.MatteBorder;
 public class GamePanel extends JPanel {
 
 	private static final long serialVersionUID = 4955959778710528121L;
-	
+
 	private JPanel tilesArea;
 	private TilesPanel tilesPanel;
 	private JPanel players;
 	private PlayerPanel[] playerPanels;
+
 	private CurrentTilePanel currentTilePanel;
-	
+	private JLabel messageLabel;
+
 	private JButton rotateButton;
 	private JTextField coordsField;
 	private JButton putTileButton;
 	private JComboBox followerComboBox;
 	private JButton putFollowerButton;
+	private JButton passButton;
 
 	public GamePanel() {
 		setLayout(new BorderLayout(0, 0));
@@ -42,24 +49,28 @@ public class GamePanel extends JPanel {
 		add(tilesArea, BorderLayout.CENTER);
 
 		// Notification panel
-		JPanel notificationPanel = new JPanel();
-		notificationPanel.setPreferredSize(new Dimension(195, 10));
-		notificationPanel.setBorder(new MatteBorder(0, 1, 0, 0,
-				(Color) Color.GRAY));
-		add(notificationPanel, BorderLayout.EAST);
-		notificationPanel.setLayout(new BoxLayout(notificationPanel,
-				BoxLayout.Y_AXIS));
+		JPanel actionsPanel = new JPanel();
+		actionsPanel.setPreferredSize(new Dimension(195, 10));
+		actionsPanel.setBorder(new MatteBorder(0, 1, 0, 0, (Color) Color.GRAY));
+		add(actionsPanel, BorderLayout.EAST);
+		actionsPanel.setLayout(new BoxLayout(actionsPanel, BoxLayout.Y_AXIS));
 
-		//Current Tile panel
+		// Current Tile panel
+		JPanel noticationsPanel = new JPanel();
+		noticationsPanel.setLayout(new FlowLayout());
 		currentTilePanel = new CurrentTilePanel();
+		noticationsPanel.add(currentTilePanel, BorderLayout.CENTER);
+		messageLabel = new JLabel();
+		noticationsPanel.add(messageLabel, BorderLayout.SOUTH);
 
-		//Rotate panel
+		// Rotate panel
 		JPanel rotatePanel = new JPanel();
 		rotatePanel.setLayout(new BoxLayout(rotatePanel, BoxLayout.X_AXIS));
 		rotateButton = new JButton("Rotate");
+		rotateButton.addActionListener(new TileRotateListener());
 		rotatePanel.add(rotateButton);
 
-		//Coords panel
+		// Coords panel
 		JPanel coordsPanel = new JPanel();
 		coordsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		JLabel lblInsertCoordinatesxy = new JLabel("Insert coordinates (x,y):");
@@ -68,24 +79,33 @@ public class GamePanel extends JPanel {
 		coordsField.setColumns(10);
 		coordsPanel.add(coordsField);
 		putTileButton = new JButton("Put tile");
+		putTileButton.addActionListener(new TilePutListener(coordsField));
 		coordsPanel.add(putTileButton);
-		
-		//Follower panel
+
+		// Follower panel
 		JPanel followerPanel = new JPanel();
 		JLabel lblFollower = new JLabel("Follower:");
 		followerPanel.add(lblFollower);
-		String[] followerOptions = { "none", "north", "east", "south", "west" };
+		String[] followerOptions = { "north", "east", "south", "west" };
 		followerComboBox = new JComboBox(followerOptions);
 		followerPanel.add(followerComboBox);
 		putFollowerButton = new JButton("Put follower");
+		putFollowerButton.addActionListener(new FollowerPutListener(
+				followerComboBox));
 		followerPanel.add(putFollowerButton);
 
-		notificationPanel.add(currentTilePanel);
-		currentTilePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		notificationPanel.add(rotatePanel);
-		notificationPanel.add(coordsPanel);
-		notificationPanel.add(followerPanel);
-
+		//Pass button
+		JPanel passPanel = new JPanel();
+		passButton = new JButton("Pass");
+		passButton.addActionListener(new PassListener());
+		passPanel.add(passButton);
+		
+		actionsPanel.add(noticationsPanel);
+		actionsPanel.add(rotatePanel);
+		actionsPanel.add(coordsPanel);
+		actionsPanel.add(followerPanel);
+		actionsPanel.add(passPanel);
+		
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setBorder(new MatteBorder(1, 0, 0, 0, (Color) Color.GRAY));
 		add(bottomPanel, BorderLayout.SOUTH);
@@ -125,22 +145,26 @@ public class GamePanel extends JPanel {
 		tilesPanel = new TilesPanel(grid);
 		tilesArea.add(tilesPanel);
 	}
-	
-	public void updateTileGridPanel(){
+
+	public void updateTileGridPanel() {
 		tilesPanel.updateRepresentation();
 		Graphics g = tilesPanel.getGraphics();
 		tilesPanel.paint(g);
 	}
-	
-	public void setCurrentTile(String rep){
+
+	public void setCurrentTile(String rep) {
 		currentTilePanel.setCurrentTile(rep);
 	}
-	
-	public void setUIActive(boolean enabled){
+
+	public void setUIActive(boolean enabled) {
 		rotateButton.setEnabled(enabled);
 		coordsField.setEnabled(enabled);
 		putTileButton.setEnabled(enabled);
 		followerComboBox.setEnabled(enabled);
 		putFollowerButton.setEnabled(enabled);
+	}
+
+	public void setMessageText(String msg) {
+		messageLabel.setText(msg);
 	}
 }

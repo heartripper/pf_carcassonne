@@ -17,22 +17,22 @@ public class TileGridPainter extends JLabel {
 	private final int TILE_DIM = 125;
 	private int currOffsetX;
 	private int currOffsetY;
-	
+
 	private TilePainter tilePainter = TilePainter.getInstance();
 
 	public TileGridPainter(TileGrid grid) {
 		this.grid = grid;
 	}
 
-	public void updateRepresentation(){
+	public void updateRepresentation() {
 		int[] bounds = grid.getBounds();
 		int vertTile = 3 + bounds[2] - bounds[0];
 		int horTile = 3 + bounds[1] - bounds[3];
-		currOffsetX = 1 + ( - bounds[3]);
-		currOffsetY = 1 + ( - bounds[0]);
+		currOffsetX = 1 - bounds[3];
+		currOffsetY = 1 + bounds[2];
 		setDimension(horTile * TILE_DIM, vertTile * TILE_DIM);
 	}
-	
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -44,7 +44,7 @@ public class TileGridPainter extends JLabel {
 				Card tile = grid.getTile(c);
 				if (tile != null) {
 					printCard(g, tile);
-				} else if(grid.hasNeighborForCoord(c)){
+				} else if (grid.hasNeighborForCoord(c)) {
 					printPlaceHolder(g, i, j);
 				}
 			}
@@ -54,14 +54,17 @@ public class TileGridPainter extends JLabel {
 	private void printCard(Graphics g, Card tile) {
 		Coord coord = tile.getCoordinates();
 		int x = (currOffsetX + coord.getX()) * TILE_DIM;
-		int y = (currOffsetY + coord.getY()) * TILE_DIM;
+		int y = (currOffsetY - coord.getY()) * TILE_DIM;
 		tilePainter.paintTile(tile.toString(), g, x, y);
 	}
 
 	private void printPlaceHolder(Graphics g, int i, int j) {
-		int x = (currOffsetX + i) * TILE_DIM;
-		int y = (currOffsetY + j) * TILE_DIM;
-		tilePainter.paintPlaceHolder(g, x, y);
+		int offsetX = (currOffsetX + i) * TILE_DIM;
+		int offsetY = (currOffsetY - j) * TILE_DIM;
+		tilePainter.paintPlaceHolder(g, offsetX, offsetY);
+		String coord = String.format("(%s,%s)", i, j);
+		g.drawString(coord, offsetX + TILE_DIM / 4, offsetY + TILE_DIM / 2);
+
 	}
 
 	public void setDimension(int x, int y) {

@@ -14,7 +14,6 @@ public class PlayerPanel extends JPanel {
 
 	private static final long serialVersionUID = -4975696838928188946L;
 
-	private int score;
 	private PlayerColor playerColor;
 
 	private JPanel colorPanel;
@@ -24,7 +23,6 @@ public class PlayerPanel extends JPanel {
 
 	public PlayerPanel(PlayerColor playerColor) {
 		setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		this.score = 0;
 		this.playerColor = playerColor;
 		
 		setPreferredSize(new Dimension(135, 70));
@@ -47,7 +45,7 @@ public class PlayerPanel extends JPanel {
 		
 		JPanel scorePanel = new JPanel();
 		scorePanel.setPreferredSize(new Dimension(10, 20));
-		lblScore = new JLabel("Score: " + String.valueOf(score));
+		lblScore = new JLabel("Score: 0");
 		scorePanel.add(lblScore);
 		
 		JPanel followerPanel = new JPanel();
@@ -60,9 +58,8 @@ public class PlayerPanel extends JPanel {
 		content.add(followerPanel);
 	}
 
-	public void addScore(int score) {
-		this.score += score;
-		lblScore.setText(String.valueOf(this.score));
+	public void setScore(int score) {
+		lblScore.setText("Score: " + score);
 	}
 
 	public void setFollowers(int numFollowers) {
@@ -76,5 +73,4 @@ public class PlayerPanel extends JPanel {
 	public void setClientPlayer(){
 		lblName.setText(playerColor.getFullName() + " (You)");
 	}
-
 }

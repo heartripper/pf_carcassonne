@@ -1,10 +1,9 @@
 package it.polimi.dei.provafinale.carcassonne.view.game;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -15,34 +14,28 @@ public class CurrentTilePanel extends JPanel{
 	private static final long serialVersionUID = 1677387556314454292L;
 	
 	private String currentTileRep;
-	private JLabel tileLabel;
+	private JLabel tileLabel = null;
 	private TilePainter tilePainter = TilePainter.getInstance();
+	private Dimension dim;
 	
 	public CurrentTilePanel(){
-		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		setLayout(new BorderLayout());
 		int tileDim = Constants.TILE_PIXEL_DIMENSION;
-		Dimension d = new Dimension(tileDim, tileDim);
+		dim = new Dimension(tileDim, tileDim);
 		
 		tileLabel = new JLabel();
-		tileLabel.setMinimumSize(new Dimension(125, 125));
-		tileLabel.setMaximumSize(new Dimension(125, 125));
-		tileLabel.setPreferredSize(d);
+		tileLabel.setSize(dim);
+		tileLabel.setPreferredSize(dim);
+		tileLabel.setMaximumSize(dim);
+		tileLabel.setMinimumSize(dim);
 		
-		JPanel inner = new JPanel();
-		inner.setLayout(new BoxLayout(inner, BoxLayout.Y_AXIS));
-		inner.add(Box.createVerticalGlue());
-		inner.add(tileLabel);
-		inner.add(Box.createVerticalGlue());
-		
-		add(Box.createHorizontalGlue());
-		add(inner);
-		add(Box.createHorizontalGlue());
+		add(tileLabel);
 	}
 	
 	public void setCurrentTile(String rep){
 		currentTileRep = rep;
-		Graphics g = getGraphics();
-		paint(g);
+		Graphics g = tileLabel.getGraphics();
+		paintComponent(g);
 	}
 	
 	protected void paintComponent(Graphics g){
