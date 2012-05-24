@@ -10,7 +10,7 @@ import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.view.ViewManager;
 import it.polimi.dei.provafinale.carcassonne.view.viewInterface.ViewInterface;
 
-class MatchControllerImpl implements Runnable {
+public class MatchControllerImpl implements Runnable {
 
 	private final int MAX_RECONNECTION_ATTEMPTS = 10;
 	private final int RECONNECTION_INTERVAL = 30 * 1000;
@@ -59,7 +59,7 @@ class MatchControllerImpl implements Runnable {
 				break;
 			case END:
 				viewInterface.updateScore(turnMsg.payload);
-				viewInterface.showMessage("Game end.");
+				viewInterface.showNotify("Game end.");
 				endGame = true;
 				break;
 			default:
@@ -83,7 +83,7 @@ class MatchControllerImpl implements Runnable {
 
 	private void setCurrentPlayer(PlayerColor color) {
 		String msg = String.format("It's player %s turn.", color.getFullName());
-		viewInterface.showMessage(msg);
+		viewInterface.showNotify(msg);
 	}
 
 	// Turn management
@@ -148,7 +148,7 @@ class MatchControllerImpl implements Runnable {
 			viewInterface.updateGridRepresentation();
 			return;
 		case INVALID_MOVE:
-			viewInterface.showMessage("Card position not valid.");
+			viewInterface.showNotify("Card position not valid.");
 			return;
 		default:
 			protocolOrderError("update' or 'invalid move", response.type);
@@ -162,11 +162,11 @@ class MatchControllerImpl implements Runnable {
 		switch (response.type) {
 		case UPDATE:
 			handleTileUpdate(response.payload);
-			viewInterface.showMessage("Follower put on given side.");
+			viewInterface.showNotify("Follower put on given side.");
 			endTurn = true;
 			return;
 		case INVALID_MOVE:
-			viewInterface.showMessage("You can't add a follower there.");
+			viewInterface.showNotify("You can't add a follower there.");
 			return;
 		default:
 			protocolOrderError("update' or 'invalid move", response.type);
