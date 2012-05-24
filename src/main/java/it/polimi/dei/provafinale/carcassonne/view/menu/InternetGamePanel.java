@@ -125,8 +125,8 @@ public class InternetGamePanel extends JPanel {
 		g.drawImage(background, (width - 778) / 2, 0, null);
 	}
 
-	public JLabel getMessageLabel() {
-		return messageLabel;
+	public void setNotifyText(String msg) {
+		messageLabel.setText(msg);
 	}
 
 	public String getPortFieldValue() {
