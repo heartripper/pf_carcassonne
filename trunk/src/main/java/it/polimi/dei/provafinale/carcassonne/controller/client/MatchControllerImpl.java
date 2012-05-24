@@ -58,8 +58,8 @@ public class MatchControllerImpl implements Runnable {
 				}
 				break;
 			case END:
-				viewInterface.updateScore(turnMsg.payload);
 				viewInterface.showNotify("Game end.");
+				viewInterface.updateScore(turnMsg.payload);
 				endGame = true;
 				break;
 			default:
@@ -178,9 +178,9 @@ public class MatchControllerImpl implements Runnable {
 	}
 
 	private void handlePass() {
-		sendMessage(bufferedMessage);
+		sendToServer(bufferedMessage);
 		Message response = readFromServer();
-		switch(response.type){
+		switch (response.type) {
 		case UPDATE:
 			endTurn = true;
 			break;
@@ -240,9 +240,10 @@ public class MatchControllerImpl implements Runnable {
 	}
 
 	private void protocolOrderError(String expected, MessageType received) {
-		System.out.printf(
+		String msg = String.format(
 				"Protocol order error. Expecting '%s' but received '%s'.\n",
 				expected, received);
+		viewInterface.showNotify(msg);
 		System.exit(1);
 	}
 
@@ -276,9 +277,12 @@ public class MatchControllerImpl implements Runnable {
 	}
 
 	private Message handleLock() {
+		viewInterface.showNotify("A player is not responding.");
 		Message msg = readFromServer();
 		switch (msg.type) {
 		case LEAVE:
+			String format = "Player %s left the game.\n";
+			viewInterface.showNotify(String.format(format, msg.payload));
 			Message update = readFromServer();
 			while (update.type == MessageType.UPDATE) {
 				handleTileUpdate(update.payload);
@@ -286,6 +290,7 @@ public class MatchControllerImpl implements Runnable {
 			}
 			return update;
 		case UNLOCK:
+			viewInterface.showNotify("Player reconnected.");
 			return readFromServer();
 		default:
 			protocolOrderError("leave' or 'unlock", msg.type);
