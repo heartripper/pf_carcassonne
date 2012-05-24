@@ -7,7 +7,9 @@ import it.polimi.dei.provafinale.carcassonne.model.gamelogic.entity.EntityType;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class representing cards. Sides are represented using the convention North =
@@ -20,6 +22,8 @@ public class Card {
 
 	private Side[] sides;
 	private List<SideConnection> connections;
+	private Map<String, String> linksCache;
+	private boolean linksCacheValid = false;
 
 	private final SidePosition[] representationOrder = { SidePosition.N,
 			SidePosition.S, SidePosition.W, SidePosition.E };
@@ -185,10 +189,10 @@ public class Card {
 	 */
 	public List<Side> sidesLinkedTo(Side side1) {
 		List<Side> sides = new ArrayList<Side>();
-		for(Side side2 : this.sides){
-			if(side1 != side2){
+		for (Side side2 : this.sides) {
+			if (side1 != side2) {
 				SideConnection connection = new SideConnection(side1, side2);
-				if(connections.contains(connection)){
+				if (connections.contains(connection)) {
 					sides.add(side2);
 				}
 			}
@@ -244,29 +248,41 @@ public class Card {
 			representation.append(rep);
 		}
 		// Connections representation
-		for (SidePosition pos1 : representationOrder) {
-			for (SidePosition pos2 : representationOrder) {
-				if (pos2.getIndex() <= pos1.getIndex()) {
-					continue;
+		if (!linksCacheValid) {
+			linksCache = new HashMap<String, String>();
+			for (int i = 0; i < representationOrder.length; i++) {
+				for (int j = 0; j < representationOrder.length; j++) {
+					if (i >= j) {
+						continue;
+					}
+					SidePosition pos1 = representationOrder[i];
+					SidePosition pos2 = representationOrder[j];
+					SideConnection con = new SideConnection(getSide(pos1),
+							getSide(pos2));
+					boolean connected = connections.contains(con);
+					int val = (connected ? 1 : 0);
+					String conn = String.format("%s%s", pos1, pos2);
+					String rep = String.format("%s=%s ", conn, val);
+					linksCache.put(conn, rep);
 				}
-				Side start = getSide(pos1);
-				Side end = getSide(pos2);
-				SideConnection connection = new SideConnection(start, end);
-				boolean connected = connections.contains(connection);
-				int val = (connected ? 1 : 0);
-				String rep = String.format("%s%s=%s ", pos1, pos2, val);
-				representation.append(rep);
 			}
+
 		}
 
+		representation.append(linksCache.get("NS"));
+		representation.append(linksCache.get("NE"));
+		representation.append(linksCache.get("NW"));
+		representation.append(linksCache.get("WE"));
+		representation.append(linksCache.get("SE"));
+		representation.append(linksCache.get("SW"));
 		return representation.toString().trim();
 	}
 
 	private String getSideRep(SidePosition pos) {
 		String rep = getSide(pos).getType().toString();
 		PlayerColor follower = getSide(pos).getFollower();
-		String col = ( follower == null ? null : follower.toString());
-		if(col != null){
+		String col = (follower == null ? null : follower.toString());
+		if (col != null) {
 			rep += ("-" + col);
 		}
 		return rep;
