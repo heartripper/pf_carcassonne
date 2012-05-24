@@ -2,8 +2,12 @@ package it.polimi.dei.provafinale.carcassonne.view.game;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,9 +20,7 @@ public class TilePainter {
 	
 	private BufferedImage tilePlaceHolder;
 	private String placeHolderPath = "src/main/resources/placeholder.png";
-
-	private String tilePath = "src/main/resources/card.png";
-	private BufferedImage tileImage;
+	
 	private Map<String, BufferedImage> imgLib;
 	
 	private static TilePainter instance = null;
@@ -32,16 +34,31 @@ public class TilePainter {
 	
 	private TilePainter() {
 		imgLib = new HashMap<String, BufferedImage>();
+		String sourceInitialTales = "src/main/resources/tiles.txt";
+		String line;
+		
+		try {
+			FileReader fr = new FileReader(new File(sourceInitialTales));
+			BufferedReader in = new BufferedReader(fr);
+			
+			while((line = in.readLine()) != null){
+				
+				
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
 		try {
 			tilePlaceHolder = ImageIO.read(new File(placeHolderPath));
-			tileImage = ImageIO.read(new File(tilePath));
 		} catch (IOException ioe) {
 			System.out.println("Error reading tile images.");
 		}
 	}
 
 	public void paintTile(String rep, Graphics g, int x, int y) {
-		g.drawImage(tileImage, x, y, tileDim, tileDim, null);
+//		g.drawImage(tileImage, x, y, tileDim, tileDim, null);
 	}
 
 	public void paintPlaceHolder(Graphics g, int x, int y) {
@@ -52,7 +69,8 @@ public class TilePainter {
 		if(imgLib.containsKey(rep)){
 			return imgLib.get(rep);
 		}else{
-			String path = String.format(tilesPathFormat, rep);
+			String fileName = rep.replaceAll("[ ]??[NSWE]??[NSWE]=", "");
+			String path = String.format(tilesPathFormat, fileName);
 			try{
 				BufferedImage img = ImageIO.read(new File(path));
 				imgLib.put(rep, img);
