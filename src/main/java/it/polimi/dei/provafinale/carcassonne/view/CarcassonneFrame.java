@@ -11,6 +11,7 @@ import java.awt.CardLayout;
 
 public class CarcassonneFrame extends JFrame{
 	
+	private static final long serialVersionUID = -7524847858570259831L;
 	public static final String MENUPANEL = "menupanel";
 	public static final String GAMEPANEL = "gamepanel";
 	
