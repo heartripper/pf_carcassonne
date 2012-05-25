@@ -39,6 +39,9 @@ public class TextualViewInterface implements ViewInterface {
 
 	@Override
 	public void updateCurrentTile(String rep) {
+		if(rep == null){
+			return;
+		}
 		printMessage("Your card: ");
 		Card c = new Card(rep);
 		printMessage(TileGridRepresenter.getTileRepresentation(c));
