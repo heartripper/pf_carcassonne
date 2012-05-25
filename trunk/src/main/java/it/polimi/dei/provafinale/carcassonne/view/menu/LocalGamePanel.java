@@ -64,6 +64,7 @@ public class LocalGamePanel extends JPanel {
 		add(verticalStrut);
 		
 		JPanel guiPanel = new JPanel();
+		guiPanel.setBackground(new Color(0,0,0,0));
 		add(guiPanel);
 		
 		JLabel lblSelectGui = new JLabel("Select GUI:");
