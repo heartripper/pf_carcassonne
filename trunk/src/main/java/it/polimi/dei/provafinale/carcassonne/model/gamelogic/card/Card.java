@@ -161,24 +161,6 @@ public class Card {
 		return grid.getTile(neighborCoord);
 	}
 
-	// TODO: Remove this.
-	/**
-	 * Give a list of the sides of a card that are available to accept followers.
-	 * 
-	 * @return an ArrayList of SidePosition where is possible to set followers in
-	 *         the card.
-	 */
-	public List<SidePosition> sidesAcceptingFollower() {
-		ArrayList<SidePosition> sides = new ArrayList<SidePosition>();
-		for (SidePosition position : SidePosition.values()) {
-			Entity entity = getSide(position).getEntity();
-			if (entity != null && entity.acceptFollowers()) {
-				sides.add(position);
-			}
-		}
-		return sides;
-	}
-
 	/**
 	 * Give a list of the sides linked to a given one in a card because of the
 	 * presence of an entity.
