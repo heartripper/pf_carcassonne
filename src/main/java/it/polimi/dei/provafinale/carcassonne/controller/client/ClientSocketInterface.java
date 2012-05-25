@@ -17,56 +17,66 @@ public class ClientSocketInterface implements ClientInterface {
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 
+	/**
+	 * ClientSocketInterface constructor. Creates a new instance of class
+	 * ClientSocketInterface.
+	 * 
+	 * @param addr
+	 *            a String representing an address.
+	 * @param port
+	 *            a port number.
+	 */
 	public ClientSocketInterface(String addr, int port) {
 		this.addr = addr;
 		this.port = port;
 	}
 
 	@Override
-	public void connect() throws ConnectionLostException{
-		try{
+	public void connect() throws ConnectionLostException {
+		try {
 			socket = new Socket(addr, port);
 			out = new ObjectOutputStream(socket.getOutputStream());
 			in = new ObjectInputStream(socket.getInputStream());
-
 			sendToServer("connect");
-		}catch(IOException ioe){
+		} catch (IOException ioe) {
 			throw new ConnectionLostException();
 		}
 	}
 
 	@Override
-	public void sendMessage(Message msg) throws ConnectionLostException{
+	public void sendMessage(Message msg) throws ConnectionLostException {
 		String protocolMsg = msg.toProtocolMessage();
 		sendToServer(protocolMsg);
 	}
 
 	@Override
-	public Message readMessage() throws ConnectionLostException{
-			String protocolMsg = readFromServer();
-			Message msg = Message.createFromProtocolMsg(protocolMsg);
-			return msg;
+	public Message readMessage() throws ConnectionLostException {
+		String protocolMsg = readFromServer();
+		Message msg = Message.createFromProtocolMsg(protocolMsg);
+		return msg;
 	}
 
 	@Override
-	public void reconnect(String matchName, PlayerColor color) throws ConnectionLostException {
+	public void reconnect(String matchName, PlayerColor color)
+			throws ConnectionLostException {
 		String message = String.format("reconnect: %s, %s", color, matchName);
 		sendToServer(message);
 	}
-	
-	// Helper methods
-	private void sendToServer(String msg) throws ConnectionLostException{
-		try{
+
+	/* Helper methods. */
+
+	private void sendToServer(String msg) throws ConnectionLostException {
+		try {
 			out.writeObject(msg);
 			out.flush();
-		}catch(IOException ioe){
+		} catch (IOException ioe) {
 			throw new ConnectionLostException();
 		}
 	}
 
 	private String readFromServer() throws ConnectionLostException {
 		try {
-			String msg =  (String) in.readObject();
+			String msg = (String) in.readObject();
 			System.out.println("SOCKET|READ: " + msg);
 			return msg;
 		} catch (ClassNotFoundException e) {
@@ -77,4 +87,5 @@ public class ClientSocketInterface implements ClientInterface {
 			throw new ConnectionLostException();
 		}
 	}
+
 }

@@ -13,16 +13,24 @@ public class ClientLocalInterface implements GameInterface, ClientInterface {
 	private MessageBuffer clientBuffer;
 	private int playerNumber;
 
+	/**
+	 * ClientLocalInterface constructor. Creates a new instance of class
+	 * ClientLocalInterface.
+	 * 
+	 * @param playerNumber
+	 *            the number of players that want to play in the current game.
+	 */
 	public ClientLocalInterface(int playerNumber) {
 		this.playerNumber = playerNumber;
 		this.modelBuffer = new MessageBuffer();
 		this.clientBuffer = new MessageBuffer();
 	}
 
-	// Client interface
+	/* Client interface. */
+
 	@Override
 	public void connect() throws ConnectionLostException {
-		// Nothing to do here in local game.
+		/* Nothing to do here in local game. */
 		return;
 	}
 
@@ -38,11 +46,12 @@ public class ClientLocalInterface implements GameInterface, ClientInterface {
 
 	@Override
 	public void reconnect(String matchName, PlayerColor color) {
-		// Nothing to do here in local game.
+		/* Nothing to do here in local game. */
 		return;
 	}
 
-	// Game interface
+	/* Game interface */
+
 	@Override
 	public int askPlayerNumber() {
 		return playerNumber;
@@ -62,8 +71,8 @@ public class ClientLocalInterface implements GameInterface, ClientInterface {
 	}
 
 	@Override
-	public void sendAllPlayer(Message msg)
-			throws PlayersDisconnectedException {
+	public void sendAllPlayer(Message msg) throws PlayersDisconnectedException {
+		/* Case start message. */
 		if (msg.type == MessageType.START) {
 			String tile = msg.payload;
 			String payload = String.format("%s, %s, %s, %s", tile, "localgame",
