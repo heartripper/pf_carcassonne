@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 
 import it.polimi.dei.provafinale.carcassonne.controller.MenuPanelSwitcher;
 import it.polimi.dei.provafinale.carcassonne.controller.client.StartInternetGame;
+import javax.swing.JComboBox;
 
 public class InternetGamePanel extends JPanel {
 
@@ -81,6 +82,26 @@ public class InternetGamePanel extends JPanel {
 
 		Component verticalStrut = Box.createVerticalStrut(20);
 		add(verticalStrut);
+		
+		JPanel protocolPanel = new JPanel();
+		add(protocolPanel);
+		
+		JLabel lblSelectProtocol = new JLabel("Select protocol: ");
+		protocolPanel.add(lblSelectProtocol);
+		
+		String[] protocol = {"Socket", "RMI"};
+		JComboBox selectProtocolComboBox = new JComboBox(protocol);
+		protocolPanel.add(selectProtocolComboBox);
+		
+		JPanel guiPanel = new JPanel();
+		add(guiPanel);
+		
+		JLabel lblSelectGui = new JLabel("Select GUI: ");
+		guiPanel.add(lblSelectGui);
+		
+		String[] gui = {"Swing", "Textual"};
+		JComboBox guiComboBox = new JComboBox(gui);
+		guiPanel.add(guiComboBox);
 
 		JPanel joinGamePanel = new JPanel();
 		joinGamePanel.setBackground(new Color(0, 0, 0, 0));
