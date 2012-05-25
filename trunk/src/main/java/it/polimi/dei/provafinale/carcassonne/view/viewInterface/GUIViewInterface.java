@@ -20,8 +20,10 @@ public class GUIViewInterface implements ViewInterface{
 		// Set game panel
 		gamePanel.setTilesPanelGrid(grid);
 		gamePanel.createPlayerPanels(numPlayers);
-		int index = PlayerColor.indexOf(clientColor);
-		gamePanel.getPlayerPanels()[index].setClientPlayer();
+		if(clientColor != null){
+			int index = PlayerColor.indexOf(clientColor);
+			gamePanel.getPlayerPanels()[index].setClientPlayer();
+		}
 		gamePanel.setUIActive(false);
 
 		// Append game panel to frame
