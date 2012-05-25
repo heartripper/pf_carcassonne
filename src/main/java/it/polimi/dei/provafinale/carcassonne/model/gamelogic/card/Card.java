@@ -54,7 +54,7 @@ public class Card {
 		int posIndex = SidePosition.valueOf(name).getIndex();
 		String sideType = null;
 		PlayerColor follower = null;
-		if (value.indexOf("-") == -1) {
+		if (value.indexOf('-') == -1) {
 			sideType = value;
 		} else {
 			String[] split = value.split("-");
