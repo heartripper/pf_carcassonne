@@ -138,6 +138,9 @@ public class TextualInterface implements GameInterface {
 		case END:
 			out.println("End game. Score: " + msg.payload);
 			break;
+			
+		default:
+			break;
 		}
 	}
 
