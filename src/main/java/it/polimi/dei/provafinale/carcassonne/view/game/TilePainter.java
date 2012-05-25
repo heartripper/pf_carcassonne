@@ -1,6 +1,5 @@
 package it.polimi.dei.provafinale.carcassonne.view.game;
 
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
@@ -8,9 +7,7 @@ import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -65,7 +62,7 @@ public class TilePainter {
 			System.out.println("Error reading tile images.");
 		}
 
-		String followerRegExp = "[NESW]=.-[RBVGN]";
+		String followerRegExp = "(N|E|S|W)=.-(R|B|V|G|N)";
 		followerPattern = Pattern.compile(followerRegExp);
 	}
 
@@ -75,7 +72,7 @@ public class TilePainter {
 		BufferedImage img = getImage(base);
 		g.drawImage(img, x, y, tileDim, tileDim, null);
 		if (rep.indexOf('-') != -1) {
-
+			paintFollower(rep, g, x, y);
 		}
 	}
 
@@ -126,7 +123,8 @@ public class TilePainter {
 		// creating the AffineTransform instance
 		AffineTransform affineTransform = new AffineTransform();
 		/* Rotate the image. */
-		affineTransform.rotate(Math.toRadians(90 * rotCount));
+		double radians = - Math.toRadians(90 * rotCount);
+		affineTransform.rotate(radians, tileDim / 2, tileDim / 2);
 		/* Draw the image using the AffineTransform. */
 		BufferedImage rotateImage = new BufferedImage(tileDim, tileDim,
 				BufferedImage.TYPE_INT_ARGB);
@@ -138,35 +136,42 @@ public class TilePainter {
 
 	private void paintFollower(String rep, Graphics g, int x, int y) {
 		Matcher m = followerPattern.matcher(rep);
+		if (!m.find()) {
+			return;
+		}
+
 		char posChar = rep.charAt(m.start());
-		char colChar = rep.charAt(m.end());
-		PlayerColor color = PlayerColor.valueOf(String.valueOf(posChar));
-		SidePosition pos = SidePosition.valueOf(String.valueOf(colChar));
-		
+		char colChar = rep.charAt(m.end() - 1);
+		PlayerColor color = PlayerColor.valueOf(String.valueOf(colChar));
+		SidePosition pos = SidePosition.valueOf(String.valueOf(posChar));
+
 		g.setColor(color.getColor());
-		
-		int smallDist = tileDim / 16;
-		int mediumDist = tileDim / 8;
+
+		double unit = ((double) tileDim) / 16;
+		int smallSpacer = (int) unit;
+		int mediumSpacer = (int) (7 * unit);
+		int bigSpacer = (int) (13 * unit);
+
 		Point p;
-		switch (pos){
-		case N: 
-			p = new Point(7*smallDist, smallDist);
+		switch (pos) {
+		case N:
+			p = new Point(mediumSpacer, smallSpacer);
 			break;
 		case S:
-			p = new Point(7*smallDist, 13*smallDist);
+			p = new Point(mediumSpacer, bigSpacer);
 			break;
 		case W:
-			p = new Point(smallDist, 7*smallDist);
+			p = new Point(smallSpacer, mediumSpacer);
 			break;
 		case E:
-			p = new Point(13*smallDist, 7*smallDist);
+			p = new Point(bigSpacer, mediumSpacer);
 			break;
-		default: 
+		default:
 			p = null;
 			break;
 		}
-		
-		g.drawOval(p.x, p.y, mediumDist, mediumDist);
-		
+
+		g.fillOval(x + p.x, y + p.y, 2 * smallSpacer, 2 * smallSpacer);
+
 	}
 }

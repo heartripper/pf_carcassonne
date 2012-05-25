@@ -4,6 +4,7 @@ import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.TileGrid;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
@@ -63,6 +64,7 @@ public class TileGridPainter extends JLabel {
 		int offsetY = (currOffsetY - j) * TILE_DIM;
 		tilePainter.paintPlaceHolder(g, offsetX, offsetY);
 		String coord = String.format("(%s,%s)", i, j);
+		g.setColor(Color.BLACK);
 		g.drawString(coord, offsetX + TILE_DIM / 4, offsetY + TILE_DIM / 2);
 
 	}
