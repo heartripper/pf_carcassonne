@@ -112,6 +112,8 @@ public class MatchControllerImpl implements Runnable {
 		}
 		// Handle tile and score updates
 		handleUpdates();
+		//Remove current tile from View
+		viewInterface.updateCurrentTile(null);
 	}
 
 	private synchronized void readFromGUI() {
