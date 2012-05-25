@@ -26,9 +26,12 @@ public class TextualViewInterface implements ViewInterface {
 	public void initialize(TileGrid grid, int numPlayers,
 			PlayerColor clientColor) {
 		this.representer = new TileGridRepresenter(grid);
-		String format = "Match starts: %s players, you are player %s.\n";
-		String playerFullName = clientColor.getFullName();
-		printMessage(String.format(format, numPlayers, playerFullName));
+		String format = "Match starts: %s players%s.\n";
+		String clientColorStr = "";
+		if(clientColor != null){
+			clientColorStr = ", you are player " + clientColor.getFullName();
+		}
+		printMessage(String.format(format, numPlayers, clientColorStr));
 	}
 
 	@Override
