@@ -76,7 +76,7 @@ public class TileStack {
 
 	private synchronized List<Card> readTiles() {
 		if(readTileStack != null){
-			return readTileStack;
+			return new ArrayList<Card>(readTileStack);
 		}
 		
 		readTileStack = new ArrayList<Card>();
