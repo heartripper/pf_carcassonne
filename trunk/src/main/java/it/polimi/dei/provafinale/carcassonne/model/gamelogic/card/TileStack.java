@@ -1,5 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.model.gamelogic.card;
 
+import it.polimi.dei.provafinale.carcassonne.Constants;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -15,8 +17,6 @@ import java.util.Random;
 public class TileStack {
 
 	private static List<Card> readTileStack = null;
-	
-	private static final String FILE_PATH = "src/main/resources/carcassonne_mini.dat";
 
 	private List<Card> tiles;
 	private Card initialTile;
@@ -79,10 +79,17 @@ public class TileStack {
 			return new ArrayList<Card>(readTileStack);
 		}
 		
+		String path;
+		if(Constants.USE_FEW_TILES){
+			path = Constants.LESS_TILES_PATH;
+		}else{
+			path = Constants.TILES_PATH;
+		}
+		
 		readTileStack = new ArrayList<Card>();
 		BufferedReader input = null;
 		try {
-			FileReader fr = new FileReader(new File(FILE_PATH));
+			FileReader fr = new FileReader(new File(path));
 			input = new BufferedReader(fr);
 			String line;
 
