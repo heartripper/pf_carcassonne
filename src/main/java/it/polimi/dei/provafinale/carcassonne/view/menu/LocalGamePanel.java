@@ -61,6 +61,16 @@ public class LocalGamePanel extends JPanel {
 
 		Component verticalStrut = Box.createVerticalStrut(20);
 		add(verticalStrut);
+		
+		JPanel guiPanel = new JPanel();
+		add(guiPanel);
+		
+		JLabel lblSelectGui = new JLabel("Select GUI:");
+		guiPanel.add(lblSelectGui);
+		
+		String[] gui = {"Swing", "Textual"};
+		JComboBox guiComboBox = new JComboBox(gui);
+		guiPanel.add(guiComboBox);
 
 		JPanel playGamePanel = new JPanel();
 		playGamePanel.setBackground(new Color(0, 0, 0, 0));
