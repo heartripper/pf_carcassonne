@@ -50,7 +50,7 @@ public class MatchControllerImpl implements Runnable {
 			case TURN:
 				PlayerColor color = PlayerColor.valueOf(turnMsg.payload);
 				setCurrentPlayer(color);
-				if (color.equals(clientPlayerColor)) {
+				if (clientPlayerColor == null || color.equals(clientPlayerColor)) {
 					manageClientTurn();
 				} else {
 					manageOtherPlayerTurn();
@@ -73,7 +73,12 @@ public class MatchControllerImpl implements Runnable {
 		String[] split = payload.split(",");
 		handleTileUpdate(split[0] + ", 0, 0");
 		matchName = split[1].trim();
-		clientPlayerColor = PlayerColor.valueOf(split[2].trim());
+		String color = split[2].trim();
+		if(color.equals("null")){
+			clientPlayerColor = null;
+		} else {
+			clientPlayerColor = PlayerColor.valueOf(color);
+		}
 		int playerNumber = Integer.parseInt(split[3].trim());
 
 		viewInterface.initialize(grid, playerNumber, clientPlayerColor);
@@ -112,8 +117,6 @@ public class MatchControllerImpl implements Runnable {
 		}
 		// Handle tile and score updates
 		handleUpdates();
-		//Remove current tile from View
-		viewInterface.updateCurrentTile(null);
 	}
 
 	private synchronized void readFromGUI() {
