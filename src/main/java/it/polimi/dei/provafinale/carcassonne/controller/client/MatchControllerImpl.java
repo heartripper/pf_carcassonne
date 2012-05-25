@@ -111,6 +111,8 @@ public class MatchControllerImpl implements Runnable {
 			case PASS:
 				handlePass();
 				break;
+			default:
+				break;
 			}
 			// Consume buffered message;
 			bufferedMessage = null;
