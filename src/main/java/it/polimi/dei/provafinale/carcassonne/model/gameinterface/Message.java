@@ -51,4 +51,11 @@ public class Message {
 		}
 		return new Message(type, payload);
 	}
+
+	@Override
+	public String toString() {
+		return toProtocolMessage();
+	}
+	
+	
 }
