@@ -84,6 +84,7 @@ public class InternetGamePanel extends JPanel {
 		add(verticalStrut);
 		
 		JPanel protocolPanel = new JPanel();
+		protocolPanel.setBackground(new Color(0,0,0,0));
 		add(protocolPanel);
 		
 		JLabel lblSelectProtocol = new JLabel("Select protocol: ");
@@ -94,6 +95,7 @@ public class InternetGamePanel extends JPanel {
 		protocolPanel.add(selectProtocolComboBox);
 		
 		JPanel guiPanel = new JPanel();
+		guiPanel.setBackground(new Color(0,0,0,0));
 		add(guiPanel);
 		
 		JLabel lblSelectGui = new JLabel("Select GUI: ");
