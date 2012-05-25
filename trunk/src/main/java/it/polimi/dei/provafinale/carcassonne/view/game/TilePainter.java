@@ -167,7 +167,7 @@ public class TilePainter {
 			p = new Point(bigSpacer, mediumSpacer);
 			break;
 		default:
-			p = null;
+			p = new Point(tileDim / 2, tileDim / 2);
 			break;
 		}
 
