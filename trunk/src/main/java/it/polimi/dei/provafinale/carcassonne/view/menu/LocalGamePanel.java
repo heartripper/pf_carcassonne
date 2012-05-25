@@ -1,6 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.view.menu;
 
 import it.polimi.dei.provafinale.carcassonne.controller.MenuPanelSwitcher;
+import it.polimi.dei.provafinale.carcassonne.controller.client.StartLocalGame;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -81,6 +82,7 @@ public class LocalGamePanel extends JPanel {
 		playGamePanel.add(horizontalGlue03);
 
 		JButton btnPlayGame = new JButton("Play Game!");
+		btnPlayGame.addActionListener(new StartLocalGame());
 		playGamePanel.add(btnPlayGame);
 
 		Component horizontalGlue = Box.createHorizontalGlue();
