@@ -2,7 +2,7 @@ package it.polimi.dei.provafinale.carcassonne.view;
 
 import java.awt.Graphics;
 
-public class ViewManager {
+public final class ViewManager {
 
 	private static ViewManager instance = null;
 	private CarcassonneFrame frame;
