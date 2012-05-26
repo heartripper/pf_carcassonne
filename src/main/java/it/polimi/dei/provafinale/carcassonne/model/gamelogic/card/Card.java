@@ -6,6 +6,7 @@ import it.polimi.dei.provafinale.carcassonne.model.gamelogic.entity.EntityType;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -206,6 +207,7 @@ public final class Card {
 			return;
 		}
 
+		
 		int i = sides.length - 1;
 		Side backup = sides[i];
 		for (; i > 0; i--) {
