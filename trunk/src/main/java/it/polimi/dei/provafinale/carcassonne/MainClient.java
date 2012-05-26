@@ -3,7 +3,7 @@ package it.polimi.dei.provafinale.carcassonne;
 import it.polimi.dei.provafinale.carcassonne.controller.client.ClientInterface;
 import it.polimi.dei.provafinale.carcassonne.controller.client.ClientSocketInterface;
 import it.polimi.dei.provafinale.carcassonne.controller.client.ConnectionLostException;
-import it.polimi.dei.provafinale.carcassonne.controller.client.MatchController;
+import it.polimi.dei.provafinale.carcassonne.controller.client.ClientController;
 import it.polimi.dei.provafinale.carcassonne.view.viewInterface.TextualViewInterface;
 import it.polimi.dei.provafinale.carcassonne.view.viewInterface.ViewInterface;
 
@@ -18,6 +18,6 @@ public class MainClient {
 		}
 		
 		ViewInterface vi = new TextualViewInterface();
-		MatchController.startNewMatchController(ci, vi);
+		ClientController.startNewMatchController(ci, vi);
 	}
 }
