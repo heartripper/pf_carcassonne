@@ -192,6 +192,7 @@ public class ClientControllerImpl implements Runnable {
 		 */
 		if (!coord.matches("[-]??[0-9]+,[-]??[0-9]+")) {
 			viewInterface.showNotify("Position not valid.");
+			return;
 		}
 		/* If the inserted coord is correct, it is sent to the server. */
 		sendToServer(bufferedMessage);
