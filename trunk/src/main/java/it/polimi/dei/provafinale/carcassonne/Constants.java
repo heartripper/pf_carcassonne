@@ -29,4 +29,9 @@ public abstract class Constants {
 	//View Type
 	public static final int VIEW_TYPE_GUI = 0;
 	public static final int VIEW_TYPE_TEXTUAL = 1;
+	
+	//Tile painter
+	public static final String BASE_TILE_PATH = "src/main/resources/tiles.txt";
+	public static final String PLACEHOLDER_PATH = "src/main/resources/placeholder.png";
+	public static final String TILE_PATH_FORMAT ="src/main/resources/tiles/%s.png";
 }
