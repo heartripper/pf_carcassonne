@@ -1,6 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne.model.gamelogic.entity;
 
-public class EntityFactory {
+public final class EntityFactory {
 
 	private EntityFactory() {
 	}
