@@ -12,9 +12,9 @@ public class Message {
 	 * Creates a new Message with give type and payload.
 	 * 
 	 * @param type
-	 *            - a MessageType
+	 *            - a MessageType.
 	 * @param payload
-	 *            - a string containing the message payload
+	 *            - a string containing the message payload.
 	 * */
 	public Message(MessageType type, String payload) {
 		this.type = type;
@@ -56,6 +56,5 @@ public class Message {
 	public String toString() {
 		return toProtocolMessage();
 	}
-	
-	
+
 }
