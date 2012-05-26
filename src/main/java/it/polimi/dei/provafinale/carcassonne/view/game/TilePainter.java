@@ -26,7 +26,7 @@ import javax.imageio.ImageIO;
  * Class to paint tiles images. Base tile images are load from files, while the
  * images of tiles obtained by basic by rotation are obtained by rotation too.
  * */
-public class TilePainter {
+public final class TilePainter {
 
 	private final int tileDim;
 	private BufferedImage tilePlaceHolder;
