@@ -24,7 +24,7 @@ public class WindowClose extends WindowAdapter {
 			int ans = JOptionPane.showConfirmDialog(null,
 					"Are you sure you want to close this window?",
 					"Attention!", JOptionPane.YES_NO_OPTION);
-			/* Case we really want to clore the window. */
+			/* Case we really want to close the window. */
 			if (ans == JOptionPane.YES_OPTION) {
 				close(frame);
 			}
