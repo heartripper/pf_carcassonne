@@ -66,4 +66,10 @@ public class GUIViewInterface implements ViewInterface{
 		gamePanel.setUIActive(enabled);
 	}
 
+	@Override
+	public void setCurrentPlayer(PlayerColor color) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

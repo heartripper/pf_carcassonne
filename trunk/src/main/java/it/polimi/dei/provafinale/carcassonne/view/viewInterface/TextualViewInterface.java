@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import it.polimi.dei.provafinale.carcassonne.controller.client.MatchController;
+import it.polimi.dei.provafinale.carcassonne.controller.client.ClientController;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.Message;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.MessageType;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
@@ -16,7 +16,9 @@ public class TextualViewInterface implements ViewInterface {
 
 	private TileGridRepresenter representer;
 	private BufferedReader input;
-
+	private PlayerColor currentPlayerColor;
+	private boolean handleSinglePlayer = false;
+	
 	public TextualViewInterface() {
 		InputStreamReader reader = new InputStreamReader(System.in);
 		input = new BufferedReader(reader);
@@ -29,6 +31,7 @@ public class TextualViewInterface implements ViewInterface {
 		String format = "Match starts: %s players%s.\n";
 		String clientColorStr = "";
 		if(clientColor != null){
+			handleSinglePlayer = true;
 			clientColorStr = ", you are player " + clientColor.getFullName();
 		}
 		printMessage(String.format(format, numPlayers, clientColorStr));
@@ -67,7 +70,11 @@ public class TextualViewInterface implements ViewInterface {
 		}
 
 		while(true){
-			printMessage("Please insert command");
+			String pre = "";
+			if(!handleSinglePlayer){
+				pre = String.format("(%s) ", currentPlayerColor);
+			}
+			printMessage(pre + "Please insert command");
 			String line;
 			try{
 			line = input.readLine();
@@ -94,14 +101,19 @@ public class TextualViewInterface implements ViewInterface {
 				continue;
 			}
 			
-			MatchController.getCurrentMatchController().sendMessage(request);
+			ClientController.getCurrentMatchController().sendMessage(request);
 			return;
 		}
 	}
 
+	@Override
+	public void setCurrentPlayer(PlayerColor color) {
+		this.currentPlayerColor = color;
+		printMessage(String.format("Player %s turn.\n", color));
+	}
+	
 	// Helper
 	private void printMessage(String msg) {
 		System.out.println(msg);
 	}
-
 }
