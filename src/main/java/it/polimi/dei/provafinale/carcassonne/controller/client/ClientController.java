@@ -7,6 +7,10 @@ public class ClientController {
 	private static Thread thread;
 	private static ClientControllerImpl currentMatch;
 
+	private ClientController(){
+		
+	}
+	
 	/**
 	 * Initializes an instance of MatchController, if no threads are already
 	 * initialized.
