@@ -155,8 +155,7 @@ public class TileGrid {
 	 * Gets the occupied area in the map
 	 * */
 	public int[] getBounds() {
-		int[] bounds = { upperEdge, rightEdge, lowerEdge, leftEdge };
-		return bounds;
+		return new int[]{ upperEdge, rightEdge, lowerEdge, leftEdge };
 	}
 
 }

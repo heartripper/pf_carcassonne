@@ -52,8 +52,7 @@ public class ClientSocketInterface implements ClientInterface {
 	@Override
 	public Message readMessage() throws ConnectionLostException {
 		String protocolMsg = readFromServer();
-		Message msg = Message.createFromProtocolMsg(protocolMsg);
-		return msg;
+		return Message.createFromProtocolMsg(protocolMsg);
 	}
 
 	@Override
