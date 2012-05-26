@@ -145,9 +145,7 @@ public class ServerGameInterface implements GameInterface {
 				System.out.printf("P%s>S: %s\n", connectionIndex, msg);
 				return msg;
 			} catch (ClassNotFoundException cnf) {
-				System.out
-						.println("Fatal error during communication with player.");
-				System.exit(1);
+				throw new RuntimeException(cnf);
 			} catch (IOException ioe) {
 				handleDisconnection(pc);
 			}

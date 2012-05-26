@@ -78,10 +78,8 @@ public class ClientSocketInterface implements ClientInterface {
 			String msg = (String) in.readObject();
 			System.out.println("SOCKET|READ: " + msg);
 			return msg;
-		} catch (ClassNotFoundException e) {
-			System.out.println("ClassNotFoundExcepion");
-			System.exit(1); // TODO: do something better
-			return null;
+		} catch (ClassNotFoundException cnf) {
+			throw new RuntimeException(cnf);
 		} catch (IOException e) {
 			throw new ConnectionLostException();
 		}
