@@ -331,8 +331,7 @@ public class ClientControllerImpl implements Runnable {
 		String msg = String.format(
 				"Protocol order error. Expecting '%s' but received '%s'.\n",
 				expected, received);
-		viewInterface.showNotify(msg);
-		System.exit(1);
+		throw new RuntimeException(msg);
 	}
 
 	/* Helpers to send and receive messages. */

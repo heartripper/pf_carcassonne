@@ -232,7 +232,8 @@ public class MatchHandler implements Runnable {
 		} catch (NotEnoughPlayersException nep) {
 			// TODO: what to do when there are not enough player left
 			System.out.println("There are not enough players left.");
-			System.exit(1);
+			// TODO: End match
+			Thread.currentThread().interrupt();
 		}
 	}
 
