@@ -9,7 +9,7 @@ import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.TileGrid;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.view.viewInterface.ViewInterface;
 
-public class MatchControllerImpl implements Runnable {
+public class ClientControllerImpl implements Runnable {
 
 	private final int MAX_RECONNECTION_ATTEMPTS = 10;
 	private final int RECONNECTION_INTERVAL = 30 * 1000;
@@ -30,7 +30,7 @@ public class MatchControllerImpl implements Runnable {
 	 * @param ci a ClientInterface.
 	 * @param vi a ViewInterface.
 	 */
-	public MatchControllerImpl(ClientInterface ci, ViewInterface vi) {
+	public ClientControllerImpl(ClientInterface ci, ViewInterface vi) {
 		this.clientInterface = ci;
 		this.viewInterface = vi;
 		this.grid = new TileGrid();

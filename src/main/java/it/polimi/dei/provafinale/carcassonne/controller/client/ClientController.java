@@ -2,10 +2,10 @@ package it.polimi.dei.provafinale.carcassonne.controller.client;
 
 import it.polimi.dei.provafinale.carcassonne.view.viewInterface.ViewInterface;
 
-public class MatchController {
+public class ClientController {
 
 	private static Thread thread;
-	private static MatchControllerImpl currentMatch;
+	private static ClientControllerImpl currentMatch;
 
 	/**
 	 * Initializes an instance of MatchController, if no threads are already
@@ -23,7 +23,7 @@ public class MatchController {
 			return;
 		}
 
-		currentMatch = new MatchControllerImpl(ci, vi);
+		currentMatch = new ClientControllerImpl(ci, vi);
 		thread = new Thread(currentMatch);
 		thread.start();
 	}
@@ -32,7 +32,7 @@ public class MatchController {
 	 * 
 	 * @return the current instance of the class attribute currentMatch.
 	 */
-	public static MatchControllerImpl getCurrentMatchController() {
+	public static ClientControllerImpl getCurrentMatchController() {
 		return currentMatch;
 	}
 

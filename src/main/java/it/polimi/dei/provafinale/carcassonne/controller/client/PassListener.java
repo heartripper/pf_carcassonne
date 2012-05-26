@@ -11,7 +11,7 @@ public class PassListener implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Message msg = new Message(MessageType.PASS, null);
-		MatchController.getCurrentMatchController().sendMessage(msg);
+		ClientController.getCurrentMatchController().sendMessage(msg);
 	}
 
 }

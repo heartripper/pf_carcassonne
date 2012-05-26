@@ -23,7 +23,7 @@ public class StartLocalGame implements ActionListener {
 		ViewInterface vi = new GUIViewInterface();
 
 		// Create client controller
-		MatchController.startNewMatchController(cli, vi);
+		ClientController.startNewMatchController(cli, vi);
 	}
 
 }

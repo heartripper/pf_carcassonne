@@ -43,7 +43,7 @@ public class StartInternetGame implements ActionListener{
 			ci.connect();
 			ViewInterface vi = new GUIViewInterface();
 			
-			MatchController.startNewMatchController(ci, vi);
+			ClientController.startNewMatchController(ci, vi);
 			internetGamePanel.setNotifyText(Constants.MATCH_IS_STARTING);
 		}catch(NumberFormatException nfe){
 			internetGamePanel.setNotifyText(Constants.PORT_ERROR);
