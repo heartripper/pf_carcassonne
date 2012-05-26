@@ -15,7 +15,7 @@ public class TileGridPainter extends JLabel {
 	private static final long serialVersionUID = -2603074766780325918L;
 
 	private TileGrid grid;
-	private final int TILE_DIM = 125;
+	private final int tileDim = 125;
 	private int currOffsetX;
 	private int currOffsetY;
 
@@ -31,7 +31,7 @@ public class TileGridPainter extends JLabel {
 		int horTile = 3 + bounds[1] - bounds[3];
 		currOffsetX = 1 - bounds[3];
 		currOffsetY = 1 + bounds[2];
-		setDimension(horTile * TILE_DIM, vertTile * TILE_DIM);
+		setDimension(horTile * tileDim, vertTile * tileDim);
 	}
 
 	@Override
@@ -54,18 +54,18 @@ public class TileGridPainter extends JLabel {
 
 	private void printCard(Graphics g, Card tile) {
 		Coord coord = tile.getCoordinates();
-		int x = (currOffsetX + coord.getX()) * TILE_DIM;
-		int y = (currOffsetY - coord.getY()) * TILE_DIM;
+		int x = (currOffsetX + coord.getX()) * tileDim;
+		int y = (currOffsetY - coord.getY()) * tileDim;
 		tilePainter.paintTile(tile.toString(), g, x, y);
 	}
 
 	private void printPlaceHolder(Graphics g, int i, int j) {
-		int offsetX = (currOffsetX + i) * TILE_DIM;
-		int offsetY = (currOffsetY - j) * TILE_DIM;
+		int offsetX = (currOffsetX + i) * tileDim;
+		int offsetY = (currOffsetY - j) * tileDim;
 		tilePainter.paintPlaceHolder(g, offsetX, offsetY);
 		String coord = String.format("(%s,%s)", i, j);
 		g.setColor(Color.BLACK);
-		g.drawString(coord, offsetX + TILE_DIM / 4, offsetY + TILE_DIM / 2);
+		g.drawString(coord, offsetX + tileDim / 4, offsetY + tileDim / 2);
 
 	}
 
