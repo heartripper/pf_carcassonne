@@ -7,6 +7,7 @@ import it.polimi.dei.provafinale.carcassonne.model.server.PlayersDisconnectedExc
  * Interface between the game handler and game utilizers
  */
 public interface GameInterface {
+	
 	public int askPlayerNumber();
 
 	public Message readFromPlayer(PlayerColor player) throws PlayersDisconnectedException;
