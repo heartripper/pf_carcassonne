@@ -12,9 +12,9 @@ public class ClientController {
 	 * initialized.
 	 * 
 	 * @param ci
-	 *            a ClientInterface.
+	 *            a ClientInterface to communicate with the controller.
 	 * @param vi
-	 *            a ViewInterface.
+	 *            a ViewInterface to communicate with the graphic interface.
 	 */
 	public static void startNewMatchController(ClientInterface ci,
 			ViewInterface vi) {
