@@ -7,8 +7,18 @@ public class MatchController {
 	private static Thread thread;
 	private static MatchControllerImpl currentMatch;
 
+	/**
+	 * Initializes an instance of MatchController, if no threads are already
+	 * initialized.
+	 * 
+	 * @param ci
+	 *            a ClientInterface.
+	 * @param vi
+	 *            a ViewInterface.
+	 */
 	public static void startNewMatchController(ClientInterface ci,
 			ViewInterface vi) {
+		/* A thread already exists. */
 		if (thread != null) {
 			return;
 		}
@@ -18,6 +28,10 @@ public class MatchController {
 		thread.start();
 	}
 
+	/**
+	 * 
+	 * @return the current instance of the class attribute currentMatch.
+	 */
 	public static MatchControllerImpl getCurrentMatchController() {
 		return currentMatch;
 	}

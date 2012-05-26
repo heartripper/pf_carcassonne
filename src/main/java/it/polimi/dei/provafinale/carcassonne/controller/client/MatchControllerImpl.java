@@ -24,6 +24,12 @@ public class MatchControllerImpl implements Runnable {
 	private boolean endTurn = false;
 	private PlayerColor clientPlayerColor;
 
+	/**
+	 * MatchControllerImpl constructor. 
+	 * Creates a new instance of class MatchControllerImpl.
+	 * @param ci a ClientInterface.
+	 * @param vi a ViewInterface.
+	 */
 	public MatchControllerImpl(ClientInterface ci, ViewInterface vi) {
 		this.clientInterface = ci;
 		this.viewInterface = vi;
