@@ -84,8 +84,7 @@ public class TilePainter {
 		String fileName = rep.replaceAll("[ ]??[NSWE]??[NSWE]=", "");
 		String path = String.format(tilesPathFormat, fileName);
 		try {
-			BufferedImage img = ImageIO.read(new File(path));
-			return img;
+			return ImageIO.read(new File(path));
 		} catch (IOException e) {
 			System.out.println("Error reading image for card " + rep);
 			return null;

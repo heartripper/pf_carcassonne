@@ -178,8 +178,7 @@ public class MatchHandler implements Runnable {
 	private String getUpdateTileMsg(Card tile) {
 		String rep = tile.toString();
 		Coord c = tile.getCoordinates();
-		String update = String.format("%s, %s, %s", rep, c.getX(), c.getY());
-		return update;
+		return String.format("%s, %s, %s", rep, c.getX(), c.getY());
 	}
 
 	/* Score message. */
