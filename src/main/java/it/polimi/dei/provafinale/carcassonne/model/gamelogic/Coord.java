@@ -5,12 +5,13 @@ public class Coord {
 	private int y;
 
 	/**
-	 * Constructor: Create a new instance of Coord.
+	 * Coord constructor.
+	 * Creates a new instance of class Coord.
 	 * 
 	 * @param x
-	 *            - an int that represent the horizontal position in the grid.
+	 *            - a number that represents the horizontal position in the grid.
 	 * @param y
-	 *            - an int that represent the vertical position in the grid.
+	 *            - a number that represents the vertical position in the grid.
 	 */
 	public Coord(int x, int y) {
 		this.x = x;
@@ -18,65 +19,60 @@ public class Coord {
 	}
 
 	/**
-	 * Get the horiziontal position in the grid.
 	 * 
-	 * @return the int value that represent the horizontal position in the grid.
+	 * @return the number that represents the horizontal position in the grid.
 	 */
 	public int getX() {
 		return x;
 	}
 
 	/**
-	 * Get the vertical position in the grid.
 	 * 
-	 * @return the int value that represent the vertical position in the grid.
+	 * @return the number that represents the vertical position in the grid.
 	 */
 	public int getY() {
 		return y;
 	}
 
 	/**
-	 * Sum two coordinates.
+	 * Adds a coordinate to the current one.
 	 * 
 	 * @param p
-	 *            - a Coord to add to the current one.
-	 * @return the Coord given by the result of the sum of the two Coord.
+	 *            - a Coord we want to add to the current one.
+	 * @return the Coord given by the result of the sum of the two coordinates.
 	 */
 	public Coord add(Coord p) {
 		return new Coord(this.x + p.x, this.y + p.y);
 	}
 
-	/**
-	 * Compare two coordinates.
-	 */
 	@Override
 	public boolean equals(Object obj) {
+		/*Case obj is not an instance of class Coord.*/
 		if (!(obj instanceof Coord)){
 			return false;
 		}
+		
 		Coord coord = (Coord) obj;
 		return (coord.x == x && coord.y == y);
 	}
 
-	/**
-	 * Calculate the object hash.
-	 */
 	@Override
 	public int hashCode() {
+		/*Calculating and returning hash.*/
 		return 72 * x + y;
 	}
 
-	/**
-	 * Return the string representation of Coord.
-	 */
 	@Override
 	public String toString() {
 		String base = String.format("(%s,%s)", x, y);
 		int spaceToFill = 7 - base.length();
 		while (spaceToFill > 0) {
+			/*Case spaceToFill even.*/
 			if (spaceToFill % 2 == 0) {
 				base = " " + base;
-			} else {
+			} 
+			/*Case spaceToFill odd.*/
+			else {
 				base = base + " ";
 			}
 			spaceToFill--;
