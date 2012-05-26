@@ -20,7 +20,7 @@ public class TilePutListener implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		String command = field.getText();
 		Message msg = new Message(MessageType.PLACE, command);
-		MatchController.getCurrentMatchController().sendMessage(msg);
+		ClientController.getCurrentMatchController().sendMessage(msg);
 	}
 
 }

@@ -11,6 +11,6 @@ public class TileRotateListener implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Message msg = new Message(MessageType.ROTATE, null);
-		MatchController.getCurrentMatchController().sendMessage(msg);
+		ClientController.getCurrentMatchController().sendMessage(msg);
 	}
 }

@@ -28,7 +28,7 @@ public class FollowerPutListener implements ActionListener {
 		int posIndex = followerPosition.getSelectedIndex();
 		SidePosition pos = SidePosition.valueOf(posIndex);
 		Message msg = new Message(MessageType.FOLLOWER, pos.toString());
-		MatchController.getCurrentMatchController().sendMessage(msg);
+		ClientController.getCurrentMatchController().sendMessage(msg);
 	}
 
 }
