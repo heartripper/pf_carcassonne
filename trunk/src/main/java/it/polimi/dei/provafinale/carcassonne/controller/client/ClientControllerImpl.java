@@ -1,6 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.controller.client;
 
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.Message;
+import it.polimi.dei.provafinale.carcassonne.model.gameinterface.MessageBuffer;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.MessageType;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
@@ -14,7 +15,7 @@ public class ClientControllerImpl implements Runnable {
 	private final int MAX_RECONNECTION_ATTEMPTS = 10;
 	private final int RECONNECTION_INTERVAL = 30 * 1000;
 
-	private Message bufferedMessage = null;
+	private MessageBuffer messageBuffer;
 	private ClientInterface clientInterface;
 	private ViewInterface viewInterface;
 	private String matchName;
@@ -36,6 +37,7 @@ public class ClientControllerImpl implements Runnable {
 	public ClientControllerImpl(ClientInterface ci, ViewInterface vi) {
 		this.clientInterface = ci;
 		this.viewInterface = vi;
+		this.messageBuffer = new MessageBuffer();
 		this.grid = new TileGrid();
 	}
 
@@ -45,9 +47,8 @@ public class ClientControllerImpl implements Runnable {
 	 * @param msg
 	 *            a message to be sent.
 	 */
-	public synchronized void sendMessage(Message msg) {
-		this.bufferedMessage = msg;
-		notifyAll();
+	public void sendMessage(Message msg) {
+		messageBuffer.write(msg);
 	}
 
 	@Override
@@ -127,48 +128,42 @@ public class ClientControllerImpl implements Runnable {
 		/* Turn execution. */
 		endTurn = false;
 		while (!endTurn) {
-			readFromGUI();
-			switch (bufferedMessage.type) {
+			Message viewMsg = readFromGUI();
+			switch (viewMsg.type) {
 			case ROTATE:
-				handleRotation();
+				handleRotation(viewMsg);
 				break;
 			case PLACE:
-				handleTilePositioning();
+				handleTilePositioning(viewMsg);
 				break;
 			case FOLLOWER:
-				handleFollowerPositioning();
+				handleFollowerPositioning(viewMsg);
 				break;
 			case PASS:
-				handlePass();
+				handlePass(viewMsg);
 				break;
 			default:
 				break;
 			}
-			/* Consume buffered message. */
-			bufferedMessage = null;
 		}
 		/* Handle tile and score updates */
 		handleUpdates();
 	}
 
-	private synchronized void readFromGUI() {
+	private Message readFromGUI() {
 		/* Activates the interface. */
 		viewInterface.setUIActive(true);
-		/* Waits for a message. */
-		while (bufferedMessage == null) {
-			try {
-				wait();
-			} catch (InterruptedException ie) {
-			}
-		}
-		/* Disactivates the interface. */
+		/* Reads a message from buffer. */
+		Message msg = messageBuffer.read();
+		/* Deactivates the interface. */
 		viewInterface.setUIActive(false);
+		return msg;
 	}
 
 	/* Manages the tile rotation. */
-	private void handleRotation() {
+	private void handleRotation(Message msg) {
 		/* Sends the rotation message to the server. */
-		sendToServer(bufferedMessage);
+		sendToServer(msg);
 		/* Reads the answer from the server. */
 		Message response = readFromServer();
 		/* Rotation successful. */
@@ -182,9 +177,9 @@ public class ClientControllerImpl implements Runnable {
 	}
 
 	/* Manages the tile positioning. */
-	private void handleTilePositioning() {
+	private void handleTilePositioning(Message msg) {
 		/* Puts the payload of bufferedMessage in coord. */
-		String coord = bufferedMessage.payload;
+		String coord = msg.payload;
 		/*
 		 * If the two parts of coord are not equal to an expression composed by
 		 * a "-" or not followed by one or more numbers the position is not
@@ -195,7 +190,7 @@ public class ClientControllerImpl implements Runnable {
 			return;
 		}
 		/* If the inserted coord is correct, it is sent to the server. */
-		sendToServer(bufferedMessage);
+		sendToServer(msg);
 		/* Reads the server answer. */
 		Message response = readFromServer();
 		switch (response.type) {
@@ -217,9 +212,9 @@ public class ClientControllerImpl implements Runnable {
 	}
 
 	/* Manages the follower positioning. */
-	private void handleFollowerPositioning() {
+	private void handleFollowerPositioning(Message msg) {
 		/* Sends to the server the message contained in bufferedMessage. */
-		sendToServer(bufferedMessage);
+		sendToServer(msg);
 		/* Reads the server response and analyzes it. */
 		Message response = readFromServer();
 		switch (response.type) {
@@ -241,9 +236,9 @@ public class ClientControllerImpl implements Runnable {
 	}
 
 	/* Manages the change of player. */
-	private void handlePass() {
+	private void handlePass(Message msg) {
 		/* Sends to the server the message contained in bufferedMessage. */
-		sendToServer(bufferedMessage);
+		sendToServer(msg);
 		/* Reads the server response and analyzes it. */
 		Message response = readFromServer();
 		switch (response.type) {
