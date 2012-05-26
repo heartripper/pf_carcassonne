@@ -2,7 +2,7 @@ package it.polimi.dei.provafinale.carcassonne.model.gameinterface;
 
 /**
  * Enum containing all possible types of messages used in communications by
- * match handler and players
+ * match handler and players.
  * */
 public enum MessageType {
 	START("start"), TURN("turn"), NEXT("next"), ROTATE("rotate"), ROTATED(
@@ -25,7 +25,7 @@ public enum MessageType {
 	 * Gives the MessageType corresponding to the given protocol message header.
 	 * 
 	 * @param type
-	 *            - a String containing the protocol message header
+	 *            - a String containing the protocol message header.
 	 * @return the MessageType corresponding to given message header if exists,
 	 *         null otherwise.
 	 * */
@@ -37,4 +37,5 @@ public enum MessageType {
 		}
 		return null;
 	}
+	
 }
