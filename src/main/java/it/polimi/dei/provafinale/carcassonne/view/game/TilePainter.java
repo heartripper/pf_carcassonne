@@ -1,5 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne.view.game;
 
+import it.polimi.dei.provafinale.carcassonne.Constants;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
@@ -21,17 +22,16 @@ import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
+/**
+ * Class to paint tiles images. Base tile images are load from files, while the
+ * images of tiles obtained by basic by rotation are obtained by rotation too.
+ * */
 public class TilePainter {
 
-	private final int tileDim = 125;
-	private final String tilesPathFormat = "src/main/resources/tiles/%s.png";
-
+	private final int tileDim;
 	private BufferedImage tilePlaceHolder;
-	private String placeHolderPath = "src/main/resources/placeholder.png";
-
-	private Pattern followerPattern;
-
 	private Map<String, BufferedImage> imgLib;
+	private Pattern followerPattern;
 
 	private static TilePainter instance = null;
 
@@ -42,13 +42,20 @@ public class TilePainter {
 		return instance;
 	}
 
+	/**
+	 * Creates a new TilePainter object loading placeholder and base tile images
+	 * from files. It also compiles the pattern to match followers in tile
+	 * representations.
+	 * */
 	private TilePainter() {
-		imgLib = new HashMap<String, BufferedImage>();
-		String sourceInitialTales = "src/main/resources/tiles.txt";
-		String line;
+		this.imgLib = new HashMap<String, BufferedImage>();
+		String followerRegExp = "(N|E|S|W)=.-(R|B|V|G|N)";
+		this.followerPattern = Pattern.compile(followerRegExp);
+		this.tileDim = Constants.TILE_PIXEL_DIMENSION;
 
+		String line;
 		try {
-			FileReader fr = new FileReader(new File(sourceInitialTales));
+			FileReader fr = new FileReader(new File(Constants.BASE_TILE_PATH));
 			BufferedReader in = new BufferedReader(fr);
 			while ((line = in.readLine()) != null) {
 				BufferedImage currentImg = readBaseImage(line);
@@ -57,15 +64,26 @@ public class TilePainter {
 				}
 			}
 
-			tilePlaceHolder = ImageIO.read(new File(placeHolderPath));
+			tilePlaceHolder = ImageIO
+					.read(new File(Constants.PLACEHOLDER_PATH));
 		} catch (IOException ioe) {
 			System.out.println("Error reading tile images.");
 		}
 
-		String followerRegExp = "(N|E|S|W)=.-(R|B|V|G|N)";
-		followerPattern = Pattern.compile(followerRegExp);
 	}
 
+	/**
+	 * Paints a tile.
+	 * 
+	 * @param rep
+	 *            - the String representation of the tile to paint
+	 * @param g
+	 *            - the Graphics to draw on
+	 * @param x
+	 *            - the horizontal offset of the tile
+	 * @param y
+	 *            - the vertical offset of the tile
+	 * */
 	public void paintTile(String rep, Graphics g, int x, int y) {
 		// Remove followers
 		String base = rep.replaceAll("-.", "");
@@ -79,10 +97,17 @@ public class TilePainter {
 	public void paintPlaceHolder(Graphics g, int x, int y) {
 		g.drawImage(tilePlaceHolder, x, y, tileDim, tileDim, null);
 	}
-
+	
+	/**
+	 * Reads a base image.
+	 * 
+	 * @param rep
+	 *            - the string representation of the base image to read
+	 * @return the base image read.
+	 * */
 	private BufferedImage readBaseImage(String rep) {
 		String fileName = rep.replaceAll("[ ]??[NSWE]??[NSWE]=", "");
-		String path = String.format(tilesPathFormat, fileName);
+		String path = String.format(Constants.TILE_PATH_FORMAT, fileName);
 		try {
 			return ImageIO.read(new File(path));
 		} catch (IOException e) {
@@ -91,6 +116,13 @@ public class TilePainter {
 		}
 	}
 
+	/**
+	 * Retrieves the image representing a Tile.
+	 * 
+	 * @param rep
+	 *            - the String representation of the tile
+	 * @return the BufferedImage representing the tile
+	 * */
 	private BufferedImage getImage(String rep) {
 		/* Case base image. */
 		if (imgLib.containsKey(rep)) {
@@ -118,11 +150,21 @@ public class TilePainter {
 		}
 	}
 
+	/**
+	 * Creates a new image from a base one and rotates it a given number of
+	 * times.
+	 * 
+	 * @param baseImage
+	 *            - the BufferedImage to rotate.
+	 * @param rotCount
+	 *            - the number of rotations
+	 * @return the rotated image
+	 * */
 	private BufferedImage rotateImage(BufferedImage baseImage, int rotCount) {
 		// creating the AffineTransform instance
 		AffineTransform affineTransform = new AffineTransform();
 		/* Rotate the image. */
-		double radians = - Math.toRadians(90 * rotCount);
+		double radians = -Math.toRadians(90 * rotCount);
 		affineTransform.rotate(radians, tileDim / 2, tileDim / 2);
 		/* Draw the image using the AffineTransform. */
 		BufferedImage rotateImage = new BufferedImage(tileDim, tileDim,
@@ -133,6 +175,18 @@ public class TilePainter {
 		return rotateImage;
 	}
 
+	/**
+	 * Paints the follower on a tile.
+	 * 
+	 * @param rep
+	 *            - The tile String representation
+	 * @param g
+	 *            - the Graphics to paint on
+	 * @param x
+	 *            - the Horizontal offset of the tile
+	 * @param y
+	 *            - the Vertical offset of the tile
+	 * */
 	private void paintFollower(String rep, Graphics g, int x, int y) {
 		Matcher m = followerPattern.matcher(rep);
 		if (!m.find()) {
@@ -171,6 +225,5 @@ public class TilePainter {
 		}
 
 		g.fillOval(x + p.x, y + p.y, 2 * smallSpacer, 2 * smallSpacer);
-
 	}
 }
