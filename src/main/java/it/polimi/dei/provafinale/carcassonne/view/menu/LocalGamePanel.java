@@ -54,8 +54,8 @@ public class LocalGamePanel extends JPanel {
 		selectPlayersNumberPanel.add(lblInsertPlayersNumber);
 
 		String[] data = { "2", "3", "4", "5" };
-		JComboBox comboBox = new JComboBox(data);
-		selectPlayersNumberPanel.add(comboBox);
+		JComboBox playerComboBox = new JComboBox(data);
+		selectPlayersNumberPanel.add(playerComboBox);
 
 		Component horizontalGlue02 = Box.createHorizontalGlue();
 		selectPlayersNumberPanel.add(horizontalGlue02);
@@ -83,7 +83,7 @@ public class LocalGamePanel extends JPanel {
 		playGamePanel.add(horizontalGlue03);
 
 		JButton btnPlayGame = new JButton("Play Game!");
-		btnPlayGame.addActionListener(new StartLocalGame());
+		btnPlayGame.addActionListener(new StartLocalGame(playerComboBox,guiComboBox));
 		playGamePanel.add(btnPlayGame);
 
 		Component horizontalGlue = Box.createHorizontalGlue();

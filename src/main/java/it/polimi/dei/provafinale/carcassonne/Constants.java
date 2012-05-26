@@ -25,4 +25,8 @@ public abstract class Constants {
 	public static final String FIELDS_ERROR = "Please fill in all fields.";
 	public static final String PORT_ERROR = "Please insert a valid port value.";
 	public static final String CONNECTION_ERROR = "Connection to server failed.";
+	
+	//View Type
+	public static final int VIEW_TYPE_GUI = 0;
+	public static final int VIEW_TYPE_TEXTUAL = 1;
 }
