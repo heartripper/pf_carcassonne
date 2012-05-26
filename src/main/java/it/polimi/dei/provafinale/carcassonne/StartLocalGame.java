@@ -1,7 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne;
 
 import it.polimi.dei.provafinale.carcassonne.controller.client.ClientLocalInterface;
-import it.polimi.dei.provafinale.carcassonne.controller.client.MatchController;
+import it.polimi.dei.provafinale.carcassonne.controller.client.ClientController;
 import it.polimi.dei.provafinale.carcassonne.model.MatchHandler;
 import it.polimi.dei.provafinale.carcassonne.view.viewInterface.TextualViewInterface;
 
@@ -17,6 +17,6 @@ public class StartLocalGame {
 		TextualViewInterface vi = new TextualViewInterface();
 		
 		//Create client controller
-		MatchController.startNewMatchController(cli, vi);
+		ClientController.startNewMatchController(cli, vi);
 	}
 }
