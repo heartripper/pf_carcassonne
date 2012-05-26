@@ -18,42 +18,39 @@ public class Match {
 	private TileStack stack;
 	private PlayerCircularArray players;
 	private List<Entity> entities;
-
-	private Card firstTile;
+	private Tile firstTile;
 	private int playersNumber;
 
 	/**
-	 * Constructor: creates a new match for a given number of players.
+	 * Match constructor. Creates a new instance of class Match.
 	 * 
-	 * @param playersNumber
-	 *            - an int that indicates the number of players.
+	 * @param numPlayers
+	 *            the number of players.
 	 */
 	public Match(int numPlayers) {
 		this.grid = new TileGrid();
 		this.entities = new ArrayList<Entity>();
 		this.stack = new TileStack();
 		this.players = new PlayerCircularArray(numPlayers);
-
 		this.playersNumber = numPlayers;
-
-		// Add cards #0 to the grid.
+		/* Add cards #0 to the grid. */
 		firstTile = stack.getInitialTile();
 		grid.putTile(firstTile, new Coord(0, 0));
 		updateEntities(firstTile);
 	}
 
-	//Tiles
+	/* Tiles methods. */
+
 	/**
-	 * Gives the initial tile.
 	 * 
-	 * @return the initial tile
+	 * @return the initial tile.
 	 * */
-	public Card getFirstTile() {
+	public Tile getFirstTile() {
 		return firstTile;
 	}
 
 	/**
-	 * Used to determine if there are still cards in the stack.
+	 * Determines if there are still cards in the stack.
 	 * 
 	 * @return true if there is at least a card in the stack, false instead.
 	 */
@@ -62,98 +59,110 @@ public class Match {
 	}
 
 	/**
-	 * @return the current card.
+	 * Gives a representation of a tile chosen randomly from the stack.
+	 * 
+	 * @return the chosen tile representation.
 	 **/
-	public Card drawCard() {
+	public Tile drawTile() {
 		return stack.drawTile();
 	}
-	
+
 	/**
-	 * Tries to put current card in the grid at given position.
+	 * Tries to put the current tile in the grid at given coordinates.
 	 * 
-	 * @return true if the card was added (this means the card was compatible
-	 *         with the position).
+	 * @return true if the tile is correctly added (this means the tile was
+	 *         compatible with the position), false otherwise.
 	 * */
-	public boolean putTile(Card tile, Coord coord) {
-		if (!grid.isTileCompatible(tile, coord)){
+	public boolean putTile(Tile tile, Coord coord) {
+		/* The tile is not compatible with the given coordinates. */
+		if (!grid.isTileCompatible(tile, coord)) {
 			return false;
 		}
+		/* The tile is compatible with the given coordinates. */
 		grid.putTile(tile, coord);
 		updateEntities(tile);
 		return true;
 	}
 
 	/**
-	 * Check if modified entities (the ones card sides belong to) are now
+	 * Checks if modified entities (the ones tile sides belong to) are now
 	 * complete. If an entity is complete finalizes (See Entity.finalize()) it
-	 * and give its owners the resutling score.
+	 * and give its owners the resulting score.
 	 * 
-	 * @param card
-	 *            - a Card that has been added to the grid.
+	 * @param tile
+	 *            - a Tile that has been added to the grid.
 	 */
-	public List<Card> checkForCompletedEntities(Card card) {
+	public List<Tile> checkForCompletedEntities(Tile tile) {
 		ArrayList<Entity> checkedEntities = new ArrayList<Entity>();
-		ArrayList<Card> updatedTiles = new ArrayList<Card>();
+		ArrayList<Tile> updatedTiles = new ArrayList<Tile>();
 
 		for (SidePosition position : SidePosition.values()) {
-			Entity entity = card.getSide(position).getEntity();
-
-			if (entity == null || checkedEntities.contains(entity)){
+			Entity entity = tile.getSide(position).getEntity();
+			/*
+			 * There are no Entity on the current SidePosition or the Entity of
+			 * the side is already included in checkedEntities.
+			 */
+			if (entity == null || checkedEntities.contains(entity)) {
 				continue;
 			}
+			/* The Entity of the current SidePosition is a new one. */
 			checkedEntities.add(entity);
+			/* Case an Entity is completed using the current SidePosition. */
 			if (entity.isComplete()) {
-				List<Card> currentUpdatedTiles = finalizeEntityAndUpdate(entity);
+				List<Tile> currentUpdatedTiles = finalizeEntityAndUpdate(entity);
 				updatedTiles.addAll(currentUpdatedTiles);
 			}
 		}
 		return updatedTiles;
 	}
-	
-	
-	//Players
+
+	/* Players methods. */
+
 	/**
+	 * Gives the identificator (color) of the player that has to play the
+	 * current turn in the match.
 	 * 
-	 * @return current player.
+	 * @return the PlayerColor of the player that has to play the turn.
 	 */
 	public PlayerColor getNextPlayer() {
 		return players.getNext().getColor();
 	}
 
 	/**
-	 * Adds a follower of a color on a position of a card. If that operation
-	 * succeeds removes a follower from player represented by that color.
+	 * Adds a follower of a color on a coordinate of a tile. If this operation
+	 * succeeds removes a follower from the list of followers belonging to
+	 * player represented by color.
 	 * 
 	 * @param tile
-	 *            - the card to add the follower on
+	 *            the tile to add the follower on.
 	 * @param position
-	 *            - the position to put the follower at
+	 *            the position to put the follower at.
 	 * @param color
-	 *            - the color of the player owning the follower
-	 * 
-	 * */
-	public boolean putFollower(Card tile, SidePosition pos, PlayerColor col){
-		//Check that we can put the follower in given position.
-		Entity e = tile.getSide(pos).getEntity();
-		if (e == null || !e.acceptFollowers()){
+	 *            the tile to add the follower on.
+	 * @return true if the follower is correctly put on the specified position,
+	 *         false otherwise.
+	 */
+	public boolean putFollower(Tile tile, SidePosition position,
+			PlayerColor color) {
+		/* Check that we can put the follower in given position. */
+		Entity e = tile.getSide(position).getEntity();
+		if (e == null || !e.acceptFollowers()) {
 			return false;
 		}
-		//check that given player has followers
-		Player p = players.getByColor(col);
-		if(!p.hasFollowers()){
+		/* Check that given player has available followers. */
+		Player p = players.getByColor(color);
+		if (!p.hasFollowers()) {
 			return false;
 		}
-		//Add follower on tile and remove it from player
-		tile.addFollower(pos, col);
+		/* Add follower on tile and remove it from player. */
+		tile.addFollower(position, color);
 		p.removeFollower();
 		return true;
 	}
 
 	/**
-	 * When the game is finished, give the score corresponding to each
+	 * When the game is finished, gives the score corresponding to each
 	 * incomplete entity to his owner/owners.
-	 * 
-	 * @return a report of performed action
 	 */
 	public void finalizeMatch() {
 		for (Entity e : entities) {
@@ -162,10 +171,9 @@ public class Match {
 	}
 
 	/**
-	 * Gives the game classification, which is an array of Players sorted by
-	 * score.
+	 * Gives the game classification.
 	 * 
-	 * @return an Array of Player sorted by score.
+	 * @return an array of scores.
 	 */
 	public int[] getScores() {
 		return players.getScores();
@@ -176,46 +184,51 @@ public class Match {
 	 * all his followers).
 	 * 
 	 * @param color
-	 *            - the color of the player to remove.
+	 *            - the color of the player we want to remove.
 	 */
 	public void removePlayer(PlayerColor color)
 			throws NotEnoughPlayersException {
 		Player p = players.getByColor(color);
 		p.setInactive();
 		// TODO remove followers.
-
-		if (players.getSize() < 2){
+		/* There are no enought players to play the game. */
+		if (players.getSize() < 2) {
 			throw new NotEnoughPlayersException();
 		}
 	}
 
-	// Private Methods
+	/* Private Methods. */
 
-	/**
-	 * Update the entities (cities, roads, fields) present on the grid after a
-	 * card has been added.
-	 * 
-	 * @param card
-	 *            - a card that has been added to the grid.
-	 */
-	private void updateEntities(Card card) {
+	private void updateEntities(Tile tile) {
 		for (SidePosition position : SidePosition.values()) {
-			Side currentSide = card.getSide(position);
+			Side currentSide = tile.getSide(position);
 			Side oppositeSide = currentSide.getOppositeSide();
 			Entity currentEntity = currentSide.getEntity();
 			EntityType type = currentSide.getType();
 			Entity sideEntity;
+			/* The current side doesn't belong to an entity. */
 			if (currentEntity == null) {
+				/* There is no a side opposite to the current one. */
 				if (oppositeSide == null) {
+					/* Creation of a new entity. */
 					sideEntity = EntityFactory.createByType(type);
-				} else {
+				}
+				/* There is a side opposite to the current one. */
+				else {
+					/*
+					 * The current side entity belongs to the same entity of the
+					 * opposite side.
+					 */
 					sideEntity = oppositeSide.getEntity();
 				}
+				/* The current side is added to the entity. */
 				addSideToEntity(currentSide, sideEntity);
-				for (Side s : card.sidesLinkedTo(currentSide)) {
-					addSideToEntity(s, sideEntity);
+				for (Side side : tile.sidesLinkedTo(currentSide)) {
+					addSideToEntity(side, sideEntity);
 				}
-			} else {
+			}
+			/* The current side belongs to an entity. */
+			else {
 				if (oppositeSide == null) {
 					continue;
 				}
@@ -223,82 +236,81 @@ public class Match {
 				if (oppositeEntity == null) {
 					continue;
 				}
+				/* Current side inclusion to an entity. */
 				sideEntity = oppositeEntity.enclose(currentEntity);
-				if (entities.contains(currentEntity) && !currentEntity.equals(sideEntity)) {
+				if (entities.contains(currentEntity)
+						&& !currentEntity.equals(sideEntity)) {
 					entities.remove(currentEntity);
 				}
-				if (entities.contains(oppositeEntity) && !oppositeEntity.equals(sideEntity)) {
+				if (entities.contains(oppositeEntity)
+						&& !oppositeEntity.equals(sideEntity)) {
 					entities.remove(oppositeEntity);
 				}
 			}
+			/* Addition of current side entity. */
 			if (sideEntity != null && !entities.contains(sideEntity)) {
 				entities.add(sideEntity);
 			}
 		}
 	}
 
-	/**
-	 * Add a side to a entity.
-	 * 
-	 * @param side
-	 *            - a Side of a given card.
-	 * @param entity
-	 *            - an Entity which the side belongs to.
-	 */
 	private void addSideToEntity(Side side, Entity entity) {
 		side.setEntity(entity);
-		if (entity != null){
+		if (entity != null) {
 			entity.addMember(side);
 		}
 	}
 
-	private List<Card> finalizeEntityAndUpdate(Entity entity) {
-		// Give corresponding score to entity owners
+	private List<Tile> finalizeEntityAndUpdate(Entity entity) {
+		/* Give corresponding score to entity owners. */
 		int score = entity.getScore();
 		int[] followers = entity.countFollowers(playersNumber);
 		giveScoreToOwners(followers, score);
-		// return followers to owners
+		/* Return followers to owners. */
 		returnFollowers(followers);
-		// Remove followers from entity and return a list of updated cards.
+		/* Remove followers from entity and return a list of updated cards. */
 		return entity.removeFollowers();
 	}
 
 	private void giveScoreToOwners(int[] followers, int score) {
+
 		int max = 0;
 
 		for (int f : followers) {
-			if (f > max){
+			/* Maximum number of followers. */
+			if (f > max) {
 				max = f;
 			}
 		}
 
-		if (max == 0){
+		/* No follower to assign a score. */
+		if (max == 0) {
 			return;
 		}
 
+		/* Score assignment. */
 		for (int i = 0; i < followers.length; i++) {
 			if (followers[i] == max) {
 				PlayerColor color = PlayerColor.valueOf(i);
-				Player p = players.getByColor(color);
-				p.addScore(score);
+				Player player = players.getByColor(color);
+				player.addScore(score);
 			}
 		}
 	}
 
+	/* Returns followers to their owners. */
 	private void returnFollowers(int[] followers) {
 		for (int i = 0; i < playersNumber; i++) {
 			PlayerColor color = PlayerColor.valueOf(i);
-			Player p = players.getByColor(color);
-			p.addFollowers(followers[i]);
+			Player player = players.getByColor(color);
+			player.addFollowers(followers[i]);
 		}
 	}
 
-	/**
-	 * Return the string representation of Match
-	 */
 	@Override
 	public String toString() {
 		return String.format("Remaining cards: %s - %s\n\n%s",
 				stack.remainingTilesNumber(), players, grid);
 	}
+
 }

@@ -15,7 +15,7 @@ import java.util.Map;
  * Class representing cards. Sides are represented using the convention North =
  * 0, East = 1, South = 2, <west = 3.
  * */
-public final class Card {
+public final class Tile {
 	// Reference to container grid
 	private TileGrid grid;
 	private Coord cardCoord;
@@ -35,7 +35,7 @@ public final class Card {
 	 *            - a String representing the card according to the project
 	 *            specification
 	 */
-	public Card(String rep) {
+	public Tile(String rep) {
 		sides = new Side[Constants.SIDES_NUMBER];
 		connections = new ArrayList<SideConnection>();
 
@@ -150,7 +150,7 @@ public final class Card {
 	 *            - a SidePosition of this card
 	 * @return the neighbor Card.
 	 */
-	public Card getNeighbor(SidePosition position) {
+	public Tile getNeighbor(SidePosition position) {
 		Coord offset;
 		if (grid == null || cardCoord == null) {
 			return null;

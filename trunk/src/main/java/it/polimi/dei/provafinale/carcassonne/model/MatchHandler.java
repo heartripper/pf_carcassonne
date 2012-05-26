@@ -7,7 +7,7 @@ import it.polimi.dei.provafinale.carcassonne.model.gameinterface.Message;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.MessageType;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Match;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Tile;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.model.server.PlayersDisconnectedException;
@@ -16,7 +16,7 @@ public class MatchHandler implements Runnable {
 
 	private Match match;
 	private PlayerColor currentPlayer;
-	private Card currentTile;
+	private Tile currentTile;
 	private boolean currentPlayerDisconnected;
 	private boolean currentTileAdded;
 	private boolean currentTurnEnd;
@@ -47,7 +47,7 @@ public class MatchHandler implements Runnable {
 
 		while (match.hasMoreCards()) {
 			/* Draw the current tile. */
-			currentTile = match.drawCard();
+			currentTile = match.drawTile();
 			/* Get the player that have to play in the current turn. */
 			currentPlayer = match.getNextPlayer();
 			/* Send turn information. */
@@ -154,8 +154,8 @@ public class MatchHandler implements Runnable {
 	/* Manages end turn. */
 	private void handleTurnEnd() {
 		/* Send tiles updates. */
-		List<Card> updatedTile = match.checkForCompletedEntities(currentTile);
-		for (Card c : updatedTile) {
+		List<Tile> updatedTile = match.checkForCompletedEntities(currentTile);
+		for (Tile c : updatedTile) {
 			Message msg = new Message(MessageType.UPDATE, getUpdateTileMsg(c));
 			sendMessage(msg);
 		}
@@ -175,7 +175,7 @@ public class MatchHandler implements Runnable {
 	/* Helpers to send messages. */
 
 	/* Update tile message. */
-	private String getUpdateTileMsg(Card tile) {
+	private String getUpdateTileMsg(Tile tile) {
 		String rep = tile.toString();
 		Coord c = tile.getCoordinates();
 		return String.format("%s, %s, %s", rep, c.getX(), c.getY());

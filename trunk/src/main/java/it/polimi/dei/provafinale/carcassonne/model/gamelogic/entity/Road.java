@@ -1,6 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne.model.gamelogic.entity;
 
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Tile;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Side;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 
@@ -52,9 +52,9 @@ public class Road extends Entity {
 
 	@Override
 	public int getScore() {
-		Set<Card> cards = new HashSet<Card>();
+		Set<Tile> cards = new HashSet<Tile>();
 		for (Side s : members) {
-			Card card = s.getOwnerCard();
+			Tile card = s.getOwnerCard();
 			if (!cards.contains(card)){
 				cards.add(card);
 			}
@@ -106,12 +106,12 @@ public class Road extends Entity {
 	}
 
 	@Override
-	public List<Card> removeFollowers() {
-		ArrayList<Card> updatedCards = new ArrayList<Card>();
+	public List<Tile> removeFollowers() {
+		ArrayList<Tile> updatedCards = new ArrayList<Tile>();
 		for (Side s : members) {
 			if(s.getFollower() != null){
 				s.setFollower(null);
-				Card c = s.getOwnerCard();
+				Tile c = s.getOwnerCard();
 				if(!updatedCards.contains(c)){
 					updatedCards.add(c);
 				}

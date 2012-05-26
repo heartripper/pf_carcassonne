@@ -4,7 +4,7 @@ import it.polimi.dei.provafinale.carcassonne.model.gameinterface.Message;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.MessageBuffer;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.MessageType;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Tile;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.TileGrid;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
@@ -299,13 +299,13 @@ public class ClientControllerImpl implements Runnable {
 	private void handleTileUpdate(String command) {
 		String[] split = command.split(",");
 		/* Creates a new card based on the arrived message. */
-		Card newTile = new Card(split[0].trim());
+		Tile newTile = new Tile(split[0].trim());
 		/* Finds out the coordinates. */
 		int x = Integer.parseInt(split[1].trim());
 		int y = Integer.parseInt(split[2].trim());
 		/* Sets the tile coordinates. */
 		Coord c = new Coord(x, y);
-		Card oldTile = grid.getTile(c);
+		Tile oldTile = grid.getTile(c);
 		/* Case the player hasn't put the tile in the specified coordinates yet. */
 		if (oldTile == null) {
 			grid.putTile(newTile, c);

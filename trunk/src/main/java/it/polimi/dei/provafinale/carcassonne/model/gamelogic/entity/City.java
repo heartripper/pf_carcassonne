@@ -1,6 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne.model.gamelogic.entity;
 
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Tile;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Side;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 
@@ -142,12 +142,12 @@ public class City extends Entity {
 	 * Removes followers from entity;
 	 */
 	@Override
-	public List<Card> removeFollowers() {
-		ArrayList<Card> updatedCards = new ArrayList<Card>();
+	public List<Tile> removeFollowers() {
+		ArrayList<Tile> updatedCards = new ArrayList<Tile>();
 		for (Side s : members) {
 			if(s.getFollower() != null){
 				s.setFollower(null);
-				Card c = s.getOwnerCard();
+				Tile c = s.getOwnerCard();
 				if(!updatedCards.contains(c)){
 					updatedCards.add(c);
 				}
@@ -163,9 +163,9 @@ public class City extends Entity {
 	 */
 	@Override
 	public int getScore() {
-		Set<Card> cards = new HashSet<Card>();
+		Set<Tile> cards = new HashSet<Tile>();
 		for (Side s : members) {
-			Card c = s.getOwnerCard();
+			Tile c = s.getOwnerCard();
 			if (!cards.contains(c)) {
 				cards.add(c);
 			}
