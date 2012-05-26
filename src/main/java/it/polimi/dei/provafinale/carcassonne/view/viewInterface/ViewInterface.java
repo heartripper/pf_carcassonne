@@ -16,4 +16,6 @@ public interface ViewInterface {
 	public abstract void showNotify(String msg);
 	
 	public abstract void setUIActive(boolean enabled);
+	
+	public abstract void setCurrentPlayer(PlayerColor color);
 }
