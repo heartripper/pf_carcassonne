@@ -16,10 +16,10 @@ import java.util.Random;
  * */
 public class TileStack {
 
-	private static List<Card> readTileStack = null;
+	private static List<Tile> readTileStack = null;
 
-	private List<Card> tiles;
-	private Card initialTile;
+	private List<Tile> tiles;
+	private Tile initialTile;
 
 	public TileStack() {
 		tiles = readTiles();
@@ -33,11 +33,11 @@ public class TileStack {
 	 * 
 	 * @return the drew tile.
 	 */
-	public Card drawTile() {
+	public Tile drawTile() {
 		int size = tiles.size();
 		Random rand = new Random();
 		int randomIndex = rand.nextInt(size);
-		Card drewTile = tiles.get(randomIndex);
+		Tile drewTile = tiles.get(randomIndex);
 		tiles.remove(randomIndex);
 		return drewTile;
 	}
@@ -57,7 +57,7 @@ public class TileStack {
 	 * 
 	 * @return the initial tile.
 	 * */
-	public Card getInitialTile() {
+	public Tile getInitialTile() {
 		return initialTile;
 	}
 
@@ -74,9 +74,9 @@ public class TileStack {
 	 * each representation and then put the new tile into tile list.
 	 * */
 
-	private synchronized List<Card> readTiles() {
+	private synchronized List<Tile> readTiles() {
 		if(readTileStack != null){
-			return new ArrayList<Card>(readTileStack);
+			return new ArrayList<Tile>(readTileStack);
 		}
 		
 		String path;
@@ -86,7 +86,7 @@ public class TileStack {
 			path = Constants.TILES_PATH;
 		}
 		
-		readTileStack = new ArrayList<Card>();
+		readTileStack = new ArrayList<Tile>();
 		BufferedReader input = null;
 		try {
 			FileReader fr = new FileReader(new File(path));
@@ -96,7 +96,7 @@ public class TileStack {
 			line = input.readLine();
 			while (line != null) {
 				// Card creation
-				Card tile = new Card(line);
+				Tile tile = new Tile(line);
 				readTileStack.add(tile);
 				line = input.readLine(); // Go on to next line
 			}

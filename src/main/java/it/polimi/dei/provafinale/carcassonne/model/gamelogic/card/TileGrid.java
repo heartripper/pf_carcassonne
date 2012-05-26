@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class TileGrid {
 
-	Map<Coord, Card> grid;
+	Map<Coord, Tile> grid;
 	private int upperEdge;
 	private int rightEdge;
 	private int lowerEdge;
@@ -17,7 +17,7 @@ public class TileGrid {
 	 * Constructor: create a new instance of CardGrid.
 	 */
 	public TileGrid() {
-		grid = new HashMap<Coord, Card>();
+		grid = new HashMap<Coord, Tile>();
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class TileGrid {
 	 * @return true if the Tile is compatible with the given Coord, false
 	 *         instead.
 	 */
-	public boolean isTileCompatible(Card tile, Coord coord) {
+	public boolean isTileCompatible(Tile tile, Coord coord) {
 		// If the cell is already in use we can't put a tile there
 		if (grid.get(coord) != null) {
 			return false;
@@ -63,7 +63,7 @@ public class TileGrid {
 		// Check that all sides matches
 		for (SidePosition position : SidePosition.values()) {
 			Coord offset = SidePosition.getOffsetForPosition(position);
-			Card neighborTile = grid.get(coord.add(offset));
+			Tile neighborTile = grid.get(coord.add(offset));
 			if (neighborTile != null) {
 				Side currentSide = tile.getSide(position);
 				SidePosition oppositePosition = position.getOpposite();
@@ -86,7 +86,7 @@ public class TileGrid {
 	 * @return true if the Tile has at least one compatible place where to put
 	 *         it, false instead.
 	 */
-	public boolean hasAPlaceFor(Card tile) {
+	public boolean hasAPlaceFor(Tile tile) {
 		for (Coord coord : grid.keySet()) {
 			for (SidePosition pos : SidePosition.values()) {
 				Coord offset = SidePosition.getOffsetForPosition(pos);
@@ -106,7 +106,7 @@ public class TileGrid {
 	 *            - the Coord of a Tile.
 	 * @return the Tile corresponding to a given Coord.
 	 */
-	public Card getTile(Coord coord) {
+	public Tile getTile(Coord coord) {
 		return grid.get(coord);
 	}
 
@@ -118,7 +118,7 @@ public class TileGrid {
 	 * @param coord
 	 *            - a Coord.
 	 */
-	public void putTile(Card tile, Coord coord) {
+	public void putTile(Tile tile, Coord coord) {
 		grid.put(coord, tile);
 		int x = coord.getX();
 		int y = coord.getY();
@@ -142,7 +142,7 @@ public class TileGrid {
 	 * @param position
 	 *            - a SidePosition
 	 * */
-	public Card getTileNeighbor(Card card, SidePosition position) {
+	public Tile getTileNeighbor(Tile card, SidePosition position) {
 		Coord coord = card.getCoordinates();
 		if (coord == null){
 			return null;

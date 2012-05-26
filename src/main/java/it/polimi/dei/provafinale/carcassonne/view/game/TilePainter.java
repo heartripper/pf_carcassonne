@@ -1,7 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.view.game;
 
 import it.polimi.dei.provafinale.carcassonne.Constants;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Tile;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 
@@ -130,7 +130,7 @@ public final class TilePainter {
 		}
 		/* Case rotated image. */
 		else {
-			Card c = new Card(rep);
+			Tile c = new Tile(rep);
 			int rotCount = 0;
 			do {
 				c.rotate();

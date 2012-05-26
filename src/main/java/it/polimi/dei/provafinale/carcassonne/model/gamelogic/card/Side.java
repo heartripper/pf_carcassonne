@@ -8,7 +8,7 @@ public class Side {
 
 	private EntityType type = null;
 	private Entity entity = null;
-	private Card ownerCard = null;
+	private Tile ownerCard = null;
 	private PlayerColor follower = null;
 
 	/**
@@ -20,7 +20,7 @@ public class Side {
 	 * @param type
 	 *            - an EntityType which the Side belong to.
 	 */
-	public Side(Card ownerCard, EntityType type) {
+	public Side(Tile ownerCard, EntityType type) {
 		this.type = type;
 		this.entity = null;
 		this.ownerCard = ownerCard;
@@ -60,7 +60,7 @@ public class Side {
 	 * 
 	 * @return an ownerCard.
 	 */
-	public Card getOwnerCard() {
+	public Tile getOwnerCard() {
 		return ownerCard;
 	}
 
@@ -75,7 +75,7 @@ public class Side {
 		}
 		SidePosition position = ownerCard.getSidePosition(this);
 		SidePosition oppositePosition = position.getOpposite();
-		Card oppositeCard = ownerCard.getNeighbor(position);
+		Tile oppositeCard = ownerCard.getNeighbor(position);
 		if (oppositeCard == null) {
 			return null;
 		}

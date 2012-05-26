@@ -10,7 +10,7 @@ import it.polimi.dei.provafinale.carcassonne.model.gameinterface.GameInterface;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.Message;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.MessageType;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Tile;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.TileGrid;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
@@ -116,7 +116,7 @@ public class TextualInterface implements GameInterface {
 	public void sendAllPlayer(Message msg) {
 		switch (msg.type) {
 		case START:
-			Card c0 = new Card(msg.payload);
+			Tile c0 = new Tile(msg.payload);
 			grid.putTile(c0, new Coord(0, 0));
 			return;
 
@@ -150,13 +150,13 @@ public class TextualInterface implements GameInterface {
 	}
 
 	private String manageTileRotation(PlayerColor color, Message msg) {
-		Card tile = new Card(msg.payload);
+		Tile tile = new Tile(msg.payload);
 		String tileRep = TileGridRepresenter.getTileRepresentation(tile);
 		return String.format("Tile rotated:\n%s\n", tileRep);
 	}
 
 	private String manageNext(String payload) {
-		Card tile = new Card(payload);
+		Tile tile = new Tile(payload);
 		String tileRep = TileGridRepresenter.getTileRepresentation(tile);
 		return String.format("Your card:\n%s\n", tileRep);
 	}
@@ -166,8 +166,8 @@ public class TextualInterface implements GameInterface {
 		int x = Integer.parseInt(split[1].trim());
 		int y = Integer.parseInt(split[2].trim());
 		Coord c = new Coord(x,y);
-		Card newTile = new Card(split[0].trim());
-		Card oldTile = grid.getTile(c);
+		Tile newTile = new Tile(split[0].trim());
+		Tile oldTile = grid.getTile(c);
 		if(oldTile == null){
 			grid.putTile(newTile, c);
 		}else{

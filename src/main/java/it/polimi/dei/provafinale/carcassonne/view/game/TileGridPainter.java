@@ -1,7 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.view.game;
 
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Tile;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.TileGrid;
 
 import java.awt.Color;
@@ -42,7 +42,7 @@ public class TileGridPainter extends JLabel {
 		for (int j = bounds[2] + 1; j >= bounds[0] - 1; j--) {
 			for (int i = bounds[3] - 1; i <= bounds[1] + 1; i++) {
 				Coord c = new Coord(i, j);
-				Card tile = grid.getTile(c);
+				Tile tile = grid.getTile(c);
 				if (tile != null) {
 					printCard(g, tile);
 				} else if (grid.hasNeighborForCoord(c)) {
@@ -52,7 +52,7 @@ public class TileGridPainter extends JLabel {
 		}
 	}
 
-	private void printCard(Graphics g, Card tile) {
+	private void printCard(Graphics g, Tile tile) {
 		Coord coord = tile.getCoordinates();
 		int x = (currOffsetX + coord.getX()) * tileDim;
 		int y = (currOffsetY - coord.getY()) * tileDim;

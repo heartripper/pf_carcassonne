@@ -1,7 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.model.textinterface;
 
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Tile;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.TileGrid;
 
@@ -27,7 +27,7 @@ public class TileGridRepresenter {
 			}
 			for (int i = bounds[3] - 1; i <= bounds[1] + 1; i++) {
 				Coord currentCoord = new Coord(i, j);
-				Card currentTile = grid.getTile(currentCoord);
+				Tile currentTile = grid.getTile(currentCoord);
 				String[] rep = null;
 
 				//Find out current representation
@@ -58,7 +58,7 @@ public class TileGridRepresenter {
 	 *            - a tile
 	 * @return the textual representation
 	 * */
-	public static String getTileRepresentation(Card tile) {
+	public static String getTileRepresentation(Tile tile) {
 		String[] arrayRep = getTileArrayRepresentation(tile);
 		StringBuilder representation = new StringBuilder();
 		for (int i = 0; i < arrayRep.length; i++) {
@@ -101,7 +101,7 @@ public class TileGridRepresenter {
 	 * 
 	 * @return the String[] representation of a card with its sides and links.
 	 */
-	private static String[] getTileArrayRepresentation(Card tile) {
+	private static String[] getTileArrayRepresentation(Tile tile) {
 		String north = tile.getSide(SidePosition.N).toString();
 		String east = tile.getSide(SidePosition.E).toString();
 		String south = tile.getSide(SidePosition.S).toString();
