@@ -1,3 +1,4 @@
+
 package it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile;
 
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.entity.Entity;
@@ -8,103 +9,98 @@ public class Side {
 
 	private EntityType type = null;
 	private Entity entity = null;
-	private Tile ownerCard = null;
+	private Tile ownerTile = null;
 	private PlayerColor follower = null;
 
 	/**
-	 * Constructor: set the owner of a card which the side belongs to, set the
-	 * type of an entity which the side belongs to.
+	 * Side constructor. Creates a new instance of class Side (set the owner of a card which the side belongs to, set the
+	 * type of an entity which the side belongs to).
 	 * 
-	 * @param ownerCard
-	 *            - an owner which the Side of the Card belongs to.
+	 * @param ownerTile
+	 *            - an owner which the Side of Tile belongs to.
 	 * @param type
 	 *            - an EntityType which the Side belong to.
 	 */
-	public Side(Tile ownerCard, EntityType type) {
+	public Side(Tile ownerTile, EntityType type) {
 		this.type = type;
 		this.entity = null;
-		this.ownerCard = ownerCard;
+		this.ownerTile = ownerTile;
 		this.follower = null;
 	}
 
 	/**
-	 * Give the entity type of a side.
 	 * 
-	 * @return an EntityType
+	 * @return the EntityType of Side.
 	 */
 	public EntityType getType() {
 		return type;
 	}
 
 	/**
-	 * Give the entity which the side belongs to.
 	 * 
-	 * @return an entity.
+	 * @return the Entity of Side.
 	 */
 	public Entity getEntity() {
 		return entity;
 	}
 
 	/**
-	 * Set an entity on a side of a card.
 	 * 
 	 * @param entity
-	 *            - an Entity.
+	 *            - an Entity we want to set on Side.
 	 */
 	public void setEntity(Entity entity) {
 		this.entity = entity;
 	}
 
 	/**
-	 * Give the owner of a side of a card.
 	 * 
-	 * @return an ownerCard.
+	 * @return a Tile which the Side belongs to.
 	 */
 	public Tile getOwnerCard() {
-		return ownerCard;
+		return ownerTile;
 	}
 
 	/**
-	 * Give the side opposite to the current one.
+	 * Gives the side opposite to the current one.
 	 * 
-	 * @return a Side.
+	 * @return a Side opposite to the current one.
 	 */
 	public Side getOppositeSide() {
-		if (ownerCard == null) {
+		/*The Side doesn't belong to a Tile.*/
+		if (ownerTile == null) {
 			return null;
 		}
-		SidePosition position = ownerCard.getSidePosition(this);
+		/*The Side belongs to a Tile.*/
+		/*Obtains the SidePosition of the current Side.*/
+		SidePosition position = ownerTile.getSidePosition(this);
+		/*Obtains the opposite SidePosition.*/
 		SidePosition oppositePosition = position.getOpposite();
-		Tile oppositeCard = ownerCard.getNeighbor(position);
-		if (oppositeCard == null) {
+		/*Obtains the opposite Tile.*/
+		Tile oppositeTile = ownerTile.getNeighbor(position);
+		/*Case there isn't an opposite Tile.*/
+		if (oppositeTile == null) {
 			return null;
 		}
-		return oppositeCard.getSide(oppositePosition);
+		return oppositeTile.getSide(oppositePosition);
 	}
 
 	/**
-	 * Add a follower to a side.
 	 * 
-	 * @param player
-	 *            - a Player which the Card containing the Side belongs to.
-	 * @return true if the Player puts a follower on the Side, false instead.
+	 * @param follower the follower we want to put on the current Side
 	 */
 	public void setFollower(PlayerColor follower) {
 		this.follower = follower;
 	}
 
 	/**
-	 * Give the color of the player who put a follower on this side.
 	 * 
-	 * @return the PlayerColor of the player.
+	 * @return the PlayerColor of the follower that is located on Side.
 	 */
 	public PlayerColor getFollower() {
 		return follower;
 	}
 
-	/**
-	 * Return the string representation of Side.
-	 */
 	@Override
 	public String toString() {
 		String rep = (type == EntityType.N ? " " : type.toString());
