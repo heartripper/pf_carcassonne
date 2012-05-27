@@ -10,11 +10,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class to manage players and matches. It handles remote players queue,
+ * automatically starting a new match when:
+ * <ul>
+ * <li>There are 5 players waiting to play;</li>
+ * <li>After a timeout there are at least 2 player waiting to play.</li>
+ * </ul>
+ * */
 public class MatchesManager implements Runnable {
 
 	private List<RemotePlayer> pendingPlayers;
 	private Map<String, ServerGameInterface> matches;
 
+	/**
+	 * Constructs a new Matches Manager.
+	 * */
 	public MatchesManager() {
 		this.pendingPlayers = new ArrayList<RemotePlayer>();
 		this.matches = new HashMap<String, ServerGameInterface>();
@@ -25,6 +36,18 @@ public class MatchesManager implements Runnable {
 		checkPlayersPeriodically();
 	}
 
+	/**
+	 * Handles player's request to play. If player's request is CONNECT, manager
+	 * puts it into pending players queue. Then if the size of the queue is 5,
+	 * it starts a new match for those players and resets the queue. On the
+	 * other and, if player's request is RECONNECT, manager tries to reconnect
+	 * the player to the right match.
+	 * 
+	 * @param player
+	 *            - the player who asked to play.
+	 * @param request
+	 *            - player's request
+	 * */
 	public synchronized void enqueuePlayer(RemotePlayer player, Message request) {
 		switch (request.type) {
 		case CONNECT:
@@ -52,6 +75,13 @@ public class MatchesManager implements Runnable {
 	}
 
 	// Helpers
+	/**
+	 * Starts a new match.
+	 * 
+	 * @param players
+	 *            - the list of the players who will take part in the starting
+	 *            match.
+	 * */
 	private void startMatch(List<RemotePlayer> players) {
 		ServerGameInterface sgi = new ServerGameInterface(players);
 		MatchHandler mh = new MatchHandler(sgi);
@@ -60,6 +90,10 @@ public class MatchesManager implements Runnable {
 		matches.put(sgi.getName(), sgi);
 	}
 
+	/**
+	 * Periodically checks if players queue size is at least 2. If so, it starts
+	 * a new match for those players.
+	 * */
 	private synchronized void checkPlayersPeriodically() {
 		while (true) {
 			int size = pendingPlayers.size();

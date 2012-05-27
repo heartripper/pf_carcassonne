@@ -9,10 +9,19 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
+/**
+ * Class to monitor players' requests to play made via RMI.
+ * */
 public class RMIRequestMonitor implements CarcassonneRMIServer {
 
 	private MatchesManager matchesManager;
 
+	/**
+	 * Registers a RMI Request Monitor in the RMI Registry.
+	 * 
+	 * @param matchesManager
+	 *            - the matches manager which will handle players' requests
+	 * */
 	public static void registerRMIRequestMonitor(MatchesManager matchesManager) {
 		RMIRequestMonitor monitor = new RMIRequestMonitor(matchesManager);
 		try {
