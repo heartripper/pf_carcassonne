@@ -3,23 +3,23 @@ package it.polimi.dei.provafinale.carcassonne;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Side;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.entity.EntityType;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.Side;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.SidePosition;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.Tile;
 
 import org.junit.*;
 import static org.junit.Assert.*;
 
 public class TileTest {
 
-	private Card tile;
+	private Tile tile;
 	private final String REPRESENTATION = "N=N S=C W=S-B E=S NS=0 NE=0 NW=0 WE=1 SE=0 SW=0";
 	
 	@Before
 	public void setUp(){
-		tile = new Card(REPRESENTATION);
+		tile = new Tile(REPRESENTATION);
 	}
 	
 	@Test
