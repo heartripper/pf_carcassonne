@@ -1,22 +1,22 @@
 package it.polimi.dei.provafinale.carcassonne;
 
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Card;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.TileGrid;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.Tile;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.TileGrid;
 
 import org.junit.*;
 import static org.junit.Assert.*;
 
 public class TileGridTest {
 
-	private Card c0;
-	private Card c1;
+	private Tile c0;
+	private Tile c1;
 	private TileGrid tg;
 	
 	@Before
 	public void setUp(){
-		c0 = new Card("N=N S=C W=S E=S NS=0 NE=0 NW=0 WE=1 SE=0 SW=0");
-		c1 = new Card("N=S S=S W=S E=S NS=0 NE=0 NW=1 WE=0 SE=1 SW=0");
+		c0 = new Tile("N=N S=C W=S E=S NS=0 NE=0 NW=0 WE=1 SE=0 SW=0");
+		c1 = new Tile("N=S S=S W=S E=S NS=0 NE=0 NW=1 WE=0 SE=1 SW=0");
 		
 		tg = new TileGrid();
 		tg.putTile(c0, new Coord(0,0));
@@ -37,7 +37,7 @@ public class TileGridTest {
 	
 	@Test
 	public void testPositionAvailable(){
-		Card c2 = new Card("N=S S=S W=N E=N NS=1 NE=0 NW=0 WE=0 SE=0 SW=0");
+		Tile c2 = new Tile("N=S S=S W=N E=N NS=1 NE=0 NW=0 WE=0 SE=0 SW=0");
 		boolean available = tg.hasAPlaceFor(c2);
 		assertFalse(available);
 		c2.rotate();
