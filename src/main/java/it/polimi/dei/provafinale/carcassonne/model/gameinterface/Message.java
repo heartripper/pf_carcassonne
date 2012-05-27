@@ -1,10 +1,15 @@
 package it.polimi.dei.provafinale.carcassonne.model.gameinterface;
 
+import java.io.Serializable;
+
 /**
  * Class representing messages that are exchanged between MatchHandler and
  * player clients.
  * */
-public class Message {
+public class Message implements Serializable{
+	
+	private static final long serialVersionUID = -5892768452421790257L;
+	
 	public final MessageType type;
 	public final String payload;
 
