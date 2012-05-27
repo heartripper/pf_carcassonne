@@ -27,7 +27,7 @@ public class MatchHandler implements Runnable {
 	 * MatchHandler constructor. Creates a new instance of class MatchHandler.
 	 * 
 	 * @param gameInterface
-	 *            an instance of classe GameInterface
+	 *            an instance of class GameInterface
 	 */
 	public MatchHandler(GameInterface gameInterface) {
 		this.gameInterface = gameInterface;
