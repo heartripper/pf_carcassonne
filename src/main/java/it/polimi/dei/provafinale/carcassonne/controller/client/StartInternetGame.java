@@ -3,6 +3,7 @@ package it.polimi.dei.provafinale.carcassonne.controller.client;
 import it.polimi.dei.provafinale.carcassonne.Constants;
 import it.polimi.dei.provafinale.carcassonne.view.menu.InternetGamePanel;
 import it.polimi.dei.provafinale.carcassonne.view.viewInterface.GUIViewInterface;
+import it.polimi.dei.provafinale.carcassonne.view.viewInterface.TextualViewInterface;
 import it.polimi.dei.provafinale.carcassonne.view.viewInterface.ViewInterface;
 
 import java.awt.event.ActionEvent;
@@ -18,36 +19,56 @@ public class StartInternetGame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String addr;
+		String host;
 		int port;
 		
-		try{
-			internetGamePanel.setUIActive(false);
-			if(Constants.DEBUG_MODE){
-				addr = Constants.DEBUG_ADDR;
-				port = Constants.DEBUG_PORT;
+		internetGamePanel.setUIActive(false);
+		
+		/*Retrieves settings from view*/
+		int connectionType = internetGamePanel.getConnType();
+		int viewType = internetGamePanel.getViewType();
+		
+		if(Constants.DEBUG_MODE){
+			host = Constants.DEBUG_ADDR;
+			port = Constants.DEBUG_PORT;
+		} else {
+			host = internetGamePanel.getIPFieldValue();
+			String portString = internetGamePanel.getPortFieldValue();
+			
+			if(host.equals("") || portString.equals("")){
+				internetGamePanel.setNotifyText(Constants.FIELDS_ERROR);
+				internetGamePanel.setUIActive(true);
+				return;
 			} else {
-				addr = internetGamePanel.getIPFieldValue();
-				String portString = internetGamePanel.getPortFieldValue();
-				
-				if(addr.equals("") || portString.equals("")){
-					internetGamePanel.setNotifyText(Constants.FIELDS_ERROR);
-					internetGamePanel.setUIActive(true);
-					return;
-				} else {
+				try{
 					port = Integer.parseInt(portString);
+				}catch(NumberFormatException nfe){
+					internetGamePanel.setNotifyText(Constants.PORT_ERROR);
+					internetGamePanel.setUIActive(true);
 				}
 			}
-
-			ClientInterface ci = new ClientSocketInterface(addr, port);
+		}
+		
+		/*Set up client interface*/
+		ClientInterface ci;
+		if(connectionType == 0){
+			ci = new ClientSocketInterface(host, port);
+		} else {
+			ci = new ClientRMIInterface(host);
+		}
+		
+		/*Set up view interface*/
+		ViewInterface vi;
+		if(viewType == 0){
+			vi = new GUIViewInterface();
+		} else {
+			vi = new TextualViewInterface();
+		}
+		
+		try{
 			ci.connect();
-			ViewInterface vi = new GUIViewInterface();
-			
 			ClientController.startNewMatchController(ci, vi);
 			internetGamePanel.setNotifyText(Constants.MATCH_IS_STARTING);
-		}catch(NumberFormatException nfe){
-			internetGamePanel.setNotifyText(Constants.PORT_ERROR);
-			internetGamePanel.setUIActive(true);
 		}catch(ConnectionLostException cle){
 			internetGamePanel.setNotifyText(Constants.CONNECTION_ERROR);
 			internetGamePanel.setUIActive(true);
