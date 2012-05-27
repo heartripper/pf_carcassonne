@@ -5,6 +5,10 @@ package it.polimi.dei.provafinale.carcassonne;
  * */
 public abstract class Constants {
 
+	//Basics
+	public static final int MIN_PLAYER_NUMBER = 2;
+	public static final int MAX_PLAYER_NUMBER = 4;
+	
 	public static final int SIDES_NUMBER = 4;
 
 	public static final int TILE_PIXEL_DIMENSION = 125;
@@ -34,4 +38,8 @@ public abstract class Constants {
 	public static final String BASE_TILE_PATH = "src/main/resources/tiles.txt";
 	public static final String PLACEHOLDER_PATH = "src/main/resources/placeholder.png";
 	public static final String TILE_PATH_FORMAT ="src/main/resources/tiles/%s.png";
+	
+	//Server
+	public static final int PLAYER_LIST_CHECK_TIME = 10*1000;
+	public static final String RMI_SERVER_NAME = "CarcassonneRMIServer";
 }
