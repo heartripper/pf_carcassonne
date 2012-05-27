@@ -42,23 +42,26 @@ public enum SidePosition {
 	}
 
 	/**
-	 * Retrieves the corresponding side position given its index.
+	 * Retrieves the corresponding SidePosition given its index.
 	 * 
 	 * @param index
-	 *            - the index of the sidePosition.
+	 *            - the corresponding index of SidePosition.
 	 * @return the desired SidePosition.
 	 */
 	public static SidePosition valueOf(int index) {
 		SidePosition[] positions = SidePosition.values();
+		/*Exists a position corresponding to the given index.*/
 		if (index >= 0 && index < positions.length) {
 			return positions[index];
-		} else {
+		}
+		/*Not exists a position corresponding to the given index.*/
+		else {
 			return null;
 		}
 	}
 
 	/**
-	 * Give the side position opposite to the current one.
+	 * Gives the SidePosition opposite to the current one.
 	 * 
 	 * @return the SidePosition opposite to the current one.
 	 */
@@ -66,4 +69,5 @@ public enum SidePosition {
 		int oppositeIndex = (index + 2) % 4;
 		return SidePosition.valueOf(oppositeIndex);
 	}
+	
 }
