@@ -25,6 +25,8 @@ public class InternetGamePanel extends JPanel {
 	private JLabel messageLabel;
 	private JTextField serverIPField;
 	private JTextField serverPortField;
+	private JComboBox connectionComboBox;
+	private JComboBox viewComboBox;
 	private JButton btnJoinGame;
 
 	private BufferedImage background;
@@ -91,8 +93,8 @@ public class InternetGamePanel extends JPanel {
 		protocolPanel.add(lblSelectProtocol);
 		
 		String[] protocol = {"Socket", "RMI"};
-		JComboBox selectProtocolComboBox = new JComboBox(protocol);
-		protocolPanel.add(selectProtocolComboBox);
+		connectionComboBox = new JComboBox(protocol);
+		protocolPanel.add(connectionComboBox);
 		
 		JPanel guiPanel = new JPanel();
 		guiPanel.setBackground(new Color(0,0,0,0));
@@ -102,8 +104,8 @@ public class InternetGamePanel extends JPanel {
 		guiPanel.add(lblSelectGui);
 		
 		String[] gui = {"Swing", "Textual"};
-		JComboBox guiComboBox = new JComboBox(gui);
-		guiPanel.add(guiComboBox);
+		viewComboBox = new JComboBox(gui);
+		guiPanel.add(viewComboBox);
 
 		JPanel joinGamePanel = new JPanel();
 		joinGamePanel.setBackground(new Color(0, 0, 0, 0));
@@ -160,6 +162,14 @@ public class InternetGamePanel extends JPanel {
 		return serverIPField.getText();
 	}
 
+	public int getConnType(){
+		return connectionComboBox.getSelectedIndex();
+	}
+	
+	public int getViewType(){
+		return viewComboBox.getSelectedIndex();
+	}
+	
 	public void setUIActive(boolean active) {
 		serverIPField.setEnabled(active);
 		serverPortField.setEnabled(active);
