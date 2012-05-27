@@ -7,9 +7,9 @@ import it.polimi.dei.provafinale.carcassonne.model.gameinterface.Message;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.MessageType;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Match;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Tile;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.SidePosition;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.Tile;
 import it.polimi.dei.provafinale.carcassonne.model.server.PlayersDisconnectedException;
 
 public class MatchHandler implements Runnable {
