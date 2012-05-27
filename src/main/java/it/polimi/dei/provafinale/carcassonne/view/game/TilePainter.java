@@ -1,9 +1,9 @@
 package it.polimi.dei.provafinale.carcassonne.view.game;
 
 import it.polimi.dei.provafinale.carcassonne.Constants;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Tile;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.SidePosition;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.Tile;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;

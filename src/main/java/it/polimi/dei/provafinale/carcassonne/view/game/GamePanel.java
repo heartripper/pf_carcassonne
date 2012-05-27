@@ -4,8 +4,8 @@ import it.polimi.dei.provafinale.carcassonne.controller.client.FollowerPutListen
 import it.polimi.dei.provafinale.carcassonne.controller.client.PassListener;
 import it.polimi.dei.provafinale.carcassonne.controller.client.TilePutListener;
 import it.polimi.dei.provafinale.carcassonne.controller.client.TileRotateListener;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.TileGrid;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.TileGrid;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
