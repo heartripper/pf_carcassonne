@@ -1,9 +1,9 @@
 package it.polimi.dei.provafinale.carcassonne.model.textinterface;
 
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Tile;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.SidePosition;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.TileGrid;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.SidePosition;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.Tile;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.TileGrid;
 
 public class TileGridRepresenter {
 
