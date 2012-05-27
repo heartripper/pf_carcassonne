@@ -7,28 +7,31 @@ import java.util.Map;
 
 public class TileGrid {
 
-	Map<Coord, Tile> grid;
+	Map<Coord, Tile> grid; // TODO verificare che la visibilità di questo
+							// attributo sia corretta
 	private int upperEdge;
 	private int rightEdge;
 	private int lowerEdge;
 	private int leftEdge;
 
 	/**
-	 * Constructor: create a new instance of CardGrid.
+	 * TileGrid constructor. Creates a new instance of TileGrid.
 	 */
 	public TileGrid() {
 		grid = new HashMap<Coord, Tile>();
 	}
 
 	/**
-	 * Checks if for a given coordinate there is a neighbor card.
+	 * Checks if for a given Coord there is a neighbor Tile.
 	 * 
-	 * @param - coord a Coordinate
+	 * @param coord
+	 *            an instance of Coord.
 	 * @return true if there is a neighbor tile, false otherwise.
-	 * */
+	 */
 	public boolean hasNeighborForCoord(Coord coord) {
 		for (SidePosition pos : SidePosition.values()) {
 			Coord offset = SidePosition.getOffsetForPosition(pos);
+			/* Looks if a neighbor Tile exists. */
 			if (grid.containsKey(coord.add(offset))) {
 				return true;
 			}
@@ -47,24 +50,27 @@ public class TileGrid {
 	 *         instead.
 	 */
 	public boolean isTileCompatible(Tile tile, Coord coord) {
-		// If the cell is already in use we can't put a tile there
+		/* If the cell is already in use we can't put a tile there. */
 		if (grid.get(coord) != null) {
 			return false;
 		}
-		// The first tile that goes into (0,0) is the initial tile and is
-		// compatible by default.
+		/*
+		 * The first tile that goes into (0,0) is the initial tile and is
+		 * compatible by default.
+		 */
 		if (coord.getX() == 0 && coord.getY() == 0) {
 			return true;
 		}
-		// Check that we have at least one neighbor
-		if (!hasNeighborForCoord(coord)) {
+		/* Check that we have at least one neighbor. */
+		if (hasNeighborForCoord(coord) == false) {
 			return false;
 		}
-		// Check that all sides matches
+		/* Check that all sides matches. */
 		for (SidePosition position : SidePosition.values()) {
 			Coord offset = SidePosition.getOffsetForPosition(position);
 			Tile neighborTile = grid.get(coord.add(offset));
 			if (neighborTile != null) {
+				/* Start verifying that the two SidePosition are compatible. */
 				Side currentSide = tile.getSide(position);
 				SidePosition oppositePosition = position.getOpposite();
 				Side oppositeSide = neighborTile.getSide(oppositePosition);
@@ -73,24 +79,25 @@ public class TileGrid {
 				}
 			}
 		}
-
-		// Tile is compatible
+		/* Tile is compatible. */
 		return true;
 	}
 
 	/**
-	 * Check if a tile can be put into the grid.
+	 * Checks if a tile can be put into the grid.
 	 * 
 	 * @param tile
-	 *            - a Tile.
+	 *            - a Tile we want to put in the grid.
 	 * @return true if the Tile has at least one compatible place where to put
 	 *         it, false instead.
 	 */
 	public boolean hasAPlaceFor(Tile tile) {
 		for (Coord coord : grid.keySet()) {
+			/* Calculates possible Coord in grid for the given Tile. */
 			for (SidePosition pos : SidePosition.values()) {
 				Coord offset = SidePosition.getOffsetForPosition(pos);
 				Coord newPos = coord.add(offset);
+				/* Checks compatibility. */
 				if (isTileCompatible(tile, newPos)) {
 					return true;
 				}
@@ -100,7 +107,7 @@ public class TileGrid {
 	}
 
 	/**
-	 * Give the tile corresponding to the given coordinate.
+	 * Gives the Tile corresponding to the position included in the given Coord.
 	 * 
 	 * @param coord
 	 *            - the Coord of a Tile.
@@ -111,51 +118,55 @@ public class TileGrid {
 	}
 
 	/**
-	 * Set a tile on a giving coordinate.
+	 * Sets a tile on the gived Coord.
 	 * 
-	 * @param put
-	 *            - a Tile to be put into the grid at given Coord.
+	 * @param tile
+	 *            a Tile to be put into the grid at given Coord.
 	 * @param coord
-	 *            - a Coord.
+	 *            a Coord.
 	 */
 	public void putTile(Tile tile, Coord coord) {
 		grid.put(coord, tile);
 		int x = coord.getX();
 		int y = coord.getY();
-
-		// Updating bounds of area to represent.
+		/* Updating bounds of area to represent. */
 		rightEdge = (x > rightEdge ? x : rightEdge);
 		leftEdge = (x < leftEdge ? x : leftEdge);
 		upperEdge = (y < upperEdge ? y : upperEdge);
 		lowerEdge = (y > lowerEdge ? y : lowerEdge);
-
-		// Insert into the tile its position and a reference to the grid to find
-		// its neighbors.
+		/*
+		 * Insert into the tile its position and a reference to the grid, useful
+		 * to find its neighbors.
+		 */
 		tile.setPositionInfo(this, coord);
 	}
 
 	/**
-	 * Gets the neighbor of a tile at a position.
+	 * Gets the Tile neighbor, opposite to the given SidePosition.
 	 * 
-	 * @param card
-	 *            - a Card
+	 * @param tile
+	 *            - a Tile.
 	 * @param position
-	 *            - a SidePosition
+	 *            - a SidePosition we want to know the neighbor.
 	 * */
-	public Tile getTileNeighbor(Tile card, SidePosition position) {
-		Coord coord = card.getCoordinates();
-		if (coord == null){
+	public Tile getTileNeighbor(Tile tile, SidePosition position) {
+		Coord coord = tile.getCoordinates();
+		/* If the Tile has not corresponding Coord, it can't have a neighbor. */
+		if (coord == null) {
 			return null;
 		}
+		/* Calculate neighbor Coord and obtain it. */
 		Coord offset = SidePosition.getOffsetForPosition(position);
 		return grid.get(coord.add(offset));
 	}
 
 	/**
-	 * Gets the occupied area in the map
-	 * */
+	 * Gets the dimension (upperbound) of the area currently occupied by tiles.
+	 * 
+	 * @return the bounds of the occupied area.
+	 */
 	public int[] getBounds() {
-		return new int[]{ upperEdge, rightEdge, lowerEdge, leftEdge };
+		return new int[] { upperEdge, rightEdge, lowerEdge, leftEdge };
 	}
 
 }

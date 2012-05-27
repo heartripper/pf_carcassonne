@@ -11,17 +11,20 @@ public enum PlayerColor {
 	private Color color;
 
 	/**
-	 * Give the color corresponding to the id of a player.
+	 * Gives the color corresponding to the identificator of a Player.
 	 * 
 	 * @param id
-	 *            - an int that identifies a player.
-	 * @return the PlayerColor corresponding to the Player id.
+	 *            - an number that identifies a Player.
+	 * @return the PlayerColor corresponding to the Player identificator.
 	 */
 	public static PlayerColor valueOf(int id) {
 		PlayerColor[] colors = PlayerColor.values();
-		if (id < colors.length && id >= 0){
+		/* A color can be found. */
+		if (id < colors.length && id >= 0) {
 			return colors[id];
-		}else{
+		}
+		/* A color cannot be found. */
+		else {
 			return null;
 		}
 	}
@@ -35,8 +38,8 @@ public enum PlayerColor {
 	 * */
 	public static int indexOf(PlayerColor color) {
 		PlayerColor[] values = values();
-		for (int i = 0; i < values.length; i++){
-			if (values[i] == color){
+		for (int i = 0; i < values.length; i++) {
+			if (values[i] == color) {
 				return i;
 			}
 		}
@@ -44,7 +47,7 @@ public enum PlayerColor {
 	}
 
 	/**
-	 * Constructor: Create a new instance of PlayerColor.
+	 * PlayerColor constructor. Creates a new instance of class PlayerColor.
 	 * 
 	 * @param fullName
 	 *            - the full name of a color.
@@ -55,7 +58,6 @@ public enum PlayerColor {
 	}
 
 	/**
-	 * Give the full name of a color.
 	 * 
 	 * @return the full name of a PlayerColor.
 	 */
@@ -64,9 +66,8 @@ public enum PlayerColor {
 	}
 
 	/**
-	 * Gives the Color corresponding to the player.
 	 * 
-	 * @return the color corresponding to this player.
+	 * @return the color corresponding to the current PlayerColor.
 	 * */
 	public Color getColor() {
 		return color;

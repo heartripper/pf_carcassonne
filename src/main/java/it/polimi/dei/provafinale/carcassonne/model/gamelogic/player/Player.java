@@ -12,7 +12,7 @@ public class Player {
 	private boolean active = true;
 
 	/**
-	 * Constructor: Create a new instance of Player.
+	 * Player constructor. Creates a new instance of class Player.
 	 */
 	public Player() {
 		this.score = 0;
@@ -22,7 +22,7 @@ public class Player {
 	}
 
 	/**
-	 * Check if the player has available followers.
+	 * Checks if the Player has available followers.
 	 * 
 	 * @return true if the Player has available followers, false instead.
 	 */
@@ -31,38 +31,40 @@ public class Player {
 	}
 
 	/**
-	 * Add one follower to the player's ones.
+	 * Adds one follower to the player's ones.
 	 */
 	public void addFollowers(int amount) {
 		followers += amount;
-		
-		if (followers > 7){
-			System.out.printf("Error in followers for player %s. It has %s followers.\n", toString(), followers);	
+		/* Error in followers number. */
+		if (followers > 7) {
+			System.out.printf(
+					"Error in followers for player %s. It has %s followers.\n",
+					toString(), followers);
 		}
 		return;
 	}
 
 	/**
-	 * Remove one follower from the player's ones.
+	 * Removes one follower from the player's ones.
 	 */
 	public void removeFollower() {
-		if (followers > 0){
+		if (followers > 0) {
 			followers--;
 		}
 	}
 
 	/**
-	 * Increment the score of a player.
+	 * Increments the score of a Player of a given value.
 	 * 
 	 * @param increment
-	 *            - an int to add to the score of the player.
+	 *            - a number to add to the current score of the player.
 	 */
 	public void addScore(int increment) {
 		score += increment;
 	}
 
 	/**
-	 * Give the score of a player.
+	 * Gives the score of a player.
 	 * 
 	 * @return the score of the player.
 	 */
@@ -73,43 +75,49 @@ public class Player {
 	/**
 	 * Give player's symbol, which is the first letter of his color.
 	 * 
-	 * @return the color of the player.
+	 * @return the String representation of the player color.
 	 */
 	public String getSymbol() {
 		return color.toString();
 	}
 
 	/**
-	 * Gives the player's color
 	 * 
-	 * @return the player's color
+	 * @return player color.
 	 * */
 	public PlayerColor getColor() {
 		return color;
 	}
 
 	/**
-	 * Give an overview of the status of a player.
+	 * Gives an overview of the status of a Player (color, score, number of
+	 * followers).
 	 * 
-	 * @return the color, the score and the available followers of the player.
+	 * @return the String representation of color, score and available followers
+	 *         of the Player.
 	 */
 	public String getStatus() {
-		return String.format("%s: %s , %s", color.getFullName(), score, followers);
+		return String.format("%s: %s , %s", color.getFullName(), score,
+				followers);
 	}
 
-	/**
-	 * Return the string representation of Player.
-	 */
 	@Override
 	public String toString() {
 		return color.getFullName();
 	}
-	
-	public boolean isActive(){
+
+	/**
+	 * 
+	 * @return true if the Player is active, false instead.
+	 */
+	public boolean isActive() {
 		return active;
 	}
-	
-	public void setInactive(){
+
+	/**
+	 * Sets the Player status inactive.
+	 */
+	public void setInactive() {
 		active = false;
 	}
 }

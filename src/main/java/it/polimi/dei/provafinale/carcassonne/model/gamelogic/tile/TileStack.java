@@ -21,6 +21,9 @@ public class TileStack {
 	private List<Tile> tiles;
 	private Tile initialTile;
 
+	/**
+	 * TileStack constructor. Creates a new instance of class TileStack.
+	 */
 	public TileStack() {
 		tiles = readTiles();
 		initialTile = tiles.get(0);
@@ -28,22 +31,30 @@ public class TileStack {
 	}
 
 	/**
-	 * Randomly choose and then remove a tile from the stack. After that return
-	 * the drew tile.
+	 * Randomly choose and then remove a Tile from the stack. After that return
+	 * the drew Tile.
 	 * 
-	 * @return the drew tile.
+	 * @return the drew Tile.
 	 */
 	public Tile drawTile() {
+		/* Setting Tile dimension. */
 		int size = tiles.size();
+		/* Random choice of a Tile. */
 		Random rand = new Random();
 		int randomIndex = rand.nextInt(size);
+		/* Obtain the Tile representation. */
 		Tile drewTile = tiles.get(randomIndex);
+		/*
+		 * Remove the index of the given Tile from the list of the available
+		 * random numbers.
+		 */
 		tiles.remove(randomIndex);
+		/* Return the tile representation. */
 		return drewTile;
 	}
 
 	/**
-	 * Used to determine if there are still tiles in the stack.
+	 * Determines if there are still tiles in the stack.
 	 * 
 	 * @return true if there is at least a tiles in the stack, false instead.
 	 */
@@ -52,10 +63,10 @@ public class TileStack {
 	}
 
 	/**
-	 * Obtain the initial tile, which is the one that is put into play before
-	 * the beginning of the match.
+	 * Obtains the initial Tile, which is the one that is put into the grid
+	 * before the beginning of the match.
 	 * 
-	 * @return the initial tile.
+	 * @return the initial Tile.
 	 * */
 	public Tile getInitialTile() {
 		return initialTile;
@@ -63,56 +74,62 @@ public class TileStack {
 
 	/**
 	 * Gives the number of tiles remaining in the stack.
-	 * */
-	public int remainingTilesNumber(){
+	 * 
+	 * @return the number of tiles remaining in the stack.
+	 */
+	public int remainingTilesNumber() {
 		return tiles.size();
 	}
-	
-	// helpers
+
+	/* Helper methods. */
+
 	/**
 	 * Reads tile representation from carcassonne.dat, creates a new Tile for
 	 * each representation and then put the new tile into tile list.
 	 * */
 
 	private synchronized List<Tile> readTiles() {
-		if(readTileStack != null){
+		/*
+		 * Case we have already read some tiles: we return the array that
+		 * contains the read tiles.
+		 */
+		if (readTileStack != null) {
 			return new ArrayList<Tile>(readTileStack);
 		}
-		
+		/* Case we haven't read tiles yet. */
+		/* Obtaining the path to reach file carcassonne.dat. */
 		String path;
-		if(Constants.USE_FEW_TILES){
+		if (Constants.USE_FEW_TILES) {
 			path = Constants.LESS_TILES_PATH;
-		}else{
+		} else {
 			path = Constants.TILES_PATH;
 		}
-		
+		/* Creating a new ArrayList to put the list of tiles in. */
 		readTileStack = new ArrayList<Tile>();
 		BufferedReader input = null;
 		try {
 			FileReader fr = new FileReader(new File(path));
 			input = new BufferedReader(fr);
 			String line;
-
 			line = input.readLine();
 			while (line != null) {
-				// Card creation
+				/* Card creation. */
 				Tile tile = new Tile(line);
 				readTileStack.add(tile);
-				line = input.readLine(); // Go on to next line
+				/* Go on to next line */
+				line = input.readLine();
 			}
-
 		} catch (IOException e) {
 			// TODO: throw exception
 			System.out.println("Error opening tile file.");
 		}
-		
-		//Close stream if it has been opened.
-		if(input != null){
-			try{
+		/* Close stream if it has been opened. */
+		if (input != null) {
+			try {
 				input.close();
-			}catch(IOException e){
-				System.out.println("Error opening tile file.");				
-			} 
+			} catch (IOException e) {
+				System.out.println("Error opening tile file.");
+			}
 		}
 		return readTileStack;
 	}
