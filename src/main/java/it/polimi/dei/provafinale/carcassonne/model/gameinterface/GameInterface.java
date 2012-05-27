@@ -1,7 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.model.gameinterface;
 
+import it.polimi.dei.provafinale.carcassonne.controller.server.PlayersDisconnectedException;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
-import it.polimi.dei.provafinale.carcassonne.model.server.PlayersDisconnectedException;
 
 /**
  * Interface to let Game Controller communicate with Client Controller.

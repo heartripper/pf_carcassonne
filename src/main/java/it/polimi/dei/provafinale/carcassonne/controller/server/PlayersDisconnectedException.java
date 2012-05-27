@@ -1,4 +1,4 @@
-package it.polimi.dei.provafinale.carcassonne.model.server;
+package it.polimi.dei.provafinale.carcassonne.controller.server;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -5,7 +5,6 @@ import it.polimi.dei.provafinale.carcassonne.model.gameinterface.Message;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.MessageBuffer;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.MessageType;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
-import it.polimi.dei.provafinale.carcassonne.model.server.PlayersDisconnectedException;
 
 public class ClientLocalInterface implements GameInterface, ClientInterface {
 
@@ -71,7 +70,7 @@ public class ClientLocalInterface implements GameInterface, ClientInterface {
 	}
 
 	@Override
-	public void sendAllPlayer(Message msg) throws PlayersDisconnectedException {
+	public void sendAllPlayer(Message msg){
 		/* Case start message. */
 		if (msg.type == MessageType.START) {
 			String tile = msg.payload;
