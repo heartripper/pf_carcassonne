@@ -7,9 +7,9 @@ import java.io.InputStreamReader;
 import it.polimi.dei.provafinale.carcassonne.controller.client.ClientController;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.Message;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.MessageType;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Tile;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.TileGrid;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.Tile;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.TileGrid;
 import it.polimi.dei.provafinale.carcassonne.model.textinterface.TileGridRepresenter;
 
 public class TextualViewInterface implements ViewInterface {

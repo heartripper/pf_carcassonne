@@ -1,7 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.view.viewInterface;
 
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.TileGrid;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.TileGrid;
 import it.polimi.dei.provafinale.carcassonne.view.CarcassonneFrame;
 import it.polimi.dei.provafinale.carcassonne.view.ViewManager;
 import it.polimi.dei.provafinale.carcassonne.view.game.GamePanel;

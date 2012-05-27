@@ -1,8 +1,8 @@
 package it.polimi.dei.provafinale.carcassonne.view.game;
 
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Tile;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.TileGrid;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.Tile;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.TileGrid;
 
 import java.awt.Color;
 import java.awt.Dimension;
