@@ -1,8 +1,8 @@
 package it.polimi.dei.provafinale.carcassonne.model.gamelogic.entity;
 
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Tile;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.card.Side;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.Side;
+import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.Tile;
 
 import java.util.ArrayList;
 import java.util.HashSet;
