@@ -3,7 +3,7 @@ package it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
 
 public enum SidePosition {
-	/* Side position are stored using the convention N=1, E=2, S=3, W=4.*/
+	/* Side position are stored using the convention N=1, E=2, S=3, W=4. */
 	N(0), E(1), S(2), W(3);
 
 	int index;
@@ -34,7 +34,8 @@ public enum SidePosition {
 	 * 
 	 * @param position
 	 *            - a SidePosition we want to reach.
-	 * @return the offset in form of Coord needed to reach the given SidePosition.
+	 * @return the offset in form of Coord needed to reach the given
+	 *         SidePosition.
 	 */
 	public static Coord getOffsetForPosition(SidePosition position) {
 		int index = position.getIndex();
@@ -50,11 +51,11 @@ public enum SidePosition {
 	 */
 	public static SidePosition valueOf(int index) {
 		SidePosition[] positions = SidePosition.values();
-		/*Exists a position corresponding to the given index.*/
+		/* Exists a position corresponding to the given index. */
 		if (index >= 0 && index < positions.length) {
 			return positions[index];
 		}
-		/*Not exists a position corresponding to the given index.*/
+		/* Not exists a position corresponding to the given index. */
 		else {
 			return null;
 		}
@@ -69,5 +70,5 @@ public enum SidePosition {
 		int oppositeIndex = (index + 2) % 4;
 		return SidePosition.valueOf(oppositeIndex);
 	}
-	
+
 }
