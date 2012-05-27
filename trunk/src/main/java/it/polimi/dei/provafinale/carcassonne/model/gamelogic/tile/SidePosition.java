@@ -3,42 +3,38 @@ package it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
 
 public enum SidePosition {
-	// Side position are stored using the convention N=1, E=2, S=3, W=4
+	/* Side position are stored using the convention N=1, E=2, S=3, W=4.*/
 	N(0), E(1), S(2), W(3);
 
 	int index;
 
 	/**
-	 * Constructor: set a new instance of a side position.
+	 * SidePosition constructor. Creates a new instance of a SidePosition.
 	 * 
 	 * @param index
-	 *            - an index of a sidePosition.
+	 *            - a number that represent the index of a sidePosition.
 	 */
 	SidePosition(int index) {
 		this.index = index;
 	}
 
 	/**
-	 * Give the corresponding index of a side position
 	 * 
-	 * @return an index of a SidePosition.
+	 * @return the index of the current SidePosition.
 	 */
 	public int getIndex() {
 		return index;
 	}
 
-	/**
-	 * 
-	 */
 	private static final Coord[] OFFSETS = { new Coord(0, 1), new Coord(1, 0),
 			new Coord(0, -1), new Coord(-1, 0) };
 
 	/**
-	 * Give the offset to reach a given side position.
+	 * Gives the offset to reach a given SidePosition.
 	 * 
 	 * @param position
-	 *            - a SidePosition.
-	 * @return the offset in form of Coord to reach the given SidePosition.
+	 *            - a SidePosition we want to reach.
+	 * @return the offset in form of Coord needed to reach the given SidePosition.
 	 */
 	public static Coord getOffsetForPosition(SidePosition position) {
 		int index = position.getIndex();
@@ -50,7 +46,7 @@ public enum SidePosition {
 	 * 
 	 * @param index
 	 *            - the index of the sidePosition.
-	 * @return the desired sidePosition.
+	 * @return the desired SidePosition.
 	 */
 	public static SidePosition valueOf(int index) {
 		SidePosition[] positions = SidePosition.values();
