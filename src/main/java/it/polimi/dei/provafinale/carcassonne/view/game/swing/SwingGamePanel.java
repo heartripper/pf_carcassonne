@@ -25,7 +25,7 @@ import javax.swing.border.MatteBorder;
 public class SwingGamePanel extends GamePanel {
 
 	private static final long serialVersionUID = -5552501660516939765L;
-	
+
 	private JPanel tilesArea;
 	private TilesPanel tilesPanel;
 	private JPanel players;
@@ -94,18 +94,18 @@ public class SwingGamePanel extends GamePanel {
 				followerComboBox));
 		followerPanel.add(putFollowerButton);
 
-		//Pass button
+		// Pass button
 		JPanel passPanel = new JPanel();
 		passButton = new JButton("Pass");
 		passButton.addActionListener(new PassListener());
 		passPanel.add(passButton);
-		
+
 		actionsPanel.add(noticationsPanel);
 		actionsPanel.add(rotatePanel);
 		actionsPanel.add(coordsPanel);
 		actionsPanel.add(followerPanel);
 		actionsPanel.add(passPanel);
-		
+
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setBorder(new MatteBorder(1, 0, 0, 0, (Color) Color.GRAY));
 		add(bottomPanel, BorderLayout.SOUTH);
@@ -128,81 +128,66 @@ public class SwingGamePanel extends GamePanel {
 		bottomPanel.add(players, BorderLayout.WEST);
 	}
 
-	public void createPlayerPanels(int num) {
-		this.playerPanels = new PlayerPanel[num];
-		for (int i = 0; i < num; i++) {
+	@Override
+	public void initialize(TileGrid grid, int numPlayers,
+			PlayerColor clientColor) {
+		tilesPanel = new TilesPanel(grid);
+		tilesArea.add(tilesPanel, BorderLayout.CENTER);
+		playerPanels = new PlayerPanel[numPlayers];
+		for (int i = 0; i < numPlayers; i++) {
 			PlayerPanel p = new PlayerPanel(PlayerColor.valueOf(i));
 			players.add(p);
 			playerPanels[i] = p;
 		}
+		if (clientColor != null) {
+			int index = PlayerColor.indexOf(clientColor);
+			playerPanels[index].setClientPlayer();
+		}
+		updateGridRepresentation();
 	}
 
-	public PlayerPanel[] getPlayerPanels() {
-		return playerPanels;
-	}
-
-	public void setTilesPanelGrid(TileGrid grid) {
-		tilesPanel = new TilesPanel(grid);
-		tilesArea.add(tilesPanel);
-	}
-
-	public void updateTileGridPanel() {
+	@Override
+	public void updateGridRepresentation() {
 		tilesPanel.updateRepresentation();
 		Graphics g = tilesPanel.getGraphics();
 		tilesPanel.paint(g);
 	}
 
-	public void setCurrentTile(String rep) {
+	@Override
+	public void updateCurrentTile(String rep) {
 		currentTilePanel.setCurrentTile(rep);
 	}
 
+	@Override
+	public void updateScore(String msg) {
+		String[] scores = msg.split(",");
+		for (String s : scores) {
+			String[] split = s.split("=");
+			PlayerColor color = PlayerColor.valueOf(split[0].trim());
+			int colorIndex = PlayerColor.indexOf(color);
+			int score = Integer.parseInt(split[1].trim());
+			playerPanels[colorIndex].setScore(score);
+		}
+	}
+
+	@Override
+	public void setCurrentPlayer(PlayerColor color) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void showNotify(String msg) {
+		messageLabel.setText(msg);
+	}
+	
+	@Override
 	public void setUIActive(boolean enabled) {
 		rotateButton.setEnabled(enabled);
 		coordsField.setEnabled(enabled);
 		putTileButton.setEnabled(enabled);
 		followerComboBox.setEnabled(enabled);
 		putFollowerButton.setEnabled(enabled);
-	}
-
-	public void setMessageText(String msg) {
-		messageLabel.setText(msg);
-	}
-
-	@Override
-	public void initialize(TileGrid grid, int numPlayers,
-			PlayerColor clientColor) {
-		
-		
-	}
-
-	@Override
-	public void updateGridRepresentation() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateCurrentTile(String rep) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateScore(String msg) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setCurrentPlayer(PlayerColor color) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void showNotify(String msg) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
