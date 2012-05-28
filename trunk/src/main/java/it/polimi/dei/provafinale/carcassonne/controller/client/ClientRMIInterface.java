@@ -7,6 +7,8 @@ import java.rmi.server.UnicastRemoteObject;
 
 import it.polimi.dei.provafinale.carcassonne.Constants;
 import it.polimi.dei.provafinale.carcassonne.controller.server.CarcassonneRMIServer;
+import it.polimi.dei.provafinale.carcassonne.logger.Logger;
+import it.polimi.dei.provafinale.carcassonne.logger.LoggerService;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.Message;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.MessageType;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
@@ -18,9 +20,11 @@ public class ClientRMIInterface implements ClientInterface,
 	private String host;
 	private Message serverBuffer, clientBuffer;
 	private CarcassonneRMIServer server;
+	private Logger logger;
 
 	public ClientRMIInterface(String host) {
 		this.host = host;
+		this.logger = LoggerService.getService().register("RMI Interface");
 	}
 
 	/* ClientInterface methods */
@@ -46,7 +50,7 @@ public class ClientRMIInterface implements ClientInterface,
 
 		clientBuffer = msg;
 		notifyAll();
-		System.out.println("RMI|CLIENT|WRITE: " + msg);
+		logger.log("RMI|CLIENT|WRITE: " + msg);
 		return;
 	}
 
@@ -66,7 +70,7 @@ public class ClientRMIInterface implements ClientInterface,
 		Message msg = serverBuffer;
 		serverBuffer = null;
 		notifyAll();
-		System.out.println("RMI|CLIENT|READ: " + msg);
+		logger.log("RMI|CLIENT|READ: " + msg);
 		return msg;
 	}
 
@@ -90,7 +94,7 @@ public class ClientRMIInterface implements ClientInterface,
 		}
 
 		serverBuffer = msg;
-		System.out.println("RMI|SERVER|WRITE: " + msg);
+		logger.log("RMI|SERVER|WRITE: " + msg);
 		notifyAll();
 		return;
 	}
@@ -108,7 +112,7 @@ public class ClientRMIInterface implements ClientInterface,
 		Message msg = clientBuffer;
 		clientBuffer = null;
 		notifyAll();
-		System.out.println("RMI|SERVER|READ: " + msg);
+		logger.log("RMI|SERVER|READ: " + msg);
 		return msg;
 	}
 

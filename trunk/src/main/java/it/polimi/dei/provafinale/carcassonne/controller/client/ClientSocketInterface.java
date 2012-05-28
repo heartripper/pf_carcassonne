@@ -5,6 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import it.polimi.dei.provafinale.carcassonne.logger.Logger;
+import it.polimi.dei.provafinale.carcassonne.logger.LoggerService;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.Message;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 
@@ -13,6 +15,8 @@ public class ClientSocketInterface implements ClientInterface {
 	private final String addr;
 	private final int port;
 
+	private Logger logger;
+	
 	private Socket socket;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
@@ -29,6 +33,7 @@ public class ClientSocketInterface implements ClientInterface {
 	public ClientSocketInterface(String addr, int port) {
 		this.addr = addr;
 		this.port = port;
+		logger = LoggerService.getService().register("Socket");
 	}
 
 	@Override
@@ -47,12 +52,15 @@ public class ClientSocketInterface implements ClientInterface {
 	public void sendMessage(Message msg) throws ConnectionLostException {
 		String protocolMsg = msg.toProtocolMessage();
 		sendToServer(protocolMsg);
+		logger.log("SOCKET|WRITE: " + msg);
 	}
 
 	@Override
 	public Message readMessage() throws ConnectionLostException {
 		String protocolMsg = readFromServer();
-		return Message.createFromProtocolMsg(protocolMsg);
+		Message msg = Message.createFromProtocolMsg(protocolMsg);
+		logger.log("SOCKET|READ: " + msg);
+		return msg;
 	}
 
 	@Override

@@ -3,11 +3,12 @@ package it.polimi.dei.provafinale.carcassonne.controller.server;
 import java.util.List;
 
 import it.polimi.dei.provafinale.carcassonne.controller.client.ConnectionLostException;
+import it.polimi.dei.provafinale.carcassonne.logger.Logger;
+import it.polimi.dei.provafinale.carcassonne.logger.LoggerService;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.GameInterface;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.Message;
 import it.polimi.dei.provafinale.carcassonne.model.gameinterface.MessageType;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
-
 
 public class ServerGameInterface implements GameInterface {
 
@@ -16,26 +17,31 @@ public class ServerGameInterface implements GameInterface {
 	private String name;
 	private int numPlayers;
 
+	private Logger logger;
+
 	public ServerGameInterface(List<RemotePlayer> remotePlayers) {
 		this.remotePlayers = remotePlayers;
 		this.name = Integer.toHexString(hashCode());
 		this.numPlayers = remotePlayers.size();
+		this.logger = LoggerService.getService()
+				.register("ServerGameInterface");
 	}
 
 	@Override
 	public int askPlayerNumber() {
 		return numPlayers;
 	}
+
 	@Override
 	public Message readFromPlayer(PlayerColor color)
 			throws PlayersDisconnectedException {
 		RemotePlayer remotePlayer = getRemotePlayerByColor(color);
-		while(true){
+		while (true) {
 			try {
 				Message msg = remotePlayer.readMessage();
 				int index = remotePlayers.indexOf(remotePlayer);
 				String protocolMsg = msg.toProtocolMessage();
-				System.out.printf("P%s>S: \"%s\"\n", index, protocolMsg);
+				logger.log(String.format("P%s>S: \"%s\"\n", index, protocolMsg));
 				return msg;
 			} catch (ConnectionLostException cle) {
 				handleDisconnection(remotePlayer);
@@ -47,18 +53,18 @@ public class ServerGameInterface implements GameInterface {
 	public void sendPlayer(PlayerColor color, Message msg)
 			throws PlayersDisconnectedException {
 		RemotePlayer remotePlayer = getRemotePlayerByColor(color);
-		while(true){
+		while (true) {
 			try {
 				Message toSend;
-				if(msg.type == MessageType.UPDATE_SINGLE){
+				if (msg.type == MessageType.UPDATE_SINGLE) {
 					toSend = new Message(MessageType.UPDATE, msg.payload);
-				}else{
+				} else {
 					toSend = msg;
 				}
-				
+
 				int index = remotePlayers.indexOf(remotePlayer);
 				String protocolMsg = msg.toProtocolMessage();
-				System.out.printf("S>P%s: \"%s\"\n", index, protocolMsg);
+				logger.log(String.format("S>P%s: \"%s\"\n", index, protocolMsg));
 				remotePlayer.sendMessage(toSend);
 				return;
 			} catch (ConnectionLostException cle) {
@@ -72,12 +78,12 @@ public class ServerGameInterface implements GameInterface {
 		PlayersDisconnectedException pde = null;
 
 		for (RemotePlayer player : remotePlayers) {
-			if(!player.isActive()){
+			if (!player.isActive()) {
 				continue;
 			}
 
 			int index = remotePlayers.indexOf(player);
-			PlayerColor color = PlayerColor.valueOf(index);			
+			PlayerColor color = PlayerColor.valueOf(index);
 			try {
 				if (msg.type == MessageType.START) {
 					String payload = String.format("%s, %s, %s, %s",
@@ -95,7 +101,7 @@ public class ServerGameInterface implements GameInterface {
 				}
 			}
 		}
-		
+
 		if (pde != null) {
 			throw pde;
 		}
@@ -112,16 +118,16 @@ public class ServerGameInterface implements GameInterface {
 			throws PlayersDisconnectedException {
 		PlayersDisconnectedException pde = null;
 		int playerIndex = remotePlayers.indexOf(player);
-		
+
 		player.setInactive();
-		
-		try{
+
+		try {
 			sendAllPlayer(new Message(MessageType.LOCK, null));
-		}catch (PlayersDisconnectedException e) {
+		} catch (PlayersDisconnectedException e) {
 			pde = e;
 		}
-		
-		//Let's wait for player to reconnect
+
+		// Let's wait for player to reconnect
 		try {
 			wait(RECONNECTION_TIMEOUT);
 		} catch (InterruptedException e) {
@@ -133,33 +139,34 @@ public class ServerGameInterface implements GameInterface {
 		Message msg;
 		if (!newPlayer.isActive()) {
 			msg = new Message(MessageType.LEAVE, color.toString());
-			System.out.printf("Player %s has disconnected.\n", color);
-			if(pde == null){
+			logger.log(String.format("Player %s has disconnected.\n", color));
+			if (pde == null) {
 				pde = new PlayersDisconnectedException(color);
-			}else{
+			} else {
 				pde.add(color);
 			}
 		} else {
 			msg = new Message(MessageType.UNLOCK, null);
-			System.out.printf("Player %s has reconnected.\n", color);
+			logger.log(String.format("Player %s has reconnected.\n", color));
 		}
-		
-		try{
+
+		try {
 			sendAllPlayer(msg);
-		}catch(PlayersDisconnectedException e){
-			if(pde == null){
+		} catch (PlayersDisconnectedException e) {
+			if (pde == null) {
 				pde = e;
-			}else{
+			} else {
 				pde.add(e.getDisconnectedPlayers());
 			}
 		}
-		
-		if(pde != null){
+
+		if (pde != null) {
 			throw pde;
 		}
 	}
 
-	public synchronized void reconnectPlayer(PlayerColor color, RemotePlayer player) {
+	public synchronized void reconnectPlayer(PlayerColor color,
+			RemotePlayer player) {
 		int connectionIndex = PlayerColor.indexOf(color);
 		remotePlayers.set(connectionIndex, player);
 		notifyAll();
