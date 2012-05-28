@@ -1,5 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.model;
 
+import it.polimi.dei.provafinale.carcassonne.Message;
+import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.controller.server.PlayersDisconnectedException;
 
 /**

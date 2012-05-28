@@ -1,6 +1,5 @@
 package it.polimi.dei.provafinale.carcassonne;
 
-import it.polimi.dei.provafinale.carcassonne.model.Coord;
 import it.polimi.dei.provafinale.carcassonne.model.Tile;
 import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
 

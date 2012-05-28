@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.polimi.dei.provafinale.carcassonne.model.EntityType;
-import it.polimi.dei.provafinale.carcassonne.model.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.model.Side;
 import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.Tile;

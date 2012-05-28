@@ -1,5 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.model;
 
+import it.polimi.dei.provafinale.carcassonne.Message;
+
 public class MessageBuffer {
 
 	private Message buffer = null;

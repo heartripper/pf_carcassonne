@@ -1,6 +1,8 @@
 package it.polimi.dei.provafinale.carcassonne.model;
 
 
+import it.polimi.dei.provafinale.carcassonne.Coord;
+
 import java.util.HashMap;
 import java.util.Map;
 

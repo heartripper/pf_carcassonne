@@ -1,4 +1,4 @@
-package it.polimi.dei.provafinale.carcassonne.model;
+package it.polimi.dei.provafinale.carcassonne;
 
 import java.awt.Color;
 

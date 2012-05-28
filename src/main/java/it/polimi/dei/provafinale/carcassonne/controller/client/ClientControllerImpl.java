@@ -1,10 +1,10 @@
 package it.polimi.dei.provafinale.carcassonne.controller.client;
 
-import it.polimi.dei.provafinale.carcassonne.model.Coord;
-import it.polimi.dei.provafinale.carcassonne.model.Message;
+import it.polimi.dei.provafinale.carcassonne.Coord;
+import it.polimi.dei.provafinale.carcassonne.Message;
+import it.polimi.dei.provafinale.carcassonne.MessageType;
+import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.model.MessageBuffer;
-import it.polimi.dei.provafinale.carcassonne.model.MessageType;
-import it.polimi.dei.provafinale.carcassonne.model.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.Tile;
 import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
@@ -67,7 +67,7 @@ public class ClientControllerImpl implements Runnable {
 			/* Start a turn message. */
 			case TURN:
 				PlayerColor color = PlayerColor.valueOf(turnMsg.payload);
-				setCurrentPlayer(color);
+				viewInterface.setCurrentPlayer(color);
 				if (clientPlayerColor == null
 						|| color.equals(clientPlayerColor)) {
 					manageClientTurn();
@@ -112,12 +112,6 @@ public class ClientControllerImpl implements Runnable {
 		viewInterface.initialize(grid, playerNumber, clientPlayerColor);
 		/* Updates the grid that now contains the first tile. */
 		viewInterface.updateGridRepresentation();
-	}
-
-	private void setCurrentPlayer(PlayerColor color) {
-		/* Communicate the player that has to play the turn. */
-		String msg = String.format("It's player %s turn.", color.getFullName());
-		viewInterface.showNotify(msg);
 	}
 
 	/* Turn management. */

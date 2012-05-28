@@ -1,5 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne.model;
 
+import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.model.Player;
 
 public class PlayerCircularArray {
