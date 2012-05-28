@@ -6,6 +6,7 @@ import it.polimi.dei.provafinale.carcassonne.controller.client.TilePutListener;
 import it.polimi.dei.provafinale.carcassonne.controller.client.TileRotateListener;
 import it.polimi.dei.provafinale.carcassonne.model.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
+import it.polimi.dei.provafinale.carcassonne.view.GamePanel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -165,6 +166,43 @@ public class SwingGamePanel extends GamePanel {
 
 	public void setMessageText(String msg) {
 		messageLabel.setText(msg);
+	}
+
+	@Override
+	public void initialize(TileGrid grid, int numPlayers,
+			PlayerColor clientColor) {
+		
+		
+	}
+
+	@Override
+	public void updateGridRepresentation() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateCurrentTile(String rep) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateScore(String msg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setCurrentPlayer(PlayerColor color) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showNotify(String msg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
