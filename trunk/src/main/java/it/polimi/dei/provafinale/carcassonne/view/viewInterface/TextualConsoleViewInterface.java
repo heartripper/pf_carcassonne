@@ -10,7 +10,8 @@ import it.polimi.dei.provafinale.carcassonne.model.MessageType;
 import it.polimi.dei.provafinale.carcassonne.model.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.model.Tile;
 import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
-import it.polimi.dei.provafinale.carcassonne.view.game.textual.TileGridRepresenter;
+import it.polimi.dei.provafinale.carcassonne.view.game.TileGridRepresenter;
+import it.polimi.dei.provafinale.carcassonne.view.game.ViewInterface;
 
 public class TextualConsoleViewInterface implements ViewInterface {
 
