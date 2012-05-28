@@ -6,6 +6,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface CarcassonneRMIClient extends Remote {
-	public void sendMessageToPlayer(Message msg) throws RemoteException;
-	public Message readMessageFromPlayer() throws RemoteException;
+	void sendMessageToPlayer(Message msg) throws RemoteException;
+	Message readMessageFromPlayer() throws RemoteException;
 }
