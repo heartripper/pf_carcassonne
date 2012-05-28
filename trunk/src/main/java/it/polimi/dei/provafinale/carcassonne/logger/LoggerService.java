@@ -14,7 +14,7 @@ public class LoggerService {
 	private static LoggerService instance = null;
 	
 	
-	public static LoggerService getService(){
+	public static synchronized LoggerService getService(){
 		if(instance == null){
 			instance = new LoggerService();
 		}

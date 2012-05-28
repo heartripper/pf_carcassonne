@@ -35,7 +35,7 @@ public final class TilePainter {
 
 	private static TilePainter instance = null;
 
-	public static TilePainter getInstance() {
+	public static synchronized TilePainter getInstance() {
 		if (instance == null) {
 			instance = new TilePainter();
 		}
