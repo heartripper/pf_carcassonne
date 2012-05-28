@@ -19,23 +19,25 @@ public class TextualListener implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String command = textField.getText();
-		Message msgToServer;
+		Message msg;
 		if(command.equals("rotate")){
-			msgToServer = new Message(MessageType.ROTATE, null);
+			msg = new Message(MessageType.ROTATE, null);
 		}
 		else if(command.equals("pass")){
-			msgToServer = new Message(MessageType.PASS, null);
+			msg = new Message(MessageType.PASS, null);
 		}
 		else if(command.matches("[NESW]")){
-			msgToServer = new Message(MessageType.FOLLOWER, command);
+			msg = new Message(MessageType.FOLLOWER, command);
 		}
 		else if(command.matches("[-]??[0-9]+,[-]??[0-9]+")){
-			msgToServer = new Message(MessageType.PLACE, command);
+			msg = new Message(MessageType.PLACE, command);
 		}
 		else{
-			
+			msg = new Message(MessageType.INVALID_MOVE, null);
 		}
 		
+		textField.setText("");
+		ClientController.getCurrentMatchController().sendMessage(msg);
 	}
 
 }

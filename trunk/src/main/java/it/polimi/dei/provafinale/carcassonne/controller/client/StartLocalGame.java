@@ -2,8 +2,9 @@ package it.polimi.dei.provafinale.carcassonne.controller.client;
 
 import it.polimi.dei.provafinale.carcassonne.Constants;
 import it.polimi.dei.provafinale.carcassonne.model.MatchHandler;
+import it.polimi.dei.provafinale.carcassonne.view.game.textual.TextualViewInterface;
 import it.polimi.dei.provafinale.carcassonne.view.viewInterface.GUIViewInterface;
-import it.polimi.dei.provafinale.carcassonne.view.viewInterface.TextualViewInterface;
+import it.polimi.dei.provafinale.carcassonne.view.viewInterface.TextualConsoleViewInterface;
 import it.polimi.dei.provafinale.carcassonne.view.viewInterface.ViewInterface;
 
 import java.awt.event.ActionEvent;

@@ -12,14 +12,14 @@ import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.Tile;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.TileGrid;
 import it.polimi.dei.provafinale.carcassonne.view.game.textual.TileGridRepresenter;
 
-public class TextualViewInterface implements ViewInterface {
+public class TextualConsoleViewInterface implements ViewInterface {
 
 	private TileGridRepresenter representer;
 	private BufferedReader input;
 	private PlayerColor currentPlayerColor;
 	private boolean handleSinglePlayer = false;
 	
-	public TextualViewInterface() {
+	public TextualConsoleViewInterface() {
 		InputStreamReader reader = new InputStreamReader(System.in);
 		input = new BufferedReader(reader);
 	}

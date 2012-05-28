@@ -4,7 +4,7 @@ import it.polimi.dei.provafinale.carcassonne.controller.client.ClientInterface;
 import it.polimi.dei.provafinale.carcassonne.controller.client.ClientRMIInterface;
 import it.polimi.dei.provafinale.carcassonne.controller.client.ConnectionLostException;
 import it.polimi.dei.provafinale.carcassonne.controller.client.ClientController;
-import it.polimi.dei.provafinale.carcassonne.view.viewInterface.TextualViewInterface;
+import it.polimi.dei.provafinale.carcassonne.view.viewInterface.TextualConsoleViewInterface;
 import it.polimi.dei.provafinale.carcassonne.view.viewInterface.ViewInterface;
 
 public class MainClient {
@@ -27,7 +27,7 @@ public class MainClient {
 		}
 		
 		
-		ViewInterface vi = new TextualViewInterface();
+		ViewInterface vi = new TextualConsoleViewInterface();
 		ClientController.startNewMatchController(ci, vi);
 	}
 }

@@ -3,7 +3,7 @@ package it.polimi.dei.provafinale.carcassonne.controller.client;
 import it.polimi.dei.provafinale.carcassonne.Constants;
 import it.polimi.dei.provafinale.carcassonne.view.menu.InternetGamePanel;
 import it.polimi.dei.provafinale.carcassonne.view.viewInterface.GUIViewInterface;
-import it.polimi.dei.provafinale.carcassonne.view.viewInterface.TextualViewInterface;
+import it.polimi.dei.provafinale.carcassonne.view.viewInterface.TextualConsoleViewInterface;
 import it.polimi.dei.provafinale.carcassonne.view.viewInterface.ViewInterface;
 
 import java.awt.event.ActionEvent;
@@ -62,7 +62,7 @@ public class StartInternetGame implements ActionListener{
 		if(viewType == 0){
 			vi = new GUIViewInterface();
 		} else {
-			vi = new TextualViewInterface();
+			vi = new TextualConsoleViewInterface();
 		}
 		
 		try{

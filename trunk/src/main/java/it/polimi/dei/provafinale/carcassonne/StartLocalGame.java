@@ -3,7 +3,7 @@ package it.polimi.dei.provafinale.carcassonne;
 import it.polimi.dei.provafinale.carcassonne.controller.client.ClientLocalInterface;
 import it.polimi.dei.provafinale.carcassonne.controller.client.ClientController;
 import it.polimi.dei.provafinale.carcassonne.model.MatchHandler;
-import it.polimi.dei.provafinale.carcassonne.view.viewInterface.TextualViewInterface;
+import it.polimi.dei.provafinale.carcassonne.view.viewInterface.TextualConsoleViewInterface;
 
 public class StartLocalGame {
 	public static void main(String[] args) {
@@ -14,7 +14,7 @@ public class StartLocalGame {
 		th.start();
 		
 		//Create textual view
-		TextualViewInterface vi = new TextualViewInterface();
+		TextualConsoleViewInterface vi = new TextualConsoleViewInterface();
 		
 		//Create client controller
 		ClientController.startNewMatchController(cli, vi);
