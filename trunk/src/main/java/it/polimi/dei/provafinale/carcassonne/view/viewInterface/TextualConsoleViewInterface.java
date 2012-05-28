@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import it.polimi.dei.provafinale.carcassonne.controller.client.ClientController;
-import it.polimi.dei.provafinale.carcassonne.model.gameinterface.Message;
-import it.polimi.dei.provafinale.carcassonne.model.gameinterface.MessageType;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.Tile;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.TileGrid;
+import it.polimi.dei.provafinale.carcassonne.model.Message;
+import it.polimi.dei.provafinale.carcassonne.model.MessageType;
+import it.polimi.dei.provafinale.carcassonne.model.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.model.Tile;
+import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
 import it.polimi.dei.provafinale.carcassonne.view.game.textual.TileGridRepresenter;
 
 public class TextualConsoleViewInterface implements ViewInterface {

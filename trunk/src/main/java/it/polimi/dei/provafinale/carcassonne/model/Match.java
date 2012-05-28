@@ -1,12 +1,5 @@
-package it.polimi.dei.provafinale.carcassonne.model.gamelogic;
+package it.polimi.dei.provafinale.carcassonne.model;
 
-import it.polimi.dei.provafinale.carcassonne.model.NotEnoughPlayersException;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.entity.Entity;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.entity.EntityFactory;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.entity.EntityType;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.Player;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerCircularArray;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.*;
 
 import java.util.ArrayList;

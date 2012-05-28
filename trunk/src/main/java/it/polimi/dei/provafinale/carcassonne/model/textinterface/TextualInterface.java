@@ -6,14 +6,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 
-import it.polimi.dei.provafinale.carcassonne.model.gameinterface.GameInterface;
-import it.polimi.dei.provafinale.carcassonne.model.gameinterface.Message;
-import it.polimi.dei.provafinale.carcassonne.model.gameinterface.MessageType;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.SidePosition;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.Tile;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.TileGrid;
+import it.polimi.dei.provafinale.carcassonne.model.Coord;
+import it.polimi.dei.provafinale.carcassonne.model.GameInterface;
+import it.polimi.dei.provafinale.carcassonne.model.Message;
+import it.polimi.dei.provafinale.carcassonne.model.MessageType;
+import it.polimi.dei.provafinale.carcassonne.model.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
+import it.polimi.dei.provafinale.carcassonne.model.Tile;
+import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
 import it.polimi.dei.provafinale.carcassonne.view.game.textual.TileGridRepresenter;
 
 public class TextualInterface implements GameInterface {

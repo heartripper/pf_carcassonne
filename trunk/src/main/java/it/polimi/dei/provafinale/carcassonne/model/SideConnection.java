@@ -1,4 +1,4 @@
-package it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile;
+package it.polimi.dei.provafinale.carcassonne.model;
 
 /**
  * Class to represent a connection between two sides of a tile. It represents

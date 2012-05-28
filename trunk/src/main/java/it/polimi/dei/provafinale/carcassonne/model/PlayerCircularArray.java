@@ -1,6 +1,6 @@
-package it.polimi.dei.provafinale.carcassonne.model.gamelogic.player;
+package it.polimi.dei.provafinale.carcassonne.model;
 
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.Player;
+import it.polimi.dei.provafinale.carcassonne.model.Player;
 
 public class PlayerCircularArray {
 

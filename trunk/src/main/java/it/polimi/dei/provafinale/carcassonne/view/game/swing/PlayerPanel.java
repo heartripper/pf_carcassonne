@@ -1,6 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne.view.game.swing;
 
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.model.PlayerColor;
 
 import java.awt.Dimension;
 

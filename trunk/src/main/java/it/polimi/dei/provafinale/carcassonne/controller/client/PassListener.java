@@ -1,7 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.controller.client;
 
-import it.polimi.dei.provafinale.carcassonne.model.gameinterface.Message;
-import it.polimi.dei.provafinale.carcassonne.model.gameinterface.MessageType;
+import it.polimi.dei.provafinale.carcassonne.model.Message;
+import it.polimi.dei.provafinale.carcassonne.model.MessageType;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

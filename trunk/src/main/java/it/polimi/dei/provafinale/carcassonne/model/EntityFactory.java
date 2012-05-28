@@ -1,4 +1,6 @@
-package it.polimi.dei.provafinale.carcassonne.model.gamelogic.entity;
+package it.polimi.dei.provafinale.carcassonne.model;
+
+import it.polimi.dei.provafinale.carcassonne.controller.Road;
 
 public final class EntityFactory {
 

@@ -1,4 +1,4 @@
-package it.polimi.dei.provafinale.carcassonne.model.gamelogic;
+package it.polimi.dei.provafinale.carcassonne.model;
 
 public class Coord {
 	private int x;

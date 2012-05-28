@@ -2,8 +2,8 @@ package it.polimi.dei.provafinale.carcassonne.controller.server;
 
 import it.polimi.dei.provafinale.carcassonne.Constants;
 import it.polimi.dei.provafinale.carcassonne.model.MatchHandler;
-import it.polimi.dei.provafinale.carcassonne.model.gameinterface.Message;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.model.Message;
+import it.polimi.dei.provafinale.carcassonne.model.PlayerColor;
 
 import java.util.ArrayList;
 import java.util.HashMap;

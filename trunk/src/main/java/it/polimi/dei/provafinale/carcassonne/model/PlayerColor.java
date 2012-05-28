@@ -1,4 +1,4 @@
-package it.polimi.dei.provafinale.carcassonne.model.gamelogic.player;
+package it.polimi.dei.provafinale.carcassonne.model;
 
 import java.awt.Color;
 
