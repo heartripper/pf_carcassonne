@@ -17,7 +17,7 @@ public final class ViewManager {
 	 * 
 	 * @return an instance of ViewManager.
 	 */
-	public static ViewManager getInstance() {
+	public static synchronized ViewManager getInstance() {
 
 		/* There are no instances of ViewManager. */
 		if (instance == null) {
