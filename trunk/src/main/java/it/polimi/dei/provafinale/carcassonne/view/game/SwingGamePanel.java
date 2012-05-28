@@ -1,10 +1,10 @@
 package it.polimi.dei.provafinale.carcassonne.view.game;
 
+import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.controller.client.FollowerPutListener;
 import it.polimi.dei.provafinale.carcassonne.controller.client.PassListener;
 import it.polimi.dei.provafinale.carcassonne.controller.client.TilePutListener;
 import it.polimi.dei.provafinale.carcassonne.controller.client.TileRotateListener;
-import it.polimi.dei.provafinale.carcassonne.model.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
 
 import java.awt.BorderLayout;

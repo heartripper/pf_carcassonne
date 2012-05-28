@@ -1,10 +1,10 @@
 package it.polimi.dei.provafinale.carcassonne.controller.client;
 
+import it.polimi.dei.provafinale.carcassonne.Message;
+import it.polimi.dei.provafinale.carcassonne.MessageType;
+import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.model.GameInterface;
-import it.polimi.dei.provafinale.carcassonne.model.Message;
 import it.polimi.dei.provafinale.carcassonne.model.MessageBuffer;
-import it.polimi.dei.provafinale.carcassonne.model.MessageType;
-import it.polimi.dei.provafinale.carcassonne.model.PlayerColor;
 
 public class ClientLocalInterface implements GameInterface, ClientInterface {
 

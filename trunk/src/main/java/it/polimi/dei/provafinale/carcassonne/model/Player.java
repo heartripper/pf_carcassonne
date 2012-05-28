@@ -1,6 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne.model;
 
-import it.polimi.dei.provafinale.carcassonne.model.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 
 public class Player {
 

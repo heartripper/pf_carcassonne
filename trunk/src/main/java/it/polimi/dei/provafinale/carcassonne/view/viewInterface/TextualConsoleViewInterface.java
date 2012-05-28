@@ -4,10 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import it.polimi.dei.provafinale.carcassonne.Message;
+import it.polimi.dei.provafinale.carcassonne.MessageType;
+import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.controller.client.ClientController;
-import it.polimi.dei.provafinale.carcassonne.model.Message;
-import it.polimi.dei.provafinale.carcassonne.model.MessageType;
-import it.polimi.dei.provafinale.carcassonne.model.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.model.Tile;
 import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
 import it.polimi.dei.provafinale.carcassonne.view.game.TileGridRepresenter;

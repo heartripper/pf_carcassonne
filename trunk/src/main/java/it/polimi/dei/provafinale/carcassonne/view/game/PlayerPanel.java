@@ -1,6 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne.view.game;
 
-import it.polimi.dei.provafinale.carcassonne.model.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 
 import java.awt.Dimension;
 import java.awt.Font;

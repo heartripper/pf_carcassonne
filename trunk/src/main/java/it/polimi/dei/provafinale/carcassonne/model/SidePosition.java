@@ -1,5 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.model;
 
+import it.polimi.dei.provafinale.carcassonne.Coord;
+
 
 public enum SidePosition {
 	/* Side position are stored using the convention N=1, E=2, S=3, W=4. */

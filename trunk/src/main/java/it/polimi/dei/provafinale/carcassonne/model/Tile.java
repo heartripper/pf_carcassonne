@@ -1,6 +1,8 @@
 package it.polimi.dei.provafinale.carcassonne.model;
 
 import it.polimi.dei.provafinale.carcassonne.Constants;
+import it.polimi.dei.provafinale.carcassonne.Coord;
+import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 
 import java.util.ArrayList;
 import java.util.HashMap;

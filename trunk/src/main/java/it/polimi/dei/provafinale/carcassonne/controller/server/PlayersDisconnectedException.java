@@ -3,7 +3,7 @@ package it.polimi.dei.provafinale.carcassonne.controller.server;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.polimi.dei.provafinale.carcassonne.model.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 
 /**
  * Exception to communicate that one or more players has disconnected. It holds

@@ -1,7 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.controller.server;
 
+import it.polimi.dei.provafinale.carcassonne.Message;
 import it.polimi.dei.provafinale.carcassonne.controller.client.CarcassonneRMIClient;
-import it.polimi.dei.provafinale.carcassonne.model.Message;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
