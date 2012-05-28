@@ -9,9 +9,9 @@ import it.polimi.dei.provafinale.carcassonne.Constants;
 import it.polimi.dei.provafinale.carcassonne.controller.server.CarcassonneRMIServer;
 import it.polimi.dei.provafinale.carcassonne.logger.Logger;
 import it.polimi.dei.provafinale.carcassonne.logger.LoggerService;
-import it.polimi.dei.provafinale.carcassonne.model.gameinterface.Message;
-import it.polimi.dei.provafinale.carcassonne.model.gameinterface.MessageType;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.model.Message;
+import it.polimi.dei.provafinale.carcassonne.model.MessageType;
+import it.polimi.dei.provafinale.carcassonne.model.PlayerColor;
 
 public class ClientRMIInterface implements ClientInterface,
 		CarcassonneRMIClient {

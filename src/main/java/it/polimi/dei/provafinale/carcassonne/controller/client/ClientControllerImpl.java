@@ -1,13 +1,13 @@
 package it.polimi.dei.provafinale.carcassonne.controller.client;
 
-import it.polimi.dei.provafinale.carcassonne.model.gameinterface.Message;
-import it.polimi.dei.provafinale.carcassonne.model.gameinterface.MessageBuffer;
-import it.polimi.dei.provafinale.carcassonne.model.gameinterface.MessageType;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.SidePosition;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.Tile;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.TileGrid;
+import it.polimi.dei.provafinale.carcassonne.model.Coord;
+import it.polimi.dei.provafinale.carcassonne.model.Message;
+import it.polimi.dei.provafinale.carcassonne.model.MessageBuffer;
+import it.polimi.dei.provafinale.carcassonne.model.MessageType;
+import it.polimi.dei.provafinale.carcassonne.model.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
+import it.polimi.dei.provafinale.carcassonne.model.Tile;
+import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
 import it.polimi.dei.provafinale.carcassonne.view.viewInterface.ViewInterface;
 
 public class ClientControllerImpl implements Runnable {

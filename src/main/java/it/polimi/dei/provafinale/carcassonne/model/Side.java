@@ -1,9 +1,6 @@
 
-package it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile;
+package it.polimi.dei.provafinale.carcassonne.model;
 
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.entity.Entity;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.entity.EntityType;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 
 public class Side {
 

@@ -1,4 +1,4 @@
-package it.polimi.dei.provafinale.carcassonne.model.gameinterface;
+package it.polimi.dei.provafinale.carcassonne.model;
 
 public class MessageBuffer {
 

@@ -1,4 +1,4 @@
-package it.polimi.dei.provafinale.carcassonne.model.gamelogic.entity;
+package it.polimi.dei.provafinale.carcassonne.model;
 
 /**
  * Enumeration to represent side and entity types, being:

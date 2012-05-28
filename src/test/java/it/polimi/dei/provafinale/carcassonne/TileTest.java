@@ -3,11 +3,11 @@ package it.polimi.dei.provafinale.carcassonne;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.entity.EntityType;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.Side;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.SidePosition;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.Tile;
+import it.polimi.dei.provafinale.carcassonne.model.EntityType;
+import it.polimi.dei.provafinale.carcassonne.model.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.model.Side;
+import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
+import it.polimi.dei.provafinale.carcassonne.model.Tile;
 
 import org.junit.*;
 import static org.junit.Assert.*;

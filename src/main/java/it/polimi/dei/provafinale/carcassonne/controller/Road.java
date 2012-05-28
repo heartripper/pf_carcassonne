@@ -1,7 +1,9 @@
-package it.polimi.dei.provafinale.carcassonne.model.gamelogic.entity;
+package it.polimi.dei.provafinale.carcassonne.controller;
 
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.Side;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.Tile;
+import it.polimi.dei.provafinale.carcassonne.model.Entity;
+import it.polimi.dei.provafinale.carcassonne.model.EntityType;
+import it.polimi.dei.provafinale.carcassonne.model.Side;
+import it.polimi.dei.provafinale.carcassonne.model.Tile;
 
 import java.util.HashSet;
 import java.util.Set;

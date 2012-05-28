@@ -1,6 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne.view.game.swing;
 
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.TileGrid;
+import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;

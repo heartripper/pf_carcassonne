@@ -1,6 +1,5 @@
-package it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile;
+package it.polimi.dei.provafinale.carcassonne.model;
 
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
 
 import java.util.HashMap;
 import java.util.Map;

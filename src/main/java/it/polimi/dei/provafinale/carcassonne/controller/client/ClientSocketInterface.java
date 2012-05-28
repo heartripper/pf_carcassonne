@@ -7,8 +7,8 @@ import java.net.Socket;
 
 import it.polimi.dei.provafinale.carcassonne.logger.Logger;
 import it.polimi.dei.provafinale.carcassonne.logger.LoggerService;
-import it.polimi.dei.provafinale.carcassonne.model.gameinterface.Message;
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.model.Message;
+import it.polimi.dei.provafinale.carcassonne.model.PlayerColor;
 
 public class ClientSocketInterface implements ClientInterface {
 
