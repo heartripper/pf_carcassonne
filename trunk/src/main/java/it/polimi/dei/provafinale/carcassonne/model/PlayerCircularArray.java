@@ -7,7 +7,6 @@ public class PlayerCircularArray {
 
 	private Player players[];
 	private int size;
-	private int currIndex;
 	private int position;
 
 	/**
@@ -26,9 +25,7 @@ public class PlayerCircularArray {
 		for (int i = 0; i < size; i++) {
 			players[i] = new Player();
 		}
-		/* Starting values. */
 		position = 0;
-		currIndex = 0;
 	}
 
 	/**
