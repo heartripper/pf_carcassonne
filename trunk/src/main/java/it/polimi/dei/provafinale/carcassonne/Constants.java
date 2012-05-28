@@ -11,6 +11,7 @@ public abstract class Constants {
 	
 	public static final int SIDES_NUMBER = 4;
 
+	public static final int FOLLOWER_PIXEL_DIMENSION = 25;
 	public static final int TILE_PIXEL_DIMENSION = 125;
 
 	public static final boolean ASK_ON_CLOSE = false;
@@ -38,6 +39,7 @@ public abstract class Constants {
 	public static final String BASE_TILE_PATH = "src/main/resources/tiles.txt";
 	public static final String PLACEHOLDER_PATH = "src/main/resources/placeholder.png";
 	public static final String TILE_PATH_FORMAT ="src/main/resources/tiles/%s.png";
+	public static final String FOLLOWERS_IMG_PATH_FORMAT ="src/main/resources/followers/%s.png";
 	
 	//Server
 	public static final int PLAYER_LIST_CHECK_TIME = 10*1000;
