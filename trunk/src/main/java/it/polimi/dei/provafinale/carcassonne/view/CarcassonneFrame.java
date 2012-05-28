@@ -1,7 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.view;
 
 import it.polimi.dei.provafinale.carcassonne.controller.WindowClose;
-import it.polimi.dei.provafinale.carcassonne.view.game.GamePanel;
+import it.polimi.dei.provafinale.carcassonne.view.game.swing.GamePanel;
 import it.polimi.dei.provafinale.carcassonne.view.menu.MenuPanel;
 
 import javax.swing.JFrame;
@@ -19,7 +19,7 @@ public class CarcassonneFrame extends JFrame {
 	private CardLayout mainLayout;
 	private MenuPanel menuPanel;
 	private JPanel gamePanelContainer;
-	private GamePanel gamePanel;
+	private JPanel gamePanel;
 
 	/**
 	 * CarcassonneFrame constructor. Creates a new instance of class
@@ -89,7 +89,7 @@ public class CarcassonneFrame extends JFrame {
 	 * @param gamePanel
 	 *            an instance of class GamePanel.
 	 */
-	public void setGamePanel(GamePanel gamePanel) {
+	public void setGamePanel(JPanel gamePanel) {
 		/* There are no instances of GamePanel. */
 		if (this.gamePanel == null) {
 			this.gamePanel = gamePanel;

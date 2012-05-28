@@ -4,8 +4,8 @@ import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.TileGrid;
 import it.polimi.dei.provafinale.carcassonne.view.CarcassonneFrame;
 import it.polimi.dei.provafinale.carcassonne.view.ViewManager;
-import it.polimi.dei.provafinale.carcassonne.view.game.GamePanel;
-import it.polimi.dei.provafinale.carcassonne.view.game.PlayerPanel;
+import it.polimi.dei.provafinale.carcassonne.view.game.swing.GamePanel;
+import it.polimi.dei.provafinale.carcassonne.view.game.swing.PlayerPanel;
 
 public class GUIViewInterface implements ViewInterface{
 

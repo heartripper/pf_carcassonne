@@ -1,4 +1,4 @@
-package it.polimi.dei.provafinale.carcassonne.model.textinterface;
+package it.polimi.dei.provafinale.carcassonne.view.game.textual;
 
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.SidePosition;
