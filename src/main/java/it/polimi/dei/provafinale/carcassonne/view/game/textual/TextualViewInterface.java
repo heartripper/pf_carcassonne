@@ -5,35 +5,39 @@ import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.Tile;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.TileGrid;
 import it.polimi.dei.provafinale.carcassonne.view.CarcassonneFrame;
 import it.polimi.dei.provafinale.carcassonne.view.ViewManager;
+import it.polimi.dei.provafinale.carcassonne.view.game.swing.GamePanel;
 import it.polimi.dei.provafinale.carcassonne.view.viewInterface.ViewInterface;
 
-public class TextualView implements ViewInterface {
+public class TextualViewInterface implements ViewInterface {
 
-	private TileGridRepresenter grid;
-	private TextualPanelGame gamePanel;
+	private TileGridRepresenter gridRepresenter;
+	private TextualGamePanel gamePanel;
 	private PlayerColor playerColor;
 
 	@Override
 	public void initialize(TileGrid grid, int numPlayers,
 			PlayerColor clientColor) {
-		this.grid = new TileGridRepresenter(grid);
-
-		gamePanel = new TextualPanelGame();
-		/* Sets gamePanel in the View. */
-		ViewManager.getInstance().getFrame().setGamePanel(gamePanel);
-		ViewManager.getInstance().changeMenuPanel(CarcassonneFrame.GAMEPANEL);
+		
+		this.gamePanel = new TextualGamePanel();
+		this.gridRepresenter = new TileGridRepresenter(grid);
+		
+		// Append game panel to frame
+		CarcassonneFrame frame = ViewManager.getInstance().getFrame();
+		frame.setGamePanel(gamePanel);
+		frame.changeMainPanel(CarcassonneFrame.GAMEPANEL);
 
 		String notification = String.format("Match starts with %s players.\n",
 				numPlayers);
 		if (clientColor != null) {
 			notification += String.format("You are player %s.\n", clientColor);
 		}
+		
 		gamePanel.print(notification);
 	}
 
 	@Override
 	public void updateGridRepresentation() {
-		gamePanel.print(grid.getRepresentation());
+		gamePanel.print(gridRepresenter.getRepresentation());
 	}
 
 	@Override
@@ -51,7 +55,9 @@ public class TextualView implements ViewInterface {
 
 	@Override
 	public void setUIActive(boolean enabled) {
-		gamePanel.print("Enter command: ");
+		if(enabled){
+			gamePanel.print("Enter command: ");
+		}
 	}
 
 	@Override

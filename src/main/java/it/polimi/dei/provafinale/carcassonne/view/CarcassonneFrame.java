@@ -95,10 +95,14 @@ public class CarcassonneFrame extends JFrame {
 			this.gamePanel = gamePanel;
 			gamePanelContainer.add(gamePanel, BorderLayout.CENTER);
 		}
-		/* An instance of GamePanel alredy exists. */
+		/* An instance of GamePanel already exists. */
 		else {
 			return;
 		}
+	}
+	
+	public JPanel getGamePanel(){
+		return gamePanel;
 	}
 
 }
