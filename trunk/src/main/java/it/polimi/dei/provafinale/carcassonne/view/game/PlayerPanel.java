@@ -3,6 +3,7 @@ package it.polimi.dei.provafinale.carcassonne.view.game;
 import it.polimi.dei.provafinale.carcassonne.model.PlayerColor;
 
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -46,11 +47,13 @@ public class PlayerPanel extends JPanel {
 		JPanel scorePanel = new JPanel();
 		scorePanel.setPreferredSize(new Dimension(10, 20));
 		lblScore = new JLabel("Score: 0");
+		lblScore.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
 		scorePanel.add(lblScore);
 		
 		JPanel followerPanel = new JPanel();
 		followerPanel.setPreferredSize(new Dimension(10, 20));
 		lblFollower = new JLabel("Follower: 7");
+		lblFollower.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
 		followerPanel.add(lblFollower);
 		
 		content.add(namePanel);
@@ -67,7 +70,14 @@ public class PlayerPanel extends JPanel {
 	}
 
 	public void setActive(boolean active) {
-
+		Font f;
+		if(active){
+			f = new Font(Font.SANS_SERIF, Font.BOLD, 15);
+		} else {
+			f = new Font(Font.SANS_SERIF, Font.PLAIN, 15);
+		}
+		
+		lblName.setFont(f);
 	}
 
 	public void setClientPlayer(){
