@@ -5,6 +5,9 @@ import it.polimi.dei.provafinale.carcassonne.model.gamelogic.Coord;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class representing game grid.
+ * */
 public class TileGrid {
 
 	Map<Coord, Tile> grid; // TODO verificare che la visibilità di questo
