@@ -2,10 +2,12 @@ package it.polimi.dei.provafinale.carcassonne.controller.client;
 
 import it.polimi.dei.provafinale.carcassonne.Constants;
 import it.polimi.dei.provafinale.carcassonne.model.MatchHandler;
-import it.polimi.dei.provafinale.carcassonne.view.game.textual.TextualViewInterface;
-import it.polimi.dei.provafinale.carcassonne.view.viewInterface.GUIViewInterface;
-import it.polimi.dei.provafinale.carcassonne.view.viewInterface.TextualConsoleViewInterface;
-import it.polimi.dei.provafinale.carcassonne.view.viewInterface.ViewInterface;
+import it.polimi.dei.provafinale.carcassonne.view.CarcassonneFrame;
+import it.polimi.dei.provafinale.carcassonne.view.ViewManager;
+import it.polimi.dei.provafinale.carcassonne.view.game.GamePanel;
+import it.polimi.dei.provafinale.carcassonne.view.game.SwingGamePanel;
+import it.polimi.dei.provafinale.carcassonne.view.game.TextualGamePanel;
+
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,20 +38,25 @@ public class StartLocalGame implements ActionListener {
 		Thread th = new Thread(mh);
 		th.start();
 
-		// Create view interface
+		// Create game panel
 		int viewType = viewTypeBox.getSelectedIndex();
-		ViewInterface vi;
+		GamePanel panel;
 		if(viewType == Constants.VIEW_TYPE_GUI){
-			vi = new GUIViewInterface();
+			panel = new SwingGamePanel();
 		} else if(viewType == Constants.VIEW_TYPE_TEXTUAL){
-			vi = new TextualViewInterface();
+			panel = new TextualGamePanel();
 		} else {
 			System.out.println("Error in view type selection: value " + viewType);
 			return;
 		}
+		
+		// Append game panel
+		CarcassonneFrame frame = ViewManager.getInstance().getFrame();
+		frame.setGamePanel(panel);
+		frame.changeMainPanel(CarcassonneFrame.GAMEPANEL);
 
 		// Create client controller
-		ClientController.startNewMatchController(cli, vi);
+		ClientController.startNewMatchController(cli, panel);
 	}
 
 }

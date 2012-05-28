@@ -14,7 +14,7 @@ import it.polimi.dei.provafinale.carcassonne.model.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.Tile;
 import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
-import it.polimi.dei.provafinale.carcassonne.view.game.textual.TileGridRepresenter;
+import it.polimi.dei.provafinale.carcassonne.view.game.TileGridRepresenter;
 
 public class TextualInterface implements GameInterface {
 

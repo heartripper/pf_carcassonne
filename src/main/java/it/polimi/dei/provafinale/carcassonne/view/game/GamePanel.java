@@ -1,10 +1,11 @@
-package it.polimi.dei.provafinale.carcassonne.view;
+package it.polimi.dei.provafinale.carcassonne.view.game;
 
-import it.polimi.dei.provafinale.carcassonne.view.viewInterface.ViewInterface;
 
 import javax.swing.JPanel;
 
-
+/**
+ * Class to let Client Controller control an user interface.
+ * */
 public abstract class GamePanel extends JPanel implements ViewInterface {
 
 	private static final long serialVersionUID = -2458261363554188485L;

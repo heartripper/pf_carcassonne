@@ -1,4 +1,4 @@
-package it.polimi.dei.provafinale.carcassonne.view.viewInterface;
+package it.polimi.dei.provafinale.carcassonne.view.game;
 
 import it.polimi.dei.provafinale.carcassonne.model.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.model.TileGrid;

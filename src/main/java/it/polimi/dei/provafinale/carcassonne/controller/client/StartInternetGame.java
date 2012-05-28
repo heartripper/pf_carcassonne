@@ -1,10 +1,11 @@
 package it.polimi.dei.provafinale.carcassonne.controller.client;
 
 import it.polimi.dei.provafinale.carcassonne.Constants;
-import it.polimi.dei.provafinale.carcassonne.view.game.textual.TextualViewInterface;
+import it.polimi.dei.provafinale.carcassonne.view.game.GamePanel;
+import it.polimi.dei.provafinale.carcassonne.view.game.SwingGamePanel;
+import it.polimi.dei.provafinale.carcassonne.view.game.TextualGamePanel;
+import it.polimi.dei.provafinale.carcassonne.view.game.ViewInterface;
 import it.polimi.dei.provafinale.carcassonne.view.menu.InternetGamePanel;
-import it.polimi.dei.provafinale.carcassonne.view.viewInterface.GUIViewInterface;
-import it.polimi.dei.provafinale.carcassonne.view.viewInterface.ViewInterface;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -58,16 +59,18 @@ public class StartInternetGame implements ActionListener{
 		}
 		
 		/*Set up view interface*/
-		ViewInterface vi;
-		if(viewType == 0){
-			vi = new GUIViewInterface();
+		GamePanel panel;
+		if(viewType == Constants.VIEW_TYPE_GUI){
+			panel = new SwingGamePanel();
+		} else if(viewType == Constants.VIEW_TYPE_TEXTUAL) {
+			panel = new TextualGamePanel();
 		} else {
-			vi = new TextualViewInterface();
+			panel = null;
 		}
 		
 		try{
 			ci.connect();
-			ClientController.startNewMatchController(ci, vi);
+			ClientController.startNewMatchController(ci, panel);
 			internetGamePanel.setNotifyText(Constants.MATCH_IS_STARTING);
 		}catch(ConnectionLostException cle){
 			internetGamePanel.setNotifyText(Constants.CONNECTION_ERROR);
