@@ -1,12 +1,9 @@
 package it.polimi.dei.provafinale.carcassonne.model.gamelogic.entity;
 
-import it.polimi.dei.provafinale.carcassonne.model.gamelogic.player.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.Side;
 import it.polimi.dei.provafinale.carcassonne.model.gamelogic.tile.Tile;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class Road extends Entity {
@@ -14,14 +11,10 @@ public class Road extends Entity {
 	private static int roadCount = 0;
 
 	private EntityType type = EntityType.S;
-	private List<Side> members;
-	private boolean completed = false;
-	private boolean hasFollowers = false;
 	private int id;
 
 	public Road() {
 		id = ++roadCount;
-		members = new ArrayList<Side>();
 	}
 
 	@Override
@@ -30,111 +23,19 @@ public class Road extends Entity {
 	}
 
 	@Override
-	public boolean isComplete() {
-		if (completed){
-			return true;
-		}
-		for (Side m : members){
-			if (m.getOppositeSide() == null){
-				return false;
-			}
-		}
-		completed = true;
-		return true;
-	}
-
-	@Override
-	public void addMember(Side side) {
-		if (!members.contains(side)){
-			members.add(side);
-		}
-	}
-
-	@Override
 	public int getScore() {
-		Set<Tile> cards = new HashSet<Tile>();
-		for (Side s : members) {
+		Set<Tile> tiles = new HashSet<Tile>();
+		for (Side s : getMembers()) {
 			Tile card = s.getOwnerCard();
-			if (!cards.contains(card)){
-				cards.add(card);
+			if (!tiles.contains(card)){
+				tiles.add(card);
 			}
 		}
-		return cards.size();
+		return tiles.size();
 	}
-
-	@Override
-	public Entity enclose(Entity otherEntity) {
-		if (otherEntity.getMembers().size() > this.members.size()){
-			return otherEntity.enclose(this);
-		}else{
-			for (Side s : otherEntity.getMembers()) {
-				s.setEntity(this);
-				this.addMember(s);
-			}
-
-			if (!otherEntity.acceptFollowers()){
-				hasFollowers = true;
-			}
-			return this;
-		}
-	}
-
-	@Override
-	public List<Side> getMembers() {
-		return members;
-	}
-
+	
 	@Override
 	public String toString() {
 		return type.getRepresentation() + id;
-	}
-
-	@Override
-	public boolean acceptFollowers() {
-		if (hasFollowers){
-			return false;
-		}
-
-		for (Side s : members) {
-			if (s.getFollower() != null) {
-				hasFollowers = true;
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	@Override
-	public List<Tile> removeFollowers() {
-		ArrayList<Tile> updatedCards = new ArrayList<Tile>();
-		for (Side s : members) {
-			if(s.getFollower() != null){
-				s.setFollower(null);
-				Tile c = s.getOwnerCard();
-				if(!updatedCards.contains(c)){
-					updatedCards.add(c);
-				}
-			}
-		}
-		return updatedCards;
-	}
-
-	@Override
-	public int[] countFollowers(int numPlayers) {
-		int[] counter = new int[numPlayers];
-
-		for (int i = 0; i < numPlayers; i++) {
-			counter[i] = 0;
-		}
-		
-		for(Side s : members){
-			PlayerColor follower = s.getFollower();
-			if(follower != null){
-				int index = PlayerColor.indexOf(follower);
-				counter[index]++;
-			}
-		}
-		return counter;
 	}
 }
