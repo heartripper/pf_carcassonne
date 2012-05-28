@@ -31,24 +31,6 @@ public class PlayerCircularArray {
 	}
 
 	/**
-	 * Adds a Player to the game.
-	 * 
-	 * @param player
-	 *            - a Player to add to the game.
-	 * @return true if a new Player is correctly added to the game, false
-	 *         instead.
-	 */
-	public boolean add(Player player) {
-		/* Case we have reach the maximum number of players. */
-		if (currIndex >= size) {
-			return false;
-		}
-		/* Adding the new Player. */
-		players[currIndex++] = player;
-		return true;
-	}
-
-	/**
 	 * Gives the Player that has to play the next turn in the game.
 	 * 
 	 * @return the next Player that has to play the next turn in the game.
