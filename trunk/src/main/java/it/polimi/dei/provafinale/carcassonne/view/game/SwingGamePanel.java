@@ -39,7 +39,7 @@ public class SwingGamePanel extends GamePanel {
 	private JComboBox followerComboBox;
 	private JButton putFollowerButton;
 	private JButton passButton;
-
+	
 	public SwingGamePanel() {
 		setLayout(new BorderLayout(0, 0));
 
@@ -181,8 +181,10 @@ public class SwingGamePanel extends GamePanel {
 
 	@Override
 	public void setCurrentPlayer(PlayerColor color) {
-		// TODO Auto-generated method stub
-
+		int selectedIndex = PlayerColor.indexOf(color);
+		for(int i = 0; i < playerPanels.length; i++){
+			playerPanels[i].setActive(i == selectedIndex);
+		}
 	}
 
 	@Override
