@@ -18,11 +18,11 @@ public interface CarcassonneRMIServer extends Remote {
 	 * @param request
 	 *            - player's request
 	 * */
-	public void register(CarcassonneRMIClient client, Message request)
+	void register(CarcassonneRMIClient client, Message request)
 			throws RemoteException;
 
 	/**
 	 * Tests the connectivity between client and server.
 	 * */
-	public void poll() throws RemoteException;
+	void poll() throws RemoteException;
 }

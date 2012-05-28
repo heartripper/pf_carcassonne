@@ -14,7 +14,7 @@ public interface GameInterface {
 	 * 
 	 * @return the number of player
 	 * */
-	public int askPlayerNumber();
+	int askPlayerNumber();
 
 	/**
 	 * Reads a message from a player.
@@ -25,7 +25,7 @@ public interface GameInterface {
 	 * @throws PlayersDisconnectedException
 	 *             when given player disconnects
 	 * */
-	public Message readFromPlayer(PlayerColor color)
+	Message readFromPlayer(PlayerColor color)
 			throws PlayersDisconnectedException;
 
 	/**
@@ -38,7 +38,7 @@ public interface GameInterface {
 	 * @throws PlayersDisconnectedException
 	 *             when given player disconnects
 	 * */
-	public void sendPlayer(PlayerColor color, Message msg)
+	void sendPlayer(PlayerColor color, Message msg)
 			throws PlayersDisconnectedException;
 
 	/**
@@ -49,5 +49,5 @@ public interface GameInterface {
 	 * @throws PlayersDisconnectedException
 	 *             when one or more player discconnects;
 	 * */
-	public void sendAllPlayer(Message msg) throws PlayersDisconnectedException;
+	void sendAllPlayer(Message msg) throws PlayersDisconnectedException;
 }

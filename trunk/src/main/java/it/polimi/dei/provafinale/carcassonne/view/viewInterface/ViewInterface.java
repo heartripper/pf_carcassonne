@@ -19,25 +19,25 @@ public interface ViewInterface {
 	 *            - the color of player handled by controller, null if
 	 *            controller handles all players (local game)
 	 * */
-	public abstract void initialize(TileGrid grid, int numPlayers,
+	abstract void initialize(TileGrid grid, int numPlayers,
 			PlayerColor clientColor);
 
 	/**
 	 * Makes the user interface update the representation of the grid.
 	 * */
-	public abstract void updateGridRepresentation();
+	abstract void updateGridRepresentation();
 
 	/**
 	 * Updates the current tile in the user interface.
 	 * 
 	 * @param - the string representation of a tile
 	 * */
-	public abstract void updateCurrentTile(String rep);
+	abstract void updateCurrentTile(String rep);
 
 	/**
 	 * Updates the score in the user interface
 	 * */
-	public abstract void updateScore(String msg);
+	abstract void updateScore(String msg);
 
 	/**
 	 * Enables or disables the user interface.
@@ -46,7 +46,7 @@ public interface ViewInterface {
 	 *            - true if the user interface should be enabled, false
 	 *            otherwise
 	 * */
-	public abstract void setUIActive(boolean enabled);
+	abstract void setUIActive(boolean enabled);
 
 	/**
 	 * Sets current player in the user interface.
@@ -54,7 +54,7 @@ public interface ViewInterface {
 	 * @param color
 	 *            - the PlayerColor of current player
 	 * */
-	public abstract void setCurrentPlayer(PlayerColor color);
+	abstract void setCurrentPlayer(PlayerColor color);
 
 	/**
 	 * Shows a notice on the user interface
@@ -62,6 +62,6 @@ public interface ViewInterface {
 	 * @param msg
 	 *            - the notice to show
 	 * */
-	public abstract void showNotify(String msg);
+	abstract void showNotify(String msg);
 
 }

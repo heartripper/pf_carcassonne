@@ -15,7 +15,7 @@ public interface RemotePlayer {
 	 * @throws ConnectionLostException
 	 *             if the player has disconnected.
 	 * */
-	public Message readMessage() throws ConnectionLostException;
+	Message readMessage() throws ConnectionLostException;
 
 	/**
 	 * Sends a Message to a remote player.
@@ -25,7 +25,7 @@ public interface RemotePlayer {
 	 * @throws ConnectionLostException
 	 *             if the player has disconnected.
 	 * */
-	public void sendMessage(Message msg) throws ConnectionLostException;
+	void sendMessage(Message msg) throws ConnectionLostException;
 
 	/**
 	 * Closes the communication with remote player
@@ -33,7 +33,7 @@ public interface RemotePlayer {
 	 * @throws ConnectionLostException
 	 *             if the player has disconnected.
 	 * */
-	public void close() throws ConnectionLostException;
+	void close() throws ConnectionLostException;
 
 	/**
 	 * Returns remote player's status. A remote player is considered active if
@@ -41,10 +41,10 @@ public interface RemotePlayer {
 	 * 
 	 * @return true if remote player is active
 	 * */
-	public boolean isActive();
+	boolean isActive();
 
 	/**
 	 * Sets the player as inactive after he has disconnected.
 	 * */
-	public void setInactive();
+	void setInactive();
 }
