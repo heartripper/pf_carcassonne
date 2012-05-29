@@ -9,6 +9,11 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 
+/**
+ * The class CarcassonneFrame extends a JFrame in order to create the main
+ * frame.
+ * 
+ */
 public class CarcassonneFrame extends JFrame {
 
 	private static final long serialVersionUID = -7524847858570259831L;
@@ -100,12 +105,12 @@ public class CarcassonneFrame extends JFrame {
 			return;
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @return the class attribute gamePanel.
 	 */
-	public JPanel getGamePanel(){
+	public JPanel getGamePanel() {
 		return gamePanel;
 	}
 

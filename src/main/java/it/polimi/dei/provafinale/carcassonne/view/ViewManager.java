@@ -2,6 +2,10 @@ package it.polimi.dei.provafinale.carcassonne.view;
 
 import java.awt.Graphics;
 
+/**
+ * The class ViewManager manages the View of the game.
+ * 
+ */
 public final class ViewManager {
 
 	private static ViewManager instance = null;
