@@ -18,6 +18,11 @@ import it.polimi.dei.provafinale.carcassonne.controller.client.MenuPanelSwitcher
 import it.polimi.dei.provafinale.carcassonne.controller.client.StartInternetGame;
 import javax.swing.JComboBox;
 
+/**
+ * The class InternetGamePanel extends a JPanel in order to create the internet
+ * menu of the game.
+ * 
+ */
 public class InternetGamePanel extends JPanel {
 
 	private static final long serialVersionUID = 8480541024375120364L;

@@ -8,6 +8,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * The class MenuPanel extends a JPanel in order to manage the switch of menu
+ * panels (HomePanel, InternetGamePanel, LocalGamePanel):
+ * 
+ */
 public class MenuPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;

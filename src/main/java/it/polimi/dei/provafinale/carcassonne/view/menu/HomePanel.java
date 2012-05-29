@@ -13,10 +13,15 @@ import javax.swing.Box;
 import java.awt.event.ActionListener;
 import java.awt.Component;
 
+/**
+ * The class HomePanel extends a JPanel in order to create the home page of the
+ * game.
+ * 
+ */
 public class HomePanel extends JPanel {
 
 	private static final long serialVersionUID = 8988417171482193429L;
-	
+
 	private Image background;
 
 	/**
