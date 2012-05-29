@@ -31,7 +31,7 @@ public abstract class Entity {
 	/**
 	 * Obtains the list of this entity's members.
 	 */
-	public List<Side> getMembers() {
+	protected List<Side> getMembers() {
 		return members;
 	}
 
