@@ -1,6 +1,5 @@
 package it.polimi.dei.provafinale.carcassonne.model;
 
-
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ public abstract class Entity {
 	/**
 	 * Obtains the list of this entity's members.
 	 */
-	protected List<Side> getMembers() {
+	public List<Side> getMembers() {
 		return members;
 	}
 
@@ -136,8 +135,16 @@ public abstract class Entity {
 		return updatedCards;
 	}
 
-	//Abstract methods
+	// Abstract methods
+	/**
+	 * Gives the type of this entity.
+	 * 
+	 * @return the EntityType of this entity;
+	 * */
 	public abstract EntityType getType();
 
+	/**
+	 * Returns the score given to owners by this entity;
+	 * */
 	public abstract int getScore();
 }
