@@ -101,6 +101,10 @@ public class CarcassonneFrame extends JFrame {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return the class attribute gamePanel.
+	 */
 	public JPanel getGamePanel(){
 		return gamePanel;
 	}
