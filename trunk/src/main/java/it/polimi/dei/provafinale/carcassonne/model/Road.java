@@ -4,6 +4,11 @@ package it.polimi.dei.provafinale.carcassonne.model;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * The class Road extends Entity and represents one of the possible part the
+ * tiles in Carcassonne game.
+ *
+ */
 public class Road extends Entity {
 
 	private static int roadCount = 0;

@@ -2,7 +2,11 @@ package it.polimi.dei.provafinale.carcassonne.model;
 
 import it.polimi.dei.provafinale.carcassonne.Coord;
 
-
+/**
+ * The enum SidePosition gives the association of all the possible sides
+ * position of a Tile (North, South, East, West) with a number.
+ * 
+ */
 public enum SidePosition {
 	/* Side position are stored using the convention N=1, E=2, S=3, W=4. */
 	N(0), E(1), S(2), W(3);

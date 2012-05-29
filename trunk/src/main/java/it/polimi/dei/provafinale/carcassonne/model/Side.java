@@ -3,6 +3,11 @@ package it.polimi.dei.provafinale.carcassonne.model;
 import it.polimi.dei.provafinale.carcassonne.Constants;
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 
+/**
+ * The class Side represent one of the four sides of a Tile with all its
+ * properties.
+ * 
+ */
 public class Side {
 
 	private EntityType type = null;

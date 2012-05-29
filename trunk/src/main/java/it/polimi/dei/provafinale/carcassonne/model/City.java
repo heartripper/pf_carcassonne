@@ -1,9 +1,13 @@
 package it.polimi.dei.provafinale.carcassonne.model;
 
-
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * The class City extends Entity and represents one of the possible part the
+ * tiles in Carcassonne game.
+ * 
+ */
 public class City extends Entity {
 
 	private EntityType type = EntityType.C;

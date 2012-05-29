@@ -1,6 +1,10 @@
 package it.polimi.dei.provafinale.carcassonne.model;
 
-
+/**
+ * The class EntityFactory manages the creation of the right Entity (City,
+ * Road).
+ * 
+ */
 public final class EntityFactory {
 
 	private EntityFactory() {
@@ -9,7 +13,9 @@ public final class EntityFactory {
 	/**
 	 * Creates a new instance of the Entity implementation corresponding to the
 	 * given type.
-	 * @param type - the type of the entity to create
+	 * 
+	 * @param type
+	 *            - the type of the entity to create
 	 * @return a new instance of a Entity of the given type.
 	 * */
 	public static Entity createByType(EntityType type) {

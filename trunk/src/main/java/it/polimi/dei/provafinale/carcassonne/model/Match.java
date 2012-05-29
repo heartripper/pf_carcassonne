@@ -6,6 +6,10 @@ import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The class Match creates and manages the execution of a match.
+ * 
+ */
 public class Match {
 
 	private TileGrid grid;
