@@ -4,7 +4,6 @@ import it.polimi.dei.provafinale.carcassonne.Constants;
 import it.polimi.dei.provafinale.carcassonne.view.game.GamePanel;
 import it.polimi.dei.provafinale.carcassonne.view.game.SwingGamePanel;
 import it.polimi.dei.provafinale.carcassonne.view.game.TextualGamePanel;
-import it.polimi.dei.provafinale.carcassonne.view.game.ViewInterface;
 import it.polimi.dei.provafinale.carcassonne.view.menu.InternetGamePanel;
 
 import java.awt.event.ActionEvent;
