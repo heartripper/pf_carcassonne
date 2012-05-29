@@ -9,6 +9,11 @@ import javax.swing.JPanel;
 
 import it.polimi.dei.provafinale.carcassonne.Constants;
 
+/**
+ * The class CurrentTilePanel extends a JPanel to represent the panel that
+ * contains the current tile and its content.
+ * 
+ */
 public class CurrentTilePanel extends JPanel {
 
 	private static final long serialVersionUID = 1677387556314454292L;
@@ -48,7 +53,7 @@ public class CurrentTilePanel extends JPanel {
 	public void setCurrentTile(String rep) {
 		currentTileRep = rep;
 		Graphics g = tileLabel.getGraphics();
-		if(g == null){
+		if (g == null) {
 			return;
 		}
 		paintComponent(g);
