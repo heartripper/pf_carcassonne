@@ -24,6 +24,7 @@ public class PlayerCircularArray {
 		/* Initializing the array. */
 		for (int i = 0; i < size; i++) {
 			players[i] = new Player();
+			players[i].setColor(PlayerColor.valueOf(i));
 		}
 		position = 0;
 	}
