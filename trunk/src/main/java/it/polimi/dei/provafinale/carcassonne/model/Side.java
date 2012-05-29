@@ -14,6 +14,7 @@ public class Side {
 	private Entity entity = null;
 	private Tile ownerTile = null;
 	private PlayerColor follower = null;
+	private Side oppositeSide = null;
 
 	/**
 	 * Side constructor. Creates a new instance of class Side (set the owner of
@@ -71,24 +72,17 @@ public class Side {
 	 * @return a Side opposite to the current one.
 	 */
 	public Side getOppositeSide() {
-		/* The Side doesn't belong to a Tile. */
-		if (ownerTile == null) {
-			return null;
-		}
-		/* The Side belongs to a Tile. */
-		/* Obtains the SidePosition of the current Side. */
-		SidePosition position = ownerTile.getSidePosition(this);
-		/* Obtains the opposite SidePosition. */
-		SidePosition oppositePosition = position.getOpposite();
-		/* Obtains the opposite Tile. */
-		Tile oppositeTile = ownerTile.getNeighbor(position);
-		/* Case there isn't an opposite Tile. */
-		if (oppositeTile == null) {
-			return null;
-		}
-		return oppositeTile.getSide(oppositePosition);
+		return oppositeSide;
 	}
-
+	
+	/**
+	 * Sets the side opposite to this one
+	 * @param oppositeSide - a Side which his the one opposite to this one
+	 * */
+	public void setOppositeSide(Side oppositeSide){
+		this.oppositeSide = oppositeSide;
+	}
+	
 	/**
 	 * 
 	 * @param follower
