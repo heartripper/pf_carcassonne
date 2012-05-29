@@ -184,7 +184,8 @@ public final class TilePainter {
 		AffineTransform affineTransform = new AffineTransform();
 		/* Rotate the image. */
 		double radians = -Math.toRadians(90 * rotCount);
-		affineTransform.rotate(radians, tileDim / 2, tileDim / 2);
+		float position = ((float)tileDim / 2);
+		affineTransform.rotate(radians, position, position);
 		/* Draw the image using the AffineTransform. */
 		BufferedImage rotateImage = new BufferedImage(tileDim, tileDim,
 				BufferedImage.TYPE_INT_ARGB);
