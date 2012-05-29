@@ -29,7 +29,7 @@ public class LoggerService {
 		
 		tabs = new JTabbedPane();
 		frame.add(tabs, BorderLayout.CENTER);
-		frame.setVisible(true);
+		//frame.setVisible(true);
 	}
 	
 	public Logger register(String panelName){
