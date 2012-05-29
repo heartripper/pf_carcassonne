@@ -48,6 +48,9 @@ public class CurrentTilePanel extends JPanel {
 	public void setCurrentTile(String rep) {
 		currentTileRep = rep;
 		Graphics g = tileLabel.getGraphics();
+		if(g == null){
+			return;
+		}
 		paintComponent(g);
 	}
 
