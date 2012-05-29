@@ -13,6 +13,10 @@ import java.awt.BorderLayout;
 
 import javax.swing.border.EtchedBorder;
 
+/**
+ * The class PlayerPanel extends a JPanel to represent the status of a player.
+ * 
+ */
 public class PlayerPanel extends JPanel {
 
 	private static final long serialVersionUID = -4975696838928188946L;
