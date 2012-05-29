@@ -79,6 +79,17 @@ public class Match {
 		}
 		/* The tile is compatible with the given coordinates. */
 		grid.putTile(tile, coord);
+		for(SidePosition pos : SidePosition.values()){
+			Side current = tile.getSide(pos);
+			Coord offset = SidePosition.getOffsetForPosition(pos);
+			Tile neighbor = grid.getTile(coord.add(offset));
+			if(neighbor != null){
+				Side opposite = neighbor.getSide(pos.getOpposite());
+				current.setOppositeSide(opposite);
+				opposite.setOppositeSide(current);
+			}
+		}
+		
 		updateEntities(tile);
 		return true;
 	}
@@ -268,6 +279,7 @@ public class Match {
 		/* Return followers to owners. */
 		returnFollowers(followers);
 		/* Remove followers from entity and return a list of updated cards. */
+		entities.remove(entity);
 		return entity.removeFollowers(null);
 	}
 
