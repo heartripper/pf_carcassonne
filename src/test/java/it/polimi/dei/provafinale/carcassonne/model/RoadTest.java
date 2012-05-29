@@ -1,7 +1,5 @@
 package it.polimi.dei.provafinale.carcassonne.model;
 
-import it.polimi.dei.provafinale.carcassonne.PlayerColor;
-
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -9,6 +7,7 @@ public class RoadTest {
 
 	private Road road;
 	private EntityType type = EntityType.S;
+	
 	@Before
 	public void setUp(){
 		road = new Road();
