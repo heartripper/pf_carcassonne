@@ -16,6 +16,7 @@ import java.awt.Component;
 public class HomePanel extends JPanel {
 
 	private static final long serialVersionUID = 8988417171482193429L;
+	
 	private Image background;
 
 	/**
