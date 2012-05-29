@@ -122,6 +122,6 @@ public class TileStack {
 				System.out.println("Error opening tile file.");
 			}
 		}
-		return readTileStack;
+		return new ArrayList<Tile>(readTileStack);
 	}
 }
