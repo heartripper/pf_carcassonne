@@ -7,7 +7,6 @@ import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
 import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.Tile;
 import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
-import it.polimi.dei.provafinale.carcassonne.view.game.ViewInterface;
 
 public class ClientControllerImpl implements Runnable {
 

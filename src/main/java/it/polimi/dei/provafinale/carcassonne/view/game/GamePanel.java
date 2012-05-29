@@ -1,6 +1,8 @@
 package it.polimi.dei.provafinale.carcassonne.view.game;
 
 
+import it.polimi.dei.provafinale.carcassonne.controller.client.ViewInterface;
+
 import javax.swing.JPanel;
 
 /**
