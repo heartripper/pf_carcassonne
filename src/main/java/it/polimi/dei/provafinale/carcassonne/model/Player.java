@@ -4,10 +4,8 @@ import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 
 public class Player {
 
-	private static int count = 0;
 	private PlayerColor color;
 	private int score;
-	private int id;
 	private int followers;
 	private boolean active = true;
 
@@ -16,8 +14,6 @@ public class Player {
 	 */
 	public Player() {
 		this.score = 0;
-		this.id = count++;
-		this.color = PlayerColor.valueOf(id);
 		this.followers = 7;
 	}
 
@@ -79,6 +75,16 @@ public class Player {
 	 */
 	public String getSymbol() {
 		return color.toString();
+	}
+
+	/**
+	 * Sets player's color.
+	 * 
+	 * @param color
+	 *            - a player's color
+	 * */
+	public void setColor(PlayerColor color) {
+		this.color = color;
 	}
 
 	/**
