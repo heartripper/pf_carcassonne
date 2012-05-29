@@ -13,5 +13,4 @@ public class ScreenShotListener implements ActionListener{
 		
 		
 	}
-
 }

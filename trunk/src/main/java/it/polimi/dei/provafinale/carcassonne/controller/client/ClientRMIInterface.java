@@ -6,9 +6,9 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 import it.polimi.dei.provafinale.carcassonne.Constants;
-import it.polimi.dei.provafinale.carcassonne.Message;
-import it.polimi.dei.provafinale.carcassonne.MessageType;
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.controller.Message;
+import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
 import it.polimi.dei.provafinale.carcassonne.controller.server.CarcassonneRMIServer;
 import it.polimi.dei.provafinale.carcassonne.logger.Logger;
 import it.polimi.dei.provafinale.carcassonne.logger.LoggerService;

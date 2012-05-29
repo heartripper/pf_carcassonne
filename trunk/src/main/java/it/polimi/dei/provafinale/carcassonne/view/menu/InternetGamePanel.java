@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import it.polimi.dei.provafinale.carcassonne.controller.MenuPanelSwitcher;
+import it.polimi.dei.provafinale.carcassonne.controller.client.MenuPanelSwitcher;
 import it.polimi.dei.provafinale.carcassonne.controller.client.StartInternetGame;
 import javax.swing.JComboBox;
 

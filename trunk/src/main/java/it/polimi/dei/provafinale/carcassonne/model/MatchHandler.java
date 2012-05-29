@@ -3,9 +3,9 @@ package it.polimi.dei.provafinale.carcassonne.model;
 import java.util.List;
 
 import it.polimi.dei.provafinale.carcassonne.Coord;
-import it.polimi.dei.provafinale.carcassonne.Message;
-import it.polimi.dei.provafinale.carcassonne.MessageType;
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.controller.Message;
+import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
 import it.polimi.dei.provafinale.carcassonne.controller.server.PlayersDisconnectedException;
 
 public class MatchHandler implements Runnable {

@@ -7,8 +7,8 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 
-import it.polimi.dei.provafinale.carcassonne.Message;
-import it.polimi.dei.provafinale.carcassonne.MessageType;
+import it.polimi.dei.provafinale.carcassonne.controller.Message;
+import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
 import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
 
 public class MessageSender implements ActionListener {
