@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * Class representing cards. Sides are represented using the convention North =
- * 0, East = 1, South = 2, <west = 3.
+ * 0, East = 1, South = 2, West = 3.
  * */
 public final class Tile {
 	// Reference to container grid

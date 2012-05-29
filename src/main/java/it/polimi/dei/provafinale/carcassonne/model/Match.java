@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The class Match creates and manages the execution of a match.
+ * The class Match creates and manages the execution of a match with all its
+ * attribute (grid, stack, players, entities, firstTile, playersNumber).
  * 
  */
 public class Match {

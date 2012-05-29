@@ -5,7 +5,7 @@ import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 
 /**
  * The class Side represent one of the four sides of a Tile with all its
- * properties.
+ * properties: type, entity, ownerTile, follower, oppositeSide.
  * 
  */
 public class Side {
@@ -74,15 +74,17 @@ public class Side {
 	public Side getOppositeSide() {
 		return oppositeSide;
 	}
-	
+
 	/**
 	 * Sets the side opposite to this one
-	 * @param oppositeSide - a Side which his the one opposite to this one
+	 * 
+	 * @param oppositeSide
+	 *            - a Side which his the one opposite to this one
 	 * */
-	public void setOppositeSide(Side oppositeSide){
+	public void setOppositeSide(Side oppositeSide) {
 		this.oppositeSide = oppositeSide;
 	}
-	
+
 	/**
 	 * 
 	 * @param follower
