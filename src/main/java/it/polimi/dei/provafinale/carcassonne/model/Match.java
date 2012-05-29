@@ -300,11 +300,4 @@ public class Match {
 			player.addFollowers(followers[i]);
 		}
 	}
-
-	@Override
-	public String toString() {
-		return String.format("Remaining cards: %s - %s\n\n%s",
-				stack.remainingTilesNumber(), players, grid);
-	}
-
 }
