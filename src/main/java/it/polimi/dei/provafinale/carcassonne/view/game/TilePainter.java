@@ -37,7 +37,7 @@ public final class TilePainter {
 	private static TilePainter instance = null;
 
 	/**
-	 * Returns the current instance of TilePainter which has all vbasic images
+	 * Returns the current instance of TilePainter which has all basic images
 	 * loaded.
 	 * */
 	public static synchronized TilePainter getInstance() {
@@ -48,18 +48,20 @@ public final class TilePainter {
 	}
 
 	/**
-	 * Creates a new TilePainter object loading placeholder and base tile images
-	 * from files. It also compiles the pattern to match followers in tile
-	 * representations.
+	 * TilePainter constructor. Creates a new instance of class TilePainter,
+	 * which object loads placeholder and base tile images from files. It also
+	 * compiles the pattern to match followers in tile representations.
 	 * */
 	private TilePainter() {
+		/* Creating tileLib and followersLib. */
 		this.tileLib = new HashMap<String, BufferedImage>();
 		this.followersLib = new HashMap<String, BufferedImage>();
-
+		/* Follower regular expression. */
 		String followerRegExp = "(N|E|S|W)=.-(R|B|V|G|N)";
 		this.followerPattern = Pattern.compile(followerRegExp);
+		/* Setting tile dimension. */
 		this.tileDim = Constants.TILE_PIXEL_DIMENSION;
-
+		/* Read from file. */
 		String line;
 		BufferedReader in = null;
 		try {
@@ -68,26 +70,26 @@ public final class TilePainter {
 			in = new BufferedReader(fr);
 			while ((line = in.readLine()) != null) {
 				BufferedImage currentImg = readBaseImage(line);
+				/* Adding the tile into tileLib. */
 				if (currentImg != null) {
 					tileLib.put(line, currentImg);
 				}
 			}
-
 			/* Read placeholder image */
 			tilePlaceHolder = ImageIO
 					.read(new File(Constants.PLACEHOLDER_PATH));
-
 			/* Read followers image */
 			for (PlayerColor c : PlayerColor.values()) {
 				String path = String.format(
 						Constants.FOLLOWERS_IMG_PATH_FORMAT, c);
 				BufferedImage img = ImageIO.read(new File(path));
+				/* Adding the follower into followersLib. */
 				followersLib.put(c.toString(), img);
 			}
 		} catch (IOException ioe) {
 			System.out.println("Error reading tile images.");
 		}
-
+		/* Closing in. */
 		if (in != null) {
 			try {
 				in.close();
@@ -95,36 +97,44 @@ public final class TilePainter {
 				System.out.println("Error opening tile file.");
 			}
 		}
-		
+
 	}
 
 	/**
 	 * Paints a tile.
 	 * 
 	 * @param rep
-	 *            - the String representation of the tile to paint
+	 *            the String representation of the tile to paint.
 	 * @param g
-	 *            - the Graphics to draw on
+	 *            the Graphics to draw on.
 	 * @param x
-	 *            - the horizontal offset of the tile
+	 *            the horizontal offset of the tile.
 	 * @param y
-	 *            - the vertical offset of the tile
+	 *            the vertical offset of the tile.
 	 * */
 	public void paintTile(String rep, Graphics g, int x, int y) {
-		// Remove followers
+		/* Remove followers from rep. */
 		String base = rep.replaceAll("-.", "");
+		/* Find the base tile into the repository. */
 		BufferedImage img = getImage(base);
+		/* Draw the tile. */
 		g.drawImage(img, x, y, tileDim, tileDim, null);
+		/* In case there was a follower in rep... */
 		if (rep.indexOf('-') != -1) {
+			/* print it. */
 			paintFollower(rep, g, x, y);
 		}
 	}
 
 	/**
+	 * Paints a placeholder tile.
 	 * 
 	 * @param g
+	 *            the Graphics to draw on.
 	 * @param x
+	 *            the horizontal offset of the tile.
 	 * @param y
+	 *            the vertical offset of the tile.
 	 */
 	public void paintPlaceHolder(Graphics g, int x, int y) {
 		g.drawImage(tilePlaceHolder, x, y, tileDim, tileDim, null);
@@ -134,12 +144,18 @@ public final class TilePainter {
 	 * Reads a base image.
 	 * 
 	 * @param rep
-	 *            - the string representation of the base image to read
+	 *            - the String representation of the base image to read.
 	 * @return the base image read.
 	 * */
 	private BufferedImage readBaseImage(String rep) {
+		/*
+		 * Obtaining the "path representation" of the tile (so we can find it in
+		 * the repository).
+		 */
 		String fileName = rep.replaceAll("[ ]??[NSWE]??[NSWE]=", "");
+		/* Create the complete path of the tile. */
 		String path = String.format(Constants.TILE_PATH_FORMAT, fileName);
+		/* Read from file successful. */
 		try {
 			return ImageIO.read(new File(path));
 		} catch (IOException e) {
@@ -149,11 +165,12 @@ public final class TilePainter {
 	}
 
 	/**
-	 * Retrieves the image representing a Tile.
+	 * Giving the String representation of a tile, retrieves the image
+	 * representing a Tile.
 	 * 
 	 * @param rep
-	 *            - the String representation of the tile
-	 * @return the BufferedImage representing the tile
+	 *            - the String representation of the tile.
+	 * @return the BufferedImage representing the tile.
 	 * */
 	private BufferedImage getImage(String rep) {
 		/* Case base image. */
@@ -168,16 +185,19 @@ public final class TilePainter {
 				c.rotate();
 				rotCount++;
 			} while (!tileLib.containsKey(c.toString()) && rotCount < 4);
-
+			/* Reached the maximum number of possible rotations. */
 			if (rotCount == 4) {
 				System.out.println("Error: base tile not found for " + rep
 						+ ".");
 				return null;
 			}
-
+			/* Getting the base image. */
 			BufferedImage baseImage = tileLib.get(c.toString());
+			/* Getting the rotated image. */
 			BufferedImage image = rotateImage(baseImage, rotCount);
+			/* Put the rotated image into tileLib. */
 			tileLib.put(rep, image);
+			/* Return the rotated image. */
 			return image;
 		}
 	}
