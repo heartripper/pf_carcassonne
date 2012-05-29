@@ -1,6 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne.view;
 
-import it.polimi.dei.provafinale.carcassonne.controller.WindowClose;
+import it.polimi.dei.provafinale.carcassonne.controller.client.WindowClose;
 import it.polimi.dei.provafinale.carcassonne.view.game.GamePanel;
 import it.polimi.dei.provafinale.carcassonne.view.menu.MenuPanel;
 

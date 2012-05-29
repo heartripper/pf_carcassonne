@@ -1,4 +1,4 @@
-package it.polimi.dei.provafinale.carcassonne;
+package it.polimi.dei.provafinale.carcassonne.controller;
 
 /**
  * Enum containing all possible types of messages used in communications by

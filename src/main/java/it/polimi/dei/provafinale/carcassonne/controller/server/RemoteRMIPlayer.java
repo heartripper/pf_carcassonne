@@ -2,7 +2,7 @@ package it.polimi.dei.provafinale.carcassonne.controller.server;
 
 import java.rmi.RemoteException;
 
-import it.polimi.dei.provafinale.carcassonne.Message;
+import it.polimi.dei.provafinale.carcassonne.controller.Message;
 import it.polimi.dei.provafinale.carcassonne.controller.client.CarcassonneRMIClient;
 import it.polimi.dei.provafinale.carcassonne.controller.client.ConnectionLostException;
 

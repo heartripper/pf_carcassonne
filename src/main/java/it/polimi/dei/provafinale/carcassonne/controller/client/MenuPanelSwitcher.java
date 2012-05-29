@@ -1,4 +1,4 @@
-package it.polimi.dei.provafinale.carcassonne.controller;
+package it.polimi.dei.provafinale.carcassonne.controller.client;
 
 import it.polimi.dei.provafinale.carcassonne.view.ViewManager;
 

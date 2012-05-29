@@ -1,7 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.controller.client;
 
-import it.polimi.dei.provafinale.carcassonne.Message;
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.controller.Message;
 
 /**
  * Interface that is used by Client Controller to talk to Match Controller

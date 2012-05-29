@@ -1,6 +1,6 @@
-package it.polimi.dei.provafinale.carcassonne.model;
+package it.polimi.dei.provafinale.carcassonne.controller.client;
 
-import it.polimi.dei.provafinale.carcassonne.Message;
+import it.polimi.dei.provafinale.carcassonne.controller.Message;
 
 public class MessageBuffer {
 

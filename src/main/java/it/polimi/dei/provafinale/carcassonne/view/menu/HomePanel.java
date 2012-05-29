@@ -1,6 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne.view.menu;
 
-import it.polimi.dei.provafinale.carcassonne.controller.MenuPanelSwitcher;
+import it.polimi.dei.provafinale.carcassonne.controller.client.MenuPanelSwitcher;
 
 import javax.swing.JPanel;
 import java.awt.Color;

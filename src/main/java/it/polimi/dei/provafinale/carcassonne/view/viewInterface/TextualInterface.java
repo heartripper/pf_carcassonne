@@ -7,9 +7,9 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 import it.polimi.dei.provafinale.carcassonne.Coord;
-import it.polimi.dei.provafinale.carcassonne.Message;
-import it.polimi.dei.provafinale.carcassonne.MessageType;
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.controller.Message;
+import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
 import it.polimi.dei.provafinale.carcassonne.model.GameInterface;
 import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.Tile;
