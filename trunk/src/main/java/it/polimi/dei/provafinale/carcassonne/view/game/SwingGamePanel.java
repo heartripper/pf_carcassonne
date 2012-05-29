@@ -1,10 +1,8 @@
 package it.polimi.dei.provafinale.carcassonne.view.game;
 
+import it.polimi.dei.provafinale.carcassonne.MessageType;
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
-import it.polimi.dei.provafinale.carcassonne.controller.client.FollowerPutListener;
-import it.polimi.dei.provafinale.carcassonne.controller.client.PassListener;
-import it.polimi.dei.provafinale.carcassonne.controller.client.TilePutListener;
-import it.polimi.dei.provafinale.carcassonne.controller.client.TileRotateListener;
+import it.polimi.dei.provafinale.carcassonne.controller.client.MessageSender;
 import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
 
 import java.awt.BorderLayout;
@@ -12,6 +10,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -39,7 +38,7 @@ public class SwingGamePanel extends GamePanel {
 	private JComboBox followerComboBox;
 	private JButton putFollowerButton;
 	private JButton passButton;
-	
+
 	public SwingGamePanel() {
 		setLayout(new BorderLayout(0, 0));
 
@@ -66,7 +65,8 @@ public class SwingGamePanel extends GamePanel {
 		JPanel rotatePanel = new JPanel();
 		rotatePanel.setLayout(new BoxLayout(rotatePanel, BoxLayout.X_AXIS));
 		rotateButton = new JButton("Rotate");
-		rotateButton.addActionListener(new TileRotateListener());
+		ActionListener rotate = new MessageSender(MessageType.ROTATE, null);
+		rotateButton.addActionListener(rotate);
 		rotatePanel.add(rotateButton);
 
 		// Coords panel
@@ -78,7 +78,8 @@ public class SwingGamePanel extends GamePanel {
 		coordsField.setColumns(10);
 		coordsPanel.add(coordsField);
 		putTileButton = new JButton("Put tile");
-		putTileButton.addActionListener(new TilePutListener(coordsField));
+		ActionListener place = new MessageSender(MessageType.PLACE, coordsField);
+		putTileButton.addActionListener(place);
 		coordsPanel.add(putTileButton);
 
 		// Follower panel
@@ -89,14 +90,16 @@ public class SwingGamePanel extends GamePanel {
 		followerComboBox = new JComboBox(followerOptions);
 		followerPanel.add(followerComboBox);
 		putFollowerButton = new JButton("Put follower");
-		putFollowerButton.addActionListener(new FollowerPutListener(
-				followerComboBox));
+		ActionListener follower = new MessageSender(MessageType.FOLLOWER,
+				followerComboBox);
+		putFollowerButton.addActionListener(follower);
 		followerPanel.add(putFollowerButton);
 
 		// Pass button
 		JPanel passPanel = new JPanel();
 		passButton = new JButton("Pass");
-		passButton.addActionListener(new PassListener());
+		ActionListener pass = new MessageSender(MessageType.PASS, null);
+		passButton.addActionListener(pass);
 		passPanel.add(passButton);
 
 		actionsPanel.add(noticationsPanel);
@@ -130,28 +133,28 @@ public class SwingGamePanel extends GamePanel {
 	@Override
 	public void initialize(TileGrid grid, int numPlayers,
 			PlayerColor clientColor) {
-		/*Create tilesPanel*/
+		/* Create tilesPanel */
 		tilesPanel = new TilesPanel(grid);
 		tilesArea.add(tilesPanel, BorderLayout.CENTER);
-		
-		/*Setup players*/
+
+		/* Setup players */
 		playerPanels = new PlayerPanel[numPlayers];
 		for (int i = 0; i < numPlayers; i++) {
 			PlayerPanel p = new PlayerPanel(PlayerColor.valueOf(i));
 			players.add(p);
 			playerPanels[i] = p;
 		}
-		
-		/*Setup client player color*/
+
+		/* Setup client player color */
 		if (clientColor != null) {
 			int index = PlayerColor.indexOf(clientColor);
 			playerPanels[index].setClientPlayer();
 		}
-		
-		/*Disable UI*/
+
+		/* Disable UI */
 		setUIActive(false);
-		
-		/*Update representation of tiles*/
+
+		/* Update representation of tiles */
 		updateGridRepresentation();
 	}
 
@@ -182,7 +185,7 @@ public class SwingGamePanel extends GamePanel {
 	@Override
 	public void setCurrentPlayer(PlayerColor color) {
 		int selectedIndex = PlayerColor.indexOf(color);
-		for(int i = 0; i < playerPanels.length; i++){
+		for (int i = 0; i < playerPanels.length; i++) {
 			playerPanels[i].setActive(i == selectedIndex);
 		}
 	}
@@ -191,7 +194,7 @@ public class SwingGamePanel extends GamePanel {
 	public void showNotify(String msg) {
 		messageLabel.setText(msg);
 	}
-	
+
 	@Override
 	public void setUIActive(boolean enabled) {
 		rotateButton.setEnabled(enabled);
@@ -199,5 +202,6 @@ public class SwingGamePanel extends GamePanel {
 		putTileButton.setEnabled(enabled);
 		followerComboBox.setEnabled(enabled);
 		putFollowerButton.setEnabled(enabled);
+		passButton.setEnabled(enabled);
 	}
 }
