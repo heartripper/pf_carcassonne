@@ -40,6 +40,9 @@ public class SwingGamePanel extends GamePanel {
 	private JButton putFollowerButton;
 	private JButton passButton;
 
+	/* Player playing on this client */
+	private PlayerColor clientColor = null;
+
 	/**
 	 * SwingGamePanel constructor. Creates a new instance of class
 	 * SwingGamePanel.
@@ -182,6 +185,7 @@ public class SwingGamePanel extends GamePanel {
 		if (clientColor != null) {
 			int index = PlayerColor.indexOf(clientColor);
 			playerPanels[index].setClientPlayer();
+			this.clientColor = clientColor;
 		}
 		/* Disable UI */
 		setUIActive(false);
@@ -221,13 +225,26 @@ public class SwingGamePanel extends GamePanel {
 		}
 	}
 
-	/* Gives informations about who is the turn of. */
+	/* Sets informations about who is the turn of. */
 	@Override
 	public void setCurrentPlayer(PlayerColor color) {
 		int selectedIndex = PlayerColor.indexOf(color);
 		for (int i = 0; i < playerPanels.length; i++) {
 			playerPanels[i].setActive(i == selectedIndex);
 		}
+
+		/*Show a string to indicate current player*/
+		String text;
+		if (clientColor != null && clientColor.equals(color)) {
+			text = "It's your turn";
+		} else {
+			text = String.format("It's player %s turn", color.getFullName());
+		}
+		showNotify(text);
+		
+		/*Reset fields*/
+		coordsField.setText("");
+		followerComboBox.setSelectedIndex(0);
 	}
 
 	/* Prints notifications on the textArea. */
