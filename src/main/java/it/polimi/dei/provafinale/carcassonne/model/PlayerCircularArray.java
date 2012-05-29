@@ -3,6 +3,10 @@ package it.polimi.dei.provafinale.carcassonne.model;
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.model.Player;
 
+/**
+ * The class PlayerCircularArray manages the set of players and their turns.
+ * 
+ */
 public class PlayerCircularArray {
 
 	private Player players[];

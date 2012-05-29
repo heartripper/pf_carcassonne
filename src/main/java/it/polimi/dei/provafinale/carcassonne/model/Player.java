@@ -2,6 +2,11 @@ package it.polimi.dei.provafinale.carcassonne.model;
 
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 
+/**
+ * The class Player deals with the management of a player (color, score,
+ * followers, active).
+ * 
+ */
 public class Player {
 
 	private PlayerColor color;
