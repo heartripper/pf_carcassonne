@@ -8,7 +8,6 @@ import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
 import it.polimi.dei.provafinale.carcassonne.controller.client.ConnectionLostException;
 import it.polimi.dei.provafinale.carcassonne.logger.Logger;
 import it.polimi.dei.provafinale.carcassonne.logger.LoggerService;
-import it.polimi.dei.provafinale.carcassonne.model.GameInterface;
 
 public class ServerGameInterface implements GameInterface {
 
