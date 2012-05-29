@@ -121,10 +121,11 @@ public abstract class Entity {
 	/**
 	 * Removes followers from entity;
 	 */
-	public List<Tile> removeFollowers() {
+	public List<Tile> removeFollowers(PlayerColor toRemove) {
 		ArrayList<Tile> updatedCards = new ArrayList<Tile>();
 		for (Side s : members) {
-			if (s.getFollower() != null) {
+			PlayerColor follower = s.getFollower();
+			if (follower != null && (toRemove == null || follower == toRemove)) {
 				s.setFollower(null);
 				Tile c = s.getOwnerCard();
 				if (!updatedCards.contains(c)) {
