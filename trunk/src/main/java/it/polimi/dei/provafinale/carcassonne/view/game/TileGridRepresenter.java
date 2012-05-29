@@ -13,7 +13,7 @@ public class TileGridRepresenter {
 	 * TileGridRepresenter constructor. Creates a new instance of class
 	 * TileGridRepresenter.
 	 * 
-	 * @param grid
+	 * @param grid the grid to represent.
 	 */
 	public TileGridRepresenter(TileGrid grid) {
 		this.grid = grid;
