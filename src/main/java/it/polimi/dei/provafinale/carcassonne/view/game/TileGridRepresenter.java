@@ -5,6 +5,11 @@ import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.Tile;
 import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
 
+/**
+ * The class TileGridRepresenter manages the textual representation of tiles in
+ * the grid.
+ * 
+ */
 public class TileGridRepresenter {
 
 	private TileGrid grid;
@@ -13,7 +18,8 @@ public class TileGridRepresenter {
 	 * TileGridRepresenter constructor. Creates a new instance of class
 	 * TileGridRepresenter.
 	 * 
-	 * @param grid the grid to represent.
+	 * @param grid
+	 *            the grid to represent.
 	 */
 	public TileGridRepresenter(TileGrid grid) {
 		this.grid = grid;

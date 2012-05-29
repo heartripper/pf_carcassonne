@@ -14,7 +14,8 @@ import java.awt.BorderLayout;
 import javax.swing.border.EtchedBorder;
 
 /**
- * The class PlayerPanel extends a JPanel to represent the status of a player.
+ * The class PlayerPanel extends a JPanel in order to represent the status of a
+ * player.
  * 
  */
 public class PlayerPanel extends JPanel {

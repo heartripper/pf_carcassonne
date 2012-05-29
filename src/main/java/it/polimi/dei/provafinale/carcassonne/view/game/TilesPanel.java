@@ -7,6 +7,11 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+/**
+ * The class TilesPanel extends a JScrollPane in order to contain the
+ * representation of the grid of the current match.
+ * 
+ */
 public class TilesPanel extends JScrollPane {
 
 	private static final long serialVersionUID = -2364217759081024054L;

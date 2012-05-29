@@ -20,6 +20,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 
+/**
+ * The class SwingGamePanel extends a GamePanel in order to represent the view of
+ * the game that a player has: a screen that contains the tiles already put in
+ * the center of the page, a panel with notifications and options on the right
+ * of the page and a panel with an overview of the match in the bottom part of
+ * the page.
+ * 
+ */
 public class SwingGamePanel extends GamePanel {
 
 	private static final long serialVersionUID = -5552501660516939765L;
@@ -233,7 +241,7 @@ public class SwingGamePanel extends GamePanel {
 			playerPanels[i].setActive(i == selectedIndex);
 		}
 
-		/*Show a string to indicate current player*/
+		/* Show a string to indicate current player */
 		String text;
 		if (clientColor != null && clientColor.equals(color)) {
 			text = "It's your turn";
@@ -241,8 +249,8 @@ public class SwingGamePanel extends GamePanel {
 			text = String.format("It's player %s turn", color.getFullName());
 		}
 		showNotify(text);
-		
-		/*Reset fields*/
+
+		/* Reset fields */
 		coordsField.setText("");
 		followerComboBox.setSelectedIndex(0);
 	}
