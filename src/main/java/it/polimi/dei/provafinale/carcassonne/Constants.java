@@ -19,6 +19,8 @@ public abstract class Constants {
 	public static final String TILES_PATH = "src/main/resources/carcassonne.dat";
 	public static final String LESS_TILES_PATH = "src/main/resources/carcassonne_mini.dat";
 
+	public static final String FOLLOWER_SEPARATOR = "-";
+	
 	// Debug constants
 	public static final boolean DEBUG_MODE = true;
 	public static final String DEBUG_ADDR = "localhost";
