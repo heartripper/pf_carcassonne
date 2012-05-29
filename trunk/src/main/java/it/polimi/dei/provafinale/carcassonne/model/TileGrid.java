@@ -142,7 +142,7 @@ public class TileGrid {
 		 * Insert into the tile its position and a reference to the grid, useful
 		 * to find its neighbors.
 		 */
-		tile.setPositionInfo(this, coord);
+		tile.setCoords(this, coord);
 	}
 
 	/**
