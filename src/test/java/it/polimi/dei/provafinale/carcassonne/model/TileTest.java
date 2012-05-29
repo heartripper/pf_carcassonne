@@ -1,8 +1,9 @@
-package it.polimi.dei.provafinale.carcassonne;
+package it.polimi.dei.provafinale.carcassonne.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.model.EntityType;
 import it.polimi.dei.provafinale.carcassonne.model.Side;
 import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
