@@ -65,4 +65,24 @@ public class TileTest {
 	public void testRepresentation(){
 		assertTrue(tile.toString().equals(REPRESENTATION));
 	}
+	
+	@Test
+	public void testRotate(){
+		tile.rotate();
+		assertEquals(tile.toString(), "N=S-B S=S W=C E=N NS=1 NE=0 NW=0 WE=0 SE=0 SW=0");
+	}
+	
+	@Test
+	public void testSideLinked(){
+		assertTrue(tile.sideLinked(SidePosition.W, SidePosition.E));
+	}
+	
+	@Test
+	public void testSidesLinkedTo(){
+		Side e = tile.getSide(SidePosition.E);
+		List<Side> linkedTo = tile.sidesLinkedTo(e);
+		Side w = tile.getSide(SidePosition.W);
+		assertTrue(linkedTo.contains(w));
+		assertTrue(linkedTo.size() == 1);
+	}
 }
