@@ -29,13 +29,13 @@ public class EntityTest {
 	}
 
 	@Test
-	public void addMemberTest(){
+	public void addMemberTest() {
 		Side s = new Side(null, type);
 		entity.addMember(s);
 		assertTrue(entity.getMembers().contains(s));
 		assertTrue(entity.getMembers().size() == 1);
 	}
-	
+
 	@Test
 	public void countFollowersTest() {
 		int numFollowers = 5;
@@ -54,12 +54,12 @@ public class EntityTest {
 		Entity entity2 = EntityFactory.createByType(type);
 		int entity1sides = 3;
 		int entity2sides = 6;
-		
+
 		for (int i = 0; i < entity1sides; i++) {
 			Side s = new Side(null, type);
 			entity.addMember(s);
 		}
-		
+
 		for (int i = 0; i < entity2sides; i++) {
 			Side s = new Side(null, type);
 			entity2.addMember(s);
@@ -79,7 +79,7 @@ public class EntityTest {
 			List<Side> newSides = entity.getMembers();
 			assertTrue(newSides.containsAll(oldEntity1));
 			assertTrue(newSides.containsAll(oldEntity2));
-			assertTrue(newSides.size() == oldEntity1.size() + oldEntity2.size());			
+			assertTrue(newSides.size() == oldEntity1.size() + oldEntity2.size());
 		}
 	}
 
@@ -128,8 +128,14 @@ public class EntityTest {
 			s.setFollower(PlayerColor.valueOf(i));
 		}
 
-		entity.removeFollowers();
-		int[] expected = { 0, 0, 0, 0, 0 };
+		/*Remove followers of just one color*/
+		entity.removeFollowers(PlayerColor.R);
+		int[] expected = { 0, 1, 1, 1, 1 };
 		assertTrue(Arrays.equals(entity.countFollowers(5), expected));
+
+		/*remove all followers*/
+		entity.removeFollowers(null);
+		int[] expected1 = { 0, 0, 0, 0, 0 };
+		assertTrue(Arrays.equals(entity.countFollowers(5), expected1));
 	}
 }
