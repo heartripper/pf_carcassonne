@@ -61,10 +61,11 @@ public final class TilePainter {
 		this.tileDim = Constants.TILE_PIXEL_DIMENSION;
 
 		String line;
+		BufferedReader in = null;
 		try {
 			/* Read base tile images */
 			FileReader fr = new FileReader(new File(Constants.BASE_TILE_PATH));
-			BufferedReader in = new BufferedReader(fr);
+			in = new BufferedReader(fr);
 			while ((line = in.readLine()) != null) {
 				BufferedImage currentImg = readBaseImage(line);
 				if (currentImg != null) {
@@ -87,6 +88,14 @@ public final class TilePainter {
 			System.out.println("Error reading tile images.");
 		}
 
+		if (in != null) {
+			try {
+				in.close();
+			} catch (IOException e) {
+				System.out.println("Error opening tile file.");
+			}
+		}
+		
 	}
 
 	/**
