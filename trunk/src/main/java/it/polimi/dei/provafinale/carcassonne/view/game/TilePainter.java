@@ -36,6 +36,10 @@ public final class TilePainter {
 
 	private static TilePainter instance = null;
 
+	/**
+	 * Returns the current instance of TilePainter which has all vbasic images
+	 * loaded.
+	 * */
 	public static synchronized TilePainter getInstance() {
 		if (instance == null) {
 			instance = new TilePainter();
@@ -184,7 +188,7 @@ public final class TilePainter {
 		AffineTransform affineTransform = new AffineTransform();
 		/* Rotate the image. */
 		double radians = -Math.toRadians(90 * rotCount);
-		float position = ((float)tileDim / 2);
+		float position = ((float) tileDim / 2);
 		affineTransform.rotate(radians, position, position);
 		/* Draw the image using the AffineTransform. */
 		BufferedImage rotateImage = new BufferedImage(tileDim, tileDim,
@@ -243,7 +247,7 @@ public final class TilePainter {
 			p = new Point(tileDim / 2, tileDim / 2);
 			break;
 		}
-		
+
 		int followerDim = Constants.FOLLOWER_PIXEL_DIMENSION;
 		BufferedImage img = followersLib.get(color.toString());
 		g.drawImage(img, x + p.x, y + p.y, followerDim, followerDim, null);
