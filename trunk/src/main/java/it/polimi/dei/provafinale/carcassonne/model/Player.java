@@ -69,15 +69,6 @@ public class Player {
 	}
 
 	/**
-	 * Give player's symbol, which is the first letter of his color.
-	 * 
-	 * @return the String representation of the player color.
-	 */
-	public String getSymbol() {
-		return color.toString();
-	}
-
-	/**
 	 * Sets player's color.
 	 * 
 	 * @param color
@@ -96,15 +87,12 @@ public class Player {
 	}
 
 	/**
-	 * Gives an overview of the status of a Player (color, score, number of
-	 * followers).
+	 * Give player's symbol, which is the first letter of his color.
 	 * 
-	 * @return the String representation of color, score and available followers
-	 *         of the Player.
+	 * @return the String representation of the player color.
 	 */
-	public String getStatus() {
-		return String.format("%s: %s , %s", color.getFullName(), score,
-				followers);
+	public String getSymbol() {
+		return color.toString();
 	}
 
 	@Override
