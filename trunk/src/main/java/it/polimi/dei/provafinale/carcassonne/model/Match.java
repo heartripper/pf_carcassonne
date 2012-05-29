@@ -149,7 +149,7 @@ public class Match {
 			return false;
 		}
 		/* Add follower on tile and remove it from player. */
-		tile.addFollower(position, color);
+		tile.getSide(position).setFollower(color);
 		p.removeFollower();
 		return true;
 	}
