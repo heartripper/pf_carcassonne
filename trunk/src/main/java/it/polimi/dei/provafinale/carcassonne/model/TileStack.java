@@ -72,15 +72,6 @@ public class TileStack {
 		return initialTile;
 	}
 
-	/**
-	 * Gives the number of tiles remaining in the stack.
-	 * 
-	 * @return the number of tiles remaining in the stack.
-	 */
-	public int remainingTilesNumber() {
-		return tiles.size();
-	}
-
 	/* Helper methods. */
 
 	/**
