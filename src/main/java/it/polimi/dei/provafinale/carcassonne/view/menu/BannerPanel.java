@@ -14,13 +14,22 @@ public class BannerPanel extends JPanel {
 	private Image banner;
 	private int width;
 
+	/**
+	 * BannerPanel constructor. Creates a new instance of class BannerPanel.
+	 */
 	public BannerPanel() {
+		/* Dimension. */
 		setPreferredSize(new Dimension(10, 175));
+		/* Logo. */
 		String path = "src/main/resources/banner.png";
 		banner = Toolkit.getDefaultToolkit().createImage(path);
+		/* Background. */
 		setBackground(new Color(70, 98, 151));
 	}
 
+	/**
+	 * Paints the logo (banner) image.
+	 */
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		width = getWidth();
