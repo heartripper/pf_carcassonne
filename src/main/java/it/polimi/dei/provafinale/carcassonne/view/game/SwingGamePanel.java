@@ -206,9 +206,14 @@ public class SwingGamePanel extends GamePanel {
 	/* Gives the current scores of the players that are playing the match. */
 	@Override
 	public void updateScore(String msg) {
+		/*
+		 * Analyzing the String msg, that contains the scores of all the
+		 * players.
+		 */
 		String[] scores = msg.split(",");
 		for (String s : scores) {
 			String[] split = s.split("=");
+			/* Score assignment. */
 			PlayerColor color = PlayerColor.valueOf(split[0].trim());
 			int colorIndex = PlayerColor.indexOf(color);
 			int score = Integer.parseInt(split[1].trim());
@@ -231,6 +236,7 @@ public class SwingGamePanel extends GamePanel {
 		messageLabel.setText(msg);
 	}
 
+	/* Activates and disactivates the grapghic interface. */
 	@Override
 	public void setUIActive(boolean enabled) {
 		rotateButton.setEnabled(enabled);
