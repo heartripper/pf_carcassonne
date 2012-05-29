@@ -73,6 +73,34 @@ public class PlayerCircularArray {
 	}
 
 	/**
+	 * Add followers to players.
+	 * 
+	 * @param followers
+	 *            - an array of integers which contains at index i the number of
+	 *            followers to add to the player whose color has index i;
+	 * */
+	public void addFollowers(int[] followers){
+		for(int i = 0; i < players.length; i++){
+			players[i].addFollowers(followers[i]);
+		}
+	}
+	
+	
+	/**
+	 * Add scores to players.
+	 * 
+	 * @param scores
+	 *            - an Array of integer containing scores, with the convention
+	 *            that score at index i is added to player whose color has index
+	 *            i
+	 * */
+	public void addScores(int[] scores) {
+		for (int i = 0; i < players.length; i++) {
+			players[i].addScore(scores[i]);
+		}
+	}
+
+	/**
 	 * Gives the chart of the players that played the game.
 	 * 
 	 * @return an array scores.
