@@ -2,6 +2,10 @@ package it.polimi.dei.provafinale.carcassonne;
 
 import java.awt.Color;
 
+/**
+ * The enum PlayerColor contains a list of all the possible player colors.
+ * 
+ */
 public enum PlayerColor {
 
 	R("Rosso", Color.RED), B("Blu", Color.BLUE), V("Verde", Color.GREEN), G(

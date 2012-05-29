@@ -2,7 +2,12 @@ package it.polimi.dei.provafinale.carcassonne;
 
 import it.polimi.dei.provafinale.carcassonne.controller.server.CarcassonneServer;
 
+/**
+ * The class MainServer contains the main method of the Server.
+ * 
+ */
 public class MainServer {
+	
 	/**
 	 * Main method of Server.
 	 * 
