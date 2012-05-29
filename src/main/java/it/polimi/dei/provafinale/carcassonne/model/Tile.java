@@ -137,16 +137,6 @@ public final class Tile {
 	}
 
 	/**
-	 * Adds a follower of the given PlayerColor to the given SidePosition in
-	 * Tile.
-	 * 
-	 * */
-	public void addFollower(SidePosition position, PlayerColor color) {
-		Side side = getSide(position);
-		side.setFollower(color);
-	}
-
-	/**
 	 * 
 	 * @return the Tile coordinates.
 	 */
@@ -204,7 +194,7 @@ public final class Tile {
 	 *            a SidePosition.
 	 * @param end
 	 *            a SidePosition.
-	 * @return true if there is an entity thar links start and end in the given
+	 * @return true if there is an entity that links start and end in the given
 	 *         Tile.
 	 */
 	public boolean sideLinked(SidePosition start, SidePosition end) {
