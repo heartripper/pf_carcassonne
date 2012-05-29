@@ -18,6 +18,11 @@ import javax.swing.Box;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 
+/**
+ * The class LocalGamePanel extends a JPanel in order to create the local
+ * menu of the game.
+ * 
+ */
 public class LocalGamePanel extends JPanel {
 
 	private static final long serialVersionUID = -6424162656647447061L;

@@ -8,9 +8,16 @@ import java.awt.Toolkit;
 
 import javax.swing.JPanel;
 
+/**
+ * The class BannerPanel extends a JPanel in order to manage the creation of the
+ * banner that stays in the top part of the initial pages of the game (Home,
+ * Internet Game, Local Game).
+ * 
+ */
 public class BannerPanel extends JPanel {
 
 	private static final long serialVersionUID = -7347936654163580714L;
+
 	private Image banner;
 	private int width;
 
