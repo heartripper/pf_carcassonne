@@ -119,7 +119,11 @@ public abstract class Entity {
 	}
 
 	/**
-	 * Removes followers from entity;
+	 * Removes the followers of a given color from entity; if given color is
+	 * null, all followers are removed.
+	 * 
+	 * @param toRemove
+	 *            - the color to remove
 	 */
 	public List<Tile> removeFollowers(PlayerColor toRemove) {
 		ArrayList<Tile> updatedCards = new ArrayList<Tile>();
