@@ -15,7 +15,6 @@ import java.util.Map;
  * */
 public final class Tile {
 	// Reference to container grid
-	private TileGrid grid;
 	private Coord tileCoord;
 	private Side[] sides;
 	private List<SideConnection> connections;
@@ -104,8 +103,7 @@ public final class Tile {
 	 * @param coord
 	 *            - a Coord where we want to put the tile.
 	 */
-	public void setPositionInfo(TileGrid grid, Coord coord) {
-		this.grid = grid;
+	public void setCoords(Coord coord) {
 		this.tileCoord = coord;
 	}
 
@@ -142,25 +140,6 @@ public final class Tile {
 	 */
 	public Coord getCoordinates() {
 		return tileCoord;
-	}
-
-	/**
-	 * Gives the Tile opposite to a given SidePosition of the current Tile.
-	 * 
-	 * @param position
-	 *            - a SidePosition of the current Tile.
-	 * @return the neighbor Tile.
-	 */
-	public Tile getNeighbor(SidePosition position) {
-		Coord offset;
-		/* There is no neighbor. */
-		if (grid == null || tileCoord == null) {
-			return null;
-		}
-		/* Finds the neighbor. */
-		offset = SidePosition.getOffsetForPosition(position);
-		Coord neighborCoord = tileCoord.add(offset);
-		return grid.getTile(neighborCoord);
 	}
 
 	/**
