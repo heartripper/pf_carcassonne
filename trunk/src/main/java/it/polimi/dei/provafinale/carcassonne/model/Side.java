@@ -1,8 +1,7 @@
-
 package it.polimi.dei.provafinale.carcassonne.model;
 
+import it.polimi.dei.provafinale.carcassonne.Constants;
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
-
 
 public class Side {
 
@@ -12,8 +11,9 @@ public class Side {
 	private PlayerColor follower = null;
 
 	/**
-	 * Side constructor. Creates a new instance of class Side (set the owner of a card which the side belongs to, set the
-	 * type of an entity which the side belongs to).
+	 * Side constructor. Creates a new instance of class Side (set the owner of
+	 * a card which the side belongs to, set the type of an entity which the
+	 * side belongs to).
 	 * 
 	 * @param ownerTile
 	 *            - an owner which the Side of Tile belongs to.
@@ -66,18 +66,18 @@ public class Side {
 	 * @return a Side opposite to the current one.
 	 */
 	public Side getOppositeSide() {
-		/*The Side doesn't belong to a Tile.*/
+		/* The Side doesn't belong to a Tile. */
 		if (ownerTile == null) {
 			return null;
 		}
-		/*The Side belongs to a Tile.*/
-		/*Obtains the SidePosition of the current Side.*/
+		/* The Side belongs to a Tile. */
+		/* Obtains the SidePosition of the current Side. */
 		SidePosition position = ownerTile.getSidePosition(this);
-		/*Obtains the opposite SidePosition.*/
+		/* Obtains the opposite SidePosition. */
 		SidePosition oppositePosition = position.getOpposite();
-		/*Obtains the opposite Tile.*/
+		/* Obtains the opposite Tile. */
 		Tile oppositeTile = ownerTile.getNeighbor(position);
-		/*Case there isn't an opposite Tile.*/
+		/* Case there isn't an opposite Tile. */
 		if (oppositeTile == null) {
 			return null;
 		}
@@ -86,7 +86,8 @@ public class Side {
 
 	/**
 	 * 
-	 * @param follower the follower we want to put on the current Side
+	 * @param follower
+	 *            the follower we want to put on the current Side
 	 */
 	public void setFollower(PlayerColor follower) {
 		this.follower = follower;
@@ -102,12 +103,10 @@ public class Side {
 
 	@Override
 	public String toString() {
-		String rep = (type == EntityType.N ? " " : type.toString());
-		if (follower == null) {
-			return String.format(" %s ", rep);
-		} else {
-			return String.format("%s:%s", rep, follower.toString());
+		String rep = type.toString();
+		if (follower != null) {
+			rep += (Constants.FOLLOWER_SEPARATOR + follower.toString());
 		}
+		return rep;
 	}
-
 }

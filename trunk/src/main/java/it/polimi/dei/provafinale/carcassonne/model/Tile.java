@@ -235,7 +235,7 @@ public final class Tile {
 		StringBuilder representation = new StringBuilder();
 		/* Sides representation. */
 		for (SidePosition pos : representationOrder) {
-			String rep = String.format("%s=%s ", pos, getSideRep(pos));
+			String rep = String.format("%s=%s ", pos, getSide(pos).toString());
 			representation.append(rep);
 		}
 		/* Connections representation. */
@@ -263,7 +263,10 @@ public final class Tile {
 			}
 
 		}
-		/* Adds the current String to the string builder to create the complete representation. */
+		/*
+		 * Adds the current String to the string builder to create the complete
+		 * representation.
+		 */
 		representation.append(linksCache.get("NS"));
 		representation.append(linksCache.get("NE"));
 		representation.append(linksCache.get("NW"));
@@ -271,17 +274,5 @@ public final class Tile {
 		representation.append(linksCache.get("SE"));
 		representation.append(linksCache.get("SW"));
 		return representation.toString().trim();
-	}
-
-	/* Return the String representation of a given SidePosition. */
-	private String getSideRep(SidePosition pos) {
-		String rep = getSide(pos).getType().toString();
-		PlayerColor follower = getSide(pos).getFollower();
-		/* Analyzing follower option. */
-		String col = (follower == null ? null : follower.toString());
-		if (col != null) {
-			rep += ("-" + col);
-		}
-		return rep;
 	}
 }
