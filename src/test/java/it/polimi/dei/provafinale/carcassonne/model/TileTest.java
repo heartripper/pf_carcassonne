@@ -1,6 +1,5 @@
 package it.polimi.dei.provafinale.carcassonne.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
