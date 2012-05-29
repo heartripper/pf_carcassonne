@@ -267,7 +267,7 @@ public class Match {
 		/* Return followers to owners. */
 		returnFollowers(followers);
 		/* Remove followers from entity and return a list of updated cards. */
-		return entity.removeFollowers();
+		return entity.removeFollowers(null);
 	}
 
 	private void giveScoreToOwners(int[] followers, int score) {
