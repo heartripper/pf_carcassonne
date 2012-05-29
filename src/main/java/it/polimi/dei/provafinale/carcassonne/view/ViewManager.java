@@ -7,6 +7,10 @@ public final class ViewManager {
 	private static ViewManager instance = null;
 	private CarcassonneFrame frame;
 
+	/*
+	 * Private constructor of class ViewManager. Creates a new instance of
+	 * ViewManager.
+	 */
 	private ViewManager() {
 		frame = new CarcassonneFrame();
 	}
@@ -31,8 +35,8 @@ public final class ViewManager {
 	 * Manages the change of menuPanel (eg. from HomePanel to LocalGamePanel,
 	 * from HomePanel to InternetGamePanel) in ViewManager.
 	 * 
-	 * @param panelNamea
-	 *            String representing the name of the panel we want to put in
+	 * @param panelName
+	 *            a String representing the name of the panel we want to put in
 	 *            frame.
 	 */
 	public void changeMenuPanel(String panelName) {
