@@ -1,6 +1,8 @@
 package it.polimi.dei.provafinale.carcassonne.controller.client;
 
 import it.polimi.dei.provafinale.carcassonne.Constants;
+import it.polimi.dei.provafinale.carcassonne.view.CarcassonneFrame;
+import it.polimi.dei.provafinale.carcassonne.view.ViewManager;
 import it.polimi.dei.provafinale.carcassonne.view.game.GamePanel;
 import it.polimi.dei.provafinale.carcassonne.view.game.SwingGamePanel;
 import it.polimi.dei.provafinale.carcassonne.view.game.TextualGamePanel;
@@ -66,6 +68,11 @@ public class StartInternetGame implements ActionListener{
 		} else {
 			panel = null;
 		}
+		
+		// Append game panel
+		CarcassonneFrame frame = ViewManager.getInstance().getFrame();
+		frame.setGamePanel(panel);
+		frame.changeMainPanel(CarcassonneFrame.GAMEPANEL);
 		
 		try{
 			ci.connect();

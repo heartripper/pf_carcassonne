@@ -252,6 +252,7 @@ public class ClientControllerImpl implements Runnable {
 	/* Updates the view of its player with notifications from the other players. */
 	private void manageOtherPlayerTurn() {
 		viewInterface.setUIActive(false);
+		viewInterface.updateCurrentTile(null);
 		handleUpdates();
 	}
 
