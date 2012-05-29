@@ -28,10 +28,8 @@ public class SwingGamePanel extends GamePanel {
 	private TilesPanel tilesPanel;
 	private JPanel players;
 	private PlayerPanel[] playerPanels;
-
 	private CurrentTilePanel currentTilePanel;
 	private JLabel messageLabel;
-
 	private JButton rotateButton;
 	private JTextField coordsField;
 	private JButton putTileButton;
@@ -39,9 +37,13 @@ public class SwingGamePanel extends GamePanel {
 	private JButton putFollowerButton;
 	private JButton passButton;
 
+	/**
+	 * SwingGamePanel constructor. Creates a new instance of class SwingGamePanel.
+	 */
 	public SwingGamePanel() {
+		/*Setting the class layout.*/
 		setLayout(new BorderLayout(0, 0));
-
+		/*Initializing the area where to put tiles.*/
 		tilesArea = new JPanel();
 		tilesArea.setLayout(new BorderLayout());
 		add(tilesArea, BorderLayout.CENTER);
