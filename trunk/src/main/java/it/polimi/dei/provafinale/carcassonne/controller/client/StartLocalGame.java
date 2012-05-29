@@ -1,7 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.controller.client;
 
 import it.polimi.dei.provafinale.carcassonne.Constants;
-import it.polimi.dei.provafinale.carcassonne.model.MatchHandler;
+import it.polimi.dei.provafinale.carcassonne.controller.server.MatchHandler;
 import it.polimi.dei.provafinale.carcassonne.view.CarcassonneFrame;
 import it.polimi.dei.provafinale.carcassonne.view.ViewManager;
 import it.polimi.dei.provafinale.carcassonne.view.game.GamePanel;

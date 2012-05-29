@@ -1,4 +1,4 @@
-package it.polimi.dei.provafinale.carcassonne.model;
+package it.polimi.dei.provafinale.carcassonne.controller.server;
 
 import java.util.List;
 
@@ -6,7 +6,10 @@ import it.polimi.dei.provafinale.carcassonne.Coord;
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
 import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
-import it.polimi.dei.provafinale.carcassonne.controller.server.PlayersDisconnectedException;
+import it.polimi.dei.provafinale.carcassonne.model.Match;
+import it.polimi.dei.provafinale.carcassonne.model.NotEnoughPlayersException;
+import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
+import it.polimi.dei.provafinale.carcassonne.model.Tile;
 
 public class MatchHandler implements Runnable {
 
