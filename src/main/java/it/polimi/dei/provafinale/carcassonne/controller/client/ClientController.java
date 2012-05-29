@@ -20,7 +20,7 @@ public class ClientController {
 	 * @param vi
 	 *            a ViewInterface to communicate with the graphic interface.
 	 */
-	public static void startNewMatchController(ClientInterface ci,
+	public static synchronized void startNewMatchController(ClientInterface ci,
 			ViewInterface vi) {
 		/* A thread already exists. */
 		if (thread != null) {
