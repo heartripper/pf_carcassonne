@@ -10,6 +10,11 @@ import java.awt.Graphics;
 
 import javax.swing.JLabel;
 
+/**
+ * The class TileGridPainter extends a JLabel in order to paint the updated grid
+ * of the game.
+ * 
+ */
 public class TileGridPainter extends JLabel {
 
 	private static final int INITIAL_GRID_DIMENSION = 3;

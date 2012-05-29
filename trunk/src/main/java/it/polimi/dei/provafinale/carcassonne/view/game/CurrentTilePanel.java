@@ -10,8 +10,8 @@ import javax.swing.JPanel;
 import it.polimi.dei.provafinale.carcassonne.Constants;
 
 /**
- * The class CurrentTilePanel extends a JPanel to represent the panel that
- * contains the current tile and its content.
+ * The class CurrentTilePanel extends a JPanel in order to represent the panel
+ * that contains the current tile and its content.
  * 
  */
 public class CurrentTilePanel extends JPanel {

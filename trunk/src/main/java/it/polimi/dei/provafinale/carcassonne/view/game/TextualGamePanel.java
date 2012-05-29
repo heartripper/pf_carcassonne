@@ -14,6 +14,13 @@ import it.polimi.dei.provafinale.carcassonne.controller.client.TextualListener;
 import it.polimi.dei.provafinale.carcassonne.model.Tile;
 import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
 
+/**
+ * The class TextualGamePanel extends a GamePanel in order to represent the view
+ * of the game that a player has: a screen that contains the tiles already put,
+ * the notifications and the options in the center of the page, a line where to
+ * insert choices in the bottom part of the page.
+ * 
+ */
 public class TextualGamePanel extends GamePanel {
 
 	private static final long serialVersionUID = -8074082087694368365L;
