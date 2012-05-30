@@ -10,13 +10,18 @@ import it.polimi.dei.provafinale.carcassonne.controller.Message;
 import it.polimi.dei.provafinale.carcassonne.logger.Logger;
 import it.polimi.dei.provafinale.carcassonne.logger.LoggerService;
 
+/**
+ * Class ClientSocketInterface implements ClientInterface in order to give an
+ * interface of a client that plays in Socket mode.
+ * 
+ */
 public class ClientSocketInterface implements ClientInterface {
 
 	private final String addr;
 	private final int port;
 
 	private Logger logger;
-	
+
 	private Socket socket;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
