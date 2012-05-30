@@ -11,74 +11,106 @@ import it.polimi.dei.provafinale.carcassonne.view.menu.InternetGamePanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class StartInternetGame implements ActionListener{
+/**
+ * Class StartInternetGame implements an ActionListener in order to manage the
+ * beginning of an internet game.
+ * 
+ */
+public class StartInternetGame implements ActionListener {
 
 	private InternetGamePanel internetGamePanel;
-	
-	public StartInternetGame(InternetGamePanel gamePanel){
+
+	/**
+	 * StartInternetGame constructor. Creates a new instance of class
+	 * StartInternetGame.
+	 * 
+	 * @param gamePanel
+	 *            the InternetGamePanel we want to show at the start of the
+	 *            game.
+	 */
+	public StartInternetGame(InternetGamePanel gamePanel) {
 		this.internetGamePanel = gamePanel;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		/* Server ip address. */
 		String host;
+		/* Server port. */
 		int port;
-		
+
 		internetGamePanel.setUIActive(false);
-		
-		/*Retrieves settings from view*/
+
+		/* Retrieves settings from view. */
+		/* Connection protocol selection. */
 		int connectionType = internetGamePanel.getConnType();
+		/* Graphic mode selection. */
 		int viewType = internetGamePanel.getViewType();
-		
-		if(Constants.DEBUG_MODE){
+		/* Values in debug mode. */
+		if (Constants.DEBUG_MODE) {
 			host = Constants.DEBUG_ADDR;
 			port = Constants.DEBUG_PORT;
-		} else {
+		}
+		/* Values in normal mode. */
+		else {
+			/* Retrieving the ip address. */
 			host = internetGamePanel.getIPFieldValue();
+			/* Retrieving the port number. */
 			String portString = internetGamePanel.getPortFieldValue();
-			
-			if(host.equals("") || portString.equals("")){
+			/* An error has occurred in server ip address or port number. */
+			if (host.equals("") || portString.equals("")) {
 				internetGamePanel.setNotifyText(Constants.FIELDS_ERROR);
 				internetGamePanel.setUIActive(true);
 				return;
-			} else {
-				try{
+			}
+			/* No error in server ip address and port number. */
+			else {
+				try {
+					/*
+					 * Conversion into integer of the String that represents the
+					 * port.
+					 */
 					port = Integer.parseInt(portString);
-				}catch(NumberFormatException nfe){
+				} catch (NumberFormatException nfe) {
 					internetGamePanel.setNotifyText(Constants.PORT_ERROR);
 					internetGamePanel.setUIActive(true);
 				}
 			}
 		}
-		
-		/*Set up client interface*/
+		/* Set up client interface */
 		ClientInterface ci;
-		if(connectionType == 0){
+		/* Socket mode. */
+		if (connectionType == 0) {
 			ci = new ClientSocketInterface(host, port);
-		} else {
+		}
+		/* RMI mode. */
+		else {
 			ci = new ClientRMIInterface(host);
 		}
-		
-		/*Set up view interface*/
+		/* Set up view interface */
 		GamePanel panel;
-		if(viewType == Constants.VIEW_TYPE_GUI){
+		/* Swing mode. */
+		if (viewType == Constants.VIEW_TYPE_GUI) {
 			panel = new SwingGamePanel();
-		} else if(viewType == Constants.VIEW_TYPE_TEXTUAL) {
-			panel = new TextualGamePanel();
-		} else {
-			panel = null;
 		}
-		
-		// Append game panel
+		/* Textual mode. */
+		else if (viewType == Constants.VIEW_TYPE_TEXTUAL) {
+			panel = new TextualGamePanel();
+		}
+		/* An error has occurred. */
+		else {
+			throw new RuntimeException();
+		}
+		/* Append game panel. */
 		CarcassonneFrame frame = ViewManager.getInstance().getFrame();
 		frame.setGamePanel(panel);
 		frame.changeMainPanel(CarcassonneFrame.GAMEPANEL);
-		
-		try{
+		/* Starting connection. */
+		try {
 			ci.connect();
 			ClientController.startNewMatchController(ci, panel);
 			internetGamePanel.setNotifyText(Constants.MATCH_IS_STARTING);
-		}catch(ConnectionLostException cle){
+		} catch (ConnectionLostException cle) {
 			internetGamePanel.setNotifyText(Constants.CONNECTION_ERROR);
 			internetGamePanel.setUIActive(true);
 		}
