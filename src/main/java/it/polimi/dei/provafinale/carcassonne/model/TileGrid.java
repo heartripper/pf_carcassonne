@@ -96,16 +96,22 @@ public class TileGrid {
 	 *         it, false instead.
 	 */
 	public boolean hasAPlaceFor(Tile tile) {
-		for (Coord coord : grid.keySet()) {
-			/* Calculates possible Coord in grid for the given Tile. */
-			for (SidePosition pos : SidePosition.values()) {
-				Coord offset = SidePosition.getOffsetForPosition(pos);
-				Coord newPos = coord.add(offset);
-				/* Checks compatibility. */
-				if (isTileCompatible(tile, newPos)) {
-					return true;
+		Tile t = new Tile(tile.toString());
+		int maxNumRotations = 4;
+		
+		for(int i = 0; i<maxNumRotations; i++){
+			for (Coord coord : grid.keySet()) {
+				/* Calculates possible Coord in grid for the given Tile. */
+				for (SidePosition pos : SidePosition.values()) {
+					Coord offset = SidePosition.getOffsetForPosition(pos);
+					Coord newPos = coord.add(offset);
+					/* Checks compatibility. */
+					if (isTileCompatible(tile, newPos)) {
+						return true;
+					}
 				}
 			}
+			t.rotate();
 		}
 		return false;
 	}
