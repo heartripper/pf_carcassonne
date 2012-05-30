@@ -6,7 +6,6 @@ import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
 /**
  * Interface to let Client Controller control an user interface.
  * */
-
 public interface ViewInterface {
 	/**
 	 * Initializes the user interface.
