@@ -200,15 +200,20 @@ public class Match {
 	 * @param color
 	 *            - the color of the player we want to remove.
 	 */
-	public void removePlayer(PlayerColor color)
+	public List<Tile> removePlayer(PlayerColor color)
 			throws NotEnoughPlayersException {
 		Player p = players.getByColor(color);
 		p.setInactive();
-		// TODO remove followers.
+		List<Tile> updates = new ArrayList<Tile>();
+		for(Entity e : entities){
+			updates.addAll(e.removeFollowers(color));
+		}
+		
 		/* There are no enought players to play the game. */
 		if (players.getSize() < 2) {
 			throw new NotEnoughPlayersException();
 		}
+		return updates;
 	}
 
 	/* Private Methods. */
