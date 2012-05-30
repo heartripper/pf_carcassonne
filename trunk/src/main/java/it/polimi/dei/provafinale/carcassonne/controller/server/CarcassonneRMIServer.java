@@ -16,7 +16,7 @@ public interface CarcassonneRMIServer extends Remote {
 	 * @param client
 	 *            - the remote interface of the client who required to play.
 	 * @param request
-	 *            - player's request
+	 *            - player's request.
 	 * */
 	void register(CarcassonneRMIClient client, Message request)
 			throws RemoteException;

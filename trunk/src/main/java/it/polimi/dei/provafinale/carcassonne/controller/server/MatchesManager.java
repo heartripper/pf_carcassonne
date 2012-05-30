@@ -49,31 +49,40 @@ public class MatchesManager implements Runnable {
 	 * */
 	public synchronized void enqueuePlayer(RemotePlayer player, Message request) {
 		switch (request.type) {
+		/* Connection request. */
 		case CONNECT:
+			/* Adding the new request to the queue. */
 			pendingPlayers.add(player);
+			/* Calculating the queue dimension. */
 			int size = pendingPlayers.size();
+			/* Notifying the player that he was added. */
 			System.out.printf("Player added (%s/%s)\n", size,
 					Constants.MAX_PLAYER_NUMBER);
+			/*
+			 * If the maximum players number has been reach, immediately start
+			 * the game.
+			 */
 			if (size == Constants.MAX_PLAYER_NUMBER) {
 				startMatch(pendingPlayers);
 				pendingPlayers = new ArrayList<RemotePlayer>();
 				System.out.println("Match started.");
 			}
 			break;
-
+		/* Reconnection request. */
 		case RECONNECT:
 			String[] split = request.payload.split(",");
 			PlayerColor color = PlayerColor.valueOf(split[0].trim());
 			String matchName = split[1].trim();
 			matches.get(matchName).reconnectPlayer(color, player);
 			break;
-
+		/* Error. */
 		default:
 			System.out.println("Received wrong request type: " + request);
 		}
 	}
 
-	// Helpers
+	/* Helpers methods. */
+
 	/**
 	 * Starts a new match.
 	 * 
@@ -95,9 +104,12 @@ public class MatchesManager implements Runnable {
 	 * */
 	private synchronized void checkPlayersPeriodically() {
 		while (true) {
+			/* Calculating the number of active players. */
 			int size = pendingPlayers.size();
 			try {
+				/* Timeout control. */
 				wait(Constants.PLAYER_LIST_CHECK_TIME);
+				/* Reached the minimum number of players: we can start the game. */
 				if (size >= Constants.MIN_PLAYER_NUMBER) {
 					startMatch(pendingPlayers);
 					pendingPlayers = new ArrayList<RemotePlayer>();
