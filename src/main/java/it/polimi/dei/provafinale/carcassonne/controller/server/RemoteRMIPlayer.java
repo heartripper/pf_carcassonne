@@ -6,47 +6,64 @@ import it.polimi.dei.provafinale.carcassonne.controller.Message;
 import it.polimi.dei.provafinale.carcassonne.controller.client.CarcassonneRMIClient;
 import it.polimi.dei.provafinale.carcassonne.controller.client.ConnectionLostException;
 
-public class RemoteRMIPlayer implements RemotePlayer{
+/**
+ * Class RemoteRMIPlayer implements a RemotePlayer in order to represent a
+ * remote player.
+ * 
+ */
+public class RemoteRMIPlayer implements RemotePlayer {
 
 	private CarcassonneRMIClient client;
 	private boolean active;
-	
-	public RemoteRMIPlayer(CarcassonneRMIClient client){
+
+	/**
+	 * RemoteRMIPlayer constructor. Creates a new instance of class
+	 * RemoteRMIPlayer.
+	 * 
+	 * @param client
+	 *            a CarcassonneRMIClient we want to add to the game.
+	 */
+	public RemoteRMIPlayer(CarcassonneRMIClient client) {
 		this.client = client;
 		this.active = true;
 	}
 
+	/* Reads the messages from client. */
 	@Override
 	public Message readMessage() throws ConnectionLostException {
-		try{
+		try {
 			return client.readMessageFromPlayer();
-		}catch(RemoteException re){
+		} catch (RemoteException re) {
 			throw new ConnectionLostException();
 		}
 	}
 
+	/* Sends message msg to server. */
 	@Override
 	public void sendMessage(Message msg) throws ConnectionLostException {
-		try{
+		try {
 			client.sendMessageToPlayer(msg);
-		}catch(RemoteException re){
+		} catch (RemoteException re) {
 			throw new ConnectionLostException();
 		}
 	}
 
+	/* Closes the connection with the user. */
 	@Override
 	public void close() throws ConnectionLostException {
-		//TODO
+		// TODO
 	}
 
+	/* Return if a player is active. */
 	@Override
 	public boolean isActive() {
 		return active;
 	}
 
+	/* Sets that a player is inactive. */
 	@Override
 	public void setInactive() {
 		active = false;
 	}
-	
+
 }

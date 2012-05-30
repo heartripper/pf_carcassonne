@@ -225,6 +225,7 @@ public class MatchHandler implements Runnable {
 		}
 	}
 
+	/* Manage players disconnection. */
 	private void handleDisconnection(PlayersDisconnectedException pde) {
 		if (pde.getDisconnectedPlayers().contains(currentPlayer)) {
 			currentPlayerDisconnected = true;
