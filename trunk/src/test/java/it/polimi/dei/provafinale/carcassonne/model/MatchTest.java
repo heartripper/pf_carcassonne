@@ -104,7 +104,49 @@ public class MatchTest {
 		int[] expectedScores = { 8, 8, 0 };
 		assertTrue(Arrays.equals(scores, expectedScores));
 	}
-	
+
+	@Test
+	public void putFollowerTest() {
+		String[] tileRep = { "N=C S=S W=S E=N NS=0 NE=0 NW=0 WE=0 SE=0 SW=1",
+				"N=S S=S W=N E=C NS=1 NE=0 NW=0 WE=0 SE=0 SW=0",
+				"N=N S=S W=C E=S NS=0 NE=0 NW=0 WE=0 SE=1 SW=0",
+
+				"N=S S=S W=C E=N NS=1 NE=0 NW=0 WE=0 SE=0 SW=0",
+				"N=S S=S W=C E=N NS=1 NE=0 NW=0 WE=0 SE=0 SW=0",
+				"N=S S=S W=C E=N NS=1 NE=0 NW=0 WE=0 SE=0 SW=0",
+				"N=S S=S W=C E=N NS=1 NE=0 NW=0 WE=0 SE=0 SW=0",
+				"N=S S=S W=C E=N NS=1 NE=0 NW=0 WE=0 SE=0 SW=0",
+				"N=S S=S W=C E=N NS=1 NE=0 NW=0 WE=0 SE=0 SW=0",
+				"N=S S=S W=C E=N NS=1 NE=0 NW=0 WE=0 SE=0 SW=0",
+				"N=S S=S W=C E=N NS=1 NE=0 NW=0 WE=0 SE=0 SW=0" };
+
+		Tile[] tiles = toTileArray(tileRep);
+
+		assertTrue(match.putTile(tiles[0], new Coord(0, -1)));
+
+		/* We can't add a follower on a null-entity side */
+		assertFalse(match.putFollower(tiles[0], SidePosition.E, PlayerColor.B));
+		/* But we can on another side */
+		assertTrue(match.putFollower(tiles[0], SidePosition.W, PlayerColor.B));
+		/*
+		 * We can't put a follower on a side who belongs to an entity which
+		 * doesn't accept followers
+		 */
+		assertTrue(match.putTile(tiles[2], new Coord(-1, -1)));
+		assertFalse(match.putFollower(tiles[1], SidePosition.E, PlayerColor.B));
+		
+		/* A player who doesn't have followers can't add one */
+		for (int i = 0; i < 7; i++) {
+			assertTrue(match.putTile(tiles[i + 3], new Coord(0, -2 - i)));
+			assertTrue(match.putFollower(tiles[i + 3], SidePosition.W,
+					PlayerColor.R));
+		}
+
+		assertTrue(match.putTile(tiles[10], new Coord(0, -9)));
+		assertFalse(match.putFollower(tiles[10], SidePosition.N, PlayerColor.R));
+
+	}
+
 	private Tile[] toTileArray(String[] reps) {
 		int size = reps.length;
 		Tile[] tiles = new Tile[size];
