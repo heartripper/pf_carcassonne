@@ -63,7 +63,12 @@ public class Match {
 	 * @return the chosen tile representation.
 	 **/
 	public Tile drawTile() {
-		return stack.drawTile();
+		Tile drew;
+		do {
+			drew = stack.drawTile();
+		} while (!grid.hasAPlaceFor(drew));
+
+		return drew;
 	}
 
 	/**
@@ -79,11 +84,11 @@ public class Match {
 		}
 		/* The tile is compatible with the given coordinates. */
 		grid.putTile(tile, coord);
-		for(SidePosition pos : SidePosition.values()){
+		for (SidePosition pos : SidePosition.values()) {
 			Side current = tile.getSide(pos);
 			Coord offset = SidePosition.getOffsetForPosition(pos);
 			Tile neighbor = grid.getTile(coord.add(offset));
-			if(neighbor != null){
+			if (neighbor != null) {
 				Side opposite = neighbor.getSide(pos.getOpposite());
 				current.setOppositeSide(opposite);
 				opposite.setOppositeSide(current);
