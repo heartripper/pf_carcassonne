@@ -47,7 +47,7 @@ public class EntityTest {
 		assertTrue(entity.getMembers().contains(s));
 		assertTrue(entity.getMembers().size() == 1);
 
-		/* Check that a side does'nt get added twice */
+		/* Check that a side doesn't get added twice */
 		entity.addMember(s);
 		assertTrue(entity.getMembers().size() == 1);
 	}
