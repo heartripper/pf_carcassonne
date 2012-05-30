@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 
 /**
  * Class StartInternetGame implements an ActionListener in order to manage the
- * beginning of an internet game.
+ * beginning of a new internet game.
  * 
  */
 public class StartInternetGame implements ActionListener {
