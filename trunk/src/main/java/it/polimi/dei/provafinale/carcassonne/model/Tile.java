@@ -119,22 +119,6 @@ public final class Tile {
 	}
 
 	/**
-	 * Give the SidePosition corresponding to a given Side of a tile.
-	 * 
-	 * @param side
-	 *            - a Side of the Tile.
-	 * @return the SidePosition of the given Side of the Tile.
-	 */
-	public SidePosition getSidePosition(Side side) {
-		for (SidePosition position : SidePosition.values()) {
-			if (sides[position.getIndex()] == side) {
-				return position;
-			}
-		}
-		return null;
-	}
-
-	/**
 	 * 
 	 * @return the Tile coordinates.
 	 */
