@@ -134,7 +134,7 @@ public class MatchTest {
 		 */
 		assertTrue(match.putTile(tiles[2], new Coord(-1, -1)));
 		assertFalse(match.putFollower(tiles[1], SidePosition.E, PlayerColor.B));
-		
+
 		/* A player who doesn't have followers can't add one */
 		for (int i = 0; i < 7; i++) {
 			assertTrue(match.putTile(tiles[i + 3], new Coord(0, -2 - i)));
@@ -147,6 +147,59 @@ public class MatchTest {
 
 	}
 
+	@Test
+	public void removePlayerTest() {
+		String[] reps = { "N=N S=S W=N E=S NS=0 NE=0 NW=0 WE=0 SE=1 SW=0",
+				"N=N S=S W=S E=N NS=0 NE=0 NW=0 WE=0 SE=0 SW=1",
+				"N=S S=S W=N E=C NS=1 NE=0 NW=0 WE=0 SE=0 SW=0",
+				"N=S S=S W=C E=N NS=1 NE=0 NW=0 WE=0 SE=0 SW=0" };
+
+		Coord[] coords = { new Coord(-1, 0), new Coord(1, 0),
+				new Coord(-1, -1), new Coord(1, -1) };
+		Tile[] tiles = toTileArray(reps);
+
+		assertTrue(match.putTile(tiles[0], coords[0]));
+		assertTrue(match.putFollower(tiles[0], SidePosition.E, PlayerColor.B));
+		assertTrue(match.putTile(tiles[1], coords[1]));
+		assertTrue(match.putTile(tiles[2], coords[2]));
+		assertTrue(match.putFollower(tiles[2], SidePosition.E, PlayerColor.R));
+		assertTrue(match.putTile(tiles[3], coords[3]));
+		assertTrue(match.putFollower(tiles[3], SidePosition.W, PlayerColor.B));
+		
+		List<Tile> updates;
+		
+		try{
+			updates = match.removePlayer(PlayerColor.B);
+			assertTrue(updates.contains(tiles[0]));
+			assertTrue(updates.contains(tiles[3]));
+			assertEquals(updates.size(), 2);
+		}catch(NotEnoughPlayersException e){
+			
+		}
+		
+		/*Check that all player blu's followers are removed*/
+		for(Tile t : tiles){
+			for(SidePosition pos : SidePosition.values()){
+				PlayerColor follower = t.getSide(pos).getFollower();
+				assertFalse(follower == PlayerColor.B);
+			}
+		}
+		
+		/*Check that player rosso's follower is still there*/
+		PlayerColor follower = tiles[2].getSide(SidePosition.E).getFollower();
+		assertTrue(follower == PlayerColor.R);
+		
+		/*Check that removed player is not returned as next player*/
+		for(int i = 0; i < playersNumber*2; i++){
+			assertFalse(match.getNextPlayer() == PlayerColor.B);
+		}	
+	}
+
+	@Test
+	public void removePlayerExceptionTest() {
+		//TODO
+	}
+	
 	private Tile[] toTileArray(String[] reps) {
 		int size = reps.length;
 		Tile[] tiles = new Tile[size];
