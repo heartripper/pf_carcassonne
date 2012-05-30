@@ -6,11 +6,17 @@ import java.io.Serializable;
  * Class representing messages that are exchanged between MatchHandler and
  * player clients.
  * */
-public class Message implements Serializable{
-	
+public class Message implements Serializable {
+
 	private static final long serialVersionUID = -5892768452421790257L;
-	
+
+	/**
+	 * A MessageType.
+	 */
 	public final MessageType type;
+	/**
+	 * A String containing the message payload..
+	 */
 	public final String payload;
 
 	/**
