@@ -8,35 +8,54 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JTextField;
 
-public class TextualListener implements ActionListener{
+/**
+ * Class TextualListener implements an ActionListener in order to send to the
+ * controller the instructions given by the user.
+ * 
+ */
+public class TextualListener implements ActionListener {
 
 	private JTextField textField;
-	
-	public TextualListener (JTextField textField){
+
+	/**
+	 * TextualListener constructor. Creates a new instance of class
+	 * TextualListener.
+	 * 
+	 * @param textField
+	 *            a JTextField in which the user puts a message to send to the
+	 *            controller.
+	 */
+	public TextualListener(JTextField textField) {
 		this.textField = textField;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		/* Retrieving the inserted command. */
 		String command = textField.getText();
 		Message msg;
-		if(command.equals("rotate")){
+		/* Rotate command. */
+		if (command.equals("rotate")) {
 			msg = new Message(MessageType.ROTATE, null);
 		}
-		else if(command.equals("pass")){
+		/* Pass command. */
+		else if (command.equals("pass")) {
 			msg = new Message(MessageType.PASS, null);
 		}
-		else if(command.matches("[NESW]")){
+		/* Follower position. */
+		else if (command.matches("[NESW]")) {
 			msg = new Message(MessageType.FOLLOWER, command);
 		}
-		else if(command.matches("[-]??[0-9]+,[-]??[0-9]+")){
+		/* Coordinate. */
+		else if (command.matches("[-]??[0-9]+,[-]??[0-9]+")) {
 			msg = new Message(MessageType.PLACE, command);
 		}
-		else{
+		/* Invalid command. */
+		else {
 			msg = new Message(MessageType.INVALID_MOVE, null);
 		}
-		
 		textField.setText("");
+		/* Sending message. */
 		ClientController.getCurrentMatchController().sendMessage(msg);
 	}
 
