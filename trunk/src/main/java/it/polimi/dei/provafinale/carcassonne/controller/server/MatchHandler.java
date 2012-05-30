@@ -11,6 +11,11 @@ import it.polimi.dei.provafinale.carcassonne.model.NotEnoughPlayersException;
 import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.Tile;
 
+/**
+ * Class MatchHandler implements Runnable in order to manage the match server
+ * side.
+ * 
+ */
 public class MatchHandler implements Runnable {
 
 	private Match match;
