@@ -20,6 +20,18 @@ public class EntityTest {
 	}
 
 	@Test
+	public void getMemberTest() {
+		int numSides = 12;
+		for (int i = 0; i < numSides; i++) {
+			Side s = new Side(null, type);
+			entity.addMember(s);
+		}
+
+		List<Side> sides = entity.getMembers();
+		assertEquals(sides.size(), numSides);
+	}
+
+	@Test
 	public void acceptFollowerTest() {
 		assertTrue(entity.acceptFollowers());
 		Side s = new Side(null, type);
@@ -33,6 +45,10 @@ public class EntityTest {
 		Side s = new Side(null, type);
 		entity.addMember(s);
 		assertTrue(entity.getMembers().contains(s));
+		assertTrue(entity.getMembers().size() == 1);
+
+		/* Check that a side does'nt get added twice */
+		entity.addMember(s);
 		assertTrue(entity.getMembers().size() == 1);
 	}
 
@@ -50,37 +66,54 @@ public class EntityTest {
 	}
 
 	@Test
-	public void encloseTest() {
-		Entity entity2 = EntityFactory.createByType(type);
-		int entity1sides = 3;
-		int entity2sides = 6;
+	public void encloseTest1() {
+		/* Test enclosing a small entity in a bigger one */
+		encloseTestBase(10, 5);
+	}
 
-		for (int i = 0; i < entity1sides; i++) {
+	@Test
+	public void encloseTest2() {
+		/* Test enclosing a big entity in a small one */
+		encloseTestBase(3, 20);
+	}
+
+	private void encloseTestBase(int e1Sides, int e2Sides) {
+		Entity entity2 = EntityFactory.createByType(type);
+
+		for (int i = 0; i < e1Sides; i++) {
 			Side s = new Side(null, type);
 			entity.addMember(s);
+			s.setEntity(entity);
 		}
 
-		for (int i = 0; i < entity2sides; i++) {
+		/* Put a follower on last member of entity */
+		entity.getMembers().get(e1Sides - 1).setFollower(PlayerColor.R);
+
+		for (int i = 0; i < e2Sides; i++) {
 			Side s = new Side(null, type);
 			entity2.addMember(s);
+			s.setEntity(entity2);
 		}
 
 		List<Side> oldEntity1 = new ArrayList<Side>(entity.getMembers());
 		List<Side> oldEntity2 = new ArrayList<Side>(entity2.getMembers());
 
-		entity.enclose(entity2);
+		Entity newEntity = entity.enclose(entity2);
 
-		if (entity2sides > entity1sides) {
-			List<Side> newSides = entity2.getMembers();
-			assertTrue(newSides.containsAll(oldEntity1));
-			assertTrue(newSides.containsAll(oldEntity2));
-			assertTrue(newSides.size() == oldEntity1.size() + oldEntity2.size());
-		} else {
-			List<Side> newSides = entity.getMembers();
-			assertTrue(newSides.containsAll(oldEntity1));
-			assertTrue(newSides.containsAll(oldEntity2));
-			assertTrue(newSides.size() == oldEntity1.size() + oldEntity2.size());
+		List<Side> newSides = newEntity.getMembers();
+				
+		/* Check that new entity has all members of previous two entities */
+		assertTrue(newSides.containsAll(oldEntity1));
+		assertTrue(newSides.containsAll(oldEntity2));
+		assertTrue(newSides.size() == oldEntity1.size() + oldEntity2.size());
+		
+		/* Check that all sides have newEntity as entity */
+		for (Side s : newSides) {
+			assertEquals(s.getEntity(), newEntity);
 		}
+
+		/* Check that new entity doesn't accept followers as entity didn't */
+		assertFalse(newEntity.acceptFollowers());
 	}
 
 	@Test
@@ -98,6 +131,7 @@ public class EntityTest {
 				previous = s;
 			}
 		}
+		assertTrue(entity.isComplete());
 		assertTrue(entity.isComplete());
 	}
 
@@ -128,12 +162,12 @@ public class EntityTest {
 			s.setFollower(PlayerColor.valueOf(i));
 		}
 
-		/*Remove followers of just one color*/
+		/* Remove followers of just one color */
 		entity.removeFollowers(PlayerColor.R);
 		int[] expected = { 0, 1, 1, 1, 1 };
 		assertTrue(Arrays.equals(entity.countFollowers(5), expected));
 
-		/*remove all followers*/
+		/* remove all followers */
 		entity.removeFollowers(null);
 		int[] expected1 = { 0, 0, 0, 0, 0 };
 		assertTrue(Arrays.equals(entity.countFollowers(5), expected1));
