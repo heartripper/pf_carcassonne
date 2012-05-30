@@ -1,6 +1,8 @@
 package it.polimi.dei.provafinale.carcassonne.view.game;
 
 import it.polimi.dei.provafinale.carcassonne.Coord;
+import it.polimi.dei.provafinale.carcassonne.model.EntityType;
+import it.polimi.dei.provafinale.carcassonne.model.Side;
 import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.Tile;
 import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
@@ -132,10 +134,10 @@ public class TileGridRepresenter {
 	 */
 	private static String[] getTileArrayRepresentation(Tile tile) {
 		/* String representation of SidePosition. */
-		String north = tile.getSide(SidePosition.N).toString();
-		String east = tile.getSide(SidePosition.E).toString();
-		String south = tile.getSide(SidePosition.S).toString();
-		String west = tile.getSide(SidePosition.W).toString();
+		String north = getSideRep(tile.getSide(SidePosition.N));
+		String east = getSideRep(tile.getSide(SidePosition.E));
+		String south = getSideRep(tile.getSide(SidePosition.S));
+		String west = getSideRep(tile.getSide(SidePosition.W));
 		/*
 		 * Association of the representation of a link to the corresponding
 		 * textual symbol.
@@ -161,5 +163,22 @@ public class TileGridRepresenter {
 				String.format("#     %s     #", south), "+#############+" };
 
 		return representation;
+	}
+
+	private static String getSideRep(Side s) {
+		int sideRepLen = 3;
+		EntityType type = s.getType();
+		String rep = (type == EntityType.N ? " " : type.toString());
+		int spaceToAdd = sideRepLen - rep.length();
+		StringBuilder padded = new StringBuilder(rep);
+		for (int i = 0; i < spaceToAdd; i++) {
+			if (i % 2 == 0) {
+				padded.append(" ");
+			} else {
+				padded = new StringBuilder(" " + padded.toString());
+			}
+		}
+
+		return padded.toString();
 	}
 }
