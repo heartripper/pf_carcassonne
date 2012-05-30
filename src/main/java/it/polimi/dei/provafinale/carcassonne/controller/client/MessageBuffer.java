@@ -2,6 +2,11 @@ package it.polimi.dei.provafinale.carcassonne.controller.client;
 
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
 
+/**
+ * Class MessageBuffer provides a buffer, that will be used to put message to
+ * exchange between different threads.
+ * 
+ */
 public class MessageBuffer {
 
 	private Message buffer = null;
