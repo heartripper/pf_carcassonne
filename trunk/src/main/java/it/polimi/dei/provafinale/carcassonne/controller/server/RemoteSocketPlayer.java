@@ -8,6 +8,11 @@ import java.net.Socket;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
 import it.polimi.dei.provafinale.carcassonne.controller.client.ConnectionLostException;
 
+/**
+ * Class RemoteSocketPlayer implements a RemotePlayer in order to represent a
+ * remote player.
+ * 
+ */
 public class RemoteSocketPlayer implements RemotePlayer {
 
 	private Socket socket;
@@ -15,6 +20,17 @@ public class RemoteSocketPlayer implements RemotePlayer {
 	private ObjectInputStream in;
 	private boolean active = true;
 
+	/**
+	 * RemoteSocketPlayer constructor. Creates a new instance of class
+	 * RemoteSocketPlayer.
+	 * 
+	 * @param socket
+	 *            a Socket.
+	 * @param out
+	 *            an output stream.
+	 * @param in
+	 *            an input stream.
+	 */
 	public RemoteSocketPlayer(Socket socket, ObjectOutputStream out,
 			ObjectInputStream in) {
 		this.socket = socket;
@@ -22,6 +38,7 @@ public class RemoteSocketPlayer implements RemotePlayer {
 		this.out = out;
 	}
 
+	/* Reads the messages from client. */
 	@Override
 	public Message readMessage() throws ConnectionLostException {
 		try {
@@ -36,6 +53,7 @@ public class RemoteSocketPlayer implements RemotePlayer {
 		}
 	}
 
+	/* Sends message msg to server. */
 	@Override
 	public void sendMessage(Message msg) throws ConnectionLostException {
 		try {
@@ -47,6 +65,7 @@ public class RemoteSocketPlayer implements RemotePlayer {
 		}
 	}
 
+	/* Closes the connection with the user. */
 	@Override
 	public void close() throws ConnectionLostException {
 		try {
@@ -58,11 +77,13 @@ public class RemoteSocketPlayer implements RemotePlayer {
 		}
 	}
 
+	/* Return if a player is active. */
 	@Override
 	public boolean isActive() {
 		return active;
 	}
 
+	/* Sets that a player is inactive. */
 	@Override
 	public void setInactive() {
 		this.active = false;
