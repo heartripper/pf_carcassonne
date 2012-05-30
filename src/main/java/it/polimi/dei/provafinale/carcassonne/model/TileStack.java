@@ -15,9 +15,7 @@ import java.util.Random;
  * initial tile and verify if there are still tiles to draw.
  * */
 public class TileStack {
-
-	private static List<Tile> readTileStack = null;
-
+	
 	private List<Tile> tiles;
 	private Tile initialTile;
 
@@ -80,13 +78,6 @@ public class TileStack {
 	 * */
 
 	private synchronized List<Tile> readTiles() {
-		/*
-		 * Case we have already read some tiles: we return the array that
-		 * contains the read tiles.
-		 */
-		if (readTileStack != null) {
-			return new ArrayList<Tile>(readTileStack);
-		}
 		/* Case we haven't read tiles yet. */
 		/* Obtaining the path to reach file carcassonne.dat. */
 		String path;
@@ -96,7 +87,7 @@ public class TileStack {
 			path = Constants.TILES_PATH;
 		}
 		/* Creating a new ArrayList to put the list of tiles in. */
-		readTileStack = new ArrayList<Tile>();
+		List<Tile> tiles = new ArrayList<Tile>();
 		BufferedReader input = null;
 		try {
 			FileReader fr = new FileReader(new File(path));
@@ -106,7 +97,7 @@ public class TileStack {
 			while (line != null) {
 				/* Card creation. */
 				Tile tile = new Tile(line);
-				readTileStack.add(tile);
+				tiles.add(tile);
 				/* Go on to next line */
 				line = input.readLine();
 			}
@@ -122,6 +113,6 @@ public class TileStack {
 				System.out.println("Error opening tile file.");
 			}
 		}
-		return new ArrayList<Tile>(readTileStack);
+		return tiles;
 	}
 }
