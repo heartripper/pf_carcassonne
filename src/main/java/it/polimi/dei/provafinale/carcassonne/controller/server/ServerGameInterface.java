@@ -9,6 +9,11 @@ import it.polimi.dei.provafinale.carcassonne.controller.client.ConnectionLostExc
 import it.polimi.dei.provafinale.carcassonne.logger.Logger;
 import it.polimi.dei.provafinale.carcassonne.logger.LoggerService;
 
+/**
+ * Class ServerGameInterface implements GameInterface in order to allow Match
+ * Controller to talk to RemotePlayer over the internet.
+ * 
+ */
 public class ServerGameInterface implements GameInterface {
 
 	private static final int RECONNECTION_TIMEOUT = 15 * 1000;
@@ -18,6 +23,13 @@ public class ServerGameInterface implements GameInterface {
 
 	private Logger logger;
 
+	/**
+	 * ServerGameInterface constructor. Creates a new instance of class
+	 * ServerGameInterface.
+	 * 
+	 * @param remotePlayers
+	 *            a list of RemotePlayer.
+	 */
 	public ServerGameInterface(List<RemotePlayer> remotePlayers) {
 		this.remotePlayers = remotePlayers;
 		this.name = Integer.toHexString(hashCode());
@@ -164,6 +176,14 @@ public class ServerGameInterface implements GameInterface {
 		}
 	}
 
+	/**
+	 * Manages the reconnection of a player.
+	 * 
+	 * @param color
+	 *            the PlayerColor of the player to reconnect.
+	 * @param player
+	 *            the associated RemotePlayer.
+	 */
 	public synchronized void reconnectPlayer(PlayerColor color,
 			RemotePlayer player) {
 		int connectionIndex = PlayerColor.indexOf(color);
@@ -171,8 +191,9 @@ public class ServerGameInterface implements GameInterface {
 		notifyAll();
 	}
 
-	/***
-	 * Gives this match name.
+	/**
+	 * 
+	 * @return this match name.
 	 */
 	public String getName() {
 		return name;
