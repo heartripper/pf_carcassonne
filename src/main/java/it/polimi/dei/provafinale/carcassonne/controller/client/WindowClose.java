@@ -8,6 +8,11 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JOptionPane;
 
+/**
+ * Class WindowClose extends a WindowAdapter in order to manage the closure of a
+ * window.
+ * 
+ */
 public class WindowClose extends WindowAdapter {
 
 	/**
@@ -15,12 +20,14 @@ public class WindowClose extends WindowAdapter {
 	 * pressing the close button.
 	 */
 	public void windowClosing(WindowEvent e) {
-
+		/* Retrieving the window that has activated the listener. */
 		CarcassonneFrame frame = (CarcassonneFrame) e.getWindow();
-
+		/* No options on window closure. */
 		if (!Constants.ASK_ON_CLOSE) {
 			close(frame);
-		} else {
+		}
+		/* Option setted on window closure. */
+		else {
 			int ans = JOptionPane.showConfirmDialog(null,
 					"Are you sure you want to close this window?",
 					"Attention!", JOptionPane.YES_NO_OPTION);
