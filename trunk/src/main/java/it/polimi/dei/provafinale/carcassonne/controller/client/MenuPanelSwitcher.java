@@ -5,6 +5,11 @@ import it.polimi.dei.provafinale.carcassonne.view.ViewManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Class MenuPanelSwitcher implements an ActionListener in order to switch
+ * panel.
+ * 
+ */
 public class MenuPanelSwitcher implements ActionListener {
 
 	private String panelName;

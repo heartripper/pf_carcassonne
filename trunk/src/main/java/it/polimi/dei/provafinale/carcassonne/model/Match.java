@@ -89,7 +89,6 @@ public class Match {
 				opposite.setOppositeSide(current);
 			}
 		}
-		
 		updateEntities(tile);
 		return true;
 	}

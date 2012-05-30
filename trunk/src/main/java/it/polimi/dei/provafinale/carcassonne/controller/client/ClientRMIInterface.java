@@ -13,6 +13,11 @@ import it.polimi.dei.provafinale.carcassonne.controller.server.CarcassonneRMISer
 import it.polimi.dei.provafinale.carcassonne.logger.Logger;
 import it.polimi.dei.provafinale.carcassonne.logger.LoggerService;
 
+/**
+ * Class ClientRMIInterface implements ClientInterface and CarcassonneRMIClient
+ * in order to give an interface of a client that plays in RMI mode.
+ * 
+ */
 public class ClientRMIInterface implements ClientInterface,
 		CarcassonneRMIClient {
 
@@ -22,6 +27,13 @@ public class ClientRMIInterface implements ClientInterface,
 	private CarcassonneRMIServer server;
 	private Logger logger;
 
+	/**
+	 * ClientRMIInterface constructor. Creates a new instance of class
+	 * ClientRMIInterface.
+	 * 
+	 * @param host
+	 *            a String that identifies an host.
+	 */
 	public ClientRMIInterface(String host) {
 		this.host = host;
 		this.logger = LoggerService.getService().register("RMI Interface");

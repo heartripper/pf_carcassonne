@@ -8,6 +8,10 @@ import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.Tile;
 import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
 
+/**
+ * Class ClientControllerImpl implements the client controller.
+ * 
+ */
 public class ClientControllerImpl implements Runnable {
 
 	private final int maxReconnectionAttempts = 10;

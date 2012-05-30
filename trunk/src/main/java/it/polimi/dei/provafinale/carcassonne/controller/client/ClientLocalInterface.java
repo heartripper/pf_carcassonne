@@ -5,6 +5,11 @@ import it.polimi.dei.provafinale.carcassonne.controller.Message;
 import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
 import it.polimi.dei.provafinale.carcassonne.controller.server.GameInterface;
 
+/**
+ * Class ClientLocalInterface implements GameInterface and ClientInterface in
+ * order to give an interface of a client that plays in the local mode.
+ * 
+ */
 public class ClientLocalInterface implements GameInterface, ClientInterface {
 
 	private MessageBuffer modelBuffer;
@@ -69,7 +74,7 @@ public class ClientLocalInterface implements GameInterface, ClientInterface {
 	}
 
 	@Override
-	public void sendAllPlayer(Message msg){
+	public void sendAllPlayer(Message msg) {
 		/* Case start message. */
 		if (msg.type == MessageType.START) {
 			String tile = msg.payload;

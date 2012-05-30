@@ -1,5 +1,10 @@
 package it.polimi.dei.provafinale.carcassonne.controller.client;
 
+/**
+ * Class ConnectionLostException extends Exception in order to manage exceptions
+ * of the type connection lost.
+ * 
+ */
 public class ConnectionLostException extends Exception {
 
 	private static final long serialVersionUID = 7560807455345741619L;
@@ -20,5 +25,5 @@ public class ConnectionLostException extends Exception {
 	public ConnectionLostException(String s) {
 		super(s);
 	}
-	
+
 }

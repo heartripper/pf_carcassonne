@@ -1,15 +1,19 @@
 package it.polimi.dei.provafinale.carcassonne.controller.client;
 
-
+/**
+ * Class ClientController creates the client controller.
+ * 
+ */
 public class ClientController {
 
 	private static Thread thread;
 	private static ClientControllerImpl currentMatch;
 
-	private ClientController(){
-		
+	/* Private constructor. */
+	private ClientController() {
+
 	}
-	
+
 	/**
 	 * Initializes an instance of MatchController, if no threads are already
 	 * initialized.
@@ -25,7 +29,7 @@ public class ClientController {
 		if (thread != null) {
 			return;
 		}
-
+		/* A thread doesn't exists: we have to create it. */
 		currentMatch = new ClientControllerImpl(ci, vi);
 		thread = new Thread(currentMatch);
 		thread.start();
