@@ -19,7 +19,7 @@ public class Message implements Serializable{
 	 * @param type
 	 *            - a MessageType.
 	 * @param payload
-	 *            - a string containing the message payload.
+	 *            - a String containing the message payload.
 	 * */
 	public Message(MessageType type, String payload) {
 		this.type = type;
