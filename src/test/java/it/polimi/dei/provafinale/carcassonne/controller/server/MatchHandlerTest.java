@@ -6,6 +6,7 @@ import java.awt.Color;
 
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
+import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +15,7 @@ public class MatchHandlerTest {
 
 	private final int playerNumber = 3;
 
-	private Message msg = new Message(START, null);
+	private Message msg = new Message(MessageType.START, null);
 	private Color red;
 	private GameInterface gameInterface;
 	
