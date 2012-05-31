@@ -7,6 +7,7 @@ import java.awt.Color;
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
 import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
+import it.polimi.dei.provafinale.carcassonne.controller.client.MessageBuffer;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,23 +15,29 @@ import org.junit.Test;
 public class MatchHandlerTest {
 
 	private final int playerNumber = 3;
-
-	private Message msg = new Message(MessageType.START, null);
-	private Color red;
-	private GameInterface gameInterface;
+	private FakeGameInterface fakeInterface;
 	
 	@Before
 	public void setUp(){
-		
+		fakeInterface = new FakeGameInterface();
+		MatchHandler handler = new MatchHandler(fakeInterface);
+		Thread t = new Thread(handler);
+		t.start();
+		handler.startGame();
 	}
 	
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		Message testRes = fakeInterface.readTestResult();
+		assertTrue(testRes.type.equals(MessageType.START));
+		assertFalse(!testRes.type.equals(MessageType.START));
 	}
 
 	
-	private class fakeGameInterface implements GameInterface{
+	private class FakeGameInterface implements GameInterface{
+		
+		private MessageBuffer testInput;
+		private MessageBuffer testOutput;
 
 		@Override
 		public int askPlayerNumber() {
@@ -40,22 +47,27 @@ public class MatchHandlerTest {
 		@Override
 		public Message readFromPlayer(PlayerColor color)
 				throws PlayersDisconnectedException {
-			
-			return null;
+			return testInput.read();
 		}
 
 		@Override
 		public void sendPlayer(PlayerColor color, Message msg)
 				throws PlayersDisconnectedException {
-			// TODO Auto-generated method stub
-			
+			testOutput.write(msg);
 		}
 
 		@Override
 		public void sendAllPlayer(Message msg)
 				throws PlayersDisconnectedException {
-			// TODO Auto-generated method stub
-			
+			testOutput.write(msg);
+		}
+		
+		public Message readTestResult(){
+			return testOutput.read();
+		}
+		
+		public void writeOnBuffer(Message msg){
+			testInput.write(msg);
 		}
 		
 	}
