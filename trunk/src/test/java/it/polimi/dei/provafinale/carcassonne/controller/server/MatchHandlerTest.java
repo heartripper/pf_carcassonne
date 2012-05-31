@@ -70,5 +70,10 @@ public class MatchHandlerTest {
 			testInput.write(msg);
 		}
 		
+		public FakeGameInterface(){
+			testInput = new MessageBuffer();
+			testOutput = new MessageBuffer();
+		}
+		
 	}
 }
