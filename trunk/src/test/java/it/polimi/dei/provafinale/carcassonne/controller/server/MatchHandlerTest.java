@@ -16,21 +16,16 @@ public class MatchHandlerTest {
 
 	private final int playerNumber = 3;
 	private FakeGameInterface fakeInterface;
+	private Thread runningThread;
 	
 	@Before
 	public void setUp(){
-		fakeInterface = new FakeGameInterface();
-		MatchHandler handler = new MatchHandler(fakeInterface);
-		Thread t = new Thread(handler);
-		t.start();
-		handler.startGame();
+
 	}
 	
 	@Test
 	public void test() {
-		Message testRes = fakeInterface.readTestResult();
-		assertTrue(testRes.type.equals(MessageType.START));
-		assertFalse(!testRes.type.equals(MessageType.START));
+
 	}
 
 	
