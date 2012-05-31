@@ -28,6 +28,8 @@ import javax.imageio.ImageIO;
  * */
 public final class TilePainter {
 
+	private static final int ROTATION_DEGREES = 90;
+	private static final int MAXIMUM_NUMBER_OF_ROTATION = 4;
 	private final int tileDim;
 	private BufferedImage tilePlaceHolder;
 	private Map<String, BufferedImage> tileLib;
@@ -184,9 +186,9 @@ public final class TilePainter {
 			do {
 				c.rotate();
 				rotCount++;
-			} while (!tileLib.containsKey(c.toString()) && rotCount < 4);
+			} while (!tileLib.containsKey(c.toString()) && rotCount < MAXIMUM_NUMBER_OF_ROTATION);
 			/* Reached the maximum number of possible rotations. */
-			if (rotCount == 4) {
+			if (rotCount == MAXIMUM_NUMBER_OF_ROTATION) {
 				System.out.println("Error: base tile not found for " + rep
 						+ ".");
 				return null;
@@ -216,7 +218,7 @@ public final class TilePainter {
 		// creating the AffineTransform instance
 		AffineTransform affineTransform = new AffineTransform();
 		/* Rotate the image. */
-		double radians = -Math.toRadians(90 * rotCount);
+		double radians = -Math.toRadians(ROTATION_DEGREES * rotCount);
 		float position = ((float) tileDim / 2);
 		affineTransform.rotate(radians, position, position);
 		/* Draw the image using the AffineTransform. */

@@ -28,6 +28,16 @@ import javax.swing.border.MatteBorder;
  */
 public class SwingGamePanel extends GamePanel {
 
+	private static final int COORDSFIELD_COLUMNS_NUMBER = 10;
+
+	private static final int VERTICAL_SPACING = 5;
+
+	private static final int HORIZONTAL_SPACING = 5;
+
+	private static final int ACTIONPANEL_HEIGHT = 10;
+
+	private static final int ACTIONSPANEL_WIDTH = 195;
+
 	private static final long serialVersionUID = -5552501660516939765L;
 
 	/* Tiles area. */
@@ -72,7 +82,7 @@ public class SwingGamePanel extends GamePanel {
 		 * the option to conclude the turn).
 		 */
 		JPanel actionsPanel = new JPanel();
-		actionsPanel.setPreferredSize(new Dimension(195, 10));
+		actionsPanel.setPreferredSize(new Dimension(ACTIONSPANEL_WIDTH, ACTIONPANEL_HEIGHT));
 		actionsPanel.setBorder(new MatteBorder(0, 1, 0, 0, (Color) Color.GRAY));
 		actionsPanel.setLayout(new BoxLayout(actionsPanel, BoxLayout.Y_AXIS));
 		add(actionsPanel, BorderLayout.EAST);
@@ -101,13 +111,13 @@ public class SwingGamePanel extends GamePanel {
 		/* Coordinate panel. */
 
 		JPanel coordsPanel = new JPanel();
-		coordsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		coordsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, HORIZONTAL_SPACING, VERTICAL_SPACING));
 		/* Insert coordinate label. */
 		JLabel lblInsertCoordinatesxy = new JLabel("Insert coordinates (x,y):");
 		coordsPanel.add(lblInsertCoordinatesxy);
 		/* Coordinates text field. */
 		coordsField = new JTextField();
-		coordsField.setColumns(10);
+		coordsField.setColumns(COORDSFIELD_COLUMNS_NUMBER);
 		coordsPanel.add(coordsField);
 		/* Put button. */
 		putTileButton = new JButton("Put tile");
