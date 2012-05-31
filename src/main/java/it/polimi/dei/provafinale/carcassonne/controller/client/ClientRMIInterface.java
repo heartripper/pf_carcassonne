@@ -7,9 +7,12 @@ import java.rmi.server.UnicastRemoteObject;
 
 import it.polimi.dei.provafinale.carcassonne.Constants;
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.controller.CarcassonneRMIClient;
+import it.polimi.dei.provafinale.carcassonne.controller.CarcassonneRMIServer;
+import it.polimi.dei.provafinale.carcassonne.controller.ClientInterface;
+import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
 import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
-import it.polimi.dei.provafinale.carcassonne.controller.server.CarcassonneRMIServer;
 import it.polimi.dei.provafinale.carcassonne.logger.Logger;
 import it.polimi.dei.provafinale.carcassonne.logger.LoggerService;
 

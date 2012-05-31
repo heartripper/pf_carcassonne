@@ -1,4 +1,4 @@
-package it.polimi.dei.provafinale.carcassonne.controller.client;
+package it.polimi.dei.provafinale.carcassonne.controller;
 
 /**
  * Class ConnectionLostException extends Exception in order to manage exceptions

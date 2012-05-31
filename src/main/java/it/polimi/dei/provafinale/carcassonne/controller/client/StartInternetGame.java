@@ -1,6 +1,8 @@
 package it.polimi.dei.provafinale.carcassonne.controller.client;
 
 import it.polimi.dei.provafinale.carcassonne.Constants;
+import it.polimi.dei.provafinale.carcassonne.controller.ClientInterface;
+import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
 import it.polimi.dei.provafinale.carcassonne.view.CarcassonneFrame;
 import it.polimi.dei.provafinale.carcassonne.view.ViewManager;
 import it.polimi.dei.provafinale.carcassonne.view.game.GamePanel;

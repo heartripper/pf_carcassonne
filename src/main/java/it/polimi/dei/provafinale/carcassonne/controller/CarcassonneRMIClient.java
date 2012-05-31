@@ -1,6 +1,5 @@
-package it.polimi.dei.provafinale.carcassonne.controller.client;
+package it.polimi.dei.provafinale.carcassonne.controller;
 
-import it.polimi.dei.provafinale.carcassonne.controller.Message;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
