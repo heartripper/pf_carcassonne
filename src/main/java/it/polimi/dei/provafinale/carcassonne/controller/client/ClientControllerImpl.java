@@ -1,14 +1,10 @@
 package it.polimi.dei.provafinale.carcassonne.controller.client;
 
-import it.polimi.dei.provafinale.carcassonne.Coord;
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.controller.ClientInterface;
 import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
 import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
-import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
-import it.polimi.dei.provafinale.carcassonne.model.Tile;
-import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
 
 /**
  * Class ClientControllerImpl implements the client controller.
@@ -24,7 +20,6 @@ public class ClientControllerImpl implements Runnable {
 	private ViewInterface viewInterface;
 	private String matchName;
 
-	private TileGrid grid;
 	private boolean endGame = false;
 	private boolean endTurn = false;
 	private PlayerColor clientPlayerColor;
@@ -42,7 +37,6 @@ public class ClientControllerImpl implements Runnable {
 		this.clientInterface = ci;
 		this.viewInterface = vi;
 		this.messageBuffer = new MessageBuffer();
-		this.grid = new TileGrid();
 	}
 
 	/**
@@ -96,12 +90,13 @@ public class ClientControllerImpl implements Runnable {
 	private void initializeMatch(String payload) {
 		/* Parse received start command. */
 		String[] split = payload.split(",");
-		/* Manages the first tile. */
-		handleTileUpdate(split[0] + ", 0, 0");
-		/* Manages the identificator of the match. */
+
+		/* Manages the identifier of the match. */
 		matchName = split[1].trim();
+		
 		/* Manages the color value of the associated player. */
 		String color = split[2].trim();
+		
 		/* The controller manages the messages (only updates) of all players. */
 		if (color.equals("null")) {
 			clientPlayerColor = null;
@@ -110,12 +105,9 @@ public class ClientControllerImpl implements Runnable {
 		else {
 			clientPlayerColor = PlayerColor.valueOf(color);
 		}
-		/* Manages the number of players. */
-		int playerNumber = Integer.parseInt(split[3].trim());
+		
 		/* View initialization. */
-		viewInterface.initialize(grid, playerNumber, clientPlayerColor);
-		/* Updates the grid that now contains the first tile. */
-		viewInterface.updateGridRepresentation();
+		viewInterface.initialize(payload);
 	}
 
 	/* Turn management. */
@@ -195,7 +187,7 @@ public class ClientControllerImpl implements Runnable {
 		/* Tile is correctly placed. */
 		case UPDATE:
 			handleTileUpdate(response.payload);
-			viewInterface.updateGridRepresentation();
+//			viewInterface.updateGridRepresentation(response.payload);
 			viewInterface.showNotify("Tile placed.");
 			return;
 			/* Coord not valid. */
@@ -289,37 +281,14 @@ public class ClientControllerImpl implements Runnable {
 			}
 		}
 		/* Update game panel. */
-		viewInterface.updateGridRepresentation();
+//		viewInterface.updateGridRepresentation();
 		/* Update score. */
 		viewInterface.updateScore(msg.payload);
 	}
 
 	/* Manages the updates on the tile. */
 	private void handleTileUpdate(String command) {
-		String[] split = command.split(",");
-		/* Creates a new card based on the arrived message. */
-		Tile newTile = new Tile(split[0].trim());
-		/* Finds out the coordinates. */
-		int x = Integer.parseInt(split[1].trim());
-		int y = Integer.parseInt(split[2].trim());
-		/* Sets the tile coordinates. */
-		Coord c = new Coord(x, y);
-		Tile oldTile = grid.getTile(c);
-		/* Case the player hasn't put the tile in the specified coordinates yet. */
-		if (oldTile == null) {
-			grid.putTile(newTile, c);
-		}
-		/*
-		 * Case the player has already put the tile in the specified
-		 * coordinates.
-		 */
-		else {
-			/* Update followers. */
-			for (SidePosition pos : SidePosition.values()) {
-				PlayerColor newFollower = newTile.getSide(pos).getFollower();
-				oldTile.getSide(pos).setFollower(newFollower);
-			}
-		}
+		viewInterface.updateGridRepresentation(command);
 	}
 
 	/*

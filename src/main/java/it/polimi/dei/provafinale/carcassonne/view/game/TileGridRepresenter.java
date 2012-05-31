@@ -5,7 +5,6 @@ import it.polimi.dei.provafinale.carcassonne.model.EntityType;
 import it.polimi.dei.provafinale.carcassonne.model.Side;
 import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.Tile;
-import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
 
 /**
  * The class TileGridRepresenter manages the textual representation of tiles in
@@ -14,7 +13,7 @@ import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
  */
 public class TileGridRepresenter {
 
-	private TileGrid grid;
+	private TileRepresentationGrid grid;
 
 	/**
 	 * TileGridRepresenter constructor. Creates a new instance of class
@@ -23,7 +22,7 @@ public class TileGridRepresenter {
 	 * @param grid
 	 *            the grid to represent.
 	 */
-	public TileGridRepresenter(TileGrid grid) {
+	public TileGridRepresenter(TileRepresentationGrid grid) {
 		this.grid = grid;
 	}
 
@@ -50,7 +49,12 @@ public class TileGridRepresenter {
 				/* Creating a coordinate. */
 				Coord currentCoord = new Coord(i, j);
 				/* Obtaining the tile at the given coordinate. */
-				Tile currentTile = grid.getTile(currentCoord);
+				String tileRep = grid.getTileRepresentation(currentCoord);
+				Tile currentTile = null;
+				if(tileRep != null){
+					currentTile = new Tile(tileRep);
+				}
+				
 				/* Initializing the tile representation (null). */
 				String[] rep = null;
 				/* Exists a tile at the given position. */
@@ -59,7 +63,7 @@ public class TileGridRepresenter {
 					rep = getTileArrayRepresentation(currentTile);
 				}
 				/* Exists a placeholder at the given position. */
-				else if (grid.hasNeighborForCoord(currentCoord)) {
+				else if (grid.hasTileNeighbor(currentCoord)) {
 					rep = getPlaceHolder(currentCoord);
 				}
 				/* There are no tiles at the given position. */

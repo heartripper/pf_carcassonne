@@ -12,7 +12,6 @@ import javax.swing.JTextField;
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.controller.client.TextualListener;
 import it.polimi.dei.provafinale.carcassonne.model.Tile;
-import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
 
 /**
  * The class TextualGamePanel extends a GamePanel in order to represent the view
@@ -25,18 +24,25 @@ public class TextualGamePanel extends GamePanel {
 
 	private static final long serialVersionUID = -8074082087694368365L;
 
-	private TileGridRepresenter representer;
 	private PlayerColor clientColor;
 	private PlayerColor currentPlayerColor;
 	private JTextField textField;
 	private JTextArea textArea;
 	private StringBuilder text = new StringBuilder();
 
+	private TileRepresentationGrid tileRepGrid;
+	private TileGridRepresenter representer;
+
 	/**
 	 * TextualGamePanel constructor. Creates a new instance of class
 	 * TextualGamePanel.
 	 */
 	public TextualGamePanel() {
+		super();
+
+		/* Initialize grid */
+		tileRepGrid = new TileRepresentationGrid();
+		representer = new TileGridRepresenter(tileRepGrid);
 		/* Setting the class layout. */
 		setLayout(new BorderLayout(0, 0));
 		/* Initializing the area where to put tiles and notifications. */
@@ -70,31 +76,42 @@ public class TextualGamePanel extends GamePanel {
 	/* Implementation of ViewInterface methods. */
 
 	@Override
-	public void initialize(TileGrid grid, int numPlayers,
-			PlayerColor clientColor) {
-		/* Setting the grid. */
-		this.representer = new TileGridRepresenter(grid);
+	public void initialize(String initMsg) {
+		String[] split = initMsg.split(",");
+
+		/* Setup initial tile */
+		String initialTile = split[0].trim();
+		tileRepGrid.execUpdate(initialTile + ", 0, 0");
+
 		/*
 		 * Setting the color of the client that uses the current instance of
 		 * TextualGamePanel (clientColor could be null if case the client
 		 * manages all the colors).
 		 */
-		this.clientColor = clientColor;
+		String color = split[2].trim();
+		clientColor = (color.equals("null") ? null : PlayerColor.valueOf(color));
+
 		/*
 		 * Printing on the textArea a String that announces the start of a
 		 * match.
 		 */
+		int playerNumber = Integer.parseInt(split[3].trim());
+
+		/* Print introduction */
 		String notification = String.format("Match starts with %s players.\n",
-				numPlayers);
+				playerNumber);
 		if (clientColor != null) {
-			notification += String.format("You are player %s.\n", clientColor);
+			notification += String
+					.format("You are player %s.\n\n", clientColor);
 		}
 		printMsg(notification);
+		printMsg(representer.getRepresentation());
 	}
 
 	/* Prints the current grid on the textArea. */
 	@Override
-	public void updateGridRepresentation() {
+	public void updateGridRepresentation(String s) {
+		tileRepGrid.execUpdate(s);
 		printMsg(representer.getRepresentation());
 	}
 
@@ -106,7 +123,15 @@ public class TextualGamePanel extends GamePanel {
 		/* Converts the Tile into a printable String. */
 		String tileRepresentation = TileGridRepresenter
 				.getTileRepresentation(tile);
-		printMsg("Your tile:\n" + tileRepresentation);
+
+		String msg;
+		if (clientColor != null) {
+			msg = "Your tile:\n";
+		} else {
+			msg = (String.format("Player %s tile:\n",
+					currentPlayerColor.getFullName()));
+		}
+		printMsg(msg + tileRepresentation);
 	}
 
 	/* Gives the current scores of the players that are playing the match. */
