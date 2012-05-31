@@ -173,6 +173,7 @@ public class SwingGamePanel extends GamePanel {
 		players = new JPanel();
 		bottomPanel.add(players, BorderLayout.WEST);
 
+		setUIActive(false);
 	}
 
 	/* Implementation of ViewInterface methods. */
