@@ -80,7 +80,7 @@ public class TileGridPainter extends JLabel {
 		int absX = (currOffsetX + x) * tileDim;
 		int absY = (currOffsetY - y) * tileDim;
 		/* Tile representation. */
-		tilePainter.paintTile(tile.toString(), g, absX, absY);
+		tilePainter.paintTile(tile, g, absX, absY);
 	}
 
 	private void printPlaceHolder(Graphics g, int x, int y) {
