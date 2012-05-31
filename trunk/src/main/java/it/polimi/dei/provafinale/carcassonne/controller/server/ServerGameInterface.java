@@ -3,9 +3,10 @@ package it.polimi.dei.provafinale.carcassonne.controller.server;
 import java.util.List;
 
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
 import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
-import it.polimi.dei.provafinale.carcassonne.controller.client.ConnectionLostException;
+import it.polimi.dei.provafinale.carcassonne.controller.RemotePlayer;
 import it.polimi.dei.provafinale.carcassonne.logger.Logger;
 import it.polimi.dei.provafinale.carcassonne.logger.LoggerService;
 

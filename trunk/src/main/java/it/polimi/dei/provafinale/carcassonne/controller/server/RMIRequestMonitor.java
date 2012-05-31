@@ -1,8 +1,10 @@
 package it.polimi.dei.provafinale.carcassonne.controller.server;
 
 import it.polimi.dei.provafinale.carcassonne.Constants;
+import it.polimi.dei.provafinale.carcassonne.controller.CarcassonneRMIClient;
+import it.polimi.dei.provafinale.carcassonne.controller.CarcassonneRMIServer;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
-import it.polimi.dei.provafinale.carcassonne.controller.client.CarcassonneRMIClient;
+import it.polimi.dei.provafinale.carcassonne.controller.RemotePlayer;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
