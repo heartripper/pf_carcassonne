@@ -3,13 +3,11 @@ package it.polimi.dei.provafinale.carcassonne.view.game;
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
 import it.polimi.dei.provafinale.carcassonne.controller.client.MessageSender;
-import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
@@ -21,11 +19,11 @@ import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 
 /**
- * The class SwingGamePanel extends a GamePanel in order to represent the view of
- * the game that a player has: a screen that contains the tiles already put in
- * the center of the page, a panel with notifications and options on the right
- * of the page and a panel with an overview of the match in the bottom part of
- * the page.
+ * The class SwingGamePanel extends a GamePanel in order to represent the view
+ * of the game that a player has: a screen that contains the tiles already put
+ * in the center of the page, a panel with notifications and options on the
+ * right of the page and a panel with an overview of the match in the bottom
+ * part of the page.
  * 
  */
 public class SwingGamePanel extends GamePanel {
@@ -33,8 +31,9 @@ public class SwingGamePanel extends GamePanel {
 	private static final long serialVersionUID = -5552501660516939765L;
 
 	/* Tiles area. */
-	private JPanel tilesArea;
 	private TilesPanel tilesPanel;
+	private TileRepresentationGrid tileRepGrid;
+
 	/* Overview of players area. */
 	private JPanel players;
 	private PlayerPanel[] playerPanels;
@@ -56,14 +55,15 @@ public class SwingGamePanel extends GamePanel {
 	 * SwingGamePanel.
 	 */
 	public SwingGamePanel() {
+		super();
 
 		/* Setting the class layout. */
 		setLayout(new BorderLayout(0, 0));
 
 		/* Initializing the area where to put tiles. */
-		tilesArea = new JPanel();
-		tilesArea.setLayout(new BorderLayout());
-		add(tilesArea, BorderLayout.CENTER);
+		tileRepGrid = new TileRepresentationGrid();
+		tilesPanel = new TilesPanel(tileRepGrid);
+		add(tilesPanel, BorderLayout.CENTER);
 
 		/*
 		 * Initializing the panel where to put notifications (e.g. current card,
@@ -172,41 +172,47 @@ public class SwingGamePanel extends GamePanel {
 		/* Players panel (to put into options panel). */
 		players = new JPanel();
 		bottomPanel.add(players, BorderLayout.WEST);
+
 	}
 
 	/* Implementation of ViewInterface methods. */
 
 	@Override
-	public void initialize(TileGrid grid, int numPlayers,
-			PlayerColor clientColor) {
-		/* Create tilesPanel */
-		tilesPanel = new TilesPanel(grid);
-		tilesArea.add(tilesPanel, BorderLayout.CENTER);
+	public void initialize(String payload) {
+		String[] split = payload.split(",");
+		String tileRep = split[0].trim();
+		String color = split[2].trim();
+		clientColor = (color.equals("null") ? null : PlayerColor.valueOf(color));
+		int playerNumber = Integer.parseInt(split[3].trim());
+
+		/*Setup first tile*/
+		tileRepGrid.execUpdate(tileRep + ", 0, 0");
+		tilesPanel.updateRepresentation();
+		
 		/* Setup players */
-		playerPanels = new PlayerPanel[numPlayers];
-		for (int i = 0; i < numPlayers; i++) {
+		playerPanels = new PlayerPanel[playerNumber];
+		for (int i = 0; i < playerNumber; i++) {
 			PlayerPanel p = new PlayerPanel(PlayerColor.valueOf(i));
 			players.add(p);
 			playerPanels[i] = p;
 		}
+
 		/* Setup client player color */
 		if (clientColor != null) {
 			int index = PlayerColor.indexOf(clientColor);
 			playerPanels[index].setClientPlayer();
-			this.clientColor = clientColor;
 		}
+
 		/* Disable UI */
 		setUIActive(false);
 		/* Update representation of tiles */
-		updateGridRepresentation();
 	}
 
 	/* Prints the current grid on the special area. */
 	@Override
-	public void updateGridRepresentation() {
+	public void updateGridRepresentation(String msg) {
+		tileRepGrid.execUpdate(msg);
 		tilesPanel.updateRepresentation();
-		Graphics g = tilesPanel.getGraphics();
-		tilesPanel.paint(g);
 	}
 
 	/* Prints the representation of the current tile on the special area. */
@@ -261,7 +267,7 @@ public class SwingGamePanel extends GamePanel {
 		messageLabel.setText(msg);
 	}
 
-	/* Activates and disactivates the grapghic interface. */
+	/* Activates and deactivates the graphic interface. */
 	@Override
 	public void setUIActive(boolean enabled) {
 		rotateButton.setEnabled(enabled);

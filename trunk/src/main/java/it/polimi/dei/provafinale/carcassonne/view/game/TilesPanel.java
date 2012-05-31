@@ -1,6 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne.view.game;
 
-import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
+import java.awt.Graphics;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -25,7 +25,7 @@ public class TilesPanel extends JScrollPane {
 	 * @param grid
 	 *            the grid to represent.
 	 */
-	public TilesPanel(TileGrid grid) {
+	public TilesPanel(TileRepresentationGrid grid) {
 		super();
 
 		/* Creating a new panel. */
@@ -56,5 +56,9 @@ public class TilesPanel extends JScrollPane {
 	 */
 	public void updateRepresentation() {
 		tilesPainter.updateRepresentation();
+		Graphics g = this.getGraphics();
+		if(g != null){
+			this.paint(g);
+		}
 	}
 }

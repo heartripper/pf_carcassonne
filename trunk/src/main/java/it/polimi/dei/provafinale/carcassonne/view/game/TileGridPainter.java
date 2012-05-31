@@ -1,8 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne.view.game;
 
 import it.polimi.dei.provafinale.carcassonne.Coord;
-import it.polimi.dei.provafinale.carcassonne.model.Tile;
-import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,7 +19,7 @@ public class TileGridPainter extends JLabel {
 
 	private static final long serialVersionUID = -2603074766780325918L;
 
-	private TileGrid grid;
+	private TileRepresentationGrid grid;
 	private final int tileDim = 125;
 	private int currOffsetX;
 	private int currOffsetY;
@@ -34,7 +32,7 @@ public class TileGridPainter extends JLabel {
 	 * @param grid
 	 *            the grid to represent.
 	 */
-	public TileGridPainter(TileGrid grid) {
+	public TileGridPainter(TileRepresentationGrid grid) {
 		this.grid = grid;
 	}
 
@@ -61,42 +59,41 @@ public class TileGridPainter extends JLabel {
 		for (int j = bounds[2] + 1; j >= bounds[0] - 1; j--) {
 			for (int i = bounds[3] - 1; i <= bounds[1] + 1; i++) {
 				Coord c = new Coord(i, j);
-				Tile tile = grid.getTile(c);
+				String tileRep = grid.getTileRepresentation(c);
 				/* The tile is present at a given coordinate. */
-				if (tile != null) {
-					printCard(g, tile);
+				if (tileRep != null) {
+					printCard(g, tileRep, i, j);
 				}
 				/*
 				 * The is the neighbor of another tile (that is really present
 				 * on the grid).
 				 */
-				else if (grid.hasNeighborForCoord(c)) {
+				else if (grid.hasTileNeighbor(c)) {
 					printPlaceHolder(g, i, j);
 				}
 			}
 		}
 	}
 
-	private void printCard(Graphics g, Tile tile) {
+	private void printCard(Graphics g, String tile, int x, int y) {
 		/* Calculating the coordinates. */
-		Coord coord = tile.getCoordinates();
-		int x = (currOffsetX + coord.getX()) * tileDim;
-		int y = (currOffsetY - coord.getY()) * tileDim;
+		int absX = (currOffsetX + x) * tileDim;
+		int absY = (currOffsetY - y) * tileDim;
 		/* Tile representation. */
-		tilePainter.paintTile(tile.toString(), g, x, y);
+		tilePainter.paintTile(tile.toString(), g, absX, absY);
 	}
 
-	private void printPlaceHolder(Graphics g, int i, int j) {
+	private void printPlaceHolder(Graphics g, int x, int y) {
 		/* Calculating the coordinates. */
-		int offsetX = (currOffsetX + i) * tileDim;
-		int offsetY = (currOffsetY - j) * tileDim;
+		int absX = (currOffsetX + x) * tileDim;
+		int absY = (currOffsetY - y) * tileDim;
 		/* Tile representation. */
-		tilePainter.paintPlaceHolder(g, offsetX, offsetY);
+		tilePainter.paintPlaceHolder(g, absX, absY);
 		/* Calculating the coordinates. */
-		String coord = String.format("(%s,%s)", i, j);
+		String coord = String.format("(%s,%s)", x, y);
 		/* Writing the coordinates on the placeholder representation */
 		g.setColor(Color.BLACK);
-		g.drawString(coord, offsetX + tileDim / 4, offsetY + tileDim / 2);
+		g.drawString(coord, absX + tileDim / 4, absY + tileDim / 2);
 
 	}
 

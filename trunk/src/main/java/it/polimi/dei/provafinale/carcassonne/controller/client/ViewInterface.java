@@ -1,7 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne.controller.client;
 
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
-import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
 
 /**
  * Interface to let Client Controller control an user interface.
@@ -10,21 +9,18 @@ public interface ViewInterface {
 	/**
 	 * Initializes the user interface.
 	 * 
-	 * @param grid
-	 *            - a tileGrid to be represented on the user interface
 	 * @param numPlayers
 	 *            - a int representing the number of players
 	 * @param clientColor
 	 *            - the color of player handled by controller, null if
 	 *            controller handles all players (local game)
 	 * */
-	abstract void initialize(TileGrid grid, int numPlayers,
-			PlayerColor clientColor);
+	abstract void initialize(String initializeString);
 
 	/**
 	 * Makes the user interface update the representation of the grid.
 	 * */
-	abstract void updateGridRepresentation();
+	abstract void updateGridRepresentation(String msg);
 
 	/**
 	 * Updates the current tile in the user interface.
