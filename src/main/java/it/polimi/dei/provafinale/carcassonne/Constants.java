@@ -7,7 +7,7 @@ public abstract class Constants {
 
 	/* Basics */
 	public static final int MIN_PLAYER_NUMBER = 2;
-	public static final int MAX_PLAYER_NUMBER = 4;
+	public static final int MAX_PLAYER_NUMBER = 5;
 
 	public static final int SIDES_NUMBER = 4;
 
