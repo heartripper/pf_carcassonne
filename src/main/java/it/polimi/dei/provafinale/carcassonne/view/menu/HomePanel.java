@@ -5,12 +5,12 @@ import it.polimi.dei.provafinale.carcassonne.controller.client.MenuPanelSwitcher
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
 
 import javax.swing.JButton;
 import javax.swing.BoxLayout;
 import javax.swing.Box;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.awt.Component;
 
 /**
@@ -22,7 +22,7 @@ public class HomePanel extends JPanel {
 
 	private static final long serialVersionUID = 8988417171482193429L;
 
-	private Image background;
+	private BufferedImage background;
 
 	/**
 	 * HomePanel constructor. Creates a new instance of class HomePanel.
@@ -30,7 +30,7 @@ public class HomePanel extends JPanel {
 	 * @param background
 	 *            an Image we want to set as background of the panel.
 	 */
-	public HomePanel(Image background) {
+	public HomePanel(BufferedImage background) {
 		/* Setting background attribute. */
 		this.background = background;
 
@@ -85,8 +85,9 @@ public class HomePanel extends JPanel {
 	 */
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		int width = getWidth();
-		g.drawImage(background, (width - 778) / 2, 0, null);
+		int x = (getWidth() - background.getWidth()) / 2;
+		int y = (getHeight() -background.getHeight());
+		g.drawImage(background, x, y, null);
 	}
 
 }

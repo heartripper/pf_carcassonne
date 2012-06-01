@@ -2,7 +2,6 @@ package it.polimi.dei.provafinale.carcassonne.view.menu;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -186,8 +185,9 @@ public class InternetGamePanel extends JPanel {
 	 */
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		int width = getWidth();
-		g.drawImage(background, (width - background.getWidth()) / 2, 0, null);
+		int x = (getWidth() - background.getWidth()) / 2;
+		int y = (getHeight() -background.getHeight());
+		g.drawImage(background, x, y, null);
 	}
 
 	/**
