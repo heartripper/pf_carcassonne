@@ -144,18 +144,20 @@ public class PlayerPanel extends JPanel {
 	 *            that is the turn of another player.
 	 */
 	public void setActive(boolean active) {
-		Font f;
+		Font font;
+		Color color;
 		/* It's current player turn. */
 		if (active) {
-			f = selNameFont;
-			setBackground(selectedBGColor);
+			font = selNameFont;
+			color = selectedBGColor;
 		}
 		/* It's another player turn. */
 		else {
-			f = unselNameFont;
-			setBackground(unselectedBGColor);
+			font = unselNameFont;
+			color = unselectedBGColor;
 		}
-		lblName.setFont(f);
+		lblName.setFont(font);
+		setBackground(color);
 	}
 
 	/**
