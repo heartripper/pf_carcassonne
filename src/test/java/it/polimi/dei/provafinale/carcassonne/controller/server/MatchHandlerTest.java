@@ -20,12 +20,16 @@ public class MatchHandlerTest {
 	
 	@Before
 	public void setUp(){
-
+		fakeInterface = new FakeGameInterface();
+		MatchHandler match = new MatchHandler(fakeInterface);
+		runningThread = new Thread(match);
+		runningThread.start();
 	}
 	
 	@Test
 	public void test() {
-
+		Message testRes = fakeInterface.readTestResult();
+		assertTrue(testRes.type.equals(MessageType.START));
 	}
 
 	
