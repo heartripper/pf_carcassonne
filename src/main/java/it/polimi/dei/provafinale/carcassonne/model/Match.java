@@ -5,6 +5,7 @@ import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * The class Match creates and manages the execution of a match with all its
@@ -16,7 +17,7 @@ public class Match {
 	private TileGrid grid;
 	private TileStack stack;
 	private PlayerCircularArray players;
-	private List<Entity> entities;
+	private Vector<Entity> entities;
 	private Tile firstTile;
 	private int playersNumber;
 
@@ -28,7 +29,7 @@ public class Match {
 	 */
 	public Match(int numPlayers) {
 		this.grid = new TileGrid();
-		this.entities = new ArrayList<Entity>();
+		this.entities = new Vector<Entity>();
 		this.stack = new TileStack();
 		this.players = new PlayerCircularArray(numPlayers);
 		this.playersNumber = numPlayers;
@@ -106,7 +107,7 @@ public class Match {
 	 * @param tile
 	 *            - a Tile that has been added to the grid.
 	 */
-	public List<Tile> checkForCompletedEntities(Tile tile) {
+	public synchronized List<Tile> checkForCompletedEntities(Tile tile) {
 		ArrayList<Entity> checkedEntities = new ArrayList<Entity>();
 		ArrayList<Tile> updatedTiles = new ArrayList<Tile>();
 
@@ -125,6 +126,7 @@ public class Match {
 			if (entity.isComplete()) {
 				List<Tile> currentUpdatedTiles = finalizeEntityAndUpdate(entity);
 				updatedTiles.addAll(currentUpdatedTiles);
+				entities.remove(entity);
 			}
 		}
 		return updatedTiles;
@@ -178,8 +180,9 @@ public class Match {
 	 * When the game is finished, gives the score corresponding to each
 	 * incomplete entity to his owner/owners.
 	 */
-	public void finalizeMatch() {
-		for (Entity e : entities) {
+	public synchronized void finalizeMatch() {
+		for (int i = 0; i < entities.size(); i++) {
+			Entity e = entities.get(i);
 			finalizeEntityAndUpdate(e);
 		}
 	}
@@ -200,7 +203,7 @@ public class Match {
 	 * @param color
 	 *            - the color of the player we want to remove.
 	 */
-	public List<Tile> removePlayer(PlayerColor color)
+	public synchronized List<Tile> removePlayer(PlayerColor color)
 			throws NotEnoughPlayersException {
 		Player p = players.getByColor(color);
 		p.setInactive();
@@ -287,8 +290,7 @@ public class Match {
 		giveScoreToOwners(followers, score);
 		/* Return followers to owners. */
 		returnFollowers(followers);
-		/* Remove followers from entity and return a list of updated cards. */
-		entities.remove(entity);
+		
 		return entity.removeFollowers(null);
 	}
 
