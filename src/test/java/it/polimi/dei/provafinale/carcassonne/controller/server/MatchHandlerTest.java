@@ -30,6 +30,14 @@ public class MatchHandlerTest {
 	public void test() {
 		Message testRes = fakeInterface.readTestResult();
 		assertTrue(testRes.type.equals(MessageType.START));
+		testRes = fakeInterface.readTestResult();
+		assertTrue(testRes.type.equals(MessageType.TURN));
+		testRes = fakeInterface.readTestResult();
+		assertTrue(testRes.type.equals(MessageType.NEXT));
+		fakeInterface.writeOnBuffer(new Message(MessageType.ROTATE,null));
+		assertTrue(fakeInterface.readTestResult().type.equals(MessageType.ROTATED));
+		fakeInterface.writeOnBuffer(new Message(MessageType.PASS, null));
+		assertTrue(fakeInterface.readTestResult().type.equals(MessageType.INVALID_MOVE));
 	}
 
 	
