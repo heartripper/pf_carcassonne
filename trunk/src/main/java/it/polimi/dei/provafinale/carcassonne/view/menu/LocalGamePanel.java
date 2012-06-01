@@ -25,6 +25,8 @@ import javax.swing.JButton;
  */
 public class LocalGamePanel extends JPanel {
 
+	private static final int PIXEL_SPACING = 20;
+
 	private static final long serialVersionUID = -6424162656647447061L;
 
 	private BufferedImage background;
@@ -57,7 +59,7 @@ public class LocalGamePanel extends JPanel {
 		titlePanel.add(lblNewLocalGame);
 
 		/* Layout option. */
-		Component verticalStrut01 = Box.createVerticalStrut(20);
+		Component verticalStrut01 = Box.createVerticalStrut(PIXEL_SPACING);
 		add(verticalStrut01);
 
 		/* Creating select players number panel. */
@@ -83,7 +85,7 @@ public class LocalGamePanel extends JPanel {
 		selectPlayersNumberPanel.add(horizontalGlue02);
 
 		/* Layout option. */
-		Component verticalStrut = Box.createVerticalStrut(20);
+		Component verticalStrut = Box.createVerticalStrut(PIXEL_SPACING);
 		add(verticalStrut);
 
 		/* Creating gui panel. */

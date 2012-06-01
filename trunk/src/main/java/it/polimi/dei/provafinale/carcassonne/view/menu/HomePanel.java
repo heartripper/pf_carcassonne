@@ -20,6 +20,8 @@ import java.awt.Component;
  */
 public class HomePanel extends JPanel {
 
+	private static final int PIXEL_SPACING = 20;
+
 	private static final long serialVersionUID = 8988417171482193429L;
 
 	private BufferedImage background;
@@ -53,7 +55,7 @@ public class HomePanel extends JPanel {
 		btnNewLocalGame.addActionListener(local);
 
 		/* Layout option. */
-		Component verticalStrut = Box.createVerticalStrut(20);
+		Component verticalStrut = Box.createVerticalStrut(PIXEL_SPACING);
 
 		/* Adding new internet game panel. */
 		JPanel newInternetGamePanel = new JPanel();

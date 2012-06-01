@@ -25,7 +25,6 @@ import javax.swing.JComboBox;
 public class InternetGamePanel extends JPanel {
 
 	private static final int COLUMNS_NUMBER = 10;
-
 	private static final int PIXEL_SPACING = 20;
 
 	private static final long serialVersionUID = 8480541024375120364L;
