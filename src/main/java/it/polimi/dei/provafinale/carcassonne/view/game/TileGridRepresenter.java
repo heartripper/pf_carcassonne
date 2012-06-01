@@ -179,7 +179,8 @@ public class TileGridRepresenter {
 			if (i % 2 == 0) {
 				padded.append(" ");
 			} else {
-				padded = new StringBuilder(" " + padded.toString());
+				String newRep = " " + padded.toString();
+				padded = new StringBuilder(newRep);
 			}
 		}
 
