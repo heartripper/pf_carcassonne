@@ -2,15 +2,12 @@ package it.polimi.dei.provafinale.carcassonne.controller.server;
 
 import static org.junit.Assert.*;
 
-import java.awt.Color;
-
 import it.polimi.dei.provafinale.carcassonne.Coord;
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
 import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
 import it.polimi.dei.provafinale.carcassonne.controller.client.MessageBuffer;
 import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
-import it.polimi.dei.provafinale.carcassonne.model.Tile;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +30,6 @@ public class MatchHandlerTest {
 	public void test() {
 		
 		Message testRes;
-		Tile tile;
 		Coord[] targetCoords = { new Coord(0, 1), new Coord(1, 0),
 				new Coord(0, -1), new Coord(-1, 0) };
 
@@ -51,7 +47,6 @@ public class MatchHandlerTest {
 
 		testRes = fakeInterface.readTestResult();
 		assertTrue(testRes.type.equals(MessageType.NEXT));
-		tile = new Tile(testRes.payload);
 
 		/* Test on tile rotation. */
 
