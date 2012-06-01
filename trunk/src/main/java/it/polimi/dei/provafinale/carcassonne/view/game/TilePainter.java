@@ -255,24 +255,22 @@ public final class TilePainter {
 
 		g.setColor(color.getColor());
 
-		double unit = ((double) tileDim) / 16;
-		int smallSpacer = (int) unit;
-		int bigSpacer = (int) (13 * unit);
-		int followerSpacing = 2 * tileDim / 5;
+		int smallSpacer = tileDim / 16;
+		int bigSpacer = 2 * tileDim / 5;
 
 		Point p;
 		switch (pos) {
 		case N:
-			p = new Point(followerSpacing, smallSpacer);
+			p = new Point(bigSpacer, smallSpacer);
 			break;
 		case S:
-			p = new Point(followerSpacing, bigSpacer);
+			p = new Point(bigSpacer, 2*bigSpacer - smallSpacer);
 			break;
 		case W:
-			p = new Point(smallSpacer, followerSpacing);
+			p = new Point(smallSpacer, bigSpacer);
 			break;
 		case E:
-			p = new Point(bigSpacer, followerSpacing);
+			p = new Point(2*bigSpacer - smallSpacer, bigSpacer);
 			break;
 		default:
 			p = new Point(tileDim / 2, tileDim / 2);
