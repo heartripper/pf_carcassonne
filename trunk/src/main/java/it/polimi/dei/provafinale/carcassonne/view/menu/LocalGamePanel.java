@@ -11,8 +11,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.Box;
 import javax.swing.JComboBox;
@@ -27,7 +27,7 @@ public class LocalGamePanel extends JPanel {
 
 	private static final long serialVersionUID = -6424162656647447061L;
 
-	private Image background;
+	private BufferedImage background;
 
 	/**
 	 * LocalGamePanel constructor. Creates a new instance of class
@@ -36,7 +36,7 @@ public class LocalGamePanel extends JPanel {
 	 * @param background
 	 *            an Image we want to set as background of the panel.
 	 */
-	public LocalGamePanel(Image background) {
+	public LocalGamePanel(BufferedImage background) {
 		/* Setting background attribute. */
 		this.background = background;
 
@@ -137,8 +137,9 @@ public class LocalGamePanel extends JPanel {
 	 */
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		int width = getWidth();
-		g.drawImage(background, (width - 778) / 2, 0, null);
+		int x = (getWidth() - background.getWidth()) / 2;
+		int y = (getHeight() -background.getHeight());
+		g.drawImage(background, x, y, null);
 	}
 
 }
