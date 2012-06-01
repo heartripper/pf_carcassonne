@@ -16,22 +16,26 @@ import javax.swing.JPanel;
  */
 public class BannerPanel extends JPanel {
 
+	private static final int BANNERPANEL_HEIGHT = 175;
+	private static final int BANNERPANEL_WIDTH = 10;
+
 	private static final long serialVersionUID = -7347936654163580714L;
 
 	private Image banner;
 	private int width;
+	private Color bannerBackground = new Color(70, 98, 151);
 
 	/**
 	 * BannerPanel constructor. Creates a new instance of class BannerPanel.
 	 */
 	public BannerPanel() {
-		/* Dimension. */
-		setPreferredSize(new Dimension(10, 175));
-		/* Logo. */
+
+		setPreferredSize(new Dimension(BANNERPANEL_WIDTH, BANNERPANEL_HEIGHT));
+
 		String path = "src/main/resources/banner.png";
 		banner = Toolkit.getDefaultToolkit().createImage(path);
-		/* Background. */
-		setBackground(new Color(70, 98, 151));
+
+		setBackground(bannerBackground);
 	}
 
 	/**
@@ -40,7 +44,7 @@ public class BannerPanel extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		width = getWidth();
-		g.drawImage(banner, (width - 528) / 2, 0, null);
+		g.drawImage(banner, (width - banner.getWidth(null)) / 2, 0, null);
 	}
 
 }
