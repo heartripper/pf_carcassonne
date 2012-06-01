@@ -156,12 +156,14 @@ public class ClientControllerImpl implements Runnable {
 		sendToServer(msg);
 		/* Reads the answer from the server. */
 		Message response = readFromServer();
-		/* Rotation successful. */
-		if (response.type == MessageType.ROTATED) {
+		switch(response.type){		
+		case ROTATED:
 			viewInterface.updateCurrentTile(response.payload.trim());
-		}
-		/* Rotation unsuccessful. */
-		else {
+			break;
+		case INVALID_MOVE:
+			viewInterface.showNotify("Tile can't be rotated");
+			break;
+		default:
 			protocolOrderError("rotated", response.type);
 		}
 	}
