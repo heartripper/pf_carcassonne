@@ -284,48 +284,15 @@ public class Match {
 	}
 
 	private List<Tile> finalizeEntityAndUpdate(Entity entity) {
+		/*Create Entity report*/
+		EntityReport er = new EntityReport(entity, playersNumber);
+		
 		/* Give corresponding score to entity owners. */
-		int score = entity.getScore();
-		int[] followers = entity.countFollowers(playersNumber);
-		giveScoreToOwners(followers, score);
+		players.addScores(er.getScores());
+		
 		/* Return followers to owners. */
-		returnFollowers(followers);
+		players.addFollowers(er.getFollowers());
 		
 		return entity.removeFollowers(null);
-	}
-
-	private void giveScoreToOwners(int[] followers, int score) {
-
-		int max = 0;
-
-		for (int f : followers) {
-			/* Maximum number of followers. */
-			if (f > max) {
-				max = f;
-			}
-		}
-
-		/* No follower to assign a score. */
-		if (max == 0) {
-			return;
-		}
-
-		/* Score assignment. */
-		for (int i = 0; i < followers.length; i++) {
-			if (followers[i] == max) {
-				PlayerColor color = PlayerColor.valueOf(i);
-				Player player = players.getByColor(color);
-				player.addScore(score);
-			}
-		}
-	}
-
-	/* Returns followers to their owners. */
-	private void returnFollowers(int[] followers) {
-		for (int i = 0; i < playersNumber; i++) {
-			PlayerColor color = PlayerColor.valueOf(i);
-			Player player = players.getByColor(color);
-			player.addFollowers(followers[i]);
-		}
 	}
 }

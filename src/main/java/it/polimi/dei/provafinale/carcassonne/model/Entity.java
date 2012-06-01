@@ -28,13 +28,6 @@ public abstract class Entity {
 	}
 
 	/**
-	 * Obtains the list of this entity's members.
-	 */
-	public List<Side> getMembers() {
-		return members;
-	}
-
-	/**
 	 * Checks if an entity is completed.
 	 * 
 	 * @return true if the entity is completed, false otherwise
@@ -139,7 +132,7 @@ public abstract class Entity {
 		}
 		return updatedCards;
 	}
-
+	
 	// Abstract methods
 	/**
 	 * Gives the type of this entity.
@@ -152,4 +145,11 @@ public abstract class Entity {
 	 * Returns the score given to owners by this entity;
 	 * */
 	public abstract int getScore();
+	
+	/**
+	 * Obtains the list of this entity's members.
+	 */
+	protected List<Side> getMembers() {
+		return members;
+	}
 }
