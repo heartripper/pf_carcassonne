@@ -25,6 +25,10 @@ import javax.swing.JComboBox;
  */
 public class InternetGamePanel extends JPanel {
 
+	private static final int COLUMNS_NUMBER = 10;
+
+	private static final int PIXEL_SPACING = 20;
+
 	private static final long serialVersionUID = 8480541024375120364L;
 
 	private JLabel messageLabel;
@@ -63,13 +67,12 @@ public class InternetGamePanel extends JPanel {
 		titlePanel.add(lblNewInternetGame);
 
 		/* Layout option. */
-		Component verticalStrut01 = Box.createVerticalStrut(20);
+		Component verticalStrut01 = Box.createVerticalStrut(PIXEL_SPACING);
 		add(verticalStrut01);
 
 		/* Creating server info panel. */
 		JPanel serverInfoPanel = new JPanel();
 		serverInfoPanel.setBackground(new Color(0, 0, 0, 0));
-		serverInfoPanel.setPreferredSize(new Dimension(10, 0));
 		BoxLayout boxLayout = new BoxLayout(serverInfoPanel, BoxLayout.Y_AXIS);
 		serverInfoPanel.setLayout(boxLayout);
 		add(serverInfoPanel);
@@ -87,7 +90,7 @@ public class InternetGamePanel extends JPanel {
 		 * into ip panel.
 		 */
 		serverIPField = new JTextField();
-		serverIPField.setColumns(10);
+		serverIPField.setColumns(COLUMNS_NUMBER);
 		ipPanel.add(serverIPField);
 		/* Creating port panel to put into server info panel. */
 		JPanel portPanel = new JPanel();
@@ -101,7 +104,7 @@ public class InternetGamePanel extends JPanel {
 		 */
 		serverPortField = new JTextField();
 		portPanel.add(serverPortField);
-		serverPortField.setColumns(10);
+		serverPortField.setColumns(COLUMNS_NUMBER);
 		/* Adding ip panel and port panel to server info panel. */
 		serverInfoPanel.add(ipPanel);
 		serverInfoPanel.add(portPanel);
@@ -110,7 +113,7 @@ public class InternetGamePanel extends JPanel {
 		serverInfoPanel.add(horizontalGlue02);
 
 		/* Layout option. */
-		Component verticalStrut = Box.createVerticalStrut(20);
+		Component verticalStrut = Box.createVerticalStrut(PIXEL_SPACING);
 		add(verticalStrut);
 
 		/* Creating protocol panel. */
@@ -184,7 +187,7 @@ public class InternetGamePanel extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		int width = getWidth();
-		g.drawImage(background, (width - 778) / 2, 0, null);
+		g.drawImage(background, (width - background.getWidth()) / 2, 0, null);
 	}
 
 	/**
