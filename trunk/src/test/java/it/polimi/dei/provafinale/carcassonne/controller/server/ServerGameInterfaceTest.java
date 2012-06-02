@@ -97,6 +97,25 @@ public class ServerGameInterfaceTest {
 		}
 	}
 
+	/*
+	 * Test that if server sends an update single message, players receive an
+	 * update one.
+	 */
+	@Test
+	public void updateTest() {
+		Message updateSingle = new Message(MessageType.UPDATE_SINGLE, null);
+		try {
+			serverGameInterface.sendAllPlayer(updateSingle);
+		} catch (PlayersDisconnectedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (int i = 0; i < numPlayers; i++) {
+			FakeRemotePlayer frp = (FakeRemotePlayer) remotePlayers.get(i);
+			assertTrue(frp.readOutput().type == MessageType.UPDATE);
+		}
+	}
+
 	private class FakeRemotePlayer implements RemotePlayer {
 
 		private Message testInput;
