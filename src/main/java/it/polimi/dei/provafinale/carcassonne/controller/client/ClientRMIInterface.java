@@ -24,7 +24,7 @@ import it.polimi.dei.provafinale.carcassonne.logger.LoggerService;
 public class ClientRMIInterface implements ClientInterface,
 		CarcassonneRMIClient {
 
-	private int POLL_INTERVAL;
+	private final int PollInterval = 5 * 1000;
 	private String host;
 	private Message serverBuffer, clientBuffer;
 	private CarcassonneRMIServer server;
@@ -54,7 +54,7 @@ public class ClientRMIInterface implements ClientInterface,
 			throws ConnectionLostException {
 		while (clientBuffer != null) {
 			try {
-				wait(POLL_INTERVAL);
+				wait(PollInterval);
 				server.poll();
 			} catch (InterruptedException ie) {
 
@@ -73,7 +73,7 @@ public class ClientRMIInterface implements ClientInterface,
 	public synchronized Message readMessage() throws ConnectionLostException {
 		while (serverBuffer == null) {
 			try {
-				wait(POLL_INTERVAL);
+				wait(PollInterval);
 				server.poll();
 			} catch (InterruptedException ie) {
 
