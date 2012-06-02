@@ -7,8 +7,6 @@ import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
 import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
 import it.polimi.dei.provafinale.carcassonne.controller.RemotePlayer;
-import it.polimi.dei.provafinale.carcassonne.logger.Logger;
-import it.polimi.dei.provafinale.carcassonne.logger.LoggerService;
 
 /**
  * Class ServerGameInterface implements GameInterface in order to allow Match
@@ -21,7 +19,6 @@ public class ServerGameInterface implements GameInterface {
 	private List<RemotePlayer> remotePlayers;
 	private String name;
 	private int numPlayers;
-	private Logger logger;
 
 	/**
 	 * ServerGameInterface constructor. Creates a new instance of class
@@ -34,8 +31,6 @@ public class ServerGameInterface implements GameInterface {
 		this.remotePlayers = remotePlayers;
 		this.name = Integer.toHexString(hashCode());
 		this.numPlayers = remotePlayers.size();
-		this.logger = LoggerService.getService()
-				.register("ServerGameInterface");
 	}
 
 	/* Gets the number of players. */
@@ -55,10 +50,10 @@ public class ServerGameInterface implements GameInterface {
 				/* Reading the message. */
 				Message msg = remotePlayer.readMessage();
 				/* Log preliminaries. */
-				int index = remotePlayers.indexOf(remotePlayer);
-				String protocolMsg = msg.toProtocolMessage();
+//				int index = remotePlayers.indexOf(remotePlayer);
+//				String protocolMsg = msg.toProtocolMessage();
 				/* Printing the log. */
-				logger.log(String.format("P%s>S: \"%s\"\n", index, protocolMsg));
+				//logger.log(String.format("P%s>S: \"%s\"\n", index, protocolMsg));
 				return msg;
 			} catch (ConnectionLostException cle) {
 				handleDisconnection(remotePlayer);
@@ -84,10 +79,10 @@ public class ServerGameInterface implements GameInterface {
 					toSend = msg;
 				}
 				/* Log preliminaries. */
-				int index = remotePlayers.indexOf(remotePlayer);
-				String protocolMsg = msg.toProtocolMessage();
+//				int index = remotePlayers.indexOf(remotePlayer);
+//				String protocolMsg = msg.toProtocolMessage();
 				/* Printing the log. */
-				logger.log(String.format("S>P%s: \"%s\"\n", index, protocolMsg));
+				//logger.log(String.format("S>P%s: \"%s\"\n", index, protocolMsg));
 				/* Sending message. */
 				remotePlayer.sendMessage(toSend);
 				return;
@@ -180,7 +175,7 @@ public class ServerGameInterface implements GameInterface {
 		 */
 		if (!newPlayer.isActive()) {
 			msg = new Message(MessageType.LEAVE, color.toString());
-			logger.log(String.format("Player %s has disconnected.\n", color));
+			//logger.log(String.format("Player %s has disconnected.\n", color));
 			if (pde == null) {
 				pde = new PlayersDisconnectedException(color);
 			} else {
@@ -193,7 +188,7 @@ public class ServerGameInterface implements GameInterface {
 		 */
 		else {
 			msg = new Message(MessageType.UNLOCK, null);
-			logger.log(String.format("Player %s has reconnected.\n", color));
+			//logger.log(String.format("Player %s has reconnected.\n", color));
 		}
 		/* Trying to send notifies. */
 		try {
@@ -233,5 +228,4 @@ public class ServerGameInterface implements GameInterface {
 	public String getName() {
 		return name;
 	}
-
 }
