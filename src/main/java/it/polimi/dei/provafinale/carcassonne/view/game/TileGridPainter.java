@@ -15,6 +15,7 @@ import javax.swing.JLabel;
  */
 public class TileGridPainter extends JLabel {
 
+	private static final int FIRST_TILE_OCCUPATION = 1;
 	private static final int INITIAL_GRID_DIMENSION = 3;
 
 	private static final long serialVersionUID = -2603074766780325918L;
@@ -44,9 +45,9 @@ public class TileGridPainter extends JLabel {
 		int[] bounds = grid.getBounds();
 		/* Setting the dimension of the new grid. */
 		int vertTile = INITIAL_GRID_DIMENSION + bounds[2] - bounds[0];
-		int horTile = 3 + bounds[1] - bounds[3];
-		currOffsetX = 1 - bounds[3];
-		currOffsetY = 1 + bounds[2];
+		int horTile = INITIAL_GRID_DIMENSION + bounds[1] - bounds[3];
+		currOffsetX = FIRST_TILE_OCCUPATION - bounds[3];
+		currOffsetY = FIRST_TILE_OCCUPATION + bounds[2];
 		setDimension(horTile * tileDim, vertTile * tileDim);
 	}
 
@@ -56,8 +57,10 @@ public class TileGridPainter extends JLabel {
 		/* Obtaining bounds. */
 		int[] bounds = grid.getBounds();
 		/* Print the components in the grid. */
-		for (int j = bounds[2] + 1; j >= bounds[0] - 1; j--) {
-			for (int i = bounds[3] - 1; i <= bounds[1] + 1; i++) {
+		for (int j = bounds[2] + FIRST_TILE_OCCUPATION; j >= bounds[0]
+				- FIRST_TILE_OCCUPATION; j--) {
+			for (int i = bounds[3] - FIRST_TILE_OCCUPATION; i <= bounds[1]
+					+ FIRST_TILE_OCCUPATION; i++) {
 				Coord c = new Coord(i, j);
 				String tileRep = grid.getTileRepresentation(c);
 				/* The tile is present at a given coordinate. */

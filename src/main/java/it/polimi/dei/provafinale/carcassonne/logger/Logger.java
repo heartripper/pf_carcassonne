@@ -14,6 +14,8 @@ import javax.swing.JTextArea;
  */
 public class Logger extends JPanel {
 
+	private static final int FONT_SIZE = 14;
+
 	private static final long serialVersionUID = -8795155705201105543L;
 
 	private StringBuilder log;
@@ -27,7 +29,7 @@ public class Logger extends JPanel {
 		setLayout(new BorderLayout());
 		/* Setting textArea. */
 		textArea = new JTextArea();
-		textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
+		textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, FONT_SIZE));
 		JScrollPane scroll = new JScrollPane(textArea);
 		add(scroll, BorderLayout.CENTER);
 		/* Creating a StringBuilder. */

@@ -22,6 +22,9 @@ import it.polimi.dei.provafinale.carcassonne.model.Tile;
  */
 public class TextualGamePanel extends GamePanel {
 
+	private static final int COLUMNS_NUMBER = 10;
+	private static final int FONT_SIZE = 15;
+
 	private static final long serialVersionUID = -8074082087694368365L;
 
 	private PlayerColor clientColor;
@@ -47,7 +50,7 @@ public class TextualGamePanel extends GamePanel {
 		setLayout(new BorderLayout(0, 0));
 		/* Initializing the area where to put tiles and notifications. */
 		textArea = new JTextArea();
-		textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 15));
+		textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, FONT_SIZE));
 		textArea.setEditable(false);
 		JScrollPane scrollPane = new JScrollPane(textArea);
 		add(scrollPane, BorderLayout.CENTER);
@@ -56,7 +59,7 @@ public class TextualGamePanel extends GamePanel {
 		add(panel, BorderLayout.SOUTH);
 		/* Setting in the bottom panel a TextField where to insert commands. */
 		textField = new JTextField();
-		textField.setColumns(10);
+		textField.setColumns(COLUMNS_NUMBER);
 		panel.add(textField);
 		/*
 		 * Setting in the bottom panel a JButton to confirm the inserted
