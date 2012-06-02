@@ -13,6 +13,9 @@ import it.polimi.dei.provafinale.carcassonne.model.Tile;
  */
 public class TileGridRepresenter {
 
+	private static final int FIRST_TILE_OCCUPATION = 1;
+	private static final int TILE_HEIGHT = 7;
+	
 	private TileRepresentationGrid grid;
 
 	/**
@@ -41,20 +44,21 @@ public class TileGridRepresenter {
 
 		for (int j = bounds[2] + 1; j >= bounds[0] - 1; j--) {
 			/* Initializing string builder. */
-			StringBuilder[] lines = new StringBuilder[7];
+			StringBuilder[] lines = new StringBuilder[TILE_HEIGHT];
 			for (int i = 0; i < lines.length; i++) {
 				lines[i] = new StringBuilder("");
 			}
-			for (int i = bounds[3] - 1; i <= bounds[1] + 1; i++) {
+			for (int i = bounds[3] - FIRST_TILE_OCCUPATION; i <= bounds[1]
+					+ FIRST_TILE_OCCUPATION; i++) {
 				/* Creating a coordinate. */
 				Coord currentCoord = new Coord(i, j);
 				/* Obtaining the tile at the given coordinate. */
 				String tileRep = grid.getTileRepresentation(currentCoord);
 				Tile currentTile = null;
-				if(tileRep != null){
+				if (tileRep != null) {
 					currentTile = new Tile(tileRep);
 				}
-				
+
 				/* Initializing the tile representation (null). */
 				String[] rep = null;
 				/* Exists a tile at the given position. */

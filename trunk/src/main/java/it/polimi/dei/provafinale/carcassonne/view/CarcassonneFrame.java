@@ -16,6 +16,9 @@ import java.awt.CardLayout;
  */
 public class CarcassonneFrame extends JFrame {
 
+	private static final int CARCASSONNEFRAME_HEIGHT = 700;
+	private static final int CARCASSONNEFRAME_WIDTH = 600;
+
 	private static final long serialVersionUID = -7524847858570259831L;
 
 	public static final String MENUPANEL = "menupanel";
@@ -45,7 +48,7 @@ public class CarcassonneFrame extends JFrame {
 		addWindowListener(new WindowClose());
 
 		setVisible(true);
-		setSize(600, 700);
+		setSize(CARCASSONNEFRAME_WIDTH, CARCASSONNEFRAME_HEIGHT);
 
 		/* Setting layout. */
 		mainLayout = new CardLayout(0, 0);

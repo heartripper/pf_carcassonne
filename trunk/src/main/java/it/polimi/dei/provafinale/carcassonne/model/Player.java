@@ -9,6 +9,8 @@ import it.polimi.dei.provafinale.carcassonne.PlayerColor;
  */
 public class Player {
 
+	private static final int MAXIMUM_FOLLOWERS_NUMBER = 7;
+	
 	private PlayerColor color;
 	private int score;
 	private int followers;
@@ -19,7 +21,7 @@ public class Player {
 	 */
 	public Player() {
 		this.score = 0;
-		this.followers = 7;
+		this.followers = MAXIMUM_FOLLOWERS_NUMBER;
 	}
 
 	/**
@@ -37,7 +39,7 @@ public class Player {
 	public void addFollowers(int amount) {
 		followers += amount;
 		/* Error in followers number. */
-		if (followers > 7) {
+		if (followers > MAXIMUM_FOLLOWERS_NUMBER) {
 			System.out.printf(
 					"Error in followers for player %s. It has %s followers.\n",
 					toString(), followers);

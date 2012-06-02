@@ -6,6 +6,9 @@ package it.polimi.dei.provafinale.carcassonne;
  * 
  */
 public class Coord {
+
+	private static final int TILE_HEIGHT = 7;
+
 	private int x;
 	private int y;
 
@@ -70,7 +73,7 @@ public class Coord {
 	@Override
 	public String toString() {
 		String base = String.format("(%s,%s)", x, y);
-		int spaceToFill = 7 - base.length();
+		int spaceToFill = TILE_HEIGHT - base.length();
 		while (spaceToFill > 0) {
 			/* Case spaceToFill even. */
 			if (spaceToFill % 2 == 0) {
