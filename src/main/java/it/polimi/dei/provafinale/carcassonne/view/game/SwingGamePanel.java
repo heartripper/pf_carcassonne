@@ -188,6 +188,14 @@ public class SwingGamePanel extends GamePanel {
 		setUIActive(false);
 	}
 
+	/**
+	 * Takes a screenshot of tiles in grid.
+	 * @return a BufferedImage containing the screenshot.
+	 * */
+	public BufferedImage takeScreenshot(){
+		return tilesPanel.takeScreenshot();
+	}
+	
 	/* Implementation of ViewInterface methods. */
 
 	@Override
@@ -221,10 +229,6 @@ public class SwingGamePanel extends GamePanel {
 		/* Update representation of tiles */
 	}
 
-	public BufferedImage takeScreenshot(){
-		return tilesPanel.takeScreenshot();
-	}
-	
 	/* Prints the current grid on the special area. */
 	@Override
 	public void updateGridRepresentation(String msg) {
