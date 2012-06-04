@@ -1,6 +1,8 @@
 package it.polimi.dei.provafinale.carcassonne.view.game;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -51,13 +53,24 @@ public class TilesPanel extends JScrollPane {
 		inner.add(Box.createVerticalGlue());
 	}
 
+	public BufferedImage takeScreenshot() {
+		int width = tilesPainter.getWidth();
+		int height = tilesPainter.getHeight();
+		BufferedImage img = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2d = img.createGraphics();
+		tilesPainter.paint(g2d);
+		g2d.dispose();
+		return img;
+	}
+
 	/**
 	 * Updates the representation of the tiles on the grid.
 	 */
 	public void updateRepresentation() {
 		tilesPainter.updateRepresentation();
 		Graphics g = this.getGraphics();
-		if(g != null){
+		if (g != null) {
 			this.paint(g);
 		}
 	}

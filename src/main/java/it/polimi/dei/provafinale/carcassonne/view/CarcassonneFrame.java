@@ -27,7 +27,7 @@ public class CarcassonneFrame extends JFrame {
 	private CardLayout mainLayout;
 	private MenuPanel menuPanel;
 	private JPanel gamePanelContainer;
-	private JPanel gamePanel;
+	private GamePanel gamePanel;
 
 	/**
 	 * CarcassonneFrame constructor. Creates a new instance of class
@@ -113,7 +113,7 @@ public class CarcassonneFrame extends JFrame {
 	 * 
 	 * @return the class attribute gamePanel.
 	 */
-	public JPanel getGamePanel() {
+	public GamePanel getGamePanel() {
 		return gamePanel;
 	}
 

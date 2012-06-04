@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -179,6 +180,7 @@ public class SwingGamePanel extends GamePanel {
 		/* Take a screenshot button. */
 		JButton btnTakeAScreenshot = new JButton("Take a ScreenShot");
 		pnlScreenshot.add(btnTakeAScreenshot);
+		btnTakeAScreenshot.addActionListener(new ScreenShotListener());
 		/* Players panel (to put into options panel). */
 		players = new JPanel();
 		bottomPanel.add(players, BorderLayout.WEST);
@@ -219,6 +221,10 @@ public class SwingGamePanel extends GamePanel {
 		/* Update representation of tiles */
 	}
 
+	public BufferedImage takeScreenshot(){
+		return tilesPanel.takeScreenshot();
+	}
+	
 	/* Prints the current grid on the special area. */
 	@Override
 	public void updateGridRepresentation(String msg) {
