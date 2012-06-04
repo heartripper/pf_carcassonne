@@ -50,10 +50,10 @@ public class ServerGameInterface implements GameInterface {
 				/* Reading the message. */
 				Message msg = remotePlayer.readMessage();
 				/* Log preliminaries. */
-//				int index = remotePlayers.indexOf(remotePlayer);
-//				String protocolMsg = msg.toProtocolMessage();
+				int index = remotePlayers.indexOf(remotePlayer);
+				String protocolMsg = msg.toProtocolMessage();
 				/* Printing the log. */
-				//logger.log(String.format("P%s>S: \"%s\"\n", index, protocolMsg));
+				System.out.printf("P%s>S: \"%s\"\n", index, protocolMsg);
 				return msg;
 			} catch (ConnectionLostException cle) {
 				handleDisconnection(remotePlayer);
@@ -79,10 +79,10 @@ public class ServerGameInterface implements GameInterface {
 					toSend = msg;
 				}
 				/* Log preliminaries. */
-//				int index = remotePlayers.indexOf(remotePlayer);
-//				String protocolMsg = msg.toProtocolMessage();
+				int index = remotePlayers.indexOf(remotePlayer);
+				String protocolMsg = msg.toProtocolMessage();
 				/* Printing the log. */
-				//logger.log(String.format("S>P%s: \"%s\"\n", index, protocolMsg));
+				System.out.printf("S>P%s: \"%s\"\n", index, protocolMsg);
 				/* Sending message. */
 				remotePlayer.sendMessage(toSend);
 				return;
@@ -146,9 +146,8 @@ public class ServerGameInterface implements GameInterface {
 	private synchronized void handleDisconnection(RemotePlayer player)
 			throws PlayersDisconnectedException {
 		PlayersDisconnectedException pde = null;
-		/* Retrieving the index of the player we want to disconnect. */
-		int playerIndex = remotePlayers.indexOf(player);
 		/* Setting the player inactive. */
+		int playerIndex = remotePlayers.indexOf(player);
 		player.setInactive();
 		/*
 		 * Sends to the active players the lock message because a player is
@@ -163,24 +162,24 @@ public class ServerGameInterface implements GameInterface {
 		try {
 			wait(RECONNECTION_TIMEOUT);
 		} catch (InterruptedException e) {
-			// TODO
+			throw new RuntimeException(e);
 		}
-		/* Takes the new information about the player that has been inactive. */
-		RemotePlayer newPlayer = remotePlayers.get(playerIndex);
-		PlayerColor color = PlayerColor.valueOf(playerIndex);
-		Message msg;
 		/*
 		 * If the player is still inactive notify other players that the player
 		 * has been disconnected.
 		 */
+		RemotePlayer newPlayer = remotePlayers.get(playerIndex);
+		PlayerColor color = PlayerColor.valueOf(playerIndex);
+		Message msg;
 		if (!newPlayer.isActive()) {
 			msg = new Message(MessageType.LEAVE, color.toString());
-			//logger.log(String.format("Player %s has disconnected.\n", color));
+			System.out.printf("Player %s has disconnected.\n", color);
 			if (pde == null) {
 				pde = new PlayersDisconnectedException(color);
 			} else {
 				pde.add(color);
 			}
+			throw pde;
 		}
 		/*
 		 * If the player is now active notify other players that he has
@@ -188,21 +187,20 @@ public class ServerGameInterface implements GameInterface {
 		 */
 		else {
 			msg = new Message(MessageType.UNLOCK, null);
-			//logger.log(String.format("Player %s has reconnected.\n", color));
-		}
-		/* Trying to send notifies. */
-		try {
-			sendAllPlayer(msg);
-		} catch (PlayersDisconnectedException e) {
-			if (pde == null) {
-				pde = e;
-			} else {
-				pde.add(e.getDisconnectedPlayers());
+			System.out.printf("Player %s has reconnected.\n", color);
+			try {
+				sendAllPlayer(msg);
+			} catch (PlayersDisconnectedException e) {
+				if (pde == null) {
+					pde = e;
+				} else {
+					pde.add(e.getDisconnectedPlayers());
+				}
 			}
-		}
-		/* Unified exception of all the disconnected players. */
-		if (pde != null) {
-			throw pde;
+			/* Unified exception of all the disconnected players. */
+			if (pde != null) {
+				throw pde;
+			}
 		}
 	}
 
