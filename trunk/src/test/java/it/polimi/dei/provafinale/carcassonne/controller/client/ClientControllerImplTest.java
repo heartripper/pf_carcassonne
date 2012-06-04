@@ -36,12 +36,24 @@ public class ClientControllerImplTest {
 
 	@Test
 	public void test() {
+		/*Test the initialize message.*/
 		String payload = String.format("%s, %s, %s, %s",
 				"N=N S=C W=S E=S NS=0 NE=0 NW=0 WE=1 SE=0 SW=0", "local",
 				PlayerColor.R, numPlayers);
 		Message msg = new Message(MessageType.START, payload);
 		fakeClientInterface.writeOnInput(msg);
 		assertTrue(fakeViewInterface.readAction() == Actions.INITIALIZE);
+		
+		/*Test set current player.*/
+		msg = new Message(MessageType.TURN, PlayerColor.R.toString());
+		fakeClientInterface.writeOnInput(msg);
+		assertTrue(fakeViewInterface.readAction() == Actions.SET_CURRENT_PLAYER);
+		
+		/*Test update current tile.*/
+		msg = new Message(MessageType.NEXT, "N=S S=S W=S E=S NS=0 NE=0 NW=0 WE=0 SE=0 SW=0");
+		fakeClientInterface.writeOnInput(msg);
+		assertTrue(fakeViewInterface.readAction() == Actions.UPDATE_CURRENT_TILE);
+
 	}
 
 	private class FakeClientInterface implements ClientInterface {
