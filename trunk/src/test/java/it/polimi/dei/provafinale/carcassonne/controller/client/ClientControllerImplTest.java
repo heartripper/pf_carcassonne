@@ -2,8 +2,6 @@ package it.polimi.dei.provafinale.carcassonne.controller.client;
 
 import static org.junit.Assert.*;
 
-import java.awt.Color;
-
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.controller.ClientInterface;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
@@ -36,23 +34,62 @@ public class ClientControllerImplTest {
 
 	@Test
 	public void test() {
-		/*Test the initialize message.*/
+		/* Test the initialize message. */
 		String payload = String.format("%s, %s, %s, %s",
 				"N=N S=C W=S E=S NS=0 NE=0 NW=0 WE=1 SE=0 SW=0", "local",
 				PlayerColor.R, numPlayers);
 		Message msg = new Message(MessageType.START, payload);
 		fakeClientInterface.writeOnInput(msg);
 		assertTrue(fakeViewInterface.readAction() == Actions.INITIALIZE);
-		
-		/*Test set current player.*/
+
+		/* Test set current player. */
 		msg = new Message(MessageType.TURN, PlayerColor.R.toString());
 		fakeClientInterface.writeOnInput(msg);
 		assertTrue(fakeViewInterface.readAction() == Actions.SET_CURRENT_PLAYER);
-		
-		/*Test update current tile.*/
-		msg = new Message(MessageType.NEXT, "N=S S=S W=S E=S NS=0 NE=0 NW=0 WE=0 SE=0 SW=0");
+
+		/* Test update current tile. */
+		msg = new Message(MessageType.NEXT,
+				"N=S S=S W=S E=S NS=0 NE=0 NW=0 WE=0 SE=0 SW=0");
 		fakeClientInterface.writeOnInput(msg);
 		assertTrue(fakeViewInterface.readAction() == Actions.UPDATE_CURRENT_TILE);
+
+		/* Test ui active. */
+		assertTrue(fakeViewInterface.readAction() == Actions.SET_UI_ACTIVE);
+
+		/* Test rotation. */
+		msg = new Message(MessageType.ROTATE, null);
+		clientControllerImpl.sendMessage(msg);
+		assertTrue(fakeViewInterface.readAction() == Actions.SET_UI_ACTIVE);
+		msg = fakeClientInterface.readFromOutput();
+		assertTrue(msg.type == MessageType.ROTATE);
+		fakeClientInterface.writeOnInput(new Message(MessageType.ROTATED,
+				"N=S S=S W=S E=S NS=0 NE=0 NW=0 WE=0 SE=0 SW=0"));
+		assertTrue(fakeViewInterface.readAction() == Actions.UPDATE_CURRENT_TILE);
+
+		/* Test place. */
+		assertTrue(fakeViewInterface.readAction() == Actions.SET_UI_ACTIVE);
+		msg = new Message(MessageType.PLACE, "0,1");
+		clientControllerImpl.sendMessage(msg);
+		assertTrue(fakeViewInterface.readAction() == Actions.SET_UI_ACTIVE);
+		msg = fakeClientInterface.readFromOutput();
+		fakeClientInterface.writeOnInput(new Message(MessageType.UPDATE,
+				"N=S S=S W=S E=S NS=0 NE=0 NW=0 WE=0 SE=0 SW=0"));
+		assertTrue(fakeViewInterface.readAction() == Actions.UPDATE_GRID_REPRESENTATION);
+
+		/* Test follower. */
+		assertTrue(fakeViewInterface.readAction() == Actions.SET_UI_ACTIVE);
+		msg = new Message(MessageType.FOLLOWER, "N");
+		clientControllerImpl.sendMessage(msg);
+		assertTrue(fakeViewInterface.readAction() == Actions.SET_UI_ACTIVE);
+		msg = fakeClientInterface.readFromOutput();
+		fakeClientInterface.writeOnInput(new Message(MessageType.UPDATE,
+				"N=S S=S W=S E=S NS=0 NE=0 NW=0 WE=0 SE=0 SW=0"));
+		assertTrue(fakeViewInterface.readAction() == Actions.UPDATE_GRID_REPRESENTATION);
+
+		/* Test score. */
+		msg = new Message(MessageType.SCORE, "R=0, B=0, V=0");
+		fakeClientInterface.writeOnInput(msg);
+		assertTrue(fakeViewInterface.readAction() == Actions.UPDATE_SCORE);
 
 	}
 
