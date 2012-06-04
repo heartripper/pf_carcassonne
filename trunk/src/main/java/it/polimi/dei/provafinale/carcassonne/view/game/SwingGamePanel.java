@@ -83,7 +83,8 @@ public class SwingGamePanel extends GamePanel {
 		 * the option to conclude the turn).
 		 */
 		JPanel actionsPanel = new JPanel();
-		actionsPanel.setPreferredSize(new Dimension(ACTIONSPANEL_WIDTH, ACTIONPANEL_HEIGHT));
+		actionsPanel.setPreferredSize(new Dimension(ACTIONSPANEL_WIDTH,
+				ACTIONPANEL_HEIGHT));
 		actionsPanel.setBorder(new MatteBorder(0, 1, 0, 0, (Color) Color.GRAY));
 		actionsPanel.setLayout(new BoxLayout(actionsPanel, BoxLayout.Y_AXIS));
 		add(actionsPanel, BorderLayout.EAST);
@@ -112,7 +113,8 @@ public class SwingGamePanel extends GamePanel {
 		/* Coordinate panel. */
 
 		JPanel coordsPanel = new JPanel();
-		coordsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, HORIZONTAL_SPACING, VERTICAL_SPACING));
+		coordsPanel.setLayout(new FlowLayout(FlowLayout.CENTER,
+				HORIZONTAL_SPACING, VERTICAL_SPACING));
 		/* Insert coordinate label. */
 		JLabel lblInsertCoordinatesxy = new JLabel("Insert coordinates (x,y):");
 		coordsPanel.add(lblInsertCoordinatesxy);
@@ -190,12 +192,13 @@ public class SwingGamePanel extends GamePanel {
 
 	/**
 	 * Takes a screenshot of tiles in grid.
+	 * 
 	 * @return a BufferedImage containing the screenshot.
 	 * */
-	public BufferedImage takeScreenshot(){
+	public BufferedImage takeScreenshot() {
 		return tilesPanel.takeScreenshot();
 	}
-	
+
 	/* Implementation of ViewInterface methods. */
 
 	@Override
@@ -206,10 +209,10 @@ public class SwingGamePanel extends GamePanel {
 		clientColor = (color.equals("null") ? null : PlayerColor.valueOf(color));
 		int playerNumber = Integer.parseInt(split[3].trim());
 
-		/*Setup first tile*/
+		/* Setup first tile */
 		tileRepGrid.execUpdate(tileRep + ", 0, 0");
 		tilesPanel.updateRepresentation();
-		
+
 		/* Setup players */
 		playerPanels = new PlayerPanel[playerNumber];
 		for (int i = 0; i < playerNumber; i++) {

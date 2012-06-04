@@ -53,6 +53,11 @@ public class TilesPanel extends JScrollPane {
 		inner.add(Box.createVerticalGlue());
 	}
 
+	/**
+	 * Takes a screenshot of represented tiles.
+	 * 
+	 * @return a BufferedImage containing the screenshot.
+	 * */
 	public BufferedImage takeScreenshot() {
 		int width = tilesPainter.getWidth();
 		int height = tilesPainter.getHeight();
