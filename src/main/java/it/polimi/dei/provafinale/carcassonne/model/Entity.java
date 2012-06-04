@@ -119,6 +119,7 @@ public abstract class Entity {
 	 *            - the color to remove
 	 */
 	public List<Tile> removeFollowers(PlayerColor toRemove) {
+		hasFollowers = false;
 		ArrayList<Tile> updatedCards = new ArrayList<Tile>();
 		for (Side s : members) {
 			PlayerColor follower = s.getFollower();
