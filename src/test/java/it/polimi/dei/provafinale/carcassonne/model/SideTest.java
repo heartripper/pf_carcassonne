@@ -25,7 +25,7 @@ public class SideTest {
 
 	@Test
 	public void entityTest() {
-		Entity e = EntityFactory.createByType(type);
+		Entity e = Entity.createByType(type);
 		side.setEntity(e);
 		assertTrue(e.equals(side.getEntity()));
 	}

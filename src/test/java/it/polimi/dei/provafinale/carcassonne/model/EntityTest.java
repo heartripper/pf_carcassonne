@@ -16,7 +16,7 @@ public class EntityTest {
 
 	@Before
 	public void setUp() {
-		entity = EntityFactory.createByType(type);
+		entity = Entity.createByType(type);
 	}
 
 	@Test
@@ -78,7 +78,7 @@ public class EntityTest {
 	}
 
 	private void encloseTestBase(int e1Sides, int e2Sides) {
-		Entity entity2 = EntityFactory.createByType(type);
+		Entity entity2 = Entity.createByType(type);
 
 		for (int i = 0; i < e1Sides; i++) {
 			Side s = new Side(null, type);
