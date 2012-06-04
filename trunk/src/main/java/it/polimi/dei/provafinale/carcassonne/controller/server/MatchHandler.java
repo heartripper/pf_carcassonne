@@ -21,9 +21,10 @@ public class MatchHandler implements Runnable {
 	private Match match;
 	private PlayerColor currentPlayer;
 	private Tile currentTile;
-	private boolean currentPlayerDisconnected;
 	private boolean currentTileAdded;
-	private boolean currentTurnEnd;
+	private boolean endCurrentTurn;
+
+	private boolean endGame = false;
 
 	private GameInterface gameInterface;
 
@@ -40,7 +41,8 @@ public class MatchHandler implements Runnable {
 	/**
 	 * Initializes and manages the match execution.
 	 */
-	public void startGame() {
+	@Override
+	public void run() {
 		/* Getting players number from interface and initializing match. */
 		int playerNumber = gameInterface.askPlayerNumber();
 		match = new Match(playerNumber);
@@ -49,26 +51,25 @@ public class MatchHandler implements Runnable {
 		String firstTileRep = match.getFirstTile().toString();
 		sendMessage(new Message(MessageType.START, firstTileRep));
 
-		while (match.hasMoreCards()) {
+		while (match.hasMoreCards() && !endGame) {
 			/* Draw the current tile. */
 			currentTile = match.drawTile();
-			/* Get the player that have to play in the current turn. */
 			currentPlayer = match.getNextPlayer();
 			/* Send turn information. */
 			sendMessage(new Message(MessageType.TURN, currentPlayer.toString()));
 			/* Send card information to currentPlayer. */
-			String currentTileRep = currentTile.toString();
-			sendMessage(new Message(MessageType.NEXT, currentTileRep));
+			sendMessage(new Message(MessageType.NEXT, currentTile.toString()));
 			/* Turn execution. */
-			currentTurnEnd = false;
+			endCurrentTurn = false;
 			currentTileAdded = false;
-			while (!currentTurnEnd && !currentPlayerDisconnected) {
+			while (!endCurrentTurn && !endGame) {
 				/* Waiting for messages from current player. */
 				Message req = readFromCurrentPlayer();
 				/* Player disconnected. */
-				if (currentPlayerDisconnected) {
+				if (endCurrentTurn || endGame) {
 					break;
 				}
+
 				Message resp;
 				/* Managing rotation. */
 				if (req.type == MessageType.ROTATE && !currentTileAdded) {
@@ -81,12 +82,12 @@ public class MatchHandler implements Runnable {
 				/* Managing follower addition on tile. */
 				else if (req.type == MessageType.FOLLOWER && currentTileAdded) {
 					resp = handleFollowerPlacing(req.payload);
-					currentTurnEnd = (resp.type == MessageType.UPDATE);
+					endCurrentTurn = (resp.type == MessageType.UPDATE);
 				}
 				/* Managing end turn request. */
 				else if (req.type == MessageType.PASS && currentTileAdded) {
 					resp = handlePass();
-					currentTurnEnd = true;
+					endCurrentTurn = true;
 				}
 				/* Managing invalid requests. */
 				else {
@@ -96,7 +97,11 @@ public class MatchHandler implements Runnable {
 				sendMessage(resp);
 			}
 
-			handleTurnEnd();
+			if (endGame) {
+				break;
+			} else {
+				handleTurnEnd();
+			}
 		}
 		/* Match end. */
 		handleMatchEnd();
@@ -204,6 +209,7 @@ public class MatchHandler implements Runnable {
 			case UPDATE:
 			case SCORE:
 			case END:
+			case LEAVE:
 				gameInterface.sendAllPlayer(msg);
 				return;
 			default:
@@ -228,25 +234,24 @@ public class MatchHandler implements Runnable {
 	/* Manage players disconnection. */
 	private void handleDisconnection(PlayersDisconnectedException pde) {
 		if (pde.getDisconnectedPlayers().contains(currentPlayer)) {
-			currentPlayerDisconnected = true;
+			endCurrentTurn = true;
 		}
 		try {
-			for (PlayerColor c : pde.getDisconnectedPlayers()) {
-				match.removePlayer(c);
+			for (PlayerColor color : pde.getDisconnectedPlayers()) {
+				List<Tile> updates = match.removePlayer(color);
+				for (Tile tile : updates) {
+					Message updateMsg = new Message(MessageType.UPDATE,
+							getUpdateTileMsg(tile));
+					sendMessage(updateMsg);
+				}
+				Message leaveMsg = new Message(MessageType.LEAVE,
+						color.toString());
+				sendMessage(leaveMsg);
 			}
 		} catch (NotEnoughPlayersException nep) {
 			// TODO: what to do when there are not enough player left
 			System.out.println("There are not enough players left.");
-			// TODO: End match
-			Thread.currentThread().interrupt();
+			endGame = true;
 		}
 	}
-
-	/* Runnable methods */
-
-	@Override
-	public void run() {
-		this.startGame();
-	}
-
 }
