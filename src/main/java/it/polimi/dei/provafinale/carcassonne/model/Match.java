@@ -233,7 +233,7 @@ public class Match {
 				/* There is no a side opposite to the current one. */
 				if (oppositeSide == null) {
 					/* Creation of a new entity. */
-					sideEntity = EntityFactory.createByType(type);
+					sideEntity = Entity.createByType(type);
 				}
 				/* There is a side opposite to the current one. */
 				else {
