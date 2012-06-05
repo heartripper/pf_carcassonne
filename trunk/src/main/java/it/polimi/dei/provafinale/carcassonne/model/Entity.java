@@ -9,8 +9,8 @@ import java.util.List;
  * Class representing entities (Road and Cities) and shared methods.
  * */
 public abstract class Entity {
-	
-	/*Factory method*/
+
+	/* Factory method */
 	/**
 	 * Creates a new instance of the Entity implementation corresponding to the
 	 * given type.
@@ -30,7 +30,7 @@ public abstract class Entity {
 		}
 
 	}
-	
+
 	private List<Side> members;
 
 	private boolean completed;
@@ -155,8 +155,9 @@ public abstract class Entity {
 		}
 		return updatedCards;
 	}
+
+	/* Abstract methods. */
 	
-	// Abstract methods
 	/**
 	 * Gives the type of this entity.
 	 * 
@@ -168,7 +169,7 @@ public abstract class Entity {
 	 * Returns the score given to owners by this entity;
 	 * */
 	public abstract int getScore();
-	
+
 	/**
 	 * Obtains the list of this entity's members.
 	 */
