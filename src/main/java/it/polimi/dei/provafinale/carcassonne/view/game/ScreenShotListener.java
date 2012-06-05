@@ -33,13 +33,13 @@ public class ScreenShotListener implements ActionListener {
 		
 		SwingGamePanel sPanel = (SwingGamePanel) panel;
 		
-		JFileChooser choose = new JFileChooser();
-		choose.setFileFilter(new PngFilter());
-		choose.setMultiSelectionEnabled(false);
-		int r = choose.showOpenDialog(frame);
+		JFileChooser fileChoose = new JFileChooser();
+		fileChoose.setFileFilter(new PngFilter());
+		fileChoose.setMultiSelectionEnabled(false);
+		int r = fileChoose.showSaveDialog(frame);
 		if(r == JFileChooser.APPROVE_OPTION){
 			screenshot = sPanel.takeScreenshot();
-			File f = choose.getSelectedFile();
+			File f = fileChoose.getSelectedFile();
 			try{
 				ImageIO.write(screenshot, "PNG", f);
 			}catch(IOException ioe) {

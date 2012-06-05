@@ -174,14 +174,11 @@ public class SwingGamePanel extends GamePanel {
 		/* Back to home panel (to put into options panel). */
 		JPanel pnlBackToHome = new JPanel();
 		optionsPanel.add(pnlBackToHome);
-		/* Back to home button. */
-		JButton btnBackToHome = new JButton("Back to Home");
-		pnlBackToHome.add(btnBackToHome);
 		/* Screenshot panel (to put into options panel). */
 		JPanel pnlScreenshot = new JPanel();
 		optionsPanel.add(pnlScreenshot);
 		/* Take a screenshot button. */
-		JButton btnTakeAScreenshot = new JButton("Take a ScreenShot");
+		JButton btnTakeAScreenshot = new JButton("Take a Screenshot");
 		pnlScreenshot.add(btnTakeAScreenshot);
 		btnTakeAScreenshot.addActionListener(new ScreenShotListener());
 		/* Players panel (to put into options panel). */
