@@ -5,21 +5,21 @@ import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import org.junit.*;
 import static org.junit.Assert.*;
 
-public class PlayerCircularArrayTest {
+public class PlayerManagerTest {
 
 	private final int numPlayers = 4;
 	private final int inactivePlayerIndex = 2;
 
-	private PlayerCircularArray array;
+	private PlayerManager array;
 
 	@Before
 	public void setup() {
-		array = new PlayerCircularArray(numPlayers);
+		array = new PlayerManager(numPlayers);
 	}
 
 	@Test
 	public void getSizeTest(){
-		assertTrue(array.getSize() == numPlayers);
+		assertTrue(array.getPlayerNumber() == numPlayers);
 	}
 	
 	@Test

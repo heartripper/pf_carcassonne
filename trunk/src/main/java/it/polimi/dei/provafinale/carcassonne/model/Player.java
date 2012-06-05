@@ -10,7 +10,7 @@ import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 public class Player {
 
 	private static final int MAXIMUM_FOLLOWERS_NUMBER = 7;
-	
+
 	private PlayerColor color;
 	private int score;
 	private int followers;
@@ -19,9 +19,10 @@ public class Player {
 	/**
 	 * Player constructor. Creates a new instance of class Player.
 	 */
-	public Player() {
+	public Player(PlayerColor color) {
 		this.score = 0;
 		this.followers = MAXIMUM_FOLLOWERS_NUMBER;
+		this.color = color;
 	}
 
 	/**
@@ -76,30 +77,11 @@ public class Player {
 	}
 
 	/**
-	 * Sets player's color.
-	 * 
-	 * @param color
-	 *            - a player's color
-	 * */
-	public void setColor(PlayerColor color) {
-		this.color = color;
-	}
-
-	/**
 	 * 
 	 * @return player color.
 	 * */
 	public PlayerColor getColor() {
 		return color;
-	}
-
-	/**
-	 * Give player's symbol, which is the first letter of his color.
-	 * 
-	 * @return the String representation of the player color.
-	 */
-	public String getSymbol() {
-		return color.toString();
 	}
 
 	@Override
