@@ -31,6 +31,7 @@ public class TileGridPainter extends JLabel {
 	 */
 	public TileGridPainter(TileRepresentationGrid grid) {
 		this.grid = grid;
+		addMouseListener(new TileClickListener(grid));
 	}
 
 	/**

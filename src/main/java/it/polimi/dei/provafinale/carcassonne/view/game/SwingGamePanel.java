@@ -1,5 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne.view.game;
 
+import it.polimi.dei.provafinale.carcassonne.Coord;
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
 import it.polimi.dei.provafinale.carcassonne.controller.client.MessageSender;
@@ -188,6 +189,17 @@ public class SwingGamePanel extends GamePanel {
 		bottomPanel.add(players, BorderLayout.WEST);
 
 		setUIActive(false);
+	}
+
+	/**
+	 * Sets a coordinate in coordField.
+	 * 
+	 * @param coord
+	 *            the Coord we want to set in coordField.
+	 */
+	public void setCoord(Coord coord) {
+		String coordRep = String.format("%s,%s", coord.getX(), coord.getY());
+		coordsField.setText(coordRep);
 	}
 
 	/**
