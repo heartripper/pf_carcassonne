@@ -15,7 +15,7 @@ import java.util.Random;
  * initial tile and verify if there are still tiles to draw.
  * */
 public class TileStack {
-	
+
 	private List<Tile> tiles;
 	private Tile initialTile;
 
@@ -35,19 +35,12 @@ public class TileStack {
 	 * @return the drew Tile.
 	 */
 	public Tile drawTile() {
-		/* Setting Tile dimension. */
 		int size = tiles.size();
 		/* Random choice of a Tile. */
 		Random rand = new Random();
 		int randomIndex = rand.nextInt(size);
-		/* Obtain the Tile representation. */
 		Tile drewTile = tiles.get(randomIndex);
-		/*
-		 * Remove the index of the given Tile from the list of the available
-		 * random numbers.
-		 */
 		tiles.remove(randomIndex);
-		/* Return the tile representation. */
 		return drewTile;
 	}
 
@@ -76,10 +69,8 @@ public class TileStack {
 	 * Reads tile representation from carcassonne.dat, creates a new Tile for
 	 * each representation and then put the new tile into tile list.
 	 * */
-
 	private synchronized List<Tile> readTiles() {
-		/* Case we haven't read tiles yet. */
-		/* Obtaining the path to reach file carcassonne.dat. */
+
 		String path;
 		if (Constants.USE_FEW_TILES) {
 			path = Constants.LESS_TILES_PATH;
@@ -102,7 +93,6 @@ public class TileStack {
 				line = input.readLine();
 			}
 		} catch (IOException e) {
-			// TODO: throw exception
 			System.out.println("Error opening tile file.");
 		}
 		/* Close stream if it has been opened. */

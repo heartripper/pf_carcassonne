@@ -39,8 +39,4 @@ public class Road extends Entity {
 		return tiles.size();
 	}
 
-	@Override
-	public String toString() {
-		return type.getRepresentation() + id;
-	}
 }
