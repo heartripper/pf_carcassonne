@@ -1,7 +1,5 @@
 package it.polimi.dei.provafinale.carcassonne.model;
 
-import java.util.Arrays;
-
 import it.polimi.dei.provafinale.carcassonne.Coord;
 import it.polimi.dei.provafinale.carcassonne.model.Tile;
 import it.polimi.dei.provafinale.carcassonne.model.TileGrid;
@@ -22,15 +20,6 @@ public class TileGridTest {
 
 		tg = new TileGrid();
 		tg.putTile(t0, new Coord(0, 0));
-	}
-
-	@Test
-	public void getBoundsTest(){
-		int[] expected = {0,0,0,0};
-		assertTrue(Arrays.equals(tg.getBounds(), expected));
-		tg.putTile(t1, new Coord(1,0));
-		int[] expected1 = {0,1,0, 0};
-		assertTrue(Arrays.equals(tg.getBounds(), expected1));
 	}
 
 	@Test
