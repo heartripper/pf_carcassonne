@@ -16,7 +16,7 @@ public class Match {
 
 	private TileGrid grid;
 	private TileStack stack;
-	private PlayerCircularArray players;
+	private PlayerManager players;
 	private Vector<Entity> entities;
 	private Tile firstTile;
 	private int playersNumber;
@@ -31,7 +31,7 @@ public class Match {
 		this.grid = new TileGrid();
 		this.entities = new Vector<Entity>();
 		this.stack = new TileStack();
-		this.players = new PlayerCircularArray(numPlayers);
+		this.players = new PlayerManager(numPlayers);
 		this.playersNumber = numPlayers;
 		/* Add cards #0 to the grid. */
 		firstTile = stack.getInitialTile();
@@ -213,7 +213,7 @@ public class Match {
 		}
 		
 		/* There are no enought players to play the game. */
-		if (players.getSize() < 2) {
+		if (players.getPlayerNumber() < 2) {
 			throw new NotEnoughPlayersException();
 		}
 		return updates;

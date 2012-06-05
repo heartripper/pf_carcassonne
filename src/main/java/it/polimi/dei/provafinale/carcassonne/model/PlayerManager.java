@@ -4,31 +4,28 @@ import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.model.Player;
 
 /**
- * The class PlayerCircularArray manages the set of players and their turns.
+ * The class PlayerManager manages the set of players and their turns.
  * 
  */
-public class PlayerCircularArray {
+public class PlayerManager {
 
 	private Player players[];
 	private int size;
 	private int position;
 
 	/**
-	 * PlayerCircular Array constructor. Creates a new instance of class
-	 * PlayerCircularArray.
+	 * PlayerManager constructor. Creates a new instance of class PlayerManager.
 	 * 
 	 * @param num
 	 *            - a number that establishes the dimension of the array to
 	 *            create.
 	 */
-	public PlayerCircularArray(int num) {
-		/* Creating the array. */
+	public PlayerManager(int num) {
 		players = new Player[num];
 		size = num;
-		/* Initializing the array. */
+
 		for (int i = 0; i < size; i++) {
-			players[i] = new Player();
-			players[i].setColor(PlayerColor.valueOf(i));
+			players[i] = new Player(PlayerColor.valueOf(i));
 		}
 		position = 0;
 	}
@@ -66,7 +63,7 @@ public class PlayerCircularArray {
 	 * 
 	 * @return the number of players currently active in the game.
 	 */
-	public int getSize() {
+	public int getPlayerNumber() {
 		int i = 0;
 		for (Player p : players) {
 			if (p.isActive()) {
@@ -83,13 +80,12 @@ public class PlayerCircularArray {
 	 *            - an array of integers which contains at index i the number of
 	 *            followers to add to the player whose color has index i;
 	 * */
-	public void addFollowers(int[] followers){
-		for(int i = 0; i < players.length; i++){
+	public void addFollowers(int[] followers) {
+		for (int i = 0; i < players.length; i++) {
 			players[i].addFollowers(followers[i]);
 		}
 	}
-	
-	
+
 	/**
 	 * Add scores to players.
 	 * 

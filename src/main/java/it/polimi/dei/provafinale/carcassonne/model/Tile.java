@@ -14,7 +14,7 @@ import java.util.Map;
  * 0, East = 1, South = 2, West = 3.
  * */
 public final class Tile {
-	// Reference to container grid
+	/* Reference to container grid. */
 	private Coord tileCoord;
 	private Side[] sides;
 	private List<SideConnection> connections;

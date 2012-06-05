@@ -6,12 +6,14 @@ import org.junit.*;
 import static org.junit.Assert.*;
 
 public class PlayerTest {
+	
 	private final int followerNum = 7;
 	private Player player;
-
+	PlayerColor color = PlayerColor.R;
+	
 	@Before
 	public void setUp() {
-		this.player = new Player();
+		this.player = new Player(color);
 	}
 
 	@Test
@@ -26,9 +28,7 @@ public class PlayerTest {
 
 	@Test
 	public void testColor() {
-		PlayerColor col = PlayerColor.V;
-		player.setColor(col);
-		assertTrue(col.equals(player.getColor()));
+		assertTrue(color.equals(player.getColor()));
 	}
 
 	@Test
