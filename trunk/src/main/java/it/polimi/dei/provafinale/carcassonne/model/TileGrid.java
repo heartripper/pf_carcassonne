@@ -1,18 +1,16 @@
 package it.polimi.dei.provafinale.carcassonne.model;
 
-
 import it.polimi.dei.provafinale.carcassonne.Coord;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class representing game grid.
+ * Class representing a grid of tiles.
  * */
 public class TileGrid {
 
-	Map<Coord, Tile> grid; // TODO verificare che la visibilità di questo
-							// attributo sia corretta
+	private Map<Coord, Tile> grid;
 
 	/**
 	 * TileGrid constructor. Creates a new instance of TileGrid.
@@ -62,7 +60,7 @@ public class TileGrid {
 			return true;
 		}
 		/* Check that we have at least one neighbor. */
-		if (hasNeighborForCoord(coord) == false) {
+		if (!hasNeighborForCoord(coord)) {
 			return false;
 		}
 		/* Check that all sides matches. */
@@ -70,7 +68,6 @@ public class TileGrid {
 			Coord offset = SidePosition.getOffsetForPosition(position);
 			Tile neighborTile = grid.get(coord.add(offset));
 			if (neighborTile != null) {
-				/* Start verifying that the two SidePosition are compatible. */
 				Side currentSide = tile.getSide(position);
 				SidePosition oppositePosition = position.getOpposite();
 				Side oppositeSide = neighborTile.getSide(oppositePosition);
@@ -79,7 +76,7 @@ public class TileGrid {
 				}
 			}
 		}
-		/* Tile is compatible. */
+
 		return true;
 	}
 
@@ -94,14 +91,14 @@ public class TileGrid {
 	public boolean hasAPlaceFor(Tile tile) {
 		Tile t = new Tile(tile.toString());
 		int maxNumRotations = 4;
-		
-		for(int i = 0; i<maxNumRotations; i++){
+
+		for (int i = 0; i < maxNumRotations; i++) {
 			for (Coord coord : grid.keySet()) {
-				/* Calculates possible Coord in grid for the given Tile. */
+				/* Calculates possible Coord for the neighbors. */
 				for (SidePosition pos : SidePosition.values()) {
 					Coord offset = SidePosition.getOffsetForPosition(pos);
 					Coord newPos = coord.add(offset);
-					/* Checks compatibility. */
+
 					if (isTileCompatible(tile, newPos)) {
 						return true;
 					}
@@ -133,11 +130,6 @@ public class TileGrid {
 	 */
 	public void putTile(Tile tile, Coord coord) {
 		grid.put(coord, tile);
-
-		/*
-		 * Insert into the tile its position and a reference to the grid, useful
-		 * to find its neighbors.
-		 */
 		tile.setCoords(coord);
 	}
 
@@ -150,12 +142,12 @@ public class TileGrid {
 	 *            - a SidePosition we want to know the neighbor.
 	 * */
 	public Tile getTileNeighbor(Tile tile, SidePosition position) {
-		Coord coord = tile.getCoordinates();
-		/* If the Tile has not corresponding Coord, it can't have a neighbor. */
+		Coord coord = tile.getCoords();
+		/* A Tile that has not corresponding Coord can't have a neighbor. */
 		if (coord == null) {
 			return null;
 		}
-		/* Calculate neighbor Coord and obtain it. */
+
 		Coord offset = SidePosition.getOffsetForPosition(position);
 		return grid.get(coord.add(offset));
 	}

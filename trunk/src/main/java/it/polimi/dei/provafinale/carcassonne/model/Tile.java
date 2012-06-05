@@ -14,6 +14,7 @@ import java.util.Map;
  * 0, East = 1, South = 2, West = 3.
  * */
 public final class Tile {
+
 	/* Reference to container grid. */
 	private Coord tileCoord;
 	private Side[] sides;
@@ -27,40 +28,47 @@ public final class Tile {
 	/**
 	 * Tile constructor. Creates a new entity of class Tile.
 	 * 
-	 * @param rep
+	 * @param representation
 	 *            - a String representing the Tile according to the project
 	 *            specification.
 	 */
-	public Tile(String rep) {
-		/* Find the Sides and the SideConnection of the given Tile. */
+	public Tile(String representation) {
+
 		sides = new Side[Constants.SIDES_NUMBER];
 		connections = new ArrayList<SideConnection>();
-		/* rep analysis. */
-		String[] descriptors = rep.split(" ");
+
+		String[] descriptors = representation.split(" ");
 		for (String desc : descriptors) {
 			String split[] = desc.split("=");
 			String name = split[0], value = split[1];
-			/* This part of rep represents one of the Side. */
+			/* This part of representation represents one of the Side. */
 			if (name.length() == 1) {
 				setSide(name, value);
 			}
-			/* This part of rep represents one of the SideConnection */
+			/* This part of representation represents one of the SideConnection */
 			else {
 				setConnection(name, value);
 			}
 		}
 	}
 
-	/* Setting Side options. */
+	/**
+	 * Sets Side options.
+	 * 
+	 * @param name
+	 *            a String that represents a name of a parameter.
+	 * @param value
+	 *            a String that represents the value of a parameter.
+	 */
 	private void setSide(String name, String value) {
 		int posIndex = SidePosition.valueOf(name).getIndex();
 		String sideType = null;
 		PlayerColor follower = null;
-		/* We are not analyzing the Side in presence of the follower. */
+		/* A follower is NOT present on this Side. */
 		if (value.indexOf('-') == -1) {
 			sideType = value;
 		}
-		/* We are analyzing the Side in presence of the follower. */
+		/* A follower is present on this Side. */
 		else {
 			String[] split = value.split("-");
 			sideType = split[0];
@@ -75,24 +83,27 @@ public final class Tile {
 		}
 	}
 
-	/* Setting connection options. */
+	/**
+	 * Sets connection options.
+	 * 
+	 * @param name
+	 *            a String that represents the name of an option.
+	 * @param value
+	 *            a String that represents the value of an option.
+	 */
 	private void setConnection(String name, String value) {
 		/*
-		 * Conversion of value in number: there is no connection between two
-		 * sides.
+		 * If value is equals to zero there isn't a connection.
 		 */
 		if (Integer.parseInt(value) == 0) {
 			return;
 		}
-		/*
-		 * There is a connection between two sides: setting start and end of
-		 * connection.
-		 */
+
 		String start = String.valueOf(name.charAt(0));
 		String end = String.valueOf(name.charAt(1));
-		Side side1 = getSide(SidePosition.valueOf(start));
-		Side side2 = getSide(SidePosition.valueOf(end));
-		connections.add(new SideConnection(side1, side2));
+		Side startSide = getSide(SidePosition.valueOf(start));
+		Side endSide = getSide(SidePosition.valueOf(end));
+		connections.add(new SideConnection(startSide, endSide));
 	}
 
 	/**
@@ -122,7 +133,7 @@ public final class Tile {
 	 * 
 	 * @return the Tile coordinates.
 	 */
-	public Coord getCoordinates() {
+	public Coord getCoords() {
 		return tileCoord;
 	}
 
@@ -130,18 +141,19 @@ public final class Tile {
 	 * Provides a list of the Side linked to a given one (side1) in a tile
 	 * because of the presence of an entity.
 	 * 
-	 * @param side1
+	 * @param side
 	 *            - a Side we want to know the related ones.
 	 * @return an ArrayList of Side linked to the given one in a Tile.
 	 */
-	public List<Side> sidesLinkedTo(Side side1) {
+	public List<Side> sidesLinkedTo(Side side) {
 		List<Side> linkedSides = new ArrayList<Side>();
 		for (Side side2 : this.sides) {
-			/* Examination of a couple of sides of the same Tile. */
-			if (side1 != side2) {
-				/* Create the connection between side1 and side2. */
-				SideConnection connection = new SideConnection(side1, side2);
-				/* Check if the connection really exists. */
+			if (side != side2) {
+				/*
+				 * Create the connection between side1 and side2 and than checks
+				 * if it contained in the connections.
+				 */
+				SideConnection connection = new SideConnection(side, side2);
 				if (connections.contains(connection)) {
 					linkedSides.add(side2);
 				}
@@ -170,11 +182,11 @@ public final class Tile {
 	 * Rotate the Tile of 90 degrees clock wise.
 	 */
 	public void rotate() {
-		/* If tile has already been placed, it can't be rotated. */
+		/* Tile already placed can't be rotated. */
 		if (tileCoord != null) {
 			return;
 		}
-		/* Rotation implementation. */
+
 		int i = sides.length - 1;
 		Side backup = sides[i];
 		for (; i > 0; i--) {
@@ -216,10 +228,7 @@ public final class Tile {
 			}
 
 		}
-		/*
-		 * Adds the current String to the string builder to create the complete
-		 * representation.
-		 */
+		/* Complete representation creation. */
 		representation.append(linksCache.get("NS"));
 		representation.append(linksCache.get("NE"));
 		representation.append(linksCache.get("NW"));
