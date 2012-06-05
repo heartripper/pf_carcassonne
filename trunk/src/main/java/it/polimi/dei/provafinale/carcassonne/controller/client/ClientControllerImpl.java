@@ -1,5 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.controller.client;
 
+import java.util.concurrent.locks.ReadWriteLock;
+
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.controller.ClientInterface;
 import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
@@ -307,6 +309,10 @@ public class ClientControllerImpl implements Runnable {
 		for (int i = 0; i < maxReconnectionAttempts; i++) {
 			try {
 				clientInterface.reconnect(matchName, clientPlayerColor);
+				Message msg = readFromServer();
+				if(!(msg.type == MessageType.UNLOCK)){
+					protocolOrderError("UNLOCK", msg.type);
+				}
 				return;
 			} catch (ConnectionLostException cle) {
 				/* Still can't connect; go on. */
