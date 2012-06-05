@@ -1,6 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.view.game;
 
 import it.polimi.dei.provafinale.carcassonne.Coord;
+import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.model.EntityType;
 import it.polimi.dei.provafinale.carcassonne.model.Side;
 import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
@@ -13,9 +14,8 @@ import it.polimi.dei.provafinale.carcassonne.model.Tile;
  */
 public class TileGridRepresenter {
 
-	private static final int FIRST_TILE_OCCUPATION = 1;
 	private static final int TILE_HEIGHT = 7;
-	
+
 	private TileRepresentationGrid grid;
 
 	/**
@@ -39,17 +39,15 @@ public class TileGridRepresenter {
 	public String getRepresentation() {
 		/* Creating a new instance of a StringBuilder. */
 		StringBuilder gridOutput = new StringBuilder();
-		/* Obtaining grid bounds. */
-		int[] bounds = grid.getBounds();
 
-		for (int j = bounds[2] + 1; j >= bounds[0] - 1; j--) {
+		for (int j = grid.greatestY(); j >= grid.smallestY(); j--) {
 			/* Initializing string builder. */
 			StringBuilder[] lines = new StringBuilder[TILE_HEIGHT];
 			for (int i = 0; i < lines.length; i++) {
 				lines[i] = new StringBuilder("");
 			}
-			for (int i = bounds[3] - FIRST_TILE_OCCUPATION; i <= bounds[1]
-					+ FIRST_TILE_OCCUPATION; i++) {
+
+			for (int i = grid.smallestX(); i <= grid.greatestX(); i++) {
 				/* Creating a coordinate. */
 				Coord currentCoord = new Coord(i, j);
 				/* Obtaining the tile at the given coordinate. */
@@ -177,6 +175,12 @@ public class TileGridRepresenter {
 		int sideRepLen = 3;
 		EntityType type = s.getType();
 		String rep = (type == EntityType.N ? " " : type.toString());
+		
+		PlayerColor follower = s.getFollower();
+		if(follower != null){
+			rep += (":" + follower.toString());
+		}
+		
 		int spaceToAdd = sideRepLen - rep.length();
 		StringBuilder padded = new StringBuilder(rep);
 		for (int i = 0; i < spaceToAdd; i++) {

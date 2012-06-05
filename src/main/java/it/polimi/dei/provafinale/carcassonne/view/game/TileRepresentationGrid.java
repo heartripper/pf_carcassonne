@@ -3,6 +3,7 @@ package it.polimi.dei.provafinale.carcassonne.view.game;
 import it.polimi.dei.provafinale.carcassonne.Coord;
 import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
 
+import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,8 +14,10 @@ import java.util.Map;
  */
 public class TileRepresentationGrid {
 
+	private static final int INITIAL_GRID_DIMENSION = 3;
+	
 	private Map<Coord, String> tiles;
-	private int top = 0, right = 0, bottom = 0, left = 0;
+	private int greatX, smallX, greatY, smallY;
 
 	/**
 	 * Constructs a new instance of this class.
@@ -40,10 +43,10 @@ public class TileRepresentationGrid {
 		if (tiles.containsKey(c)) {
 			tiles.remove(c);
 		} else {
-			top = (y < top ? y : top);
-			right = (x > right ? x : right);
-			left = (x < left ? x : left);
-			bottom = (y > bottom ? y : bottom);
+			smallX = (x < smallX ? x : smallX);
+			greatX = (x > greatX ? x : greatX);
+			smallY = (y < smallY ? y : smallY);
+			greatY = (y > greatY ? y : greatY);
 		}
 
 		tiles.put(c, tileRep);
@@ -76,13 +79,37 @@ public class TileRepresentationGrid {
 		return false;
 	}
 
-	/**
-	 * Gives the grid bounds.
-	 * 
-	 * @return an int[] containing the grid's bounds
-	 * */
-	public int[] getBounds() {
-		int[] bounds = { top, right, bottom, left };
-		return bounds;
+	public int smallestX() {
+		return smallX - 1;
+	}
+
+	public int greatestX() {
+		return greatX + 1;
+	}
+
+	public int smallestY() {
+		return smallY - 1;
+	}
+
+	public int greatestY() {
+		return greatY + 1;
+	}
+
+	public Coord toGridCoord(Coord c) {
+		int x = c.getX() + smallX - 1;
+		int y = 1 + greatY - c.getY();
+		return new Coord(x, y);
+	}
+
+	public Coord toRealCoord(Coord c) {
+		int x = c.getX() - smallX + 1;
+		int y = 1 + greatY - c.getY();
+		return new Coord(x, y);
+	}
+
+	public Dimension getDimension(){
+		int x = INITIAL_GRID_DIMENSION -smallX + greatX;
+		int y = INITIAL_GRID_DIMENSION - smallY + greatY;
+		return new Dimension(x, y);
 	}
 }
