@@ -15,15 +15,11 @@ import javax.swing.JLabel;
  */
 public class TileGridPainter extends JLabel {
 
-	private static final int FIRST_TILE_OCCUPATION = 1;
-	private static final int INITIAL_GRID_DIMENSION = 3;
-
 	private static final long serialVersionUID = -2603074766780325918L;
 
 	private TileRepresentationGrid grid;
 	private final int tileDim = 125;
-	private int currOffsetX;
-	private int currOffsetY;
+
 	private TilePainter tilePainter = TilePainter.getInstance();
 
 	/**
@@ -41,63 +37,55 @@ public class TileGridPainter extends JLabel {
 	 * Updates the grid using the current dimension.
 	 */
 	public void updateRepresentation() {
-		/* Obtaining new bounds. */
-		int[] bounds = grid.getBounds();
 		/* Setting the dimension of the new grid. */
-		int vertTile = INITIAL_GRID_DIMENSION + bounds[2] - bounds[0];
-		int horTile = INITIAL_GRID_DIMENSION + bounds[1] - bounds[3];
-		currOffsetX = FIRST_TILE_OCCUPATION - bounds[3];
-		currOffsetY = FIRST_TILE_OCCUPATION + bounds[2];
-		setDimension(horTile * tileDim, vertTile * tileDim);
+		Dimension d = grid.getDimension();
+		setDimension(d.width * tileDim, d.height * tileDim);
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		/* Obtaining bounds. */
-		int[] bounds = grid.getBounds();
+
 		/* Print the components in the grid. */
-		for (int j = bounds[2] + FIRST_TILE_OCCUPATION; j >= bounds[0]
-				- FIRST_TILE_OCCUPATION; j--) {
-			for (int i = bounds[3] - FIRST_TILE_OCCUPATION; i <= bounds[1]
-					+ FIRST_TILE_OCCUPATION; i++) {
-				Coord c = new Coord(i, j);
-				String tileRep = grid.getTileRepresentation(c);
+		for (int i = grid.smallestX(); i <= grid.greatestX(); i++) {
+			for (int j = grid.greatestY(); j >= grid.smallestY(); j--) {
+
+				Coord gridCoord = new Coord(i, j);
+				String tileRep = grid.getTileRepresentation(gridCoord);
+				Coord realCoord = grid.toRealCoord(gridCoord);
 				/* The tile is present at a given coordinate. */
 				if (tileRep != null) {
-					printCard(g, tileRep, i, j);
+					printCard(g, tileRep, realCoord);
 				}
 				/*
 				 * The is the neighbor of another tile (that is really present
 				 * on the grid).
 				 */
-				else if (grid.hasTileNeighbor(c)) {
-					printPlaceHolder(g, i, j);
+				else if (grid.hasTileNeighbor(gridCoord)) {
+					printPlaceHolder(g, realCoord);
 				}
 			}
 		}
 	}
 
-	private void printCard(Graphics g, String tile, int x, int y) {
-		/* Calculating the coordinates. */
-		int absX = (currOffsetX + x) * tileDim;
-		int absY = (currOffsetY - y) * tileDim;
+	private void printCard(Graphics g, String tile, Coord realPos) {
 		/* Tile representation. */
-		tilePainter.paintTile(tile, g, absX, absY);
+		int x = realPos.getX() * tileDim;
+		int y = realPos.getY() * tileDim;
+		tilePainter.paintTile(tile, g, x, y);
 	}
 
-	private void printPlaceHolder(Graphics g, int x, int y) {
-		/* Calculating the coordinates. */
-		int absX = (currOffsetX + x) * tileDim;
-		int absY = (currOffsetY - y) * tileDim;
+	private void printPlaceHolder(Graphics g, Coord realCoord) {
 		/* Tile representation. */
-		tilePainter.paintPlaceHolder(g, absX, absY);
+		int x = realCoord.getX() * tileDim;
+		int y = realCoord.getY() * tileDim;
+		tilePainter.paintPlaceHolder(g, x, y);
 		/* Calculating the coordinates. */
-		String coord = String.format("(%s,%s)", x, y);
+		Coord gridCoord = grid.toGridCoord(realCoord);
+		String s = String.format("(%s,%s)", gridCoord.getX(), gridCoord.getY());
 		/* Writing the coordinates on the placeholder representation */
 		g.setColor(Color.BLACK);
-		g.drawString(coord, absX + tileDim / 4, absY + tileDim / 2);
-
+		g.drawString(s, x + tileDim / 3, y + tileDim / 2);
 	}
 
 	/**
@@ -115,5 +103,4 @@ public class TileGridPainter extends JLabel {
 		setMaximumSize(d);
 		setMinimumSize(d);
 	}
-
 }
