@@ -3,7 +3,7 @@ package it.polimi.dei.provafinale.carcassonne.controller;
 import java.io.Serializable;
 
 /**
- * Class representing messages that are exchanged between MatchHandler and
+ * This class represents messages that are exchanged between MatchHandler and
  * player clients.
  * */
 public class Message implements Serializable {
@@ -14,8 +14,9 @@ public class Message implements Serializable {
 	 * A MessageType.
 	 */
 	public final MessageType type;
+	
 	/**
-	 * A String containing the message payload..
+	 * A String containing the message payload.
 	 */
 	public final String payload;
 
@@ -50,7 +51,7 @@ public class Message implements Serializable {
 	 * message.
 	 * 
 	 * @param msg
-	 *            - a string containing the protocol message
+	 *            - a string containing the protocol message.
 	 * @return a Message representation of protocol message.
 	 */
 	public static Message createFromProtocolMsg(String msg) {

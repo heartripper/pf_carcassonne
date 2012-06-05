@@ -7,8 +7,8 @@ import java.rmi.server.UnicastRemoteObject;
 
 import it.polimi.dei.provafinale.carcassonne.Constants;
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
-import it.polimi.dei.provafinale.carcassonne.controller.CarcassonneRMIClient;
-import it.polimi.dei.provafinale.carcassonne.controller.CarcassonneRMIServer;
+import it.polimi.dei.provafinale.carcassonne.controller.RMIClient;
+import it.polimi.dei.provafinale.carcassonne.controller.RMIServer;
 import it.polimi.dei.provafinale.carcassonne.controller.ClientInterface;
 import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
@@ -22,12 +22,12 @@ import it.polimi.dei.provafinale.carcassonne.logger.LoggerService;
  * 
  */
 public class ClientRMIInterface implements ClientInterface,
-		CarcassonneRMIClient {
+		RMIClient {
 
 	private final int PollInterval = 5 * 1000;
 	private String host;
 	private Message serverBuffer, clientBuffer;
-	private CarcassonneRMIServer server;
+	private RMIServer server;
 	private Logger logger;
 
 	/**
@@ -137,7 +137,7 @@ public class ClientRMIInterface implements ClientInterface,
 		try {
 			UnicastRemoteObject.exportObject(this, 0);
 			Registry registry = LocateRegistry.getRegistry(host);
-			server = (CarcassonneRMIServer) registry
+			server = (RMIServer) registry
 					.lookup(Constants.RMI_SERVER_NAME);
 			server.register(this, request);
 		} catch (Exception re) {
