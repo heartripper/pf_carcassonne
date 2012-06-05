@@ -115,7 +115,7 @@ public class ClientControllerImpl implements Runnable {
 		viewInterface.updateCurrentTile(nextMessage.payload.trim());
 		/* Turn execution. */
 		endTurn = false;
-		while (!endTurn && !endTurn) {
+		while (!endTurn && !endGame) {
 			Message viewMsg = readFromGUI();
 			switch (viewMsg.type) {
 			case ROTATE:
