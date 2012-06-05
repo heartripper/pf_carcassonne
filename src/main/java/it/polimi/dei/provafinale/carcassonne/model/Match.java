@@ -83,7 +83,7 @@ public class Match {
 		if (!grid.isTileCompatible(tile, coord)) {
 			return false;
 		}
-		/* The tile is compatible with the given coordinates. */
+
 		grid.putTile(tile, coord);
 		for (SidePosition pos : SidePosition.values()) {
 			Side current = tile.getSide(pos);
@@ -113,14 +113,11 @@ public class Match {
 
 		for (SidePosition position : SidePosition.values()) {
 			Entity entity = tile.getSide(position).getEntity();
-			/*
-			 * There are no Entity on the current SidePosition or the Entity of
-			 * the side is already included in checkedEntities.
-			 */
+
 			if (entity == null || checkedEntities.contains(entity)) {
 				continue;
 			}
-			/* The Entity of the current SidePosition is a new one. */
+
 			checkedEntities.add(entity);
 			/* Case an Entity is completed using the current SidePosition. */
 			if (entity.isComplete()) {
@@ -201,18 +198,20 @@ public class Match {
 	 * all his followers).
 	 * 
 	 * @param color
-	 *            - the color of the player we want to remove.
+	 *            the color of the player we want to remove.
+	 * @return the list of the updated tile on the grid.
+	 * @throws NotEnoughPlayersException
 	 */
 	public synchronized List<Tile> removePlayer(PlayerColor color)
 			throws NotEnoughPlayersException {
 		Player p = players.getByColor(color);
 		p.setInactive();
 		List<Tile> updates = new ArrayList<Tile>();
-		for(Entity e : entities){
+		for (Entity e : entities) {
 			updates.addAll(e.removeFollowers(color));
 		}
-		
-		/* There are no enought players to play the game. */
+
+		/* There are no enough players to play the game. */
 		if (players.getPlayerNumber() < 2) {
 			throw new NotEnoughPlayersException();
 		}
@@ -221,6 +220,12 @@ public class Match {
 
 	/* Private Methods. */
 
+	/**
+	 * Updates entities.
+	 * 
+	 * @param tile
+	 *            the tile we have just added on the grid.
+	 */
 	private void updateEntities(Tile tile) {
 		for (SidePosition position : SidePosition.values()) {
 			Side currentSide = tile.getSide(position);
@@ -276,6 +281,14 @@ public class Match {
 		}
 	}
 
+	/**
+	 * Adds a side to an entity.
+	 * 
+	 * @param side
+	 *            a side we want to add to an entity.
+	 * @param entity
+	 *            an entity we want to set a side belongs to.
+	 */
 	private void addSideToEntity(Side side, Entity entity) {
 		side.setEntity(entity);
 		if (entity != null) {
@@ -283,16 +296,23 @@ public class Match {
 		}
 	}
 
+	/**
+	 * Handles a complete entity.
+	 * 
+	 * @param entity
+	 *            the complete entity.
+	 * @return the list of the grid updated tiles.
+	 */
 	private List<Tile> finalizeEntityAndUpdate(Entity entity) {
-		/*Create Entity report*/
+		/* Create Entity report */
 		EntityReport er = new EntityReport(entity, playersNumber);
-		
+
 		/* Give corresponding score to entity owners. */
 		players.addScores(er.getScores());
-		
+
 		/* Return followers to owners. */
 		players.addFollowers(er.getFollowers());
-		
+
 		return entity.removeFollowers(null);
 	}
 }
