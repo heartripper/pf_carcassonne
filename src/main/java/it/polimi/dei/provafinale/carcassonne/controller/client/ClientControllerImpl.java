@@ -1,7 +1,5 @@
 package it.polimi.dei.provafinale.carcassonne.controller.client;
 
-import java.util.concurrent.locks.ReadWriteLock;
-
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.controller.ClientInterface;
 import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
@@ -72,6 +70,7 @@ public class ClientControllerImpl implements Runnable {
 						|| color.equals(clientPlayerColor)) {
 					manageClientTurn();
 				} else {
+					viewInterface.updateCurrentTile(null);
 					handleGlobalUpdates();
 				}
 				break;
