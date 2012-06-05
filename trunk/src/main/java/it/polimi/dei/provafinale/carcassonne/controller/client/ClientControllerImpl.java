@@ -60,7 +60,7 @@ public class ClientControllerImpl implements Runnable {
 		/* Other types of messages. */
 		while (!endGame) {
 			/* Read turn information from server. */
-			Message turnMsg = readFromServer();
+			Message turnMsg = safeRead();
 			switch (turnMsg.type) {
 			/* Start a turn message. */
 			case TURN:
@@ -70,14 +70,12 @@ public class ClientControllerImpl implements Runnable {
 						|| color.equals(clientPlayerColor)) {
 					manageClientTurn();
 				} else {
-					manageOtherPlayerTurn();
+					handleGlobalUpdates();
 				}
 				break;
 			/* End game message. */
 			case END:
-				viewInterface.showNotify("Game end.");
-				viewInterface.updateScore(turnMsg.payload);
-				endGame = true;
+				handleGameEnd(turnMsg.payload);
 				break;
 			/* Wrong message order. */
 			default:
@@ -93,10 +91,10 @@ public class ClientControllerImpl implements Runnable {
 
 		/* Manages the identifier of the match. */
 		matchName = split[1].trim();
-		
+
 		/* Manages the color value of the associated player. */
 		String color = split[2].trim();
-		
+
 		/* The controller manages the messages (only updates) of all players. */
 		if (color.equals("null")) {
 			clientPlayerColor = null;
@@ -105,7 +103,7 @@ public class ClientControllerImpl implements Runnable {
 		else {
 			clientPlayerColor = PlayerColor.valueOf(color);
 		}
-		
+
 		/* View initialization. */
 		viewInterface.initialize(payload);
 	}
@@ -117,7 +115,7 @@ public class ClientControllerImpl implements Runnable {
 		viewInterface.updateCurrentTile(nextMessage.payload.trim());
 		/* Turn execution. */
 		endTurn = false;
-		while (!endTurn) {
+		while (!endTurn && !endTurn) {
 			Message viewMsg = readFromGUI();
 			switch (viewMsg.type) {
 			case ROTATE:
@@ -127,17 +125,13 @@ public class ClientControllerImpl implements Runnable {
 				handleTilePositioning(viewMsg);
 				break;
 			case FOLLOWER:
-				handleFollowerPositioning(viewMsg);
-				break;
 			case PASS:
-				handlePass(viewMsg);
-				break;
+				sendToServer(viewMsg);
+				handleGlobalUpdates();
 			default:
 				break;
 			}
 		}
-		/* Handle tile and score updates */
-		handleUpdates();
 	}
 
 	private Message readFromGUI() {
@@ -156,7 +150,7 @@ public class ClientControllerImpl implements Runnable {
 		sendToServer(msg);
 		/* Reads the answer from the server. */
 		Message response = readFromServer();
-		switch(response.type){		
+		switch (response.type) {
 		case ROTATED:
 			viewInterface.updateCurrentTile(response.payload.trim());
 			break;
@@ -189,7 +183,7 @@ public class ClientControllerImpl implements Runnable {
 		/* Tile is correctly placed. */
 		case UPDATE:
 			handleTileUpdate(response.payload);
-//			viewInterface.updateGridRepresentation(response.payload);
+			// viewInterface.updateGridRepresentation(response.payload);
 			viewInterface.showNotify("Tile placed.");
 			return;
 			/* Coord not valid. */
@@ -203,99 +197,79 @@ public class ClientControllerImpl implements Runnable {
 		}
 	}
 
-	/* Manages the follower positioning. */
-	private void handleFollowerPositioning(Message msg) {
-		/* Sends to the server the message contained in bufferedMessage. */
-		sendToServer(msg);
-		/* Reads the server response and analyzes it. */
-		Message response = readFromServer();
-		switch (response.type) {
-		/* The follower is correctly put on tile. */
-		case UPDATE:
-			handleTileUpdate(response.payload);
-			viewInterface.showNotify("Follower put on given side.");
-			endTurn = true;
-			return;
-			/* The selected position for the follower in invalid. */
-		case INVALID_MOVE:
-			viewInterface.showNotify("You can't add a follower there.");
-			return;
-			/* Error in the order of messages. */
-		default:
-			protocolOrderError("update' or 'invalid move", response.type);
-			return;
-		}
-	}
-
-	/* Manages the change of player. */
-	private void handlePass(Message msg) {
-		/* Sends to the server the message contained in bufferedMessage. */
-		sendToServer(msg);
-		/* Reads the server response and analyzes it. */
-		Message response = readFromServer();
-		switch (response.type) {
-		/* Correct change of player. */
-		case UPDATE:
-			endTurn = true;
-			break;
-		/* Case the current player hasn't positioned the tile. */
-		case INVALID_MOVE:
-			viewInterface.showNotify("You must add your card before passing.");
-			break;
-		/* Error in the order of messages. */
-		default:
-			protocolOrderError("update' or 'invalid move", response.type);
-		}
-	}
-
-	/* Updates the view of its player with notifications from the other players. */
-	private void manageOtherPlayerTurn() {
-		viewInterface.setUIActive(false);
-		viewInterface.updateCurrentTile(null);
-		handleUpdates();
-	}
-
 	/* Helper methods. */
-
-	/* Manages the updates of the match. */
-	private void handleUpdates() {
-		Message msg = null;
-		boolean updatesEnded = false;
-		/* Analyzes all the updates. */
-		while (!updatesEnded) {
-			/* Possible updates. */
-			msg = readFromServer();
-			switch (msg.type) {
-			/* Updates the grid with the given tile. */
-			case UPDATE:
-				handleTileUpdate(msg.payload);
-				break;
-			/*
-			 * It's the last update we can receive, containing the current
-			 * score.
-			 */
-			case SCORE:
-				updatesEnded = true;
-				break;
-			/* Error in the order of messages. */
-			default:
-				protocolOrderError("update' or 'score", msg.type);
+	private Message safeRead(){
+		Message msg = readFromServer();
+		while(true){
+			switch(msg.type){
+				case UPDATE:
+					handleTileUpdate(msg.payload);
+					endTurn = true;
+					break;
+				case LOCK:
+					viewInterface.showNotify("A Player is not responding");
+					break;
+				case UNLOCK:
+					viewInterface.showNotify("Player reconnected");
+					break;
+				case LEAVE:
+					String notify = "Player %s left";
+					viewInterface.showNotify(String.format(notify, msg.payload));
+					break;
+				default:
+					return msg;
 			}
 		}
-		/* Update game panel. */
-//		viewInterface.updateGridRepresentation();
-		/* Update score. */
-		viewInterface.updateScore(msg.payload);
 	}
 
-	/* Manages the updates on the tile. */
+	/* Manages the updates of the match. */
+	private void handleGlobalUpdates() {
+		while (true) {
+			Message msg = readFromServer();
+			switch (msg.type) {
+			case UPDATE:
+				handleTileUpdate(msg.payload);
+				endTurn = true;
+				break;
+			case LOCK:
+				viewInterface.showNotify("A Player is not responding");
+				break;
+			case UNLOCK:
+				viewInterface.showNotify("Player reconnected");
+				break;
+			case LEAVE:
+				String notify = "Player %s left";
+				viewInterface.showNotify(String.format(notify, msg.payload));
+				break;
+			case SCORE:
+				viewInterface.updateScore(msg.payload);
+				endTurn = true;
+				return;
+			case INVALID_MOVE:
+				viewInterface.showNotify("Move not valid");
+				return;
+			case END:
+				handleGameEnd(msg.payload);
+				return;
+			default:
+				protocolOrderError("an update", msg.type);
+			}
+		}
+	}
+
 	private void handleTileUpdate(String command) {
 		viewInterface.updateGridRepresentation(command);
 	}
 
+	private void handleGameEnd(String msg){
+		viewInterface.showNotify("Game end.");
+		viewInterface.updateScore(msg);
+		endGame = true;
+	}
+	
 	/*
 	 * Points out that an error in the order of the received message has been
-	 * occourred.
+	 * occurred.
 	 */
 	private void protocolOrderError(String expected, MessageType received) {
 		String msg = String.format(
@@ -303,8 +277,6 @@ public class ClientControllerImpl implements Runnable {
 				expected, received);
 		throw new RuntimeException(msg);
 	}
-
-	/* Helpers to send and receive messages. */
 
 	/* Sends a message to the server. */
 	private void sendToServer(Message msg) {
@@ -320,52 +292,12 @@ public class ClientControllerImpl implements Runnable {
 
 	/* Reads a message to the server. */
 	private Message readFromServer() {
-		Message msg;
 		while (true) {
 			try {
-				msg = clientInterface.readMessage();
-				/*
-				 * Handles lock and returns first correct message in case
-				 * another player doesn't answer.
-				 */
-				if (msg.type == MessageType.LOCK) {
-					return handleLock();
-				}
-				/* Returns the received message. */
-				else {
-					return msg;
-				}
+				return clientInterface.readMessage();
 			} catch (ConnectionLostException cle) {
 				handleReconnection();
 			}
-		}
-	}
-
-	/* Manages the lock message. */
-	private Message handleLock() {
-		viewInterface.showNotify("A player is not responding.");
-		Message msg = readFromServer();
-		switch (msg.type) {
-		/* The player left the game. */
-		case LEAVE:
-			/* Points out that a player has left the game. */
-			String format = "Player %s left the game.\n";
-			viewInterface.showNotify(String.format(format, msg.payload));
-			/* Reads the updates messages from server. */
-			Message update = readFromServer();
-			while (update.type == MessageType.UPDATE) {
-				handleTileUpdate(update.payload);
-				update = readFromServer();
-			}
-			return update;
-			/* The player has come back to the game. */
-		case UNLOCK:
-			viewInterface.showNotify("Player reconnected.");
-			return readFromServer();
-			/* Error in the order of received messages. */
-		default:
-			protocolOrderError("leave' or 'unlock", msg.type);
-			return null;
 		}
 	}
 
@@ -385,8 +317,7 @@ public class ClientControllerImpl implements Runnable {
 				}
 			}
 		}
-		/* Notify the user that connection with server was lost. */
-		Thread.currentThread().interrupt();
+		viewInterface.showNotify("Connection with server lost");
+		endGame = true;
 	}
-
 }
