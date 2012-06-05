@@ -186,7 +186,7 @@ public class MatchHandler implements Runnable {
 	/* Update tile message. */
 	private String getUpdateTileMsg(Tile tile) {
 		String rep = tile.toString();
-		Coord c = tile.getCoordinates();
+		Coord c = tile.getCoords();
 		return String.format("%s, %s, %s", rep, c.getX(), c.getY());
 	}
 
