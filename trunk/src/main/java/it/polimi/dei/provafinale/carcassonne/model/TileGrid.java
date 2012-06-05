@@ -13,10 +13,6 @@ public class TileGrid {
 
 	Map<Coord, Tile> grid; // TODO verificare che la visibilità di questo
 							// attributo sia corretta
-	private int upperEdge;
-	private int rightEdge;
-	private int lowerEdge;
-	private int leftEdge;
 
 	/**
 	 * TileGrid constructor. Creates a new instance of TileGrid.
@@ -137,13 +133,7 @@ public class TileGrid {
 	 */
 	public void putTile(Tile tile, Coord coord) {
 		grid.put(coord, tile);
-		int x = coord.getX();
-		int y = coord.getY();
-		/* Updating bounds of area to represent. */
-		rightEdge = (x > rightEdge ? x : rightEdge);
-		leftEdge = (x < leftEdge ? x : leftEdge);
-		upperEdge = (y < upperEdge ? y : upperEdge);
-		lowerEdge = (y > lowerEdge ? y : lowerEdge);
+
 		/*
 		 * Insert into the tile its position and a reference to the grid, useful
 		 * to find its neighbors.
@@ -169,14 +159,4 @@ public class TileGrid {
 		Coord offset = SidePosition.getOffsetForPosition(position);
 		return grid.get(coord.add(offset));
 	}
-
-	/**
-	 * Gets the dimension (upperbound) of the area currently occupied by tiles.
-	 * 
-	 * @return the bounds of the occupied area.
-	 */
-	public int[] getBounds() {
-		return new int[] { upperEdge, rightEdge, lowerEdge, leftEdge };
-	}
-
 }
