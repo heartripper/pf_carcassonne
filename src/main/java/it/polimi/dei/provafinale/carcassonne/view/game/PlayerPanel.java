@@ -9,6 +9,8 @@ import java.awt.Font;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
 import java.awt.BorderLayout;
 
 import javax.swing.border.EtchedBorder;
@@ -119,7 +121,7 @@ public class PlayerPanel extends JPanel {
 	 *            the score we want to add to the current one.
 	 */
 	public void setScore(int score) {
-		lblScore.setText("Score: " + score);
+		safeSetText(lblScore, "Score: " + score);
 	}
 
 	/**
@@ -131,7 +133,7 @@ public class PlayerPanel extends JPanel {
 	 *            player.
 	 */
 	public void setFollowers(int numFollowers) {
-		lblFollower.setText("Follower: " + numFollowers);
+		safeSetText(lblFollower, "Follower: " + numFollowers);
 	}
 
 	/**
@@ -144,26 +146,34 @@ public class PlayerPanel extends JPanel {
 	 *            that is the turn of another player.
 	 */
 	public void setActive(boolean active) {
-		Font font;
-		Color color;
-		/* It's current player turn. */
-		if (active) {
-			font = selNameFont;
-			color = selectedBGColor;
-		}
-		/* It's another player turn. */
-		else {
-			font = unselNameFont;
-			color = unselectedBGColor;
-		}
-		lblName.setFont(font);
-		setBackground(color);
+		final Font font = (active ? selNameFont : unselNameFont);
+		final Color background = (active ? selectedBGColor : unselectedBGColor);
+
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				// TODO Auto-generated method stub
+				lblName.setFont(font);
+				setBackground(background);
+			}
+		});
+
 	}
 
 	/**
 	 * Sets this player as the one playing on the client.
 	 */
 	public void setClientPlayer() {
-		lblName.setText(playerColor.getFullName() + " (You)");
+		safeSetText(lblName, playerColor.getFullName() + " (You)");
 	}
+
+	private void safeSetText(final JLabel label, final String text) {
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				label.setText(text);
+			}
+		});
+	}
+
 }
