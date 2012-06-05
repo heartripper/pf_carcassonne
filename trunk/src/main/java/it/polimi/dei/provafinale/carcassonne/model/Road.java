@@ -8,18 +8,15 @@ import java.util.Set;
  * tiles in Carcassonne game.
  * 
  */
-public class Road extends Entity {
-
-	private static int roadCount = 0;
+public class Road extends Entity {        
 
 	private EntityType type = EntityType.S;
-	private int id;
 
 	/**
 	 * Road constructor. Creates a new instance of class Road.
 	 */
 	public Road() {
-		id = ++roadCount;
+		super();
 	}
 
 	@Override
