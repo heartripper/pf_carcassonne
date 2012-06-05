@@ -15,7 +15,7 @@ import it.polimi.dei.provafinale.carcassonne.controller.RemotePlayer;
  */
 public class ServerGameInterface implements GameInterface {
 
-	private static final int RECONNECTION_TIMEOUT = 15 * 1000;
+	private static final int RECONNECTION_TIMEOUT = 10 * 60 * 1000;
 	private List<RemotePlayer> remotePlayers;
 	private String name;
 	private int numPlayers;
