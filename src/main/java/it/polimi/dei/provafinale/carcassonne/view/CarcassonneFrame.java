@@ -4,10 +4,14 @@ import it.polimi.dei.provafinale.carcassonne.controller.client.WindowClose;
 import it.polimi.dei.provafinale.carcassonne.view.game.GamePanel;
 import it.polimi.dei.provafinale.carcassonne.view.menu.MenuPanel;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * The class CarcassonneFrame extends a JFrame in order to create the main
@@ -35,11 +39,18 @@ public class CarcassonneFrame extends JFrame {
 	 */
 	public CarcassonneFrame() {
 
-		// TODO AGGIUNGERE ICONA GIOCO NEL PROFILO DELLA FINESTRA
-
 		/* Superclass constructor invocation. */
 		super("Carcassonne");
 
+		/* Setting icon. */
+		Image icon;
+		try {
+			icon = ImageIO.read(new File("src/main/resources/icon.png"));
+			setIconImage(icon);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		/*
 		 * Adding option "Are you sure you want to close this window?" to
 		 * CarcassonneFrame.
