@@ -15,7 +15,7 @@ import java.util.Map;
 public class TileRepresentationGrid {
 
 	private static final int INITIAL_GRID_DIMENSION = 3;
-	
+
 	private Map<Coord, String> tiles;
 	private int greatX, smallX, greatY, smallY;
 
@@ -79,36 +79,71 @@ public class TileRepresentationGrid {
 		return false;
 	}
 
+	/**
+	 * Returns the smallest value of x among the coordinates of tiles in the
+	 * grid.
+	 * */
 	public int smallestX() {
 		return smallX - 1;
 	}
 
+	/**
+	 * Returns the greates value of x among the coordinates of tiles in the
+	 * grid.
+	 * */
 	public int greatestX() {
 		return greatX + 1;
 	}
 
+	/**
+	 * Returns the smallest value of y among the coordinates of tiles in the
+	 * grid.
+	 * */
 	public int smallestY() {
 		return smallY - 1;
 	}
 
+	/**
+	 * Returns the greatest value of y among the coordinates of tiles in the
+	 * grid.
+	 * */
 	public int greatestY() {
 		return greatY + 1;
 	}
 
-	public Coord toGridCoord(Coord c) {
-		int x = c.getX() + smallX - 1;
-		int y = 1 + greatY - c.getY();
+	/**
+	 * Convert a coord referred to normal system (with 0,0 in the top-left
+	 * corner) to coords referred to grid system.
+	 * 
+	 * @param realCoord
+	 *            - the coord referred to normal system
+	 * @return the coord referred to grid system
+	 * */
+	public Coord toGridCoord(Coord realCoord) {
+		int x = realCoord.getX() + smallX - 1;
+		int y = 1 + greatY - realCoord.getY();
 		return new Coord(x, y);
 	}
 
-	public Coord toRealCoord(Coord c) {
-		int x = c.getX() - smallX + 1;
-		int y = 1 + greatY - c.getY();
+	/**
+	 * Convert a coord referred to grid system to coords referred to normal
+	 * system.
+	 * 
+	 * @param gridCoord
+	 *            - the coord referred to grid system.
+	 * @return the coord referred to normal system.
+	 * */
+	public Coord toRealCoord(Coord gridCoord) {
+		int x = gridCoord.getX() - smallX + 1;
+		int y = 1 + greatY - gridCoord.getY();
 		return new Coord(x, y);
 	}
 
-	public Dimension getDimension(){
-		int x = INITIAL_GRID_DIMENSION -smallX + greatX;
+	/**
+	 * Returns the dimension of grid.
+	 * */
+	public Dimension getDimension() {
+		int x = INITIAL_GRID_DIMENSION - smallX + greatX;
 		int y = INITIAL_GRID_DIMENSION - smallY + greatY;
 		return new Dimension(x, y);
 	}
