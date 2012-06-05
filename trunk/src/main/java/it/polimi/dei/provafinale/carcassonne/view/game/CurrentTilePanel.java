@@ -1,6 +1,7 @@
 package it.polimi.dei.provafinale.carcassonne.view.game;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
@@ -61,6 +62,9 @@ public class CurrentTilePanel extends JPanel {
 
 	protected void paintComponent(Graphics g) {
 		/* There are no tiles corresponding to the given textual representation. */
+		Color bg = getBackground();
+		g.setColor(bg);
+		g.fillRect(0, 0, getWidth(), getHeight());
 		if (currentTileRep == null) {
 			tilePainter.paintPlaceHolder(g, 0, 0);
 		}
