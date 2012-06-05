@@ -172,7 +172,6 @@ public class ServerGameInterface implements GameInterface {
 		PlayerColor color = PlayerColor.valueOf(playerIndex);
 		Message msg;
 		if (!newPlayer.isActive()) {
-			msg = new Message(MessageType.LEAVE, color.toString());
 			System.out.printf("Player %s has disconnected.\n", color);
 			if (pde == null) {
 				pde = new PlayersDisconnectedException(color);
