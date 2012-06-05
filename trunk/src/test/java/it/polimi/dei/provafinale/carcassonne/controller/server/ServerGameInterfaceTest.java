@@ -2,8 +2,7 @@ package it.polimi.dei.provafinale.carcassonne.controller.server;
 
 import static org.junit.Assert.*;
 
-import java.awt.Color;
-import java.rmi.Remote;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +77,7 @@ public class ServerGameInterfaceTest {
 	public void inactivePlayerTest() {
 		PlayerColor color = PlayerColor.R;
 		Message msg = new Message(MessageType.SCORE, null);
-		int index = color.indexOf(color);
+		int index = PlayerColor.indexOf(color);
 		FakeRemotePlayer player = (FakeRemotePlayer) remotePlayers.get(index);
 		player.setInactive();
 		try {
