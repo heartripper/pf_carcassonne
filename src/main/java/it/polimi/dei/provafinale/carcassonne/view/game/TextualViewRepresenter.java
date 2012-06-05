@@ -12,7 +12,7 @@ import it.polimi.dei.provafinale.carcassonne.model.Tile;
  * the grid.
  * 
  */
-public class TileGridRepresenter {
+public class TextualViewRepresenter {
 
 	private static final int TILE_HEIGHT = 7;
 
@@ -25,7 +25,7 @@ public class TileGridRepresenter {
 	 * @param grid
 	 *            the grid to represent.
 	 */
-	public TileGridRepresenter(TileRepresentationGrid grid) {
+	public TextualViewRepresenter(TileRepresentationGrid grid) {
 		this.grid = grid;
 	}
 
@@ -172,26 +172,14 @@ public class TileGridRepresenter {
 	}
 
 	private static String getSideRep(Side s) {
-		int sideRepLen = 3;
 		EntityType type = s.getType();
 		String rep = (type == EntityType.N ? " " : type.toString());
-		
 		PlayerColor follower = s.getFollower();
-		if(follower != null){
-			rep += (":" + follower.toString());
-		}
-		
-		int spaceToAdd = sideRepLen - rep.length();
-		StringBuilder padded = new StringBuilder(rep);
-		for (int i = 0; i < spaceToAdd; i++) {
-			if (i % 2 == 0) {
-				padded.append(" ");
-			} else {
-				String newRep = " " + padded.toString();
-				padded = new StringBuilder(newRep);
-			}
-		}
 
-		return padded.toString();
+		if (follower != null) {
+			return String.format("%s:%s", rep, follower.toString());
+		} else {
+			return String.format(" %s ", rep);
+		}
 	}
 }

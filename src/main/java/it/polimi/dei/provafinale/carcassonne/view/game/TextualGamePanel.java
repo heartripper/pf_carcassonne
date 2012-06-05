@@ -5,6 +5,7 @@ import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -23,7 +24,7 @@ import it.polimi.dei.provafinale.carcassonne.model.Tile;
 public class TextualGamePanel extends GamePanel {
 
 	private static final int COLUMNS_NUMBER = 10;
-	private static final int FONT_SIZE = 15;
+	private static final int FONT_SIZE = 13;
 
 	private static final long serialVersionUID = -8074082087694368365L;
 
@@ -31,10 +32,11 @@ public class TextualGamePanel extends GamePanel {
 	private PlayerColor currentPlayerColor;
 	private JTextField textField;
 	private JTextArea textArea;
+	private JScrollPane scrollPane;
 	private StringBuilder text = new StringBuilder();
 
 	private TileRepresentationGrid tileRepGrid;
-	private TileGridRepresenter representer;
+	private TextualViewRepresenter representer;
 
 	/**
 	 * TextualGamePanel constructor. Creates a new instance of class
@@ -45,14 +47,14 @@ public class TextualGamePanel extends GamePanel {
 
 		/* Initialize grid */
 		tileRepGrid = new TileRepresentationGrid();
-		representer = new TileGridRepresenter(tileRepGrid);
+		representer = new TextualViewRepresenter(tileRepGrid);
 		/* Setting the class layout. */
 		setLayout(new BorderLayout(0, 0));
 		/* Initializing the area where to put tiles and notifications. */
 		textArea = new JTextArea();
 		textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, FONT_SIZE));
 		textArea.setEditable(false);
-		JScrollPane scrollPane = new JScrollPane(textArea);
+		scrollPane = new JScrollPane(textArea);
 		add(scrollPane, BorderLayout.CENTER);
 		/* Creating a panel to put in the bottom part of the screen. */
 		JPanel panel = new JPanel();
@@ -74,6 +76,10 @@ public class TextualGamePanel extends GamePanel {
 	private void printMsg(String newText) {
 		text.append(newText + "\n");
 		textArea.setText(text.toString());
+		JScrollBar bar = scrollPane.getVerticalScrollBar();
+		int max = bar.getMaximum();
+		bar.setValue(max);
+		textField.requestFocus();
 	}
 
 	/* Implementation of ViewInterface methods. */
@@ -124,7 +130,7 @@ public class TextualGamePanel extends GamePanel {
 		/* Convert the String representation of a tile into the Tile one. */
 		Tile tile = new Tile(rep);
 		/* Converts the Tile into a printable String. */
-		String tileRepresentation = TileGridRepresenter
+		String tileRepresentation = TextualViewRepresenter
 				.getTileRepresentation(tile);
 
 		String msg;
