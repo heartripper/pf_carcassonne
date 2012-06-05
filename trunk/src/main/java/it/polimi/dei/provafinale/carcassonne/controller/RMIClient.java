@@ -5,12 +5,12 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
- * Remote interface of RMI Client.
+ * This is the remote interface of RMI Client.
  * */
-public interface CarcassonneRMIClient extends Remote {
+public interface RMIClient extends Remote {
 
 	/**
-	 * Sends a message to client.
+	 * Sends a message to the client.
 	 * 
 	 * @param msg
 	 *            - the Message to send to client.

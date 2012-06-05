@@ -1,8 +1,8 @@
 package it.polimi.dei.provafinale.carcassonne.controller.server;
 
 import it.polimi.dei.provafinale.carcassonne.Constants;
-import it.polimi.dei.provafinale.carcassonne.controller.CarcassonneRMIClient;
-import it.polimi.dei.provafinale.carcassonne.controller.CarcassonneRMIServer;
+import it.polimi.dei.provafinale.carcassonne.controller.RMIClient;
+import it.polimi.dei.provafinale.carcassonne.controller.RMIServer;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
 import it.polimi.dei.provafinale.carcassonne.controller.RemotePlayer;
 
@@ -14,7 +14,7 @@ import java.rmi.server.UnicastRemoteObject;
 /**
  * Class to monitor players' requests to play made via RMI.
  * */
-public class RMIRequestMonitor implements CarcassonneRMIServer {
+public class RMIRequestMonitor implements RMIServer {
 
 	private MatchesManager matchesManager;
 
@@ -27,7 +27,7 @@ public class RMIRequestMonitor implements CarcassonneRMIServer {
 	public static void registerRMIRequestMonitor(MatchesManager matchesManager) {
 		RMIRequestMonitor monitor = new RMIRequestMonitor(matchesManager);
 		try {
-			CarcassonneRMIServer stub = (CarcassonneRMIServer) UnicastRemoteObject
+			RMIServer stub = (RMIServer) UnicastRemoteObject
 					.exportObject(monitor, 0);
 			Registry registry = LocateRegistry.getRegistry();
 			registry.rebind(Constants.RMI_SERVER_NAME, stub);
@@ -43,7 +43,7 @@ public class RMIRequestMonitor implements CarcassonneRMIServer {
 	}
 
 	@Override
-	public void register(CarcassonneRMIClient client, Message request)
+	public void register(RMIClient client, Message request)
 			throws RemoteException {
 		RemotePlayer player = new RemoteRMIPlayer(client);
 		matchesManager.enqueuePlayer(player, request);

@@ -2,7 +2,7 @@ package it.polimi.dei.provafinale.carcassonne.controller.server;
 
 import java.rmi.RemoteException;
 
-import it.polimi.dei.provafinale.carcassonne.controller.CarcassonneRMIClient;
+import it.polimi.dei.provafinale.carcassonne.controller.RMIClient;
 import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
 import it.polimi.dei.provafinale.carcassonne.controller.RemotePlayer;
@@ -14,7 +14,7 @@ import it.polimi.dei.provafinale.carcassonne.controller.RemotePlayer;
  */
 public class RemoteRMIPlayer implements RemotePlayer {
 
-	private CarcassonneRMIClient client;
+	private RMIClient client;
 	private boolean active;
 
 	/**
@@ -24,7 +24,7 @@ public class RemoteRMIPlayer implements RemotePlayer {
 	 * @param client
 	 *            a CarcassonneRMIClient we want to add to the game.
 	 */
-	public RemoteRMIPlayer(CarcassonneRMIClient client) {
+	public RemoteRMIPlayer(RMIClient client) {
 		this.client = client;
 		this.active = true;
 	}

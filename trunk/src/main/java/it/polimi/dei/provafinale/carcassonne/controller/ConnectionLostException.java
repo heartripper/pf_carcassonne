@@ -10,14 +10,18 @@ public class ConnectionLostException extends Exception {
 	private static final long serialVersionUID = 7560807455345741619L;
 
 	/**
-	 * Manages the exception of type ConnectionLostException.
+	 * Class ConnectionLostException constructor. Creates a new instance of
+	 * class ConnectionLostConstructor in order to manage an exception of this
+	 * type.
 	 */
 	public ConnectionLostException() {
 		super();
 	}
 
 	/**
-	 * Manages the exception of type ConnectionLostException.
+	 * Class ConnectionLostException constructor. Creates a new instance of
+	 * class ConnectionLostConstructor in order to manage an exception of this
+	 * type.
 	 * 
 	 * @param s
 	 *            a String that indicates an error.

@@ -3,7 +3,7 @@ package it.polimi.dei.provafinale.carcassonne.controller;
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 
 /**
- * Interface that is used by Client Controller to talk to Match Controller
+ * This is an interface used by Client Controller to talk to Match Controller.
  * */
 public interface ClientInterface {
 
@@ -13,23 +13,24 @@ public interface ClientInterface {
 	void connect() throws ConnectionLostException;
 
 	/**
-	 * Sends a message to Match Controller interface
+	 * Sends a message to Match Controller interface.
 	 * 
 	 * @param msg
-	 *            - a Message to server
+	 *            - a Message to server.
 	 * */
 	void sendMessage(Message msg) throws ConnectionLostException;
 
 	/**
 	 * Reads a message from Match Controller interface.
 	 * 
-	 * @return the Message read from Match Controller
+	 * @return the Message read from Match Controller.
 	 * */
 	Message readMessage() throws ConnectionLostException;
 
 	/**
-	 * Tries to reconnect to Match controller after a disconnection
+	 * Tries to reconnect to Match controller after a disconnection.
 	 * */
 	void reconnect(String matchName, PlayerColor color)
 			throws ConnectionLostException;
+
 }
