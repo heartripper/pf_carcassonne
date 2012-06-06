@@ -48,8 +48,9 @@ public class TextualGamePanel extends GamePanel {
 		/* Initialize grid */
 		tileRepGrid = new TileRepresentationGrid();
 		representer = new TextualViewRepresenter(tileRepGrid);
-		/* Setting the class layout. */
+	
 		setLayout(new BorderLayout(0, 0));
+		
 		/* Initializing the area where to put tiles and notifications. */
 		textArea = new JTextArea();
 		textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, FONT_SIZE));
@@ -72,7 +73,12 @@ public class TextualGamePanel extends GamePanel {
 		panel.add(btnSend);
 	}
 
-	/* Prints a message in textArea. */
+	/**
+	 * Prints a message in textArea.
+	 * 
+	 * @param newText
+	 *            the text we want to put in the text area.
+	 */
 	private void printMsg(String newText) {
 		text.append(newText + "\n");
 		textArea.setText(text.toString());
@@ -88,7 +94,7 @@ public class TextualGamePanel extends GamePanel {
 	public void initialize(String initMsg) {
 		String[] split = initMsg.split(",");
 
-		/* Setup initial tile */
+		/* Setup initial tile. */
 		String initialTile = split[0].trim();
 		tileRepGrid.execUpdate(initialTile + ", 0, 0");
 
@@ -127,9 +133,8 @@ public class TextualGamePanel extends GamePanel {
 	/* Prints the representation of the current tile on the textArea. */
 	@Override
 	public void updateCurrentTile(String rep) {
-		/* Convert the String representation of a tile into the Tile one. */
+	
 		Tile tile = new Tile(rep);
-		/* Converts the Tile into a printable String. */
 		String tileRepresentation = TextualViewRepresenter
 				.getTileRepresentation(tile);
 
@@ -151,7 +156,7 @@ public class TextualGamePanel extends GamePanel {
 
 	@Override
 	public void setUIActive(boolean enabled) {
-		/* If the current player is active in the match... */
+		/* Case the current player is active. */
 		if (enabled) {
 			String msg = "";
 			/*

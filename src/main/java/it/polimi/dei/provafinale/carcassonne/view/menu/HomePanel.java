@@ -33,14 +33,12 @@ public class HomePanel extends JPanel {
 	 *            an Image we want to set as background of the panel.
 	 */
 	public HomePanel(BufferedImage background) {
-		/* Setting background attribute. */
+
 		this.background = background;
 
-		/* Setting layout. */
 		BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
 		setLayout(layout);
 
-		/* Layout option. */
 		Component verticalGlue01 = Box.createVerticalGlue();
 
 		/* Adding new local game panel. */
@@ -54,7 +52,6 @@ public class HomePanel extends JPanel {
 		ActionListener local = new MenuPanelSwitcher(MenuPanel.LOCALGAMEPANEL);
 		btnNewLocalGame.addActionListener(local);
 
-		/* Layout option. */
 		Component verticalStrut = Box.createVerticalStrut(PIXEL_SPACING);
 
 		/* Adding new internet game panel. */
@@ -69,7 +66,6 @@ public class HomePanel extends JPanel {
 				MenuPanel.INTERNETGAMEPANEL);
 		btnNewInternetGame.addActionListener(internet);
 
-		/* Layout option. */
 		Component verticalGlue02 = Box.createVerticalGlue();
 
 		/* Add components to panel. */

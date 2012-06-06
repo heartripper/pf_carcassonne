@@ -45,13 +45,11 @@ public class InternetGamePanel extends JPanel {
 	 *            an Image we want to set as background of the panel.
 	 */
 	public InternetGamePanel(BufferedImage background) {
-		/* Setting background attribute. */
+
 		this.background = background;
 
-		/* Setting layout. */
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-		/* Layout option. */
 		Component verticalGlue01 = Box.createVerticalGlue();
 		add(verticalGlue01);
 
@@ -64,7 +62,6 @@ public class InternetGamePanel extends JPanel {
 		JLabel lblNewInternetGame = new JLabel("NEW INTERNET GAME");
 		titlePanel.add(lblNewInternetGame);
 
-		/* Layout option. */
 		Component verticalStrut01 = Box.createVerticalStrut(PIXEL_SPACING);
 		add(verticalStrut01);
 
@@ -110,7 +107,6 @@ public class InternetGamePanel extends JPanel {
 		Component horizontalGlue02 = Box.createHorizontalGlue();
 		serverInfoPanel.add(horizontalGlue02);
 
-		/* Layout option. */
 		Component verticalStrut = Box.createVerticalStrut(PIXEL_SPACING);
 		add(verticalStrut);
 
@@ -162,7 +158,6 @@ public class InternetGamePanel extends JPanel {
 		messageLabel = new JLabel();
 		messagePanel.add(messageLabel);
 
-		/* Layout option. */
 		Component verticalGlue02 = Box.createVerticalGlue();
 		add(verticalGlue02);
 

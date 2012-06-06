@@ -55,15 +55,15 @@ public final class TilePainter {
 	 * compiles the pattern to match followers in tile representations.
 	 * */
 	private TilePainter() {
-		/* Creating tileLib and followersLib. */
+		
 		this.tileLib = new HashMap<String, BufferedImage>();
 		this.followersLib = new HashMap<String, BufferedImage>();
-		/* Follower regular expression. */
+	
 		String followerRegExp = "(N|E|S|W)=.-(R|B|V|G|N)";
 		this.followerPattern = Pattern.compile(followerRegExp);
-		/* Setting tile dimension. */
+		
 		this.tileDim = Constants.TILE_PIXEL_DIMENSION;
-		/* Read from file. */
+		
 		String line;
 		BufferedReader in = null;
 		try {
@@ -72,7 +72,6 @@ public final class TilePainter {
 			in = new BufferedReader(fr);
 			while ((line = in.readLine()) != null) {
 				BufferedImage currentImg = readBaseImage(line);
-				/* Adding the tile into tileLib. */
 				if (currentImg != null) {
 					tileLib.put(line, currentImg);
 				}
@@ -85,13 +84,12 @@ public final class TilePainter {
 				String path = String.format(
 						Constants.FOLLOWERS_IMG_PATH_FORMAT, c);
 				BufferedImage img = ImageIO.read(new File(path));
-				/* Adding the follower into followersLib. */
 				followersLib.put(c.toString(), img);
 			}
 		} catch (IOException ioe) {
 			System.out.println("Error reading tile images.");
 		}
-		/* Closing in. */
+		/* Closing stream in. */
 		if (in != null) {
 			try {
 				in.close();
@@ -119,11 +117,9 @@ public final class TilePainter {
 		String base = rep.replaceAll("-.", "");
 		/* Find the base tile into the repository. */
 		BufferedImage img = getImage(base);
-		/* Draw the tile. */
 		g.drawImage(img, x, y, tileDim, tileDim, null);
-		/* In case there was a follower in rep... */
+		/* Case there was a follower in rep . */
 		if (rep.indexOf('-') != -1) {
-			/* print it. */
 			paintFollower(rep, g, x, y);
 		}
 	}
@@ -155,9 +151,8 @@ public final class TilePainter {
 		 * the repository).
 		 */
 		String fileName = rep.replaceAll("[ ]??[NSWE]??[NSWE]=", "");
-		/* Create the complete path of the tile. */
 		String path = String.format(Constants.TILE_PATH_FORMAT, fileName);
-		/* Read from file successful. */
+		
 		try {
 			return ImageIO.read(new File(path));
 		} catch (IOException e) {
@@ -197,9 +192,8 @@ public final class TilePainter {
 			BufferedImage baseImage = tileLib.get(c.toString());
 			/* Getting the rotated image. */
 			BufferedImage image = rotateImage(baseImage, rotCount);
-			/* Put the rotated image into tileLib. */
+
 			tileLib.put(rep, image);
-			/* Return the rotated image. */
 			return image;
 		}
 	}
@@ -215,7 +209,7 @@ public final class TilePainter {
 	 * @return the rotated image
 	 * */
 	private BufferedImage rotateImage(BufferedImage baseImage, int rotCount) {
-		// creating the AffineTransform instance
+		/* creating the AffineTransform instance.*/
 		AffineTransform affineTransform = new AffineTransform();
 		/* Rotate the image. */
 		double radians = -Math.toRadians(ROTATION_DEGREES * rotCount);
