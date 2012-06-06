@@ -36,6 +36,9 @@ public abstract class Entity {
 	private boolean completed;
 	private boolean hasFollowers;
 
+	/**
+	 * Entity constructor. Creates a new instance of class Entity.
+	 */
 	protected Entity() {
 		members = new ArrayList<Side>();
 	}
@@ -157,7 +160,7 @@ public abstract class Entity {
 	}
 
 	/* Abstract methods. */
-	
+
 	/**
 	 * Gives the type of this entity.
 	 * 
