@@ -304,7 +304,6 @@ public class Match {
 	 * @return the list of the grid updated tiles.
 	 */
 	private List<Tile> finalizeEntityAndUpdate(Entity entity) {
-		/* Create Entity report */
 		EntityReport er = new EntityReport(entity, playersNumber);
 
 		/* Give corresponding score to entity owners. */
