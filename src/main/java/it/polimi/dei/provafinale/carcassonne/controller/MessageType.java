@@ -13,6 +13,13 @@ public enum MessageType {
 
 	private String protocolMessage;
 
+	/**
+	 * MessageType constructor. Creates a new instance of class MessageType.
+	 * 
+	 * @param s
+	 *            a String representing a protocol message we want to
+	 *            instantiate.
+	 */
 	MessageType(String s) {
 		this.protocolMessage = s;
 	}

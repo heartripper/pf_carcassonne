@@ -50,12 +50,12 @@ public class Message implements Serializable {
 	 * Given a protocol message, creates a Message instance representing that
 	 * message.
 	 * 
-	 * @param msg
+	 * @param message
 	 *            - a string containing the protocol message.
 	 * @return a Message representation of protocol message.
 	 */
-	public static Message createFromProtocolMsg(String msg) {
-		String[] split = msg.split(":");
+	public static Message createFromProtocolMsg(String message) {
+		String[] split = message.split(":");
 		MessageType type = MessageType.getTypeFor(split[0].trim());
 		String payload = null;
 		if (split.length == 2) {

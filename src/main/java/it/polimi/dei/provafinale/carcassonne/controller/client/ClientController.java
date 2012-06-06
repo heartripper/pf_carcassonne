@@ -1,5 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne.controller.client;
 
+import it.polimi.dei.provafinale.carcassonne.controller.ClientInterface;
 
 /**
  * Class ClientController creates the client controller.
@@ -10,7 +11,10 @@ public class ClientController {
 	private static Thread thread;
 	private static ClientControllerImpl currentMatch;
 
-	/* Private constructor. */
+	/**
+	 * ClientController constructor. Creates a new instance of class
+	 * ClientController.
+	 */
 	private ClientController() {
 
 	}
@@ -26,11 +30,11 @@ public class ClientController {
 	 */
 	public static synchronized void startNewMatchController(ClientInterface ci,
 			ViewInterface vi) {
-		/* A thread already exists. */
+
 		if (thread != null) {
 			return;
 		}
-		/* A thread doesn't exists: we have to create it. */
+
 		currentMatch = new ClientControllerImpl(ci, vi);
 		thread = new Thread(currentMatch);
 		thread.start();

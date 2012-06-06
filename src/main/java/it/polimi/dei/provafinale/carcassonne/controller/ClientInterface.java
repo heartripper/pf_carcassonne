@@ -1,8 +1,6 @@
-package it.polimi.dei.provafinale.carcassonne.controller.client;
+package it.polimi.dei.provafinale.carcassonne.controller;
 
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
-import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
-import it.polimi.dei.provafinale.carcassonne.controller.Message;
 
 /**
  * This is an interface used by Client Controller to talk to Match Controller.
@@ -17,10 +15,10 @@ public interface ClientInterface {
 	/**
 	 * Sends a message to Match Controller interface.
 	 * 
-	 * @param msg
+	 * @param message
 	 *            - a Message to server.
 	 * */
-	void sendMessage(Message msg) throws ConnectionLostException;
+	void sendMessage(Message message) throws ConnectionLostException;
 
 	/**
 	 * Reads a message from Match Controller interface.

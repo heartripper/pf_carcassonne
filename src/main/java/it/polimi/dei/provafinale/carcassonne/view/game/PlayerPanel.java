@@ -164,10 +164,17 @@ public class PlayerPanel extends JPanel {
 		safeSetText(lblName, playerColor.getFullName() + " (You)");
 	}
 
-	/*Safely set the text in labels to avoid graphic glitches*/
+	/**
+	 * Safely sets the text in labels to avoid graphic glitches.
+	 * 
+	 * @param label
+	 *            a label we want to set the text in.
+	 * @param text
+	 *            a text we want to set in the label.
+	 */
 	private void safeSetText(final JLabel label, final String text) {
 		SwingUtilities.invokeLater(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				label.setText(text);

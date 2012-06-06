@@ -5,7 +5,6 @@ import java.rmi.RemoteException;
 import it.polimi.dei.provafinale.carcassonne.controller.RMIClient;
 import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
-import it.polimi.dei.provafinale.carcassonne.controller.RemotePlayer;
 
 /**
  * Class RemoteRMIPlayer implements a RemotePlayer in order to represent a

@@ -7,7 +7,6 @@ import java.net.Socket;
 
 import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
-import it.polimi.dei.provafinale.carcassonne.controller.RemotePlayer;
 
 /**
  * Class RemoteSocketPlayer implements a RemotePlayer in order to represent a
