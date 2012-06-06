@@ -35,8 +35,8 @@ public class ClientLocalInterface implements GameInterface, ClientInterface {
 	}
 
 	@Override
-	public void sendMessage(Message msg) {
-		clientBuffer.write(msg);
+	public void sendMessage(Message message) {
+		clientBuffer.write(message);
 	}
 
 	@Override
@@ -63,24 +63,24 @@ public class ClientLocalInterface implements GameInterface, ClientInterface {
 	}
 
 	@Override
-	public void sendPlayer(PlayerColor color, Message msg) {
-		if (msg.type == MessageType.UPDATE_SINGLE) {
-			msg = new Message(MessageType.UPDATE, msg.payload);
+	public void sendPlayer(PlayerColor color, Message message) {
+		if (message.type == MessageType.UPDATE_SINGLE) {
+			message = new Message(MessageType.UPDATE, message.payload);
 		}
-		modelBuffer.write(msg);
+		modelBuffer.write(message);
 	}
 
 	@Override
-	public void sendAllPlayer(Message msg) {
+	public void sendAllPlayer(Message message) {
 		/* Case start message. */
-		if (msg.type == MessageType.START) {
-			String tile = msg.payload;
+		if (message.type == MessageType.START) {
+			String tile = message.payload;
 			String payload = String.format("%s, %s, %s, %s", tile, "localgame",
 					"null", playerNumber);
-			msg = new Message(MessageType.START, payload);
+			message = new Message(MessageType.START, payload);
 		}
 
-		modelBuffer.write(msg);
+		modelBuffer.write(message);
 	}
 
 }

@@ -39,7 +39,6 @@ public class CarcassonneFrame extends JFrame {
 	 */
 	public CarcassonneFrame() {
 
-		/* Superclass constructor invocation. */
 		super("Carcassonne");
 
 		/* Setting icon. */
@@ -51,17 +50,12 @@ public class CarcassonneFrame extends JFrame {
 			e.printStackTrace();
 		}
 		
-		/*
-		 * Adding option "Are you sure you want to close this window?" to
-		 * CarcassonneFrame.
-		 */
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowClose());
 
 		setVisible(true);
 		setSize(CARCASSONNEFRAME_WIDTH, CARCASSONNEFRAME_HEIGHT);
 
-		/* Setting layout. */
 		mainLayout = new CardLayout(0, 0);
 		setLayout(mainLayout);
 
@@ -109,12 +103,10 @@ public class CarcassonneFrame extends JFrame {
 	 *            an instance of class GamePanel.
 	 */
 	public void setGamePanel(GamePanel panel) {
-		/* There are no instances of GamePanel. */
 		if (this.gamePanel == null) {
 			this.gamePanel = panel;
 			gamePanelContainer.add(gamePanel, BorderLayout.CENTER);
 		}
-		/* An instance of GamePanel already exists. */
 		else {
 			return;
 		}
