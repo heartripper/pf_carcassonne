@@ -31,7 +31,6 @@ public class CurrentTilePanel extends JPanel {
 	public CurrentTilePanel() {
 		setLayout(new BorderLayout());
 
-		/* Setting dimension. */
 		int tileDim = Constants.TILE_PIXEL_DIMENSION;
 		dim = new Dimension(tileDim, tileDim);
 

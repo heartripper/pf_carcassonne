@@ -39,13 +39,11 @@ public class LocalGamePanel extends JPanel {
 	 *            an Image we want to set as background of the panel.
 	 */
 	public LocalGamePanel(BufferedImage background) {
-		/* Setting background attribute. */
+		
 		this.background = background;
 
-		/* Setting layout. */
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-		/* Layout option. */
 		Component verticalGlue01 = Box.createVerticalGlue();
 		add(verticalGlue01);
 
@@ -58,7 +56,6 @@ public class LocalGamePanel extends JPanel {
 		JLabel lblNewLocalGame = new JLabel("NEW LOCAL GAME");
 		titlePanel.add(lblNewLocalGame);
 
-		/* Layout option. */
 		Component verticalStrut01 = Box.createVerticalStrut(PIXEL_SPACING);
 		add(verticalStrut01);
 
@@ -84,7 +81,6 @@ public class LocalGamePanel extends JPanel {
 		Component horizontalGlue02 = Box.createHorizontalGlue();
 		selectPlayersNumberPanel.add(horizontalGlue02);
 
-		/* Layout option. */
 		Component verticalStrut = Box.createVerticalStrut(PIXEL_SPACING);
 		add(verticalStrut);
 
@@ -117,7 +113,6 @@ public class LocalGamePanel extends JPanel {
 		Component horizontalGlue = Box.createHorizontalGlue();
 		playGamePanel.add(horizontalGlue);
 
-		/* Layout option. */
 		Component verticalGlue02 = Box.createVerticalGlue();
 		add(verticalGlue02);
 

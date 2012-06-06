@@ -86,10 +86,10 @@ public class TileStack {
 			String line;
 			line = input.readLine();
 			while (line != null) {
-				/* Card creation. */
+				
 				Tile tile = new Tile(line);
 				tiles.add(tile);
-				/* Go on to next line */
+				
 				line = input.readLine();
 			}
 		} catch (IOException e) {

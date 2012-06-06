@@ -38,7 +38,6 @@ public class TileGridPainter extends JLabel {
 	 * Updates the grid using the current dimension.
 	 */
 	public void updateRepresentation() {
-		/* Setting the dimension of the new grid. */
 		Dimension d = grid.getDimension();
 		setDimension(d.width * tileDim, d.height * tileDim);
 	}
@@ -47,7 +46,6 @@ public class TileGridPainter extends JLabel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		/* Print the components in the grid. */
 		for (int i = grid.smallestX(); i <= grid.greatestX(); i++) {
 			for (int j = grid.greatestY(); j >= grid.smallestY(); j--) {
 
@@ -69,13 +67,27 @@ public class TileGridPainter extends JLabel {
 		}
 	}
 
+	/**
+	 * Manages the tile painting.
+	 * 
+	 * @param g
+	 *            an instance of class Graphics.
+	 * @param tile
+	 *            a Tile we want to paint.
+	 * @param realPos
+	 *            the coordinates where we want to put the Tile.
+	 */
 	private void printCard(Graphics g, String tile, Coord realPos) {
-		/* Tile representation. */
 		int x = realPos.getX() * tileDim;
 		int y = realPos.getY() * tileDim;
 		tilePainter.paintTile(tile, g, x, y);
 	}
 
+	/**
+	 * Manages the placeholder (empty tile) painting.
+	 * @param g an instance of class Graphics.
+	 * @param realCoord the coordinates where we want to put the placeholder.
+	 */
 	private void printPlaceHolder(Graphics g, Coord realCoord) {
 		/* Tile representation. */
 		int x = realCoord.getX() * tileDim;

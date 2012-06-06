@@ -37,31 +37,28 @@ public class TextualViewRepresenter {
 	 *         TileGridRepresenter.
 	 */
 	public String getRepresentation() {
-		/* Creating a new instance of a StringBuilder. */
+		
 		StringBuilder gridOutput = new StringBuilder();
 
 		for (int j = grid.greatestY(); j >= grid.smallestY(); j--) {
 			/* Initializing string builder. */
 			StringBuilder[] lines = new StringBuilder[TILE_HEIGHT];
+			
 			for (int i = 0; i < lines.length; i++) {
 				lines[i] = new StringBuilder("");
 			}
 
 			for (int i = grid.smallestX(); i <= grid.greatestX(); i++) {
-				/* Creating a coordinate. */
 				Coord currentCoord = new Coord(i, j);
-				/* Obtaining the tile at the given coordinate. */
 				String tileRep = grid.getTileRepresentation(currentCoord);
 				Tile currentTile = null;
 				if (tileRep != null) {
 					currentTile = new Tile(tileRep);
 				}
 
-				/* Initializing the tile representation (null). */
 				String[] rep = null;
 				/* Exists a tile at the given position. */
 				if (currentTile != null) {
-					/* Find out current representation. */
 					rep = getTileArrayRepresentation(currentTile);
 				}
 				/* Exists a placeholder at the given position. */
@@ -77,12 +74,11 @@ public class TextualViewRepresenter {
 					lines[k].append(rep[k]);
 				}
 			}
-			/* Copy tiles representation into GridOutput. */
+
 			for (StringBuilder s : lines) {
 				gridOutput.append(s.toString() + "\n");
 			}
 		}
-		/* Return the String representation of the grid. */
 		return gridOutput.toString();
 	}
 
@@ -94,7 +90,6 @@ public class TextualViewRepresenter {
 	 * @return the String that represent the textual view of a tile.
 	 * */
 	public static String getTileRepresentation(Tile tile) {
-		/* Getting the array representation of the tile. */
 		String[] arrayRep = getTileArrayRepresentation(tile);
 		/* Building the String representation of the tile. */
 		StringBuilder representation = new StringBuilder();
@@ -171,6 +166,13 @@ public class TextualViewRepresenter {
 		return representation;
 	}
 
+	/**
+	 * Gives the String representation of a Side.
+	 * 
+	 * @param s
+	 *            a Side.
+	 * @return the String representation of s.
+	 */
 	private static String getSideRep(Side s) {
 		EntityType type = s.getType();
 		String rep = (type == EntityType.N ? " " : type.toString());

@@ -69,7 +69,6 @@ public class SwingGamePanel extends GamePanel {
 	public SwingGamePanel() {
 		super();
 
-		/* Setting the class layout. */
 		setLayout(new BorderLayout(0, 0));
 
 		/* Initializing the area where to put tiles. */
@@ -238,7 +237,6 @@ public class SwingGamePanel extends GamePanel {
 
 		/* Disable UI */
 		setUIActive(false);
-		/* Update representation of tiles */
 	}
 
 	/* Prints the current grid on the special area. */

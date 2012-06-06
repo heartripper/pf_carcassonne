@@ -26,28 +26,33 @@ public class ScreenShotListener implements ActionListener {
 		CarcassonneFrame frame = ViewManager.getInstance().getFrame();
 		GamePanel panel = frame.getGamePanel();
 		BufferedImage screenshot;
-		
-		if(!(panel instanceof SwingGamePanel)){
+
+		if (!(panel instanceof SwingGamePanel)) {
 			return;
 		}
-		
+
 		SwingGamePanel sPanel = (SwingGamePanel) panel;
-		
+
 		JFileChooser fileChoose = new JFileChooser();
 		fileChoose.setFileFilter(new PngFilter());
 		fileChoose.setMultiSelectionEnabled(false);
 		int r = fileChoose.showSaveDialog(frame);
-		if(r == JFileChooser.APPROVE_OPTION){
+		if (r == JFileChooser.APPROVE_OPTION) {
 			screenshot = sPanel.takeScreenshot();
 			File f = fileChoose.getSelectedFile();
-			try{
+			try {
 				ImageIO.write(screenshot, "PNG", f);
-			}catch(IOException ioe) {
+			} catch (IOException ioe) {
 				sPanel.showNotify("Error opening file");
 			}
 		}
 	}
 
+	/**
+	 * Class PngFilter extends a FileFilter in order to filtrate the .png files
+	 * in file chooser.
+	 * 
+	 */
 	private class PngFilter extends FileFilter {
 
 		@Override
@@ -64,7 +69,6 @@ public class ScreenShotListener implements ActionListener {
 
 		@Override
 		public String getDescription() {
-			// TODO Auto-generated method stub
 			return "Png Image";
 		}
 

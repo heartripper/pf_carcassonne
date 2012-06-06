@@ -38,7 +38,6 @@ public class MenuPanel extends JPanel {
 			System.out.println("Error reading images.");
 		}
 
-		/* Setting layout. */
 		setLayout(new BorderLayout(0, 0));
 
 		/* Setting banner. */

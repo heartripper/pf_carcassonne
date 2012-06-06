@@ -34,28 +34,30 @@ public class TileClickListener implements MouseListener {
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Calculates the coordinate corresponding to the clicked position.
+	 * 
+	 * @param e
+	 *            one of the implemented MouseEvent.
+	 */
 	private void computeCoord(MouseEvent e) {
 		int x = e.getX() / Constants.TILE_PIXEL_DIMENSION;
 		int y = e.getY() / Constants.TILE_PIXEL_DIMENSION;
