@@ -11,7 +11,7 @@ public final class ViewManager {
 	private static ViewManager instance = null;
 	private CarcassonneFrame frame;
 
-	/*
+	/**
 	 * Private constructor of class ViewManager. Creates a new instance of
 	 * ViewManager.
 	 */
@@ -27,7 +27,6 @@ public final class ViewManager {
 	 */
 	public static synchronized ViewManager getInstance() {
 
-		/* There are no instances of ViewManager. */
 		if (instance == null) {
 			instance = new ViewManager();
 		}

@@ -60,7 +60,7 @@ public class ClientControllerImpl implements Runnable {
 		initializeMatch(startMsg.payload);
 		/* Other types of messages. */
 		while (!endGame) {
-			/* Read turn information from server. */
+
 			Message turnMsg = safeRead();
 			switch (turnMsg.type) {
 			/* Start a turn message. */
@@ -87,14 +87,17 @@ public class ClientControllerImpl implements Runnable {
 		}
 	}
 
+	/**
+	 * Manages the match initialization.
+	 * 
+	 * @param payload
+	 *            a String that contains information about match initialization
+	 *            (first tile...).
+	 */
 	private void initializeMatch(String payload) {
 		/* Parse received start command. */
 		String[] split = payload.split(",");
-
-		/* Manages the identifier of the match. */
 		matchName = split[1].trim();
-
-		/* Manages the color value of the associated player. */
 		String color = split[2].trim();
 
 		/* The controller manages the messages (only updates) of all players. */
@@ -108,7 +111,9 @@ public class ClientControllerImpl implements Runnable {
 		viewInterface.initialize(payload);
 	}
 
-	/* Turn management. */
+	/**
+	 * Manages the turn.
+	 */
 	private void manageClientTurn() {
 		/* Receives the current tile from server. */
 		Message nextMessage = readFromServer();
@@ -134,20 +139,28 @@ public class ClientControllerImpl implements Runnable {
 		}
 	}
 
+	/**
+	 * Reads message from the gui.
+	 * 
+	 * @return the read Message.
+	 */
 	private Message readFromGUI() {
 		viewInterface.setUIActive(true);
-	
+
 		Message msg = messageBuffer.read();
-	
+
 		viewInterface.setUIActive(false);
 		return msg;
 	}
 
-	/* Manages the tile rotation. */
+	/**
+	 * Manages the tile rotation.
+	 * 
+	 * @param msg
+	 *            a message of rotation.
+	 */
 	private void handleRotation(Message msg) {
-		/* Sends the rotation message to the server. */
 		sendToServer(msg);
-		/* Reads the answer from the server. */
 		Message response = readFromServer();
 		switch (response.type) {
 		case ROTATED:
@@ -161,9 +174,13 @@ public class ClientControllerImpl implements Runnable {
 		}
 	}
 
-	/* Manages the tile positioning. */
+	/**
+	 * Manages the tile positioning.
+	 * 
+	 * @param msg
+	 *            a message which contains the coordinate.
+	 */
 	private void handleTilePositioning(Message msg) {
-		/* Puts the payload of bufferedMessage in coord. */
 		String coord = msg.payload;
 		/*
 		 * If the two parts of coord are not equal to an expression composed by
@@ -176,13 +193,11 @@ public class ClientControllerImpl implements Runnable {
 		}
 		/* If the inserted coord is correct, it is sent to the server. */
 		sendToServer(msg);
-		/* Reads the server answer. */
 		Message response = readFromServer();
 		switch (response.type) {
 		/* Tile is correctly placed. */
 		case UPDATE:
 			handleTileUpdate(response.payload);
-			// viewInterface.updateGridRepresentation(response.payload);
 			viewInterface.showNotify("Tile placed.");
 			return;
 			/* Coord not valid. */
@@ -197,31 +212,38 @@ public class ClientControllerImpl implements Runnable {
 	}
 
 	/* Helper methods. */
-	private Message safeRead(){
+	/**
+	 * Manages the safe read of a message.
+	 * 
+	 * @return the read message.
+	 */
+	private Message safeRead() {
 		Message msg = readFromServer();
-		while(true){
-			switch(msg.type){
-				case UPDATE:
-					handleTileUpdate(msg.payload);
-					endTurn = true;
-					break;
-				case LOCK:
-					viewInterface.showNotify("A Player is not responding");
-					break;
-				case UNLOCK:
-					viewInterface.showNotify("Player reconnected");
-					break;
-				case LEAVE:
-					String notify = "Player %s left";
-					viewInterface.showNotify(String.format(notify, msg.payload));
-					break;
-				default:
-					return msg;
+		while (true) {
+			switch (msg.type) {
+			case UPDATE:
+				handleTileUpdate(msg.payload);
+				endTurn = true;
+				break;
+			case LOCK:
+				viewInterface.showNotify("A Player is not responding");
+				break;
+			case UNLOCK:
+				viewInterface.showNotify("Player reconnected");
+				break;
+			case LEAVE:
+				String notify = "Player %s left";
+				viewInterface.showNotify(String.format(notify, msg.payload));
+				break;
+			default:
+				return msg;
 			}
 		}
 	}
 
-	/* Manages the updates of the match. */
+	/**
+	 * Manages the updates of the match.
+	 */
 	private void handleGlobalUpdates() {
 		while (true) {
 			Message msg = readFromServer();
@@ -256,16 +278,28 @@ public class ClientControllerImpl implements Runnable {
 		}
 	}
 
+	/**
+	 * Manages the tile updating.
+	 * 
+	 * @param command
+	 *            a String representing the message sent from server.
+	 */
 	private void handleTileUpdate(String command) {
 		viewInterface.updateGridRepresentation(command);
 	}
 
-	private void handleGameEnd(String msg){
+	/**
+	 * Manages the end of the game.
+	 * 
+	 * @param msg
+	 *            a String representing the message sent from server.
+	 */
+	private void handleGameEnd(String msg) {
 		viewInterface.showNotify("Game end.");
 		viewInterface.updateScore(msg);
 		endGame = true;
 	}
-	
+
 	/*
 	 * Points out that an error in the order of the received message has been
 	 * occurred.
@@ -307,7 +341,7 @@ public class ClientControllerImpl implements Runnable {
 			try {
 				clientInterface.reconnect(matchName, clientPlayerColor);
 				Message msg = readFromServer();
-				if(!(msg.type == MessageType.UNLOCK)){
+				if (!(msg.type == MessageType.UNLOCK)) {
 					protocolOrderError("UNLOCK", msg.type);
 				}
 				return;
