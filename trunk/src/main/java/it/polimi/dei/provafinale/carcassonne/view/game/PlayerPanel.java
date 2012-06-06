@@ -151,12 +151,10 @@ public class PlayerPanel extends JPanel {
 
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				// TODO Auto-generated method stub
 				lblName.setFont(font);
 				setBackground(background);
 			}
 		});
-
 	}
 
 	/**
@@ -166,6 +164,7 @@ public class PlayerPanel extends JPanel {
 		safeSetText(lblName, playerColor.getFullName() + " (You)");
 	}
 
+	/*Safely set the text in labels to avoid graphic glitches*/
 	private void safeSetText(final JLabel label, final String text) {
 		SwingUtilities.invokeLater(new Runnable() {
 			
