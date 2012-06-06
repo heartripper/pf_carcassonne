@@ -130,7 +130,7 @@ public class MatchHandlerTest {
 		private MessageBuffer testOutput;
 
 		@Override
-		public int askPlayerNumber() {
+		public int getPlayerNumber() {
 			return playerNumber;
 		}
 

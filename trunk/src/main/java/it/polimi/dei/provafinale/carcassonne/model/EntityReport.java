@@ -1,8 +1,8 @@
 package it.polimi.dei.provafinale.carcassonne.model;
 
 /**
- * Creates a report for an entity calculating the followers to return and the
- * scores for each players
+ * Creates, when an entity is completed, a report for it calculating the
+ * followers to return and the scores for each player.
  * */
 public class EntityReport {
 
@@ -14,13 +14,13 @@ public class EntityReport {
 	 * players.
 	 * 
 	 * @param entity
-	 *            - the entity to create the report from
+	 *            - the entity to create the report from.
 	 * @param numPlayers
-	 *            - the number of players to generate the report for
+	 *            - the number of players to generate the report for.
 	 * */
-	public EntityReport(Entity e, int numPlayers) {
-		int score = e.getScore();
-		this.followers = e.countFollowers(numPlayers);
+	public EntityReport(Entity entity, int numPlayers) {
+		int score = entity.getScore();
+		this.followers = entity.countFollowers(numPlayers);
 		this.scores = new int[numPlayers];
 
 		int max = 0;
@@ -40,22 +40,22 @@ public class EntityReport {
 	}
 
 	/**
-	 * Gives the score per player given by passed entity
+	 * Gives the score per player given by passed entity.
 	 * 
-	 * @return an array containing score per player sort by player color
-	 *         order
+	 * @return an array containing score per player sort by player color order.
 	 * */
 	public int[] getScores() {
 		return scores;
 	}
 
 	/**
-	 * Gives the number of followers per player put on passed entity
+	 * Gives the number of followers per player put on passed entity.
 	 * 
-	 * @return an array containing followers per player sort by player color
+	 * @return an array containing followers per player sort by player color.
 	 *         order
 	 * */
 	public int[] getFollowers() {
 		return followers;
 	}
+
 }

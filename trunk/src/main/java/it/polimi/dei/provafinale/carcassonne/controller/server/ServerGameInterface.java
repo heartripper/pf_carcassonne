@@ -35,7 +35,7 @@ public class ServerGameInterface implements GameInterface {
 
 	/* Gets the number of players. */
 	@Override
-	public int askPlayerNumber() {
+	public int getPlayerNumber() {
 		return numPlayers;
 	}
 
@@ -43,16 +43,16 @@ public class ServerGameInterface implements GameInterface {
 	@Override
 	public Message readFromPlayer(PlayerColor color)
 			throws PlayersDisconnectedException {
-		/* Retrieving the remote player associated to the given color. */
+
 		RemotePlayer remotePlayer = getRemotePlayerByColor(color);
 		while (true) {
 			try {
-				/* Reading the message. */
+
 				Message msg = remotePlayer.readMessage();
-				/* Log preliminaries. */
+
 				int index = remotePlayers.indexOf(remotePlayer);
 				String protocolMsg = msg.toProtocolMessage();
-				/* Printing the log. */
+
 				System.out.printf("P%s>S: \"%s\"\n", index, protocolMsg);
 				return msg;
 			} catch (ConnectionLostException cle) {
@@ -65,7 +65,7 @@ public class ServerGameInterface implements GameInterface {
 	@Override
 	public void sendPlayer(PlayerColor color, Message msg)
 			throws PlayersDisconnectedException {
-		/* Retrieving the remote player. */
+
 		RemotePlayer remotePlayer = getRemotePlayerByColor(color);
 		while (true) {
 			try {
@@ -78,12 +78,10 @@ public class ServerGameInterface implements GameInterface {
 				else {
 					toSend = msg;
 				}
-				/* Log preliminaries. */
+
 				int index = remotePlayers.indexOf(remotePlayer);
 				String protocolMsg = msg.toProtocolMessage();
-				/* Printing the log. */
 				System.out.printf("S>P%s: \"%s\"\n", index, protocolMsg);
-				/* Sending message. */
 				remotePlayer.sendMessage(toSend);
 				return;
 			} catch (ConnectionLostException cle) {
@@ -96,15 +94,14 @@ public class ServerGameInterface implements GameInterface {
 	@Override
 	public void sendAllPlayer(Message msg) throws PlayersDisconnectedException {
 		PlayersDisconnectedException pde = null;
-		/* Players scanning. */
+
 		for (RemotePlayer player : remotePlayers) {
-			/* Doing nothing if the player is inactive. */
+
 			if (!player.isActive()) {
 				continue;
 			}
-			/* Taking the index of the player. */
+
 			int index = remotePlayers.indexOf(player);
-			/* Retrieving the correspondent color. */
 			PlayerColor color = PlayerColor.valueOf(index);
 			try {
 				/* Start message. */
@@ -134,7 +131,13 @@ public class ServerGameInterface implements GameInterface {
 
 	/* Helper methods. */
 
-	/* Retrieves a remote player by his color. */
+	/**
+	 * Retrieves a remote player by his color.
+	 * 
+	 * @param color
+	 *            the color of the RemotePlayer we want to retrieve.
+	 * @return the RemotePlayer corresponding to the given color.
+	 */
 	private RemotePlayer getRemotePlayerByColor(PlayerColor color) {
 		int colorIndex = PlayerColor.indexOf(color);
 		return remotePlayers.get(colorIndex);
@@ -142,11 +145,17 @@ public class ServerGameInterface implements GameInterface {
 
 	/* Disconnections / Reconnections handlers methods. */
 
-	/* Manages the disconnection of a RemotePlayer. */
+	/**
+	 * Manages the disconnection of a RemotePlayer.
+	 * 
+	 * @param player
+	 *            the RemotePlayer we want to disconnect.
+	 * @throws PlayersDisconnectedException
+	 */
 	private synchronized void handleDisconnection(RemotePlayer player)
 			throws PlayersDisconnectedException {
 		PlayersDisconnectedException pde = null;
-		/* Setting the player inactive. */
+
 		int playerIndex = remotePlayers.indexOf(player);
 		player.setInactive();
 		/*

@@ -36,7 +36,7 @@ public class SocketRequestMonitor implements Runnable {
 	@Override
 	public void run() {
 		try {
-			/*Start listening to given port*/
+			/* Start listening to given port */
 			serverSocket = new ServerSocket(port);
 		} catch (BindException be) {
 			System.out.println("Given port is not free.");
@@ -67,7 +67,6 @@ public class SocketRequestMonitor implements Runnable {
 			ObjectInputStream input = new ObjectInputStream(
 					socket.getInputStream());
 
-			/* Create remote player instance */
 			RemotePlayer player = new RemoteSocketPlayer(socket, output, input);
 
 			/* Parse request */
@@ -75,7 +74,6 @@ public class SocketRequestMonitor implements Runnable {
 			message = (String) input.readObject();
 			Message request = Message.createFromProtocolMsg(message);
 
-			/* Enqueue player */
 			matchesManager.enqueuePlayer(player, request);
 
 		} catch (IOException e) {

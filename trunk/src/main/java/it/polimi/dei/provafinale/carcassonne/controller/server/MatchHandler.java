@@ -43,27 +43,25 @@ public class MatchHandler implements Runnable {
 	 */
 	@Override
 	public void run() {
-		/* Getting players number from interface and initializing match. */
-		int playerNumber = gameInterface.askPlayerNumber();
+
+		int playerNumber = gameInterface.getPlayerNumber();
 		match = new Match(playerNumber);
 
-		/* Initialize players */
 		String firstTileRep = match.getFirstTile().toString();
 		sendMessage(new Message(MessageType.START, firstTileRep));
 
 		while (match.hasMoreCards() && !endGame) {
-			/* Draw the current tile. */
+
 			currentTile = match.drawTile();
+
 			currentPlayer = match.getNextPlayer();
-			/* Send turn information. */
 			sendMessage(new Message(MessageType.TURN, currentPlayer.toString()));
-			/* Send card information to currentPlayer. */
 			sendMessage(new Message(MessageType.NEXT, currentTile.toString()));
-			/* Turn execution. */
+
 			endCurrentTurn = false;
 			currentTileAdded = false;
 			while (!endCurrentTurn && !endGame) {
-				/* Waiting for messages from current player. */
+
 				Message req = readFromCurrentPlayer();
 				/* Player disconnected. */
 				if (endCurrentTurn || endGame) {
@@ -103,20 +101,30 @@ public class MatchHandler implements Runnable {
 				handleTurnEnd();
 			}
 		}
-		/* Match end. */
+
 		handleMatchEnd();
 	}
 
 	/* Helper methods to manage turn. */
 
-	/* Manages tile rotation. */
+	/**
+	 * Manages tile rotation.
+	 * 
+	 * @return a message containing the tile rotation response.
+	 */
 	private Message handleTileRotation() {
 		currentTile.rotate();
 		String payload = currentTile.toString();
 		return new Message(MessageType.ROTATED, payload);
 	}
 
-	/* Manages tile placement. */
+	/**
+	 * Manages the tile placement.
+	 * 
+	 * @param payload
+	 *            a String containing the coordinate where to put the tile on.
+	 * @return a message containing the tile placement response.
+	 */
 	private Message handleTilePlacing(String payload) {
 		String[] split = payload.split(",");
 		int x = Integer.parseInt(split[0].trim());
@@ -137,7 +145,13 @@ public class MatchHandler implements Runnable {
 		return resp;
 	}
 
-	/* Manages follower placement. */
+	/**
+	 * Manages follower placement.
+	 * 
+	 * @param payload
+	 *            a String containing the position to put the follower on.
+	 * @return a message containing the follower placement response.
+	 */
 	private Message handleFollowerPlacing(String payload) {
 		SidePosition position = SidePosition.valueOf(payload.trim());
 		Message response;
@@ -154,13 +168,19 @@ public class MatchHandler implements Runnable {
 		return response;
 	}
 
-	/* Manages end turn request. */
+	/**
+	 * Manages the end of turn request.
+	 * 
+	 * @return a message of update.
+	 */
 	private Message handlePass() {
 		String update = getUpdateTileMsg(currentTile);
 		return new Message(MessageType.UPDATE, update);
 	}
 
-	/* Manages end turn. */
+	/**
+	 * Manages the end of a turn.
+	 */
 	private void handleTurnEnd() {
 		/* Send tiles updates. */
 		List<Tile> updatedTile = match.checkForCompletedEntities(currentTile);
@@ -174,7 +194,9 @@ public class MatchHandler implements Runnable {
 		sendMessage(msg);
 	}
 
-	/* Manages end match. */
+	/**
+	 * Manages the end of the match.
+	 */
 	private void handleMatchEnd() {
 		match.finalizeMatch();
 		Message msg = new Message(MessageType.END, getScoreMsg());
@@ -183,14 +205,22 @@ public class MatchHandler implements Runnable {
 
 	/* Helpers to send messages. */
 
-	/* Update tile message. */
+	/**
+	 * 
+	 * @param tile
+	 *            a Tile.
+	 * @return a String representing a tile.
+	 */
 	private String getUpdateTileMsg(Tile tile) {
 		String rep = tile.toString();
 		Coord c = tile.getCoords();
 		return String.format("%s, %s, %s", rep, c.getX(), c.getY());
 	}
 
-	/* Score message. */
+	/**
+	 * 
+	 * @return a String containing the scores.
+	 */
 	private String getScoreMsg() {
 		int[] scores = match.getScores();
 		StringBuilder payload = new StringBuilder();
@@ -201,6 +231,11 @@ public class MatchHandler implements Runnable {
 		return payload.toString().trim();
 	}
 
+	/**
+	 * 
+	 * @param msg
+	 *            the message to be sent.
+	 */
 	private void sendMessage(Message msg) {
 		try {
 			switch (msg.type) {
@@ -221,7 +256,10 @@ public class MatchHandler implements Runnable {
 		}
 	}
 
-	/* Reads a message from current player. */
+	/**
+	 * 
+	 * @return the message read from the current player.
+	 */
 	private Message readFromCurrentPlayer() {
 		try {
 			return gameInterface.readFromPlayer(currentPlayer);
@@ -231,7 +269,12 @@ public class MatchHandler implements Runnable {
 		}
 	}
 
-	/* Manage players disconnection. */
+	/**
+	 * Manages players disconnection.
+	 * 
+	 * @param pde
+	 *            a PlayersDisconnectedException.
+	 */
 	private void handleDisconnection(PlayersDisconnectedException pde) {
 		if (pde.getDisconnectedPlayers().contains(currentPlayer)) {
 			endCurrentTurn = true;

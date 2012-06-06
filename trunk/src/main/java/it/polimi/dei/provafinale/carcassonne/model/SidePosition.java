@@ -60,7 +60,7 @@ public enum SidePosition {
 		if (index >= 0 && index < positions.length) {
 			return positions[index];
 		}
-		/* Not exists a position corresponding to the given index. */
+		
 		else {
 			return null;
 		}

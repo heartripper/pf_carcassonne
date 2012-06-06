@@ -41,11 +41,11 @@ public class CarcassonneServer {
 			Thread socketThread = new Thread(srm);
 			socketThread.start();
 		}
-		/* If requested, start RMI request monitor */
+		/* If requested, start RMI request monitor. */
 		if (technology == RMI || technology == BOTH) {
 			RMIRequestMonitor.registerRMIRequestMonitor(manager);
 		}
-		/* Waits matches manager thread */
+		/* Waits matches manager thread. */
 		try {
 			managerThread.join();
 		} catch (InterruptedException e) {

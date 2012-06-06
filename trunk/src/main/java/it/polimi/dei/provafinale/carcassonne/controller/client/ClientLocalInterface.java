@@ -1,7 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne.controller.client;
 
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
-import it.polimi.dei.provafinale.carcassonne.controller.ClientInterface;
 import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
 import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
@@ -58,7 +57,7 @@ public class ClientLocalInterface implements GameInterface, ClientInterface {
 	/* Game interface */
 
 	@Override
-	public int askPlayerNumber() {
+	public int getPlayerNumber() {
 		return playerNumber;
 	}
 
