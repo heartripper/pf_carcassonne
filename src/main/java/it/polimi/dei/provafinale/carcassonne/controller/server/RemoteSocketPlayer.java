@@ -55,9 +55,9 @@ public class RemoteSocketPlayer implements RemotePlayer {
 
 	/* Sends message msg to server. */
 	@Override
-	public void sendMessage(Message msg) throws ConnectionLostException {
+	public void sendMessage(Message message) throws ConnectionLostException {
 		try {
-			String protocolMessage = msg.toProtocolMessage();
+			String protocolMessage = message.toProtocolMessage();
 			out.writeObject(protocolMessage);
 			out.flush();
 		} catch (IOException ioe) {

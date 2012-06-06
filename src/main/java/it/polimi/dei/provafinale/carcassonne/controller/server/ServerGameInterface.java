@@ -63,7 +63,7 @@ public class ServerGameInterface implements GameInterface {
 
 	/* Sends a message to a player. */
 	@Override
-	public void sendPlayer(PlayerColor color, Message msg)
+	public void sendPlayer(PlayerColor color, Message message)
 			throws PlayersDisconnectedException {
 
 		RemotePlayer remotePlayer = getRemotePlayerByColor(color);
@@ -71,16 +71,16 @@ public class ServerGameInterface implements GameInterface {
 			try {
 				Message toSend;
 				/* Message type: update to a single player. */
-				if (msg.type == MessageType.UPDATE_SINGLE) {
-					toSend = new Message(MessageType.UPDATE, msg.payload);
+				if (message.type == MessageType.UPDATE_SINGLE) {
+					toSend = new Message(MessageType.UPDATE, message.payload);
 				}
 				/* Any other message types. */
 				else {
-					toSend = msg;
+					toSend = message;
 				}
 
 				int index = remotePlayers.indexOf(remotePlayer);
-				String protocolMsg = msg.toProtocolMessage();
+				String protocolMsg = message.toProtocolMessage();
 				System.out.printf("S>P%s: \"%s\"\n", index, protocolMsg);
 				remotePlayer.sendMessage(toSend);
 				return;
@@ -92,7 +92,7 @@ public class ServerGameInterface implements GameInterface {
 
 	/* Sends a message to all the players. */
 	@Override
-	public void sendAllPlayer(Message msg) throws PlayersDisconnectedException {
+	public void sendAllPlayer(Message message) throws PlayersDisconnectedException {
 		PlayersDisconnectedException pde = null;
 
 		for (RemotePlayer player : remotePlayers) {
@@ -105,15 +105,15 @@ public class ServerGameInterface implements GameInterface {
 			PlayerColor color = PlayerColor.valueOf(index);
 			try {
 				/* Start message. */
-				if (msg.type == MessageType.START) {
+				if (message.type == MessageType.START) {
 					String payload = String.format("%s, %s, %s, %s",
-							msg.payload, name, color, numPlayers);
+							message.payload, name, color, numPlayers);
 					Message newMsg = new Message(MessageType.START, payload);
 					sendPlayer(color, newMsg);
 				}
 				/* Other messages. */
 				else {
-					sendPlayer(color, msg);
+					sendPlayer(color, message);
 				}
 			} catch (PlayersDisconnectedException e) {
 				if (pde == null) {

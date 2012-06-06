@@ -79,6 +79,13 @@ public class ClientSocketInterface implements ClientInterface {
 
 	/* Helper methods. */
 
+	/**
+	 * Sends a message to the server.
+	 * 
+	 * @param msg
+	 *            the message to be sent.
+	 * @throws ConnectionLostException
+	 */
 	private void sendToServer(String msg) throws ConnectionLostException {
 		try {
 			out.writeObject(msg);
@@ -88,6 +95,12 @@ public class ClientSocketInterface implements ClientInterface {
 		}
 	}
 
+	/**
+	 * Reads a message from the server.
+	 * 
+	 * @return the String representation of the read message.
+	 * @throws ConnectionLostException
+	 */
 	private String readFromServer() throws ConnectionLostException {
 		try {
 			String msg = (String) in.readObject();

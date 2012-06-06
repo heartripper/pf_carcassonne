@@ -300,9 +300,14 @@ public class ClientControllerImpl implements Runnable {
 		endGame = true;
 	}
 
-	/*
+	/**
 	 * Points out that an error in the order of the received message has been
 	 * occurred.
+	 * 
+	 * @param expected
+	 *            the expected message.
+	 * @param received
+	 *            the received message.
 	 */
 	private void protocolOrderError(String expected, MessageType received) {
 		String msg = String.format(
@@ -311,7 +316,12 @@ public class ClientControllerImpl implements Runnable {
 		throw new RuntimeException(msg);
 	}
 
-	/* Sends a message to the server. */
+	/**
+	 * Sends a message to the server.
+	 * 
+	 * @param msg
+	 *            the message to be sent.
+	 */
 	private void sendToServer(Message msg) {
 		while (true) {
 			try {
@@ -323,7 +333,11 @@ public class ClientControllerImpl implements Runnable {
 		}
 	}
 
-	/* Reads a message to the server. */
+	/**
+	 * Reads a message to the server.
+	 * 
+	 * @return the message from server.
+	 */
 	private Message readFromServer() {
 		while (true) {
 			try {
@@ -334,7 +348,9 @@ public class ClientControllerImpl implements Runnable {
 		}
 	}
 
-	/* Manages the client reconnection. */
+	/**
+	 * Manages the client reconnection.
+	 */
 	private void handleReconnection() {
 		/* Notify GUI we lost connection with server. */
 		for (int i = 0; i < maxReconnectionAttempts; i++) {
@@ -346,7 +362,7 @@ public class ClientControllerImpl implements Runnable {
 				}
 				return;
 			} catch (ConnectionLostException cle) {
-				/* Still can't connect; go on. */
+				/* Still can't connect: go on. */
 				try {
 					Thread.sleep(reconnectionInterval);
 				} catch (InterruptedException e) {

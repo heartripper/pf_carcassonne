@@ -36,42 +36,31 @@ public class StartInternetGame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		/* Server ip address. */
-		String host;
-		/* Server port. */
+		String ipAddress;
 		int port;
 
 		internetGamePanel.setUIActive(false);
 
 		/* Retrieves settings from view. */
-		/* Connection protocol selection. */
 		int connectionType = internetGamePanel.getConnType();
-		/* Graphic mode selection. */
 		int viewType = internetGamePanel.getViewType();
+
 		/* Values in debug mode. */
 		if (Constants.DEBUG_MODE) {
-			host = Constants.DEBUG_ADDR;
+			ipAddress = Constants.DEBUG_ADDR;
 			port = Constants.DEBUG_PORT;
 		}
 		/* Values in normal mode. */
 		else {
-			/* Retrieving the ip address. */
-			host = internetGamePanel.getIPFieldValue();
-			/* Retrieving the port number. */
+			ipAddress = internetGamePanel.getIPFieldValue();
 			String portString = internetGamePanel.getPortFieldValue();
 			/* An error has occurred in server ip address or port number. */
-			if (host.equals("") || portString.equals("")) {
+			if (ipAddress.equals("") || portString.equals("")) {
 				internetGamePanel.setNotifyText(Constants.FIELDS_ERROR);
 				internetGamePanel.setUIActive(true);
 				return;
-			}
-			/* No error in server ip address and port number. */
-			else {
+			} else {
 				try {
-					/*
-					 * Conversion into integer of the String that represents the
-					 * port.
-					 */
 					port = Integer.parseInt(portString);
 				} catch (NumberFormatException nfe) {
 					internetGamePanel.setNotifyText(Constants.PORT_ERROR);
@@ -79,17 +68,15 @@ public class StartInternetGame implements ActionListener {
 				}
 			}
 		}
-		/* Set up client interface */
 		ClientInterface ci;
 		/* Socket mode. */
 		if (connectionType == 0) {
-			ci = new ClientSocketInterface(host, port);
+			ci = new ClientSocketInterface(ipAddress, port);
 		}
 		/* RMI mode. */
 		else {
-			ci = new ClientRMIInterface(host);
+			ci = new ClientRMIInterface(ipAddress);
 		}
-		/* Set up view interface */
 		GamePanel panel;
 		/* Swing mode. */
 		if (viewType == Constants.VIEW_TYPE_GUI) {
@@ -98,12 +85,9 @@ public class StartInternetGame implements ActionListener {
 		/* Textual mode. */
 		else if (viewType == Constants.VIEW_TYPE_TEXTUAL) {
 			panel = new TextualGamePanel();
-		}
-		/* An error has occurred. */
-		else {
+		} else {
 			throw new RuntimeException();
 		}
-		/* Append game panel. */
 		CarcassonneFrame frame = ViewManager.getInstance().getFrame();
 		frame.setGamePanel(panel);
 		frame.changeMainPanel(CarcassonneFrame.GAMEPANEL);
@@ -117,4 +101,5 @@ public class StartInternetGame implements ActionListener {
 			internetGamePanel.setUIActive(true);
 		}
 	}
+
 }

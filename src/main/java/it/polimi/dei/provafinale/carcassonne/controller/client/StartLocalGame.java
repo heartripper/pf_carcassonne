@@ -43,15 +43,16 @@ public class StartLocalGame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		int numPlayers = NUM_PLAYER_VALUES[numPlayerBox.getSelectedIndex()];
+		
 		/* Create duplex interface for Client - Match controller communication. */
 		ClientLocalInterface cli = new ClientLocalInterface(numPlayers);
-		/* Start match handler. */
+	
 		MatchHandler mh = new MatchHandler(cli);
 		Thread th = new Thread(mh);
 		th.start();
-		/* Create game panel. */
 		int viewType = viewTypeBox.getSelectedIndex();
 		GamePanel panel;
+		
 		/* Case Swing selection. */
 		if (viewType == Constants.VIEW_TYPE_GUI) {
 			panel = new SwingGamePanel();
@@ -60,17 +61,16 @@ public class StartLocalGame implements ActionListener {
 		else if (viewType == Constants.VIEW_TYPE_TEXTUAL) {
 			panel = new TextualGamePanel();
 		}
-		/* Case an error has occurred. */
 		else {
 			System.out.println("Error in view type selection: value "
 					+ viewType);
 			return;
 		}
-		/* Append game panel. */
+		
 		CarcassonneFrame frame = ViewManager.getInstance().getFrame();
 		frame.setGamePanel(panel);
 		frame.changeMainPanel(CarcassonneFrame.GAMEPANEL);
-		/* Create client controller. */
+		
 		ClientController.startNewMatchController(cli, panel);
 	}
 

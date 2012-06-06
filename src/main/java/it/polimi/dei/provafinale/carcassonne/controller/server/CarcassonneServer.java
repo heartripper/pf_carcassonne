@@ -30,7 +30,7 @@ public class CarcassonneServer {
 	 * Starts the monitors server was instructed to use.
 	 * */
 	public void start() {
-		/* Create matches handler. */
+		
 		MatchesManager manager = new MatchesManager();
 		Thread managerThread = new Thread(manager);
 		managerThread.start();
