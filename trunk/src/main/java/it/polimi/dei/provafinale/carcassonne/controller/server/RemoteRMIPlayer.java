@@ -40,9 +40,9 @@ public class RemoteRMIPlayer implements RemotePlayer {
 
 	/* Sends message msg to server. */
 	@Override
-	public void sendMessage(Message msg) throws ConnectionLostException {
+	public void sendMessage(Message message) throws ConnectionLostException {
 		try {
-			client.sendMessageToPlayer(msg);
+			client.sendMessageToPlayer(message);
 		} catch (RemoteException re) {
 			throw new ConnectionLostException();
 		}
@@ -51,7 +51,7 @@ public class RemoteRMIPlayer implements RemotePlayer {
 	/* Closes the connection with the user. */
 	@Override
 	public void close() throws ConnectionLostException {
-		// TODO
+		
 	}
 
 	/* Return if a player is active. */

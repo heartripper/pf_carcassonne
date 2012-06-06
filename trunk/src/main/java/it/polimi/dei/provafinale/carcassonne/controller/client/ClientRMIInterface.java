@@ -98,7 +98,7 @@ public class ClientRMIInterface implements ClientInterface, RMIClient {
 	}
 
 	/* ClientRMIInterface methods */
-	
+
 	@Override
 	public synchronized void sendMessageToPlayer(Message msg) {
 		while (serverBuffer != null) {
@@ -139,7 +139,7 @@ public class ClientRMIInterface implements ClientInterface, RMIClient {
 	 * 
 	 * @param request
 	 *            a Message containing the connection request.
-	 * @throws ConnectionLostException
+	 * @throws ConnectionLostException.
 	 */
 	private void connectToRMIServer(Message request)
 			throws ConnectionLostException {
@@ -153,5 +153,5 @@ public class ClientRMIInterface implements ClientInterface, RMIClient {
 			throw new ConnectionLostException();
 		}
 	}
-	
+
 }

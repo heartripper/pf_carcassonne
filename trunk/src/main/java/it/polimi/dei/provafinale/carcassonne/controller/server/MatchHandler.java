@@ -70,20 +70,20 @@ public class MatchHandler implements Runnable {
 				}
 
 				Message resp;
-				/* Managing rotation. */
+				
 				if (req.type == MessageType.ROTATE && !currentTileAdded) {
 					resp = handleTileRotation();
 				}
-				/* Managing tile placement on grid. */
+				
 				else if (req.type == MessageType.PLACE && !currentTileAdded) {
 					resp = handleTilePlacing(req.payload);
 				}
-				/* Managing follower addition on tile. */
+
 				else if (req.type == MessageType.FOLLOWER && currentTileAdded) {
 					resp = handleFollowerPlacing(req.payload);
 					endCurrentTurn = (resp.type == MessageType.UPDATE);
 				}
-				/* Managing end turn request. */
+
 				else if (req.type == MessageType.PASS && currentTileAdded) {
 					resp = handlePass();
 					endCurrentTurn = true;
@@ -189,7 +189,6 @@ public class MatchHandler implements Runnable {
 			Message msg = new Message(MessageType.UPDATE, getUpdateTileMsg(c));
 			sendMessage(msg);
 		}
-
 		/* Send scores update. */
 		Message msg = new Message(MessageType.SCORE, getScoreMsg());
 		sendMessage(msg);
@@ -293,7 +292,6 @@ public class MatchHandler implements Runnable {
 				sendMessage(leaveMsg);
 			}
 		} catch (NotEnoughPlayersException nep) {
-			// TODO: what to do when there are not enough player left
 			System.out.println("There are not enough players left.");
 			endGame = true;
 		}

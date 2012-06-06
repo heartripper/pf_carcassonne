@@ -31,22 +31,21 @@ public class TextualListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		/* Retrieving the inserted command. */
 		String command = textField.getText();
 		Message msg;
-		/* Rotate command. */
+		
 		if (command.equals("rotate")) {
 			msg = new Message(MessageType.ROTATE, null);
 		}
-		/* Pass command. */
+		
 		else if (command.equals("pass")) {
 			msg = new Message(MessageType.PASS, null);
 		}
-		/* Follower position. */
+		
 		else if (command.matches("[NESW]")) {
 			msg = new Message(MessageType.FOLLOWER, command);
 		}
-		/* Coordinate. */
+		
 		else if (command.matches("[-]??[0-9]+,[-]??[0-9]+")) {
 			msg = new Message(MessageType.PLACE, command);
 		}
@@ -55,7 +54,6 @@ public class TextualListener implements ActionListener {
 			msg = new Message(MessageType.INVALID_MOVE, null);
 		}
 		textField.setText("");
-		/* Sending message. */
 		ClientController.getCurrentMatchController().sendMessage(msg);
 	}
 

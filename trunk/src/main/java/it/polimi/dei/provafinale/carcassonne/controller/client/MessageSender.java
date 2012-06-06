@@ -38,22 +38,22 @@ public class MessageSender implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String payload;
 		MessageType newType;
-		/* The payload is empty. */
+
 		if (payloadSource == null) {
 			payload = null;
 		}
-		/* The payload is contained in a JTextField. */
+
 		else if (payloadSource instanceof JTextField) {
 			JTextField source = (JTextField) payloadSource;
 			payload = source.getText();
 		}
-		/* The payload is contained in a JComboBox. */
+
 		else if (payloadSource instanceof JComboBox) {
 			JComboBox source = (JComboBox) payloadSource;
 			int selectedIndex = source.getSelectedIndex();
 			payload = SidePosition.valueOf(selectedIndex).toString();
 		}
-		/* Managing the exception. */
+
 		else {
 			throw new RuntimeException("Can't handle given JComponent");
 		}
@@ -67,9 +67,8 @@ public class MessageSender implements ActionListener {
 		else {
 			newType = type;
 		}
-		/* New message creation. */
+
 		Message msg = new Message(newType, payload);
-		/* Sending message. */
 		ClientController.getCurrentMatchController().sendMessage(msg);
 	}
 	
