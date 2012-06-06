@@ -1,10 +1,6 @@
-package it.polimi.dei.provafinale.carcassonne.controller.client;
+package it.polimi.dei.provafinale.carcassonne.controller;
 
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
-import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
-import it.polimi.dei.provafinale.carcassonne.controller.Message;
-import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
-import it.polimi.dei.provafinale.carcassonne.controller.server.GameInterface;
 
 /**
  * Class ClientLocalInterface implements GameInterface and ClientInterface in

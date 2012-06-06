@@ -1,6 +1,5 @@
-package it.polimi.dei.provafinale.carcassonne.controller.client;
+package it.polimi.dei.provafinale.carcassonne.controller;
 
-import it.polimi.dei.provafinale.carcassonne.controller.Message;
 
 /**
  * Class MessageBuffer provides a buffer, that will be used to put message to
@@ -14,10 +13,10 @@ public class MessageBuffer {
 	/**
 	 * Provides a buffer to allow different threads to exchange messages.
 	 * 
-	 * @param msg
+	 * @param message
 	 *            a Message to write in the buffer.
 	 */
-	public synchronized void write(Message msg) {
+	public synchronized void write(Message message) {
 		/* The buffer hasn't been read yet. */
 		while (buffer != null) {
 			try {
@@ -25,9 +24,8 @@ public class MessageBuffer {
 			} catch (InterruptedException e) {
 			}
 		}
-		/* Saves the written message in the buffer. */
-		buffer = msg;
-		/* Notifies all the waiting threads. */
+		
+		buffer = message;
 		notifyAll();
 	}
 
@@ -44,11 +42,9 @@ public class MessageBuffer {
 			} catch (InterruptedException e) {
 			}
 		}
-		/* Saves the read message in msg. */
+		
 		Message msg = buffer;
-		/* Empties the buffer. */
 		buffer = null;
-		/* Notifies all the waiting threads. */
 		notifyAll();
 		return msg;
 	}

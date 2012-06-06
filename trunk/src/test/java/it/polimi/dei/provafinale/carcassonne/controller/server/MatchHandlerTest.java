@@ -4,9 +4,10 @@ import static org.junit.Assert.*;
 
 import it.polimi.dei.provafinale.carcassonne.Coord;
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.controller.GameInterface;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
+import it.polimi.dei.provafinale.carcassonne.controller.MessageBuffer;
 import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
-import it.polimi.dei.provafinale.carcassonne.controller.client.MessageBuffer;
 import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
 
 import org.junit.Before;

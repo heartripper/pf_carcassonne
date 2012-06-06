@@ -4,9 +4,9 @@ import java.util.List;
 
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
+import it.polimi.dei.provafinale.carcassonne.controller.GameInterface;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
 import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
-import it.polimi.dei.provafinale.carcassonne.controller.RemotePlayer;
 
 /**
  * Class ServerGameInterface implements GameInterface in order to allow Match

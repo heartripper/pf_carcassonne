@@ -1,8 +1,10 @@
 package it.polimi.dei.provafinale.carcassonne.controller.client;
 
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.controller.ClientInterface;
 import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
+import it.polimi.dei.provafinale.carcassonne.controller.MessageBuffer;
 import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
 
 /**
@@ -103,8 +105,6 @@ public class ClientControllerImpl implements Runnable {
 		else {
 			clientPlayerColor = PlayerColor.valueOf(color);
 		}
-
-		/* View initialization. */
 		viewInterface.initialize(payload);
 	}
 
@@ -135,11 +135,10 @@ public class ClientControllerImpl implements Runnable {
 	}
 
 	private Message readFromGUI() {
-		/* Activates the interface. */
 		viewInterface.setUIActive(true);
-		/* Reads a message from buffer. */
+	
 		Message msg = messageBuffer.read();
-		/* Deactivates the interface. */
+	
 		viewInterface.setUIActive(false);
 		return msg;
 	}

@@ -1,4 +1,7 @@
-package it.polimi.dei.provafinale.carcassonne.controller;
+package it.polimi.dei.provafinale.carcassonne.controller.server;
+
+import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
+import it.polimi.dei.provafinale.carcassonne.controller.Message;
 
 /**
  * Interface to represent a remote player.

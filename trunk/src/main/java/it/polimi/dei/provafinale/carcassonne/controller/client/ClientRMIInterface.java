@@ -7,6 +7,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 import it.polimi.dei.provafinale.carcassonne.Constants;
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.controller.ClientInterface;
 import it.polimi.dei.provafinale.carcassonne.controller.RMIClient;
 import it.polimi.dei.provafinale.carcassonne.controller.RMIServer;
 import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
@@ -20,8 +21,7 @@ import it.polimi.dei.provafinale.carcassonne.logger.LoggerService;
  * in order to give an interface of a client that plays in RMI mode.
  * 
  */
-public class ClientRMIInterface implements ClientInterface,
-		RMIClient {
+public class ClientRMIInterface implements ClientInterface, RMIClient {
 
 	private final int PollInterval = 5 * 1000;
 	private String host;
@@ -42,6 +42,7 @@ public class ClientRMIInterface implements ClientInterface,
 	}
 
 	/* ClientInterface methods */
+
 	@Override
 	public void connect() throws ConnectionLostException {
 		Message request = new Message(MessageType.CONNECT, null);
@@ -97,6 +98,7 @@ public class ClientRMIInterface implements ClientInterface,
 	}
 
 	/* ClientRMIInterface methods */
+	
 	@Override
 	public synchronized void sendMessageToPlayer(Message msg) {
 		while (serverBuffer != null) {
@@ -130,18 +132,26 @@ public class ClientRMIInterface implements ClientInterface,
 		return msg;
 	}
 
-	// Helpers
+	/* Helpers. */
+
+	/**
+	 * Manages the connection to RMI server.
+	 * 
+	 * @param request
+	 *            a Message containing the connection request.
+	 * @throws ConnectionLostException
+	 */
 	private void connectToRMIServer(Message request)
 			throws ConnectionLostException {
 		try {
 			UnicastRemoteObject.exportObject(this, 0);
 			Registry registry = LocateRegistry.getRegistry(host);
-			server = (RMIServer) registry
-					.lookup(Constants.RMI_SERVER_NAME);
+			server = (RMIServer) registry.lookup(Constants.RMI_SERVER_NAME);
 			server.register(this, request);
 		} catch (Exception re) {
 			re.printStackTrace();
 			throw new ConnectionLostException();
 		}
 	}
+	
 }
