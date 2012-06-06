@@ -3,7 +3,6 @@ package it.polimi.dei.provafinale.carcassonne.controller.client;
 import static org.junit.Assert.*;
 
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
-import it.polimi.dei.provafinale.carcassonne.controller.ClientInterface;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
 import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
 

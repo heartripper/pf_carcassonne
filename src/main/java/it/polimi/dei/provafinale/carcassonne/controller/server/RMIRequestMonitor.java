@@ -22,22 +22,28 @@ public class RMIRequestMonitor implements RMIServer {
 	 * Registers a RMI Request Monitor in the RMI Registry.
 	 * 
 	 * @param matchesManager
-	 *            - the matches manager which will handle players' requests
+	 *            - the matches manager which will handle players' requests.
 	 * */
 	public static void registerRMIRequestMonitor(MatchesManager matchesManager) {
 		RMIRequestMonitor monitor = new RMIRequestMonitor(matchesManager);
 		try {
-			RMIServer stub = (RMIServer) UnicastRemoteObject
-					.exportObject(monitor, 0);
+			RMIServer stub = (RMIServer) UnicastRemoteObject.exportObject(
+					monitor, 0);
 			Registry registry = LocateRegistry.getRegistry();
 			registry.rebind(Constants.RMI_SERVER_NAME, stub);
 			System.out.println("RMI server ready.");
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Class RMIRequestMonitor constructor. Creates a new instance of class
+	 * RMIRequestMonitor.
+	 * 
+	 * @param matchesManager
+	 *            is the matches manager.
+	 */
 	private RMIRequestMonitor(MatchesManager matchesManager) {
 		this.matchesManager = matchesManager;
 	}

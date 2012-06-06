@@ -1,6 +1,5 @@
 package it.polimi.dei.provafinale.carcassonne.controller.client;
 
-import it.polimi.dei.provafinale.carcassonne.controller.ClientInterface;
 
 /**
  * Class ClientController creates the client controller.

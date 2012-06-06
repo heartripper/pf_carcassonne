@@ -17,12 +17,12 @@ public interface RemotePlayer {
 	/**
 	 * Sends a Message to a remote player.
 	 * 
-	 * @param msg
+	 * @param message
 	 *            - the Message to send to remote player.
 	 * @throws ConnectionLostException
 	 *             if the player has disconnected.
 	 * */
-	void sendMessage(Message msg) throws ConnectionLostException;
+	void sendMessage(Message message) throws ConnectionLostException;
 
 	/**
 	 * Closes the communication with remote player.

@@ -31,7 +31,6 @@ public class SideConnection {
 
 	@Override
 	public boolean equals(Object obj) {
-		/* The passed object is not an instance of SideConnection. */
 		if (!(obj instanceof SideConnection)) {
 			return false;
 		}
