@@ -1,4 +1,4 @@
-package it.polimi.dei.provafinale.carcassonne;
+package it.polimi.dei.provafinale.carcassonne.launchers;
 
 import it.polimi.dei.provafinale.carcassonne.controller.server.CarcassonneServer;
 
