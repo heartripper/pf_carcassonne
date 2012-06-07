@@ -14,23 +14,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Class StartInternetGame implements an ActionListener in order to manage the
+ * Class StartInternetGameListener implements an ActionListener in order to manage the
  * beginning of a new internet game.
  * 
  */
-public class StartInternetGame implements ActionListener {
+public class StartInternetGameListener implements ActionListener {
 
 	private InternetGamePanel internetGamePanel;
 
 	/**
-	 * StartInternetGame constructor. Creates a new instance of class
-	 * StartInternetGame.
+	 * StartInternetGameListener constructor. Creates a new instance of class
+	 * StartInternetGameListener.
 	 * 
 	 * @param gamePanel
 	 *            the InternetGamePanel we want to show at the start of the
 	 *            game.
 	 */
-	public StartInternetGame(InternetGamePanel gamePanel) {
+	public StartInternetGameListener(InternetGamePanel gamePanel) {
 		this.internetGamePanel = gamePanel;
 	}
 

@@ -15,11 +15,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 
 /**
- * Class StartLocalGame implements an ActionListener in order to manage the
+ * Class StartLocalGameListener implements an ActionListener in order to manage the
  * beginning of a new local game.
  * 
  */
-public class StartLocalGame implements ActionListener {
+public class StartLocalGameListener implements ActionListener {
 
 	private final int[] numPlayerValues = { 2, 3, 4, 5 };
 
@@ -27,15 +27,15 @@ public class StartLocalGame implements ActionListener {
 	private JComboBox viewTypeBox;
 
 	/**
-	 * StartLocalGame constructor. Creates a new instance of class
-	 * StartLocalGame.
+	 * StartLocalGameListener constructor. Creates a new instance of class
+	 * StartLocalGameListener.
 	 * 
 	 * @param numPlayerBox
 	 *            the number of players selected in the JComboBox.
 	 * @param viewType
 	 *            the view type selected in the JComboBox.
 	 */
-	public StartLocalGame(JComboBox numPlayerBox, JComboBox viewType) {
+	public StartLocalGameListener(JComboBox numPlayerBox, JComboBox viewType) {
 		this.numPlayerBox = numPlayerBox;
 		this.viewTypeBox = viewType;
 	}
