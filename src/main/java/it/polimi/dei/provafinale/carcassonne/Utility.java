@@ -5,6 +5,9 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/**
+ * Utility class containing helper methods used throughout the project
+ * */
 public final class Utility {
 
 	private Utility() {
