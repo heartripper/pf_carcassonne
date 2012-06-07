@@ -6,21 +6,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Class MenuPanelSwitcher implements an ActionListener in order to switch
+ * Class MenuPanelSwitcherListener implements an ActionListener in order to switch
  * panel.
  * 
  */
-public class MenuPanelSwitcher implements ActionListener {
+public class MenuPanelSwitcherListener implements ActionListener {
 
 	private String panelName;
 
 	/**
-	 * MenuPanelSwitcher constructor. Creates a new instance of class
-	 * MenuPanelSwitcher.
+	 * MenuPanelSwitcherListener constructor. Creates a new instance of class
+	 * MenuPanelSwitcherListener.
 	 * 
 	 * @param panelName
 	 */
-	public MenuPanelSwitcher(String panelName) {
+	public MenuPanelSwitcherListener(String panelName) {
 		this.panelName = panelName;
 	}
 

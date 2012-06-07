@@ -12,24 +12,25 @@ import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
 import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
 
 /**
- * Class MessageSender implements an ActionListener in order to handle user
- * actions during a match with Swing UI.
+ * Class MessageSenderListener implements an ActionListener in order to handle
+ * user actions during a match with Swing UI.
  * 
  */
-public class MessageSender implements ActionListener {
+public class MessageSenderListener implements ActionListener {
 
 	private MessageType type;
 	private JComponent payloadSource;
 
 	/**
-	 * MessageSender constructor. Creates a new instance of class MessageSender.
+	 * MessageSender constructorListener. Creates a new instance of class
+	 * MessageSenderListener.
 	 * 
 	 * @param type
 	 *            the type of the message to be sent.
 	 * @param payloadSource
 	 *            the JComponent to take the payload from.
 	 */
-	public MessageSender(MessageType type, JComponent payloadSource) {
+	public MessageSenderListener(MessageType type, JComponent payloadSource) {
 		this.type = type;
 		this.payloadSource = payloadSource;
 	}
@@ -71,5 +72,5 @@ public class MessageSender implements ActionListener {
 		Message msg = new Message(newType, payload);
 		ClientController.getCurrentMatchController().sendMessage(msg);
 	}
-	
+
 }

@@ -3,7 +3,7 @@ package it.polimi.dei.provafinale.carcassonne.view.game;
 import it.polimi.dei.provafinale.carcassonne.Coord;
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
-import it.polimi.dei.provafinale.carcassonne.controller.client.MessageSender;
+import it.polimi.dei.provafinale.carcassonne.controller.client.MessageSenderListener;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -106,7 +106,7 @@ public class SwingGamePanel extends GamePanel {
 		rotatePanel.setLayout(new BoxLayout(rotatePanel, BoxLayout.X_AXIS));
 		/* Rotate button. */
 		rotateButton = new JButton("Rotate");
-		ActionListener rotate = new MessageSender(MessageType.ROTATE, null);
+		ActionListener rotate = new MessageSenderListener(MessageType.ROTATE, null);
 		rotateButton.addActionListener(rotate);
 		rotatePanel.add(rotateButton);
 
@@ -124,7 +124,7 @@ public class SwingGamePanel extends GamePanel {
 		coordsPanel.add(coordsField);
 		/* Put button. */
 		putTileButton = new JButton("Put tile");
-		ActionListener place = new MessageSender(MessageType.PLACE, coordsField);
+		ActionListener place = new MessageSenderListener(MessageType.PLACE, coordsField);
 		putTileButton.addActionListener(place);
 		coordsPanel.add(putTileButton);
 
@@ -140,7 +140,7 @@ public class SwingGamePanel extends GamePanel {
 		followerPanel.add(followerComboBox);
 		/* Put follower button. */
 		putFollowerButton = new JButton("Put follower");
-		ActionListener follower = new MessageSender(MessageType.FOLLOWER,
+		ActionListener follower = new MessageSenderListener(MessageType.FOLLOWER,
 				followerComboBox);
 		putFollowerButton.addActionListener(follower);
 		followerPanel.add(putFollowerButton);
@@ -149,7 +149,7 @@ public class SwingGamePanel extends GamePanel {
 		JPanel passPanel = new JPanel();
 		/* Pass button. */
 		passButton = new JButton("Pass");
-		ActionListener pass = new MessageSender(MessageType.PASS, null);
+		ActionListener pass = new MessageSenderListener(MessageType.PASS, null);
 		passButton.addActionListener(pass);
 		passPanel.add(passButton);
 

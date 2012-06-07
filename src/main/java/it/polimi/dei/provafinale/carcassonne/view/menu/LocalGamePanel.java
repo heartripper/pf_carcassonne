@@ -1,6 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne.view.menu;
 
-import it.polimi.dei.provafinale.carcassonne.controller.client.MenuPanelSwitcher;
+import it.polimi.dei.provafinale.carcassonne.controller.client.MenuPanelSwitcherListener;
 import it.polimi.dei.provafinale.carcassonne.controller.client.StartLocalGameListener;
 
 import javax.swing.JPanel;
@@ -125,7 +125,7 @@ public class LocalGamePanel extends JPanel {
 		/* Adding button back to home to home panel. */
 		JButton btnBackToHome = new JButton("Back to home");
 		backToHomePanel.add(btnBackToHome);
-		ActionListener home = new MenuPanelSwitcher(MenuPanel.HOMEPANEL);
+		ActionListener home = new MenuPanelSwitcherListener(MenuPanel.HOMEPANEL);
 		btnBackToHome.addActionListener(home);
 	}
 
