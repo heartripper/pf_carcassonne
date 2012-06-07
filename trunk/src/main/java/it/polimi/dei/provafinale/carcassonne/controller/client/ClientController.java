@@ -6,7 +6,7 @@ import it.polimi.dei.provafinale.carcassonne.controller.ClientInterface;
  * Class ClientController creates the client controller.
  * 
  */
-public class ClientController {
+public final class ClientController {
 
 	private static Thread thread;
 	private static ClientControllerImpl currentMatch;

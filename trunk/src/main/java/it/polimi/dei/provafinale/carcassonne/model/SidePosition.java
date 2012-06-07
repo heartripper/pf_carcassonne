@@ -11,7 +11,7 @@ public enum SidePosition {
 	/* Side position are stored using the convention N=1, E=2, S=3, W=4. */
 	N(0), E(1), S(2), W(3);
 
-	int index;
+	private int index;
 
 	/**
 	 * SidePosition constructor. Creates a new instance of a SidePosition.

@@ -21,7 +21,7 @@ import javax.swing.JComboBox;
  */
 public class StartLocalGame implements ActionListener {
 
-	private final int[] NUM_PLAYER_VALUES = { 2, 3, 4, 5 };
+	private final int[] numPlayerValues = { 2, 3, 4, 5 };
 
 	private JComboBox numPlayerBox;
 	private JComboBox viewTypeBox;
@@ -42,7 +42,7 @@ public class StartLocalGame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		int numPlayers = NUM_PLAYER_VALUES[numPlayerBox.getSelectedIndex()];
+		int numPlayers = numPlayerValues[numPlayerBox.getSelectedIndex()];
 		
 		/* Create duplex interface for Client - Match controller communication. */
 		ClientLocalInterface cli = new ClientLocalInterface(numPlayers);
