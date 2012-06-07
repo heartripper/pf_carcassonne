@@ -13,7 +13,7 @@ import java.rmi.server.UnicastRemoteObject;
 /**
  * Class to monitor players' requests to play made via RMI.
  * */
-public final class RMIRequestMonitor implements RMIServer {
+public class RMIRequestMonitor implements RMIServer {
 
 	private MatchesManager matchesManager;
 
