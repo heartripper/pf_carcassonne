@@ -10,6 +10,7 @@ import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
 import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
+import it.polimi.dei.provafinale.carcassonne.controller.PlayersDisconnectedException;
 
 import org.junit.Before;
 import org.junit.Test;
