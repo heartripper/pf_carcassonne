@@ -7,6 +7,7 @@ import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
 import it.polimi.dei.provafinale.carcassonne.controller.GameInterface;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
 import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
+import it.polimi.dei.provafinale.carcassonne.controller.PlayersDisconnectedException;
 
 /**
  * Class ServerGameInterface implements GameInterface in order to allow Match

@@ -8,6 +8,7 @@ import it.polimi.dei.provafinale.carcassonne.controller.GameInterface;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
 import it.polimi.dei.provafinale.carcassonne.controller.MessageBuffer;
 import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
+import it.polimi.dei.provafinale.carcassonne.controller.PlayersDisconnectedException;
 import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
 
 import org.junit.Before;
