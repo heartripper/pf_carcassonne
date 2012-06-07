@@ -11,10 +11,20 @@ public final class Utility {
 
 	}
 
+	/**
+	 * Logs a message in the console.
+	 * */
 	public static void log(String msg) {
 		System.out.println(msg);
 	}
 
+	/**
+	 * Reads an image.
+	 * 
+	 * @param path
+	 *            - the path in the classpath of the image to read.
+	 * @return the read BufferedImage.
+	 * */
 	public static BufferedImage readImage(String path) {
 		try {
 			return ImageIO.read(Utility.class.getResourceAsStream(path));
