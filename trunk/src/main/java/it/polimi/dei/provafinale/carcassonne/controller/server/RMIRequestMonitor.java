@@ -32,7 +32,8 @@ public class RMIRequestMonitor implements RMIServer {
 			registry.rebind(Constants.RMI_SERVER_NAME, stub);
 			System.out.println("RMI server ready.");
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			System.out.println("Server error: " + e);
+			return;
 		}
 	}
 

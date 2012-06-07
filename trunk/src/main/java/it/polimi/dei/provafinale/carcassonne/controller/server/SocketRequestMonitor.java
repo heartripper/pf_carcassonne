@@ -41,7 +41,8 @@ public class SocketRequestMonitor implements Runnable {
 			System.out.println("Given port is not free.");
 			return;
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Server error: " + e);
+			return;
 		}
 
 		System.out.println("Request monitor started.");

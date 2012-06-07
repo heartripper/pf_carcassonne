@@ -13,8 +13,8 @@ import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
  */
 public class ClientControllerImpl implements Runnable {
 
-	private final int maxReconnectionAttempts = 10;
-	private final int reconnectionInterval = 30 * 1000;
+	private static final int maxReconnectionAttempts = 10;
+	private static final int reconnectionInterval = 30 * 1000;
 
 	private MessageBuffer messageBuffer;
 	private final ClientInterface clientInterface;
@@ -40,7 +40,6 @@ public class ClientControllerImpl implements Runnable {
 		this.messageBuffer = new MessageBuffer();
 
 		responseMonitor = new Thread(new ServerResponseMonitor());
-		
 	}
 
 	/**

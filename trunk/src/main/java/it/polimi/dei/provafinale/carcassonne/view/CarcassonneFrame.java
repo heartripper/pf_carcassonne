@@ -47,9 +47,9 @@ public class CarcassonneFrame extends JFrame {
 			icon = ImageIO.read(new File("src/main/resources/icon.png"));
 			setIconImage(icon);
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Frame error: error while reading icon image.");
 		}
-		
+
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowClose());
 
@@ -106,8 +106,7 @@ public class CarcassonneFrame extends JFrame {
 		if (this.gamePanel == null) {
 			this.gamePanel = panel;
 			gamePanelContainer.add(gamePanel, BorderLayout.CENTER);
-		}
-		else {
+		} else {
 			return;
 		}
 	}

@@ -23,7 +23,8 @@ import it.polimi.dei.provafinale.carcassonne.logger.LoggerService;
  */
 public class ClientRMIInterface implements ClientInterface, RMIClient {
 
-	private final int PollInterval = 5 * 1000;
+	private static final int PollInterval = 5 * 1000;
+	
 	private String host;
 	private Message serverBuffer, clientBuffer;
 	private RMIServer server;
@@ -57,7 +58,7 @@ public class ClientRMIInterface implements ClientInterface, RMIClient {
 				wait(PollInterval);
 				server.poll();
 			} catch (InterruptedException ie) {
-
+				throw new RuntimeException(ie);
 			} catch (RemoteException re) {
 				throw new ConnectionLostException();
 			}
@@ -105,7 +106,7 @@ public class ClientRMIInterface implements ClientInterface, RMIClient {
 			try {
 				wait();
 			} catch (InterruptedException ie) {
-
+				throw new RuntimeException(ie);
 			}
 		}
 
@@ -149,7 +150,7 @@ public class ClientRMIInterface implements ClientInterface, RMIClient {
 			server = (RMIServer) registry.lookup(Constants.RMI_SERVER_NAME);
 			server.register(this, request);
 		} catch (Exception re) {
-			re.printStackTrace();
+			System.out.println("RMI Client error: " + re);
 			throw new ConnectionLostException();
 		}
 	}
