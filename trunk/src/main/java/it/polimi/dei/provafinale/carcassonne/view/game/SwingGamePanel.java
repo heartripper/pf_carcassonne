@@ -106,7 +106,8 @@ public class SwingGamePanel extends GamePanel {
 		rotatePanel.setLayout(new BoxLayout(rotatePanel, BoxLayout.X_AXIS));
 		/* Rotate button. */
 		rotateButton = new JButton("Rotate");
-		ActionListener rotate = new MessageSenderListener(MessageType.ROTATE, null);
+		ActionListener rotate = new MessageSenderListener(MessageType.ROTATE,
+				null);
 		rotateButton.addActionListener(rotate);
 		rotatePanel.add(rotateButton);
 
@@ -124,7 +125,8 @@ public class SwingGamePanel extends GamePanel {
 		coordsPanel.add(coordsField);
 		/* Put button. */
 		putTileButton = new JButton("Put tile");
-		ActionListener place = new MessageSenderListener(MessageType.PLACE, coordsField);
+		ActionListener place = new MessageSenderListener(MessageType.PLACE,
+				coordsField);
 		putTileButton.addActionListener(place);
 		coordsPanel.add(putTileButton);
 
@@ -140,8 +142,8 @@ public class SwingGamePanel extends GamePanel {
 		followerPanel.add(followerComboBox);
 		/* Put follower button. */
 		putFollowerButton = new JButton("Put follower");
-		ActionListener follower = new MessageSenderListener(MessageType.FOLLOWER,
-				followerComboBox);
+		ActionListener follower = new MessageSenderListener(
+				MessageType.FOLLOWER, followerComboBox);
 		putFollowerButton.addActionListener(follower);
 		followerPanel.add(putFollowerButton);
 
@@ -194,8 +196,10 @@ public class SwingGamePanel extends GamePanel {
 	 *            the Coord we want to set in coordField.
 	 */
 	public void setCoord(Coord coord) {
-		String coordRep = String.format("%s,%s", coord.getX(), coord.getY());
-		coordsField.setText(coordRep);
+		if(coordsField.isEnabled()){
+			String coordRep = String.format("%s,%s", coord.getX(), coord.getY());
+			coordsField.setText(coordRep);
+		}
 	}
 
 	/**
@@ -309,4 +313,10 @@ public class SwingGamePanel extends GamePanel {
 		passButton.setEnabled(enabled);
 	}
 
+	/* Sets a player as disconnected. */
+	@Override
+	public void setDisconnectedPlayer(PlayerColor color) {
+		int index = PlayerColor.indexOf(color);
+		playerPanels[index].setDisconnected();
+	}
 }

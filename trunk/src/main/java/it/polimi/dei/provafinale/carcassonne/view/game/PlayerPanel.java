@@ -34,6 +34,7 @@ public class PlayerPanel extends JPanel {
 	private final Color selectedBGColor = new Color(255, 255, 255);
 	private final Color unselectedBGColor = new Color(225, 225, 225);
 	private final Color transparentBGColor = new Color(0, 0, 0, 0);
+	private final Color disconnectedBGColor = new Color(180, 180, 180);
 
 	/* Fonts. */
 	private final Font selNameFont = new Font(Font.SANS_SERIF, Font.BOLD, 15);
@@ -158,4 +159,10 @@ public class PlayerPanel extends JPanel {
 		});
 	}
 
+	/**
+	 * Sets disconnected state on this panel
+	 * */
+	public void setDisconnected() {
+		colorPanel.setBackground(disconnectedBGColor);
+	}
 }

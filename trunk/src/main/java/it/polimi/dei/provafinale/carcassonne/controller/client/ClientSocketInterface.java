@@ -40,14 +40,8 @@ public class ClientSocketInterface implements ClientInterface {
 
 	@Override
 	public void connect() throws ConnectionLostException {
-		try {
-			socket = new Socket(addr, port);
-			out = new ObjectOutputStream(socket.getOutputStream());
-			in = new ObjectInputStream(socket.getInputStream());
-			sendToServer("connect");
-		} catch (IOException ioe) {
-			throw new ConnectionLostException();
-		}
+		createSocket();
+		sendToServer("connect");
 	}
 
 	@Override
@@ -65,6 +59,7 @@ public class ClientSocketInterface implements ClientInterface {
 	@Override
 	public void reconnect(String matchName, PlayerColor color)
 			throws ConnectionLostException {
+		createSocket();
 		String message = String.format("reconnect: %s, %s", color, matchName);
 		sendToServer(message);
 	}
@@ -105,4 +100,19 @@ public class ClientSocketInterface implements ClientInterface {
 		}
 	}
 
+	/**
+	 * Creates the socket.
+	 * 
+	 * @throws ConnectionLostException
+	 *             if there's no connection with server
+	 * */
+	private void createSocket() throws ConnectionLostException {
+		try {
+			socket = new Socket(addr, port);
+			out = new ObjectOutputStream(socket.getOutputStream());
+			in = new ObjectInputStream(socket.getInputStream());
+		} catch (IOException ioe) {
+			throw new ConnectionLostException();
+		}
+	}
 }

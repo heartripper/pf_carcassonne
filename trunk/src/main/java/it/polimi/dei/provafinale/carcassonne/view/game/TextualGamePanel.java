@@ -197,4 +197,11 @@ public class TextualGamePanel extends GamePanel {
 	public void showNotify(String msg) {
 		printMsg(msg);
 	}
+	
+	/*Disconnects a player.*/
+	@Override
+	public void setDisconnectedPlayer(PlayerColor color) {
+		String msg = String.format("Player %s disconnected.", color);
+		printMsg(msg);
+	}
 }
