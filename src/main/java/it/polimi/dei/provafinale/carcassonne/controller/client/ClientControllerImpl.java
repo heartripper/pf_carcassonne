@@ -20,7 +20,8 @@ public class ClientControllerImpl implements Runnable {
 	private final ClientInterface clientInterface;
 	private final ViewInterface viewInterface;
 	private String matchName;
-
+	private Thread responseMonitor;
+	
 	private boolean endGame = false;
 	private PlayerColor clientColor;
 
@@ -38,8 +39,8 @@ public class ClientControllerImpl implements Runnable {
 		this.viewInterface = vi;
 		this.messageBuffer = new MessageBuffer();
 
-		Thread responseMonitor = new Thread(new ServerResponseMonitor());
-		responseMonitor.start();
+		responseMonitor = new Thread(new ServerResponseMonitor());
+		
 	}
 
 	/**
@@ -54,6 +55,7 @@ public class ClientControllerImpl implements Runnable {
 
 	@Override
 	public void run() {
+		responseMonitor.start();
 		while (!endGame) {
 			Message msg = messageBuffer.read();
 			viewInterface.setUIActive(false);
@@ -103,6 +105,8 @@ public class ClientControllerImpl implements Runnable {
 				clientInterface.reconnect(matchName, clientColor);
 				Message msg = readFromServer();
 				if (!(msg.type == MessageType.UNLOCK)) {
+					throw new RuntimeException(
+							"Unlock expected after disconnection.");
 				}
 				return;
 			} catch (ConnectionLostException cle) {
