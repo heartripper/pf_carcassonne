@@ -32,7 +32,7 @@ public class EntityReportTest {
 		assertTrue(match.putTile(tiles[0], coords[0]));
 		assertTrue(match.putTile(tiles[1], coords[1]));
 		assertTrue(match.putTile(tiles[2], coords[2]));
-		assertTrue(match.putFollower(tiles[2], SidePosition.E, PlayerColor.V));
+		assertTrue(match.putFollower(tiles[2], SidePosition.E, PlayerColor.G));
 		assertTrue(match.putTile(tiles[3], coords[3]));
 		assertTrue(match.putFollower(tiles[3], SidePosition.W, PlayerColor.B));
 		assertTrue(match.putTile(tiles[4], coords[4]));
