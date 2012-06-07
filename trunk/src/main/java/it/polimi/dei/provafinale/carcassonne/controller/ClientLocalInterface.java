@@ -64,15 +64,17 @@ public class ClientLocalInterface implements GameInterface, ClientInterface {
 
 	@Override
 	public void sendAllPlayer(Message message) {
+		Message toSend;
 		/* Case start message. */
 		if (message.type == MessageType.START) {
 			String tile = message.payload;
 			String payload = String.format("%s, %s, %s, %s", tile, "localgame",
 					"null", playerNumber);
-			message = new Message(MessageType.START, payload);
+			toSend = new Message(MessageType.START, payload);
+		} else {
+			toSend = message;
 		}
 
-		modelBuffer.write(message);
+		modelBuffer.write(toSend);
 	}
-
 }

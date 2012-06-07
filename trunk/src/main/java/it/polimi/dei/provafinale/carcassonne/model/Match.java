@@ -5,7 +5,6 @@ import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * The class Match creates and manages the execution of a match with all its
@@ -17,7 +16,7 @@ public class Match {
 	private TileGrid grid;
 	private TileStack stack;
 	private PlayerManager players;
-	private Vector<Entity> entities;
+	private List<Entity> entities;
 	private Tile firstTile;
 	private int playersNumber;
 
@@ -29,7 +28,7 @@ public class Match {
 	 */
 	public Match(int numPlayers) {
 		this.grid = new TileGrid();
-		this.entities = new Vector<Entity>();
+		this.entities = new ArrayList<Entity>();
 		this.stack = new TileStack();
 		this.players = new PlayerManager(numPlayers);
 		this.playersNumber = numPlayers;
