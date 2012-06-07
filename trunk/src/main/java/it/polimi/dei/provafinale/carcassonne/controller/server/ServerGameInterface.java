@@ -90,7 +90,7 @@ public class ServerGameInterface implements GameInterface {
 		}
 
 		/* Unified exception of all the disconnected players. */
-		if (pde != null) {
+		if (pde.getDisconnectedPlayers().size() != 0) {
 			throw pde;
 		}
 	}
