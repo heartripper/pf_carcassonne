@@ -8,6 +8,10 @@ import it.polimi.dei.provafinale.carcassonne.view.ViewManager;
  */
 public class MainClient {
 
+	private MainClient() {
+		
+	}
+	
 	/**
 	 * Main method of Client.
 	 * 

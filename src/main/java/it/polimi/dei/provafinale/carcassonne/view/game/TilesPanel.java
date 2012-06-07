@@ -91,7 +91,7 @@ public class TilesPanel extends JScrollPane {
 	 * of the game.
 	 * 
 	 */
-	private class TileGridPainter extends JLabel {
+	private static class TileGridPainter extends JLabel {
 
 		private static final long serialVersionUID = -2603074766780325918L;
 		private static final int TILE_DIM = Constants.TILE_PIXEL_DIMENSION;
