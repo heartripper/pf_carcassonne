@@ -16,8 +16,8 @@ public abstract class Constants {
 
 	public static final boolean ASK_ON_CLOSE = false;
 
-	public static final String TILES_PATH = "src/main/resources/carcassonne.dat";
-	public static final String LESS_TILES_PATH = "src/main/resources/carcassonne_mini.dat";
+	public static final String TILES_PATH = "/carcassonne.dat";
+	public static final String LESS_TILES_PATH = "/carcassonne_mini.dat";
 
 	public static final String FOLLOWER_SEPARATOR = "-";
 
