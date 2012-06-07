@@ -194,13 +194,17 @@ public class ClientControllerImplTest {
 				try {
 					wait();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 
 			this.action = action;
 			notifyAll();
+		}
+
+		@Override
+		public void setDisconnectedPlayer(PlayerColor color) {
+			
 		}
 
 	}

@@ -59,4 +59,8 @@ public interface ViewInterface {
 	 * */
 	void showNotify(String message);
 
+	/**
+	 * Sets disconnected state on a player panel.
+	 * */
+	void setDisconnectedPlayer(PlayerColor color);
 }

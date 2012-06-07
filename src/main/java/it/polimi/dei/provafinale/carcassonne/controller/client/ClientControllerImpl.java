@@ -21,7 +21,7 @@ public class ClientControllerImpl implements Runnable {
 	private final ViewInterface viewInterface;
 	private String matchName;
 	private Thread responseMonitor;
-	
+
 	private boolean endGame = false;
 	private PlayerColor clientColor;
 
@@ -187,8 +187,8 @@ public class ClientControllerImpl implements Runnable {
 					break;
 				case LEAVE:
 					handlingLock = false;
-					String msg = String.format("Player %s left.", resp.payload);
-					viewInterface.showNotify(msg);
+					PlayerColor discColor = PlayerColor.valueOf(resp.payload);
+					viewInterface.setDisconnectedPlayer(discColor);
 					break;
 				case END:
 					viewInterface.showNotify("Game ended.");
