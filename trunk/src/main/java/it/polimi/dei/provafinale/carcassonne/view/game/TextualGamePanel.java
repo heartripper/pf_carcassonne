@@ -9,6 +9,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.controller.client.TextualListener;
@@ -82,10 +83,15 @@ public class TextualGamePanel extends GamePanel {
 	private void printMsg(String newText) {
 		text.append(newText + "\n");
 		textArea.setText(text.toString());
-		JScrollBar bar = scrollPane.getVerticalScrollBar();
-		int max = bar.getMaximum();
-		bar.setValue(max);
-		textField.requestFocus();
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				JScrollBar bar = scrollPane.getVerticalScrollBar();
+				int max = bar.getMaximum();
+				bar.setValue(max);
+				textField.requestFocus();
+			}
+		});
 	}
 
 	/* Implementation of ViewInterface methods. */
