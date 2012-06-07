@@ -135,7 +135,7 @@ public class MatchHandler implements Runnable {
 		/* Allowed option. */
 		if (match.putTile(currentTile, new Coord(x, y))) {
 			String update = getUpdateTileMsg(currentTile);
-			resp = new Message(MessageType.UPDATE_SINGLE, update);
+			resp = new Message(MessageType.UPDATE, update);
 			currentTileAdded = true;
 		}
 		/* Not allowed option. */
@@ -238,19 +238,7 @@ public class MatchHandler implements Runnable {
 	 */
 	private void sendMessage(Message msg) {
 		try {
-			switch (msg.type) {
-			case START:
-			case TURN:
-			case UPDATE:
-			case SCORE:
-			case END:
-			case LEAVE:
-				gameInterface.sendAllPlayer(msg);
-				return;
-			default:
-				gameInterface.sendPlayer(currentPlayer, msg);
-				return;
-			}
+			gameInterface.sendAllPlayer(msg);
 		} catch (PlayersDisconnectedException e) {
 			handleDisconnection(e);
 		}

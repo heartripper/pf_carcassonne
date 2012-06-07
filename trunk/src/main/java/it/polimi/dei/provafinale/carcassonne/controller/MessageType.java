@@ -7,7 +7,7 @@ package it.polimi.dei.provafinale.carcassonne.controller;
 public enum MessageType {
 	START("start"), TURN("turn"), NEXT("next"), ROTATE("rotate"), ROTATED(
 			"rotated"), PLACE("place"), FOLLOWER("tile"), PASS("pass"), UPDATE(
-			"update"), UPDATE_SINGLE("update"), INVALID_MOVE("move not valid"), SCORE(
+			"update"), INVALID_MOVE("move not valid"), SCORE(
 			"score"), END("end"), LOCK("lock"), UNLOCK("unlock"), LEAVE("leave"), CONNECT(
 			"connect"), RECONNECT("disconnect");
 

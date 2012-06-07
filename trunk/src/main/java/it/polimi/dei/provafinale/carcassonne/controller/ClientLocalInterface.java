@@ -63,14 +63,6 @@ public class ClientLocalInterface implements GameInterface, ClientInterface {
 	}
 
 	@Override
-	public void sendPlayer(PlayerColor color, Message message) {
-		if (message.type == MessageType.UPDATE_SINGLE) {
-			message = new Message(MessageType.UPDATE, message.payload);
-		}
-		modelBuffer.write(message);
-	}
-
-	@Override
 	public void sendAllPlayer(Message message) {
 		/* Case start message. */
 		if (message.type == MessageType.START) {
