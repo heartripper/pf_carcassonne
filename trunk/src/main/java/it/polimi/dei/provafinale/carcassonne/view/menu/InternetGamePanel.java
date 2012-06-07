@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import it.polimi.dei.provafinale.carcassonne.controller.client.MenuPanelSwitcher;
+import it.polimi.dei.provafinale.carcassonne.controller.client.MenuPanelSwitcherListener;
 import it.polimi.dei.provafinale.carcassonne.controller.client.StartInternetGameListener;
 import javax.swing.JComboBox;
 
@@ -170,7 +170,7 @@ public class InternetGamePanel extends JPanel {
 		/* Adding button back to home to home panel. */
 		JButton btnBackToHome = new JButton("Back to home");
 		backToHomePanel.add(btnBackToHome);
-		ActionListener home = new MenuPanelSwitcher(MenuPanel.HOMEPANEL);
+		ActionListener home = new MenuPanelSwitcherListener(MenuPanel.HOMEPANEL);
 		btnBackToHome.addActionListener(home);
 	}
 

@@ -1,6 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne.view.menu;
 
-import it.polimi.dei.provafinale.carcassonne.controller.client.MenuPanelSwitcher;
+import it.polimi.dei.provafinale.carcassonne.controller.client.MenuPanelSwitcherListener;
 
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -49,7 +49,7 @@ public class HomePanel extends JPanel {
 		/* Adding new local game button to new local game panel. */
 		JButton btnNewLocalGame = new JButton("New Local Game");
 		newLocalGamePanel.add(btnNewLocalGame);
-		ActionListener local = new MenuPanelSwitcher(MenuPanel.LOCALGAMEPANEL);
+		ActionListener local = new MenuPanelSwitcherListener(MenuPanel.LOCALGAMEPANEL);
 		btnNewLocalGame.addActionListener(local);
 
 		Component verticalStrut = Box.createVerticalStrut(PIXEL_SPACING);
@@ -62,7 +62,7 @@ public class HomePanel extends JPanel {
 		/* Adding new internet game button to new internet game panel. */
 		JButton btnNewInternetGame = new JButton("New Internet Game");
 		newInternetGamePanel.add(btnNewInternetGame);
-		ActionListener internet = new MenuPanelSwitcher(
+		ActionListener internet = new MenuPanelSwitcherListener(
 				MenuPanel.INTERNETGAMEPANEL);
 		btnNewInternetGame.addActionListener(internet);
 
