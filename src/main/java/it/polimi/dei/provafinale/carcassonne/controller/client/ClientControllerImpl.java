@@ -13,8 +13,8 @@ import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
  */
 public class ClientControllerImpl implements Runnable {
 
-	private static final int maxReconnectionAttempts = 10;
-	private static final int reconnectionInterval = 30 * 1000;
+	private static final int MAX_RECONNECTION_ATTEMPTS = 10;
+	private static final int RECONNECTION_INTERVAL = 30 * 1000;
 
 	private MessageBuffer messageBuffer;
 	private final ClientInterface clientInterface;
@@ -99,7 +99,7 @@ public class ClientControllerImpl implements Runnable {
 	 */
 	private void handleReconnection() {
 		/* Notify GUI we lost connection with server. */
-		for (int i = 0; i < maxReconnectionAttempts; i++) {
+		for (int i = 0; i < MAX_RECONNECTION_ATTEMPTS; i++) {
 			try {
 				clientInterface.reconnect(matchName, clientColor);
 				Message msg = readFromServer();
@@ -111,7 +111,7 @@ public class ClientControllerImpl implements Runnable {
 			} catch (ConnectionLostException cle) {
 				/* Still can't connect: go on. */
 				try {
-					Thread.sleep(reconnectionInterval);
+					Thread.sleep(RECONNECTION_INTERVAL);
 				} catch (InterruptedException e) {
 					/* Nothing to do. */
 				}
