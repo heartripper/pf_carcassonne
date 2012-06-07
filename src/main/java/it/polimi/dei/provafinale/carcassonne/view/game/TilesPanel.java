@@ -1,5 +1,6 @@
 package it.polimi.dei.provafinale.carcassonne.view.game;
 
+import it.polimi.dei.provafinale.carcassonne.Constants;
 import it.polimi.dei.provafinale.carcassonne.Coord;
 
 import java.awt.Color;
@@ -93,9 +94,9 @@ public class TilesPanel extends JScrollPane {
 	private class TileGridPainter extends JLabel {
 
 		private static final long serialVersionUID = -2603074766780325918L;
-
+		private static final int TILE_DIM = Constants.TILE_PIXEL_DIMENSION;
 		private TileRepresentationGrid grid;
-		private final int tileDim = 125;
+		
 
 		private TilePainter tilePainter = TilePainter.getInstance();
 
@@ -116,7 +117,7 @@ public class TilesPanel extends JScrollPane {
 		 */
 		public void updateRepresentation() {
 			Dimension d = grid.getDimension();
-			setDimension(d.width * tileDim, d.height * tileDim);
+			setDimension(d.width * TILE_DIM, d.height * TILE_DIM);
 		}
 
 		@Override
@@ -155,8 +156,8 @@ public class TilesPanel extends JScrollPane {
 		 *            the coordinates where we want to put the Tile.
 		 */
 		private void printCard(Graphics g, String tile, Coord realPos) {
-			int x = realPos.getX() * tileDim;
-			int y = realPos.getY() * tileDim;
+			int x = realPos.getX() * TILE_DIM;
+			int y = realPos.getY() * TILE_DIM;
 			tilePainter.paintTile(tile, g, x, y);
 		}
 
@@ -167,15 +168,15 @@ public class TilesPanel extends JScrollPane {
 		 */
 		private void printPlaceHolder(Graphics g, Coord realCoord) {
 			/* Tile representation. */
-			int x = realCoord.getX() * tileDim;
-			int y = realCoord.getY() * tileDim;
+			int x = realCoord.getX() * TILE_DIM;
+			int y = realCoord.getY() * TILE_DIM;
 			tilePainter.paintPlaceHolder(g, x, y);
 			/* Calculating the coordinates. */
 			Coord gridCoord = grid.toGridCoord(realCoord);
 			String s = String.format("(%s,%s)", gridCoord.getX(), gridCoord.getY());
 			/* Writing the coordinates on the placeholder representation */
 			g.setColor(Color.BLACK);
-			g.drawString(s, x + tileDim / 3, y + tileDim / 2);
+			g.drawString(s, x + TILE_DIM / 3, y + TILE_DIM / 2);
 		}
 
 		/**
