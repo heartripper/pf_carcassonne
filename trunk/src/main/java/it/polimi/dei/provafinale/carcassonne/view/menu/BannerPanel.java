@@ -22,7 +22,6 @@ public class BannerPanel extends JPanel {
 	private static final long serialVersionUID = -7347936654163580714L;
 
 	private Image banner;
-	private int width;
 	private Color bannerBackground = new Color(70, 98, 151);
 
 	/**
@@ -43,7 +42,7 @@ public class BannerPanel extends JPanel {
 	 */
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		width = getWidth();
+		int width = getWidth();
 		g.drawImage(banner, (width - banner.getWidth(null)) / 2, 0, null);
 	}
 

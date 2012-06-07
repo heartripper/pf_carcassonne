@@ -22,7 +22,6 @@ public class CurrentTilePanel extends JPanel {
 	private String currentTileRep;
 	private JLabel tileLabel = null;
 	private TilePainter tilePainter = TilePainter.getInstance();
-	private Dimension dim;
 
 	/**
 	 * CurrentTilePanel constructor. Creates a new instance of class
@@ -32,7 +31,7 @@ public class CurrentTilePanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		int tileDim = Constants.TILE_PIXEL_DIMENSION;
-		dim = new Dimension(tileDim, tileDim);
+		Dimension dim = new Dimension(tileDim, tileDim);
 
 		tileLabel = new JLabel();
 		tileLabel.setSize(dim);
