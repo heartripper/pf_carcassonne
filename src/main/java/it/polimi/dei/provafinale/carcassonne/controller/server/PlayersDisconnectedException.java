@@ -16,6 +16,14 @@ public class PlayersDisconnectedException extends Exception {
 	private List<PlayerColor> colors;
 
 	/**
+	 * Constructs an exception with no players
+	 * */
+	public PlayersDisconnectedException(){
+		colors = new ArrayList<PlayerColor>();
+	}
+	
+	
+	/**
 	 * Constructs a new instance for a single disconnected player.
 	 * 
 	 * @param color
