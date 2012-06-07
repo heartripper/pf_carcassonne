@@ -12,16 +12,14 @@ import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.imageio.ImageIO;
 
 /**
  * Class to paint tiles images. Base tile images are load from files, while the
@@ -56,40 +54,47 @@ public final class TilePainter {
 	 * compiles the pattern to match followers in tile representations.
 	 * */
 	private TilePainter() {
-		
+
 		this.tileLib = new HashMap<String, BufferedImage>();
 		this.followersLib = new HashMap<String, BufferedImage>();
-	
-		String followerRegExp = "(N|E|S|W)=.-(R|B|V|G|N)";
+
+		String followerRegExp = "(N|E|S|W)=.-(R|B|G|Y|B)";
 		this.followerPattern = Pattern.compile(followerRegExp);
-		
+
 		this.tileDim = Constants.TILE_PIXEL_DIMENSION;
-		
+
+		/* Load placeholder image */
+		tilePlaceHolder = Utility.readImage(Constants.PLACEHOLDER_PATH);
+
+		/* Load followers */
+		for (PlayerColor color : PlayerColor.values()) {
+			String c = color.toString();
+			String path = String.format(Constants.FOLLOWERS_IMG_PATH_FORMAT, c);
+			BufferedImage followerImg = Utility.readImage(path);
+			followersLib.put(c, followerImg);
+		}
+
+		/* Load base tiles */
 		String line;
-		BufferedReader in = null;
+		BufferedReader in;
 		try {
 			/* Read base tile images */
-			FileReader fr = new FileReader(new File(Constants.BASE_TILE_PATH));
-			in = new BufferedReader(fr);
+			InputStream is = getClass().getResourceAsStream(
+					Constants.BASE_TILE_PATH);
+			in = new BufferedReader(new InputStreamReader(is));
 			while ((line = in.readLine()) != null) {
 				BufferedImage currentImg = readBaseImage(line);
 				if (currentImg != null) {
 					tileLib.put(line, currentImg);
+				} else {
+					System.out.println("Base img not found: " + line);
 				}
-			}
-			/* Read placeholder image */
-			tilePlaceHolder = ImageIO
-					.read(new File(Constants.PLACEHOLDER_PATH));
-			/* Read followers image */
-			for (PlayerColor c : PlayerColor.values()) {
-				String path = String.format(
-						Constants.FOLLOWERS_IMG_PATH_FORMAT, c);
-				BufferedImage img = Utility.readImage(path);
-				followersLib.put(c.toString(), img);
 			}
 		} catch (IOException ioe) {
 			System.out.println("Error reading tile images.");
+			in = null;
 		}
+		
 		/* Closing stream in. */
 		if (in != null) {
 			try {
@@ -98,7 +103,6 @@ public final class TilePainter {
 				System.out.println("Error opening tile file.");
 			}
 		}
-
 	}
 
 	/**
@@ -153,7 +157,6 @@ public final class TilePainter {
 		 */
 		String fileName = rep.replaceAll("[ ]??[NSWE]??[NSWE]=", "");
 		String path = String.format(Constants.TILE_PATH_FORMAT, fileName);
-		
 		return Utility.readImage(path);
 	}
 
@@ -177,7 +180,8 @@ public final class TilePainter {
 			do {
 				c.rotate();
 				rotCount++;
-			} while (!tileLib.containsKey(c.toString()) && rotCount < MAXIMUM_NUMBER_OF_ROTATION);
+			} while (!tileLib.containsKey(c.toString())
+					&& rotCount < MAXIMUM_NUMBER_OF_ROTATION);
 			/* Reached the maximum number of possible rotations. */
 			if (rotCount == MAXIMUM_NUMBER_OF_ROTATION) {
 				System.out.println("Error: base tile not found for " + rep
@@ -205,7 +209,7 @@ public final class TilePainter {
 	 * @return the rotated image
 	 * */
 	private BufferedImage rotateImage(BufferedImage baseImage, int rotCount) {
-		/* creating the AffineTransform instance.*/
+		/* creating the AffineTransform instance. */
 		AffineTransform affineTransform = new AffineTransform();
 		/* Rotate the image. */
 		double radians = -Math.toRadians(ROTATION_DEGREES * rotCount);
@@ -254,13 +258,13 @@ public final class TilePainter {
 			p = new Point(bigSpacer, smallSpacer);
 			break;
 		case S:
-			p = new Point(bigSpacer, 2*bigSpacer - smallSpacer);
+			p = new Point(bigSpacer, 2 * bigSpacer - smallSpacer);
 			break;
 		case W:
 			p = new Point(smallSpacer, bigSpacer);
 			break;
 		case E:
-			p = new Point(2*bigSpacer - smallSpacer, bigSpacer);
+			p = new Point(2 * bigSpacer - smallSpacer, bigSpacer);
 			break;
 		default:
 			p = new Point(tileDim / 2, tileDim / 2);

@@ -3,9 +3,9 @@ package it.polimi.dei.provafinale.carcassonne.model;
 import it.polimi.dei.provafinale.carcassonne.Constants;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -81,15 +81,15 @@ public class TileStack {
 		List<Tile> readTiles = new ArrayList<Tile>();
 		BufferedReader input = null;
 		try {
-			FileReader fr = new FileReader(new File(path));
-			input = new BufferedReader(fr);
+			InputStream is = getClass().getResourceAsStream(path);
+			input = new BufferedReader(new InputStreamReader(is));
 			String line;
 			line = input.readLine();
 			while (line != null) {
-				
+
 				Tile tile = new Tile(line);
 				readTiles.add(tile);
-				
+
 				line = input.readLine();
 			}
 		} catch (IOException e) {
@@ -105,5 +105,5 @@ public class TileStack {
 		}
 		return readTiles;
 	}
-	
+
 }
