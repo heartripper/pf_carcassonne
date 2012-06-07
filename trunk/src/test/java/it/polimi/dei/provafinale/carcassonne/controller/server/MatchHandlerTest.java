@@ -142,19 +142,6 @@ public class MatchHandlerTest {
 		}
 
 		@Override
-		public void sendPlayer(PlayerColor color, Message msg)
-				throws PlayersDisconnectedException {
-			Message newMsg;
-			if (msg.type == MessageType.UPDATE_SINGLE) {
-				newMsg = new Message(MessageType.UPDATE, msg.payload);
-			} else {
-				newMsg = msg;
-			}
-
-			testOutput.write(newMsg);
-		}
-
-		@Override
 		public void sendAllPlayer(Message msg)
 				throws PlayersDisconnectedException {
 			testOutput.write(msg);

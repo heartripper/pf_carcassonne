@@ -48,29 +48,6 @@ public class ServerGameInterfaceTest {
 		}
 	}
 
-	/* Test that a message sent to one player arrives only to that player. */
-	@Test
-	public void sendSinglePlayerTest() {
-		PlayerColor color = PlayerColor.R;
-		Message msg = new Message(MessageType.SCORE, null);
-		try {
-			serverGameInterface.sendPlayer(color, msg);
-		} catch (PlayersDisconnectedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		int colorIndex = PlayerColor.indexOf(color);
-		for (int i = 0; i < numPlayers; i++) {
-			FakeRemotePlayer frm = (FakeRemotePlayer) remotePlayers.get(i);
-			if (i == colorIndex) {
-				assertTrue(frm.hasDataToRead);
-				assertTrue(frm.readOutput() == msg);
-			} else {
-				assertFalse(frm.hasDataToRead);
-			}
-		}
-	}
-
 	/* Test that messages are not sent to inactive players. */
 	@Test
 	public void inactivePlayerTest() {
@@ -92,25 +69,6 @@ public class ServerGameInterfaceTest {
 			} else {
 				assertTrue(frp.hasDataToRead);
 			}
-		}
-	}
-
-	/*
-	 * Test that if server sends an update single message, players receive an
-	 * update one.
-	 */
-	@Test
-	public void updateTest() {
-		Message updateSingle = new Message(MessageType.UPDATE_SINGLE, null);
-		try {
-			serverGameInterface.sendAllPlayer(updateSingle);
-		} catch (PlayersDisconnectedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (int i = 0; i < numPlayers; i++) {
-			FakeRemotePlayer frp = (FakeRemotePlayer) remotePlayers.get(i);
-			assertTrue(frp.readOutput().type == MessageType.UPDATE);
 		}
 	}
 
