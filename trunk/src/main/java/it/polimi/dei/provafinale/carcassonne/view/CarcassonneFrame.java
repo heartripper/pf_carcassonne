@@ -41,14 +41,14 @@ public class CarcassonneFrame extends JFrame {
 
 		super("Carcassonne");
 
-		/* Setting icon. */
-		Image icon;
-		try {
-			icon = ImageIO.read(new File("src/main/resources/icon.png"));
-			setIconImage(icon);
-		} catch (IOException e) {
-			System.out.println("Frame error: error while reading icon image.");
-		}
+//		/* Setting icon. */
+//		Image icon;
+//		try {
+//			icon = ImageIO.read(new File("src/main/resources/icon.png"));
+//			setIconImage(icon);
+//		} catch (IOException e) {
+//			System.out.println("Frame error: error while reading icon image.");
+//		}
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowClose());

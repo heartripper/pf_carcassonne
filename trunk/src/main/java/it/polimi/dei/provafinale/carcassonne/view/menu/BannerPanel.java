@@ -5,7 +5,11 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
@@ -21,7 +25,7 @@ public class BannerPanel extends JPanel {
 
 	private static final long serialVersionUID = -7347936654163580714L;
 
-	private Image banner;
+	private BufferedImage banner;
 	private Color bannerBackground = new Color(70, 98, 151);
 
 	/**
@@ -31,9 +35,13 @@ public class BannerPanel extends JPanel {
 
 		setPreferredSize(new Dimension(BANNERPANEL_WIDTH, BANNERPANEL_HEIGHT));
 
-		String path = "src/main/resources/banner.png";
-		banner = Toolkit.getDefaultToolkit().createImage(path);
-
+		String path = "/banner.png";
+		try{
+			banner = ImageIO.read(this.getClass().getResourceAsStream(path));
+		}catch(IOException e){
+			System.out.println("Error reading banner image.");
+		}
+		
 		setBackground(bannerBackground);
 	}
 

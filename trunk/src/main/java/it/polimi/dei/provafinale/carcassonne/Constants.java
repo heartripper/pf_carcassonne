@@ -38,10 +38,10 @@ public abstract class Constants {
 	public static final int VIEW_TYPE_TEXTUAL = 1;
 
 	/* Tile painter */
-	public static final String BASE_TILE_PATH = "src/main/resources/tiles.txt";
-	public static final String PLACEHOLDER_PATH = "src/main/resources/placeholder.png";
-	public static final String TILE_PATH_FORMAT = "src/main/resources/tiles/%s.png";
-	public static final String FOLLOWERS_IMG_PATH_FORMAT = "src/main/resources/followers/%s.png";
+	public static final String BASE_TILE_PATH = "/tiles.txt";
+	public static final String PLACEHOLDER_PATH = "/placeholder.png";
+	public static final String TILE_PATH_FORMAT = "/tiles/%s.png";
+	public static final String FOLLOWERS_IMG_PATH_FORMAT = "/followers/%s.png";
 
 	/* Server */
 	public static final int PLAYER_LIST_CHECK_TIME = 10 * 1000;

@@ -2,6 +2,7 @@ package it.polimi.dei.provafinale.carcassonne.view.game;
 
 import it.polimi.dei.provafinale.carcassonne.Constants;
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
+import it.polimi.dei.provafinale.carcassonne.Utility;
 import it.polimi.dei.provafinale.carcassonne.model.SidePosition;
 import it.polimi.dei.provafinale.carcassonne.model.Tile;
 
@@ -83,7 +84,7 @@ public final class TilePainter {
 			for (PlayerColor c : PlayerColor.values()) {
 				String path = String.format(
 						Constants.FOLLOWERS_IMG_PATH_FORMAT, c);
-				BufferedImage img = ImageIO.read(new File(path));
+				BufferedImage img = Utility.readImage(path);
 				followersLib.put(c.toString(), img);
 			}
 		} catch (IOException ioe) {
@@ -153,12 +154,7 @@ public final class TilePainter {
 		String fileName = rep.replaceAll("[ ]??[NSWE]??[NSWE]=", "");
 		String path = String.format(Constants.TILE_PATH_FORMAT, fileName);
 		
-		try {
-			return ImageIO.read(new File(path));
-		} catch (IOException e) {
-			System.out.println("Error reading image for card " + rep);
-			return null;
-		}
+		return Utility.readImage(path);
 	}
 
 	/**
@@ -274,6 +270,5 @@ public final class TilePainter {
 		int followerDim = Constants.FOLLOWER_PIXEL_DIMENSION;
 		BufferedImage img = followersLib.get(color.toString());
 		g.drawImage(img, x + p.x, y + p.y, followerDim, followerDim, null);
-
 	}
 }

@@ -5,7 +5,6 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -30,14 +29,15 @@ public class MenuPanel extends JPanel {
 	public MenuPanel() {
 
 		/* Setting background. */
-		String path = "src/main/resources/background.png";
-		BufferedImage background = null;
-		try {
-			background = ImageIO.read(new File(path));
-		} catch (IOException e) {
-			System.out.println("Error reading images.");
+		String path = "/background.png";
+		BufferedImage background;
+		try{
+			background = ImageIO.read(this.getClass().getResource(path));
+		}catch(IOException e){
+			System.out.println("Error reading background image.");
+			background = null;
 		}
-
+		
 		setLayout(new BorderLayout(0, 0));
 
 		/* Setting banner. */

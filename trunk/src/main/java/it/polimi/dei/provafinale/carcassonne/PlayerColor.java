@@ -9,8 +9,8 @@ import java.awt.Color;
  */
 public enum PlayerColor {
 
-	R("Rosso", Color.RED), B("Blu", Color.BLUE), V("Verde", Color.GREEN), G(
-			"Giallo", Color.YELLOW), N("Nero", Color.BLACK);
+	R("Red", Color.RED), B("Blue", Color.BLUE), G("Green", Color.GREEN), Y(
+			"Yellow", Color.YELLOW), K("Black", Color.BLACK);
 
 	private String fullName;
 	private Color color;
