@@ -29,7 +29,6 @@ public class PlayerPanel extends JPanel {
 	private JPanel colorPanel;
 	private JLabel lblName;
 	private JLabel lblScore;
-	private JLabel lblFollower;
 
 	/* Background colors. */
 	private final Color selectedBGColor = new Color(255, 255, 255);
@@ -97,20 +96,9 @@ public class PlayerPanel extends JPanel {
 		scorePanel.setPreferredSize(labelDimension);
 		scorePanel.setBackground(transparentBGColor);
 		scorePanel.add(lblScore);
-		/*
-		 * Setting followers panel (contains the actual number of players that
-		 * belongs to a player) to put into content panel.
-		 */
-		JPanel followerPanel = new JPanel();
-		lblFollower = new JLabel("Follower: 7");
-		lblFollower.setFont(commonFont);
-		followerPanel.setPreferredSize(labelDimension);
-		followerPanel.setBackground(transparentBGColor);
-		followerPanel.add(lblFollower);
 		/* Adding panels to content panel. */
 		content.add(namePanel);
 		content.add(scorePanel);
-		content.add(followerPanel);
 	}
 
 	/**
@@ -122,18 +110,6 @@ public class PlayerPanel extends JPanel {
 	 */
 	public void setScore(int score) {
 		safeSetText(lblScore, "Score: " + score);
-	}
-
-	/**
-	 * Sets the actual number of followers that belongs to a player into the
-	 * JLabel lblFollowers (attribute of the class PlayerPanel).
-	 * 
-	 * @param numFollowers
-	 *            a number that indicates the current number of followers of a
-	 *            player.
-	 */
-	public void setFollowers(int numFollowers) {
-		safeSetText(lblFollower, "Follower: " + numFollowers);
 	}
 
 	/**
