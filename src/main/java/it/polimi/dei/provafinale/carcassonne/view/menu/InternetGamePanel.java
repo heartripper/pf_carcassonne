@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import it.polimi.dei.provafinale.carcassonne.controller.client.MenuPanelSwitcher;
-import it.polimi.dei.provafinale.carcassonne.controller.client.StartInternetGame;
+import it.polimi.dei.provafinale.carcassonne.controller.client.StartInternetGameListener;
 import javax.swing.JComboBox;
 
 /**
@@ -144,7 +144,7 @@ public class InternetGamePanel extends JPanel {
 		joinGamePanel.add(horizontalGlue03);
 		/* Adding button join game to join game panel. */
 		btnJoinGame = new JButton("Join Game!");
-		btnJoinGame.addActionListener(new StartInternetGame(this));
+		btnJoinGame.addActionListener(new StartInternetGameListener(this));
 		joinGamePanel.add(btnJoinGame);
 		/* Layout option. */
 		Component horizontalGlue04 = Box.createHorizontalGlue();
