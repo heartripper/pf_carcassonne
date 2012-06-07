@@ -53,7 +53,7 @@ public class ScreenShotListener implements ActionListener {
 	 * in file chooser.
 	 * 
 	 */
-	private class PngFilter extends FileFilter {
+	private static class PngFilter extends FileFilter {
 
 		@Override
 		public boolean accept(File pathname) {

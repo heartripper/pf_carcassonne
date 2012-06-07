@@ -8,6 +8,10 @@ import it.polimi.dei.provafinale.carcassonne.controller.server.CarcassonneServer
  */
 public class MainServer {
 	
+	private MainServer(){
+		
+	}
+	
 	/**
 	 * Main method of Server.
 	 * 
