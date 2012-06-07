@@ -13,8 +13,6 @@ import it.polimi.dei.provafinale.carcassonne.controller.RMIServer;
 import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
 import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
-import it.polimi.dei.provafinale.carcassonne.logger.Logger;
-import it.polimi.dei.provafinale.carcassonne.logger.LoggerService;
 
 /**
  * Class ClientRMIInterface implements ClientInterface and CarcassonneRMIClient
@@ -28,7 +26,6 @@ public class ClientRMIInterface implements ClientInterface, RMIClient {
 	private String host;
 	private Message serverBuffer, clientBuffer;
 	private RMIServer server;
-	private Logger logger;
 
 	/**
 	 * ClientRMIInterface constructor. Creates a new instance of class
@@ -39,7 +36,6 @@ public class ClientRMIInterface implements ClientInterface, RMIClient {
 	 */
 	public ClientRMIInterface(String host) {
 		this.host = host;
-		this.logger = LoggerService.getService().register("RMI Interface");
 	}
 
 	/* ClientInterface methods */
@@ -66,7 +62,6 @@ public class ClientRMIInterface implements ClientInterface, RMIClient {
 
 		clientBuffer = msg;
 		notifyAll();
-		logger.log("RMI|CLIENT|WRITE: " + msg);
 		return;
 	}
 
@@ -86,7 +81,6 @@ public class ClientRMIInterface implements ClientInterface, RMIClient {
 		Message msg = serverBuffer;
 		serverBuffer = null;
 		notifyAll();
-		logger.log("RMI|CLIENT|READ: " + msg);
 		return msg;
 	}
 
@@ -111,7 +105,6 @@ public class ClientRMIInterface implements ClientInterface, RMIClient {
 		}
 
 		serverBuffer = msg;
-		logger.log("RMI|SERVER|WRITE: " + msg);
 		notifyAll();
 		return;
 	}
@@ -129,7 +122,6 @@ public class ClientRMIInterface implements ClientInterface, RMIClient {
 		Message msg = clientBuffer;
 		clientBuffer = null;
 		notifyAll();
-		logger.log("RMI|SERVER|READ: " + msg);
 		return msg;
 	}
 
