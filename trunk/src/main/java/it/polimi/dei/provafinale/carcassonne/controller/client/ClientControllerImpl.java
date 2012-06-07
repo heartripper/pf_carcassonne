@@ -154,10 +154,6 @@ public class ClientControllerImpl implements Runnable {
 				case UPDATE:
 					viewInterface.updateGridRepresentation(resp.payload);
 					if (!currentTileAdded && !handlingLock) {
-						/*
-						 * It's the first non-lock update we receive: the tile
-						 * has been added.
-						 */
 						currentTileAdded = true;
 						updateViewIfNecessary();
 					}
@@ -195,7 +191,7 @@ public class ClientControllerImpl implements Runnable {
 					viewInterface.showNotify("Game ended.");
 					viewInterface.updateScore(resp.payload);
 					setGameEnd();
-					return; /*Exit from thread*/
+					return; /* Exit from thread */
 				default:
 					throw new RuntimeException("Unknown update type: "
 							+ resp.type);
