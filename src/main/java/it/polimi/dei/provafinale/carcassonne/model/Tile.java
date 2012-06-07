@@ -205,7 +205,7 @@ public final class Tile {
 		}
 		/* Connections representation. */
 		/* Case the tile has been rotated. */
-		if (linksCacheValid == false) {
+		if (!linksCacheValid) {
 			linksCache = new HashMap<String, String>();
 			for (int i = 0; i < representationOrder.length; i++) {
 				for (int j = 0; j < representationOrder.length; j++) {
