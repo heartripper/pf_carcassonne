@@ -78,7 +78,7 @@ public class TileStack {
 			path = Constants.TILES_PATH;
 		}
 		/* Creating a new ArrayList to put the list of tiles in. */
-		List<Tile> tiles = new ArrayList<Tile>();
+		List<Tile> readTiles = new ArrayList<Tile>();
 		BufferedReader input = null;
 		try {
 			FileReader fr = new FileReader(new File(path));
@@ -88,7 +88,7 @@ public class TileStack {
 			while (line != null) {
 				
 				Tile tile = new Tile(line);
-				tiles.add(tile);
+				readTiles.add(tile);
 				
 				line = input.readLine();
 			}
@@ -103,7 +103,7 @@ public class TileStack {
 				System.out.println("Error opening tile file.");
 			}
 		}
-		return tiles;
+		return readTiles;
 	}
 	
 }
