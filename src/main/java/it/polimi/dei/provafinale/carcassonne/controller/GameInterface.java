@@ -28,18 +28,18 @@ public interface GameInterface {
 	Message readFromPlayer(PlayerColor color)
 			throws PlayersDisconnectedException;
 
-	/**
-	 * Sends a message to a player.
-	 * 
-	 * @param color
-	 *            - the color of the player to send the message to.
-	 * @param msd
-	 *            - the Message to send.
-	 * @throws PlayersDisconnectedException
-	 *             when given player disconnects.
-	 * */
-	void sendPlayer(PlayerColor color, Message message)
-			throws PlayersDisconnectedException;
+//	/**
+//	 * Sends a message to a player.
+//	 * 
+//	 * @param color
+//	 *            - the color of the player to send the message to.
+//	 * @param msd
+//	 *            - the Message to send.
+//	 * @throws PlayersDisconnectedException
+//	 *             when given player disconnects.
+//	 * */
+//	void sendPlayer(PlayerColor color, Message message)
+//			throws PlayersDisconnectedException;
 
 	/**
 	 * Sends a message to all players.

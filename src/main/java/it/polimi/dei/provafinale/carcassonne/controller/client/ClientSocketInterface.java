@@ -9,8 +9,6 @@ import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.controller.ClientInterface;
 import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
-import it.polimi.dei.provafinale.carcassonne.logger.Logger;
-import it.polimi.dei.provafinale.carcassonne.logger.LoggerService;
 
 /**
  * Class ClientSocketInterface implements ClientInterface in order to give an
@@ -21,8 +19,6 @@ public class ClientSocketInterface implements ClientInterface {
 
 	private final String addr;
 	private final int port;
-
-	private Logger logger;
 
 	private Socket socket;
 	private ObjectInputStream in;
@@ -40,7 +36,6 @@ public class ClientSocketInterface implements ClientInterface {
 	public ClientSocketInterface(String addr, int port) {
 		this.addr = addr;
 		this.port = port;
-		logger = LoggerService.getService().register("Socket");
 	}
 
 	@Override
@@ -59,15 +54,12 @@ public class ClientSocketInterface implements ClientInterface {
 	public void sendMessage(Message msg) throws ConnectionLostException {
 		String protocolMsg = msg.toProtocolMessage();
 		sendToServer(protocolMsg);
-		logger.log("SOCKET|WRITE: " + msg);
 	}
 
 	@Override
 	public Message readMessage() throws ConnectionLostException {
 		String protocolMsg = readFromServer();
-		Message msg = Message.createFromProtocolMsg(protocolMsg);
-		logger.log("SOCKET|READ: " + msg);
-		return msg;
+		return Message.createFromProtocolMsg(protocolMsg);
 	}
 
 	@Override
