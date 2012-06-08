@@ -1,17 +1,14 @@
 package it.polimi.dei.provafinale.carcassonne.view;
 
+import it.polimi.dei.provafinale.carcassonne.Utility;
 import it.polimi.dei.provafinale.carcassonne.controller.client.WindowClose;
 import it.polimi.dei.provafinale.carcassonne.view.game.GamePanel;
 import it.polimi.dei.provafinale.carcassonne.view.menu.MenuPanel;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * The class CarcassonneFrame extends a JFrame in order to create the main
@@ -41,14 +38,8 @@ public class CarcassonneFrame extends JFrame {
 
 		super("Carcassonne");
 
-//		/* Setting icon. */
-//		Image icon;
-//		try {
-//			icon = ImageIO.read(new File("src/main/resources/icon.png"));
-//			setIconImage(icon);
-//		} catch (IOException e) {
-//			System.out.println("Frame error: error while reading icon image.");
-//		}
+		/* Setting icon. */
+		setIconImage(Utility.readImage("/icon.png"));
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowClose());
