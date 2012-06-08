@@ -9,10 +9,12 @@ import java.awt.Color;
  */
 public enum PlayerColor {
 
-	R("Red", Color.RED), B("Blue", Color.BLUE), G("Green", Color.GREEN), Y(
-			"Yellow", Color.YELLOW), K("Black", Color.BLACK);
+	R("Red", "R", Color.RED), B("Blue", "B", Color.BLUE), G("Green", "G",
+			Color.GREEN), Y("Yellow", "Y", Color.YELLOW), K("Black", "K",
+			Color.BLACK);
 
 	private String fullName;
+	private String symbol;
 	private Color color;
 
 	/**
@@ -32,6 +34,23 @@ public enum PlayerColor {
 		else {
 			return null;
 		}
+	}
+
+	/**
+	 * Gives the instance of PlayerColor corresponding either to a symbol or to
+	 * a full name.
+	 * 
+	 * @param s
+	 *            - a String containing the symbol or the full name of a color.
+	 * @return an instance of PlayerColor
+	 * */
+	public PlayerColor getColorFor(String s) {
+		for (PlayerColor col : values()) {
+			if (s.equals(col.fullName.toLowerCase()) || s.equals(col.symbol)) {
+				return col;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -57,8 +76,9 @@ public enum PlayerColor {
 	 * @param fullName
 	 *            - the full name of a color.
 	 */
-	PlayerColor(String fullName, Color color) {
+	PlayerColor(String fullName, String symbol, Color color) {
 		this.fullName = fullName;
+		this.symbol = symbol;
 		this.color = color;
 	}
 

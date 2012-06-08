@@ -15,8 +15,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 
 /**
- * Class StartLocalGameListener implements an ActionListener in order to manage the
- * beginning of a new local game.
+ * Class StartLocalGameListener implements an ActionListener in order to manage
+ * the beginning of a new local game.
  * 
  */
 public class StartLocalGameListener implements ActionListener {
@@ -43,35 +43,30 @@ public class StartLocalGameListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		int numPlayers = numPlayerValues[numPlayerBox.getSelectedIndex()];
-		
+
 		/* Create duplex interface for Client - Match controller communication. */
-		ClientLocalInterface cli = new ClientLocalInterface(numPlayers);
-	
-		MatchHandler mh = new MatchHandler(cli);
-		Thread th = new Thread(mh);
+		ClientLocalInterface local = new ClientLocalInterface(numPlayers);
+
+		/* Starts match handler */
+		MatchHandler matchHandler = new MatchHandler(local);
+		Thread th = new Thread(matchHandler);
 		th.start();
+
+		/* Create game panel */
 		int viewType = viewTypeBox.getSelectedIndex();
 		GamePanel panel;
-		
-		/* Case Swing selection. */
 		if (viewType == Constants.VIEW_TYPE_GUI) {
 			panel = new SwingGamePanel();
-		}
-		/* Case textual selection. */
-		else if (viewType == Constants.VIEW_TYPE_TEXTUAL) {
+		} else if (viewType == Constants.VIEW_TYPE_TEXTUAL) {
 			panel = new TextualGamePanel();
+		} else {
+			throw new RuntimeException("Wrong value for gamepanel selection.");
 		}
-		else {
-			System.out.println("Error in view type selection: value "
-					+ viewType);
-			return;
-		}
-		
+
 		CarcassonneFrame frame = ViewManager.getInstance().getFrame();
 		frame.setGamePanel(panel);
 		frame.changeMainPanel(CarcassonneFrame.GAMEPANEL);
-		
-		ClientController.startNewMatchController(cli, panel);
-	}
 
+		ClientController.startNewMatchController(local, panel);
+	}
 }

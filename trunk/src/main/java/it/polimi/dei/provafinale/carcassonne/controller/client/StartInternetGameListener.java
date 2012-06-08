@@ -14,14 +14,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Class StartInternetGameListener implements an ActionListener in order to manage the
- * beginning of a new internet game.
+ * Class StartInternetGameListener implements an ActionListener in order to
+ * manage the beginning of a new internet game.
  * 
  */
 public class StartInternetGameListener implements ActionListener {
 
 	private InternetGamePanel internetGamePanel;
 
+
+	
 	/**
 	 * StartInternetGameListener constructor. Creates a new instance of class
 	 * StartInternetGameListener.
@@ -68,38 +70,37 @@ public class StartInternetGameListener implements ActionListener {
 				}
 			}
 		}
+		
+		/*Create client interface*/
 		ClientInterface ci;
-		/* Socket mode. */
 		if (connectionType == 0) {
 			ci = new ClientSocketInterface(ipAddress, port);
-		}
-		/* RMI mode. */
-		else {
+		} else {
 			ci = new ClientRMIInterface(ipAddress);
 		}
+
+		try {
+			ci.connect();
+		} catch (ConnectionLostException cle) {
+			internetGamePanel.setNotifyText(Constants.CONNECTION_ERROR);
+			internetGamePanel.setUIActive(true);
+			return;
+		}
+
+		/*Create game panel*/
 		GamePanel panel;
-		/* Swing mode. */
 		if (viewType == Constants.VIEW_TYPE_GUI) {
 			panel = new SwingGamePanel();
-		}
-		/* Textual mode. */
-		else if (viewType == Constants.VIEW_TYPE_TEXTUAL) {
+		} else if (viewType == Constants.VIEW_TYPE_TEXTUAL) {
 			panel = new TextualGamePanel();
 		} else {
 			throw new RuntimeException();
 		}
+		
+		ClientController.startNewMatchController(ci, panel);		
 		CarcassonneFrame frame = ViewManager.getInstance().getFrame();
 		frame.setGamePanel(panel);
 		frame.changeMainPanel(CarcassonneFrame.GAMEPANEL);
-		/* Starting connection. */
-		try {
-			ci.connect();
-			ClientController.startNewMatchController(ci, panel);
-			internetGamePanel.setNotifyText(Constants.MATCH_IS_STARTING);
-		} catch (ConnectionLostException cle) {
-			internetGamePanel.setNotifyText(Constants.CONNECTION_ERROR);
-			internetGamePanel.setUIActive(true);
-		}
 	}
 
 }

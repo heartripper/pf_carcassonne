@@ -14,6 +14,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 /**
  * The class TilesPanel extends a JScrollPane in order to contain the
@@ -85,10 +86,10 @@ public class TilesPanel extends JScrollPane {
 			this.paint(g);
 		}
 	}
-	
+
 	/**
-	 * The class TileGridPainter extends a JLabel in order to paint the updated grid
-	 * of the game.
+	 * The class TileGridPainter extends a JLabel in order to paint the updated
+	 * grid of the game.
 	 * 
 	 */
 	private static class TileGridPainter extends JLabel {
@@ -96,7 +97,6 @@ public class TilesPanel extends JScrollPane {
 		private static final long serialVersionUID = -2603074766780325918L;
 		private static final int TILE_DIM = Constants.TILE_PIXEL_DIMENSION;
 		private TileRepresentationGrid grid;
-		
 
 		private TilePainter tilePainter = TilePainter.getInstance();
 
@@ -116,8 +116,14 @@ public class TilesPanel extends JScrollPane {
 		 * Updates the grid using the current dimension.
 		 */
 		public void updateRepresentation() {
-			Dimension d = grid.getDimension();
-			setDimension(d.width * TILE_DIM, d.height * TILE_DIM);
+			SwingUtilities.invokeLater(new Runnable() {
+
+				@Override
+				public void run() {
+					Dimension d = grid.getDimension();
+					setDimension(d.width * TILE_DIM, d.height * TILE_DIM);
+				}
+			});
 		}
 
 		@Override
@@ -135,8 +141,8 @@ public class TilesPanel extends JScrollPane {
 						printCard(g, tileRep, realCoord);
 					}
 					/*
-					 * The is the neighbor of another tile (that is really present
-					 * on the grid).
+					 * The is the neighbor of another tile (that is really
+					 * present on the grid).
 					 */
 					else if (grid.hasTileNeighbor(gridCoord)) {
 						printPlaceHolder(g, realCoord);
@@ -163,8 +169,11 @@ public class TilesPanel extends JScrollPane {
 
 		/**
 		 * Manages the placeholder (empty tile) painting.
-		 * @param g an instance of class Graphics.
-		 * @param realCoord the coordinates where we want to put the placeholder.
+		 * 
+		 * @param g
+		 *            an instance of class Graphics.
+		 * @param realCoord
+		 *            the coordinates where we want to put the placeholder.
 		 */
 		private void printPlaceHolder(Graphics g, Coord realCoord) {
 			/* Tile representation. */
@@ -173,7 +182,8 @@ public class TilesPanel extends JScrollPane {
 			tilePainter.paintPlaceHolder(g, x, y);
 			/* Calculating the coordinates. */
 			Coord gridCoord = grid.toGridCoord(realCoord);
-			String s = String.format("(%s,%s)", gridCoord.getX(), gridCoord.getY());
+			String s = String.format("(%s,%s)", gridCoord.getX(),
+					gridCoord.getY());
 			/* Writing the coordinates on the placeholder representation */
 			g.setColor(Color.BLACK);
 			g.drawString(s, x + TILE_DIM / 3, y + TILE_DIM / 2);

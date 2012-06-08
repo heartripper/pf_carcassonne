@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -49,9 +50,9 @@ public class TextualGamePanel extends GamePanel {
 		/* Initialize grid */
 		tileRepGrid = new TileRepresentationGrid();
 		representer = new TextualViewRepresenter(tileRepGrid);
-	
+
 		setLayout(new BorderLayout(0, 0));
-		
+
 		/* Initializing the area where to put tiles and notifications. */
 		textArea = new JTextArea();
 		textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, FONT_SIZE));
@@ -59,19 +60,22 @@ public class TextualGamePanel extends GamePanel {
 		scrollPane = new JScrollPane(textArea);
 		add(scrollPane, BorderLayout.CENTER);
 		/* Creating a panel to put in the bottom part of the screen. */
-		JPanel panel = new JPanel();
-		add(panel, BorderLayout.SOUTH);
+		JPanel bottomPanel = new JPanel();
+		add(bottomPanel, BorderLayout.SOUTH);
+		String instructions = "{ rotate | x,y | [NESW] | pass }";
+		JLabel instrLabel = new JLabel(instructions);
+		bottomPanel.add(instrLabel);
 		/* Setting in the bottom panel a TextField where to insert commands. */
 		textField = new JTextField();
 		textField.setColumns(COLUMNS_NUMBER);
-		panel.add(textField);
+		bottomPanel.add(textField);
 		/*
 		 * Setting in the bottom panel a JButton to confirm the inserted
 		 * commands.
 		 */
 		JButton btnSend = new JButton("Send!");
 		btnSend.addActionListener(new TextualListener(textField));
-		panel.add(btnSend);
+		bottomPanel.add(btnSend);
 	}
 
 	/**
@@ -139,7 +143,7 @@ public class TextualGamePanel extends GamePanel {
 	/* Prints the representation of the current tile on the textArea. */
 	@Override
 	public void updateCurrentTile(String rep) {
-	
+
 		Tile tile = new Tile(rep);
 		String tileRepresentation = TextualViewRepresenter
 				.getTileRepresentation(tile);
@@ -197,8 +201,8 @@ public class TextualGamePanel extends GamePanel {
 	public void showNotify(String msg) {
 		printMsg(msg);
 	}
-	
-	/*Disconnects a player.*/
+
+	/* Disconnects a player. */
 	@Override
 	public void setDisconnectedPlayer(PlayerColor color) {
 		String msg = String.format("Player %s disconnected.", color);

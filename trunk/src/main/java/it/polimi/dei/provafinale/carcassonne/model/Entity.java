@@ -28,7 +28,6 @@ public abstract class Entity {
 		default:
 			return null;
 		}
-
 	}
 
 	private List<Side> members;
