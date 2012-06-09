@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 public class TileTest {
 
 	private Tile tile;
-	private final String REPRESENTATION = "N=N S=C W=S-B E=S NS=0 NE=0 NW=0 WE=1 SE=0 SW=0";
+	private final String REPRESENTATION = "N=N S=C W=S+B E=S NS=0 NE=0 NW=0 WE=1 SE=0 SW=0";
 	
 	@Before
 	public void setUp(){
@@ -69,7 +69,7 @@ public class TileTest {
 	@Test
 	public void testRotate(){
 		tile.rotate();
-		assertEquals(tile.toString(), "N=S-B S=S W=C E=N NS=1 NE=0 NW=0 WE=0 SE=0 SW=0");
+		assertEquals(tile.toString(), "N=S+B S=S W=C E=N NS=1 NE=0 NW=0 WE=0 SE=0 SW=0");
 	}
 	
 	@Test

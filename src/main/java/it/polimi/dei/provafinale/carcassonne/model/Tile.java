@@ -65,12 +65,12 @@ public final class Tile {
 		String sideType = null;
 		PlayerColor follower = null;
 		/* A follower is NOT present on this Side. */
-		if (value.indexOf('-') == -1) {
+		if (value.indexOf('+') == -1) {
 			sideType = value;
 		}
 		/* A follower is present on this Side. */
 		else {
-			String[] split = value.split("-");
+			String[] split = value.split("\\+");
 			sideType = split[0];
 			follower = PlayerColor.valueOf(split[1]);
 		}
