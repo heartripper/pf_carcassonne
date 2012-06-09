@@ -57,7 +57,8 @@ public class MatchHandler implements Runnable {
 			currentTile = match.drawTile();
 
 			currentPlayer = match.getNextPlayer();
-			sendMessage(new Message(MessageType.TURN, currentPlayer.toString()));
+			sendMessage(new Message(MessageType.TURN,
+					currentPlayer.getFullName()));
 			sendMessage(new Message(MessageType.NEXT, currentTile.toString()));
 
 			endCurrentTurn = false;
@@ -71,11 +72,11 @@ public class MatchHandler implements Runnable {
 				}
 
 				Message resp;
-				
+
 				if (req.type == MessageType.ROTATE && !currentTileAdded) {
 					resp = handleTileRotation();
 				}
-				
+
 				else if (req.type == MessageType.PLACE && !currentTileAdded) {
 					resp = handleTilePlacing(req.payload);
 				}
@@ -227,7 +228,11 @@ public class MatchHandler implements Runnable {
 		StringBuilder payload = new StringBuilder();
 		for (int i = 0; i < scores.length; i++) {
 			PlayerColor color = PlayerColor.valueOf(i);
-			payload.append(String.format("%s=%s, ", color, scores[i]));
+			payload.append(String.format("%s=%s", color.getFullName(),
+					scores[i]));
+			if(i != scores.length - 1){
+				payload.append(", ");
+			}
 		}
 		return payload.toString().trim();
 	}

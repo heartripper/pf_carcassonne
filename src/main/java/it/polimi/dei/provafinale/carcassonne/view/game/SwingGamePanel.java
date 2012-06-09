@@ -196,8 +196,9 @@ public class SwingGamePanel extends GamePanel {
 	 *            the Coord we want to set in coordField.
 	 */
 	public void setCoord(Coord coord) {
-		if(coordsField.isEnabled()){
-			String coordRep = String.format("%s,%s", coord.getX(), coord.getY());
+		if (coordsField.isEnabled()) {
+			String coordRep = String
+					.format("%s,%s", coord.getX(), coord.getY());
 			coordsField.setText(coordRep);
 		}
 	}
@@ -218,7 +219,8 @@ public class SwingGamePanel extends GamePanel {
 		String[] split = payload.split(",");
 		String tileRep = split[0].trim();
 		String color = split[2].trim();
-		clientColor = (color.equals("null") ? null : PlayerColor.valueOf(color));
+		clientColor = (color.equals("null") ? null : PlayerColor
+				.getColorFor(color));
 		int playerNumber = Integer.parseInt(split[3].trim());
 
 		/* Setup first tile */
@@ -267,7 +269,7 @@ public class SwingGamePanel extends GamePanel {
 		for (String s : scores) {
 			String[] split = s.split("=");
 			/* Score assignment. */
-			PlayerColor color = PlayerColor.valueOf(split[0].trim());
+			PlayerColor color = PlayerColor.getColorFor(split[0].trim());
 			int colorIndex = PlayerColor.indexOf(color);
 			int score = Integer.parseInt(split[1].trim());
 			playerPanels[colorIndex].setScore(score);

@@ -9,7 +9,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.controller.ClientInterface;
 import it.polimi.dei.provafinale.carcassonne.controller.ConnectionLostException;
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
@@ -61,7 +60,7 @@ public class ClientSocketInterface implements ClientInterface {
 	}
 
 	@Override
-	public void reconnect(String matchName, PlayerColor color)
+	public void reconnect(String matchName, String color)
 			throws ConnectionLostException {
 		createSocket();
 		String message = String.format("reconnect: %s, %s", color, matchName);

@@ -45,7 +45,7 @@ public class ClientLocalInterface implements GameInterface, ClientInterface {
 	}
 
 	@Override
-	public void reconnect(String matchName, PlayerColor color) {
+	public void reconnect(String matchName, String color) {
 		/* Nothing to do here in local game. */
 		return;
 	}
