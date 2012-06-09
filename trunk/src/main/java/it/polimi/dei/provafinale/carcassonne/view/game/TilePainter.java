@@ -58,7 +58,7 @@ public final class TilePainter {
 		this.tileLib = new HashMap<String, BufferedImage>();
 		this.followersLib = new HashMap<String, BufferedImage>();
 
-		String followerRegExp = "(N|E|S|W)=.-(R|B|G|Y|B)";
+		String followerRegExp = "(N|E|S|W)=.\\+(R|B|G|Y|B)";
 		this.followerPattern = Pattern.compile(followerRegExp);
 
 		this.tileDim = Constants.TILE_PIXEL_DIMENSION;
@@ -119,12 +119,12 @@ public final class TilePainter {
 	 * */
 	public void paintTile(String rep, Graphics g, int x, int y) {
 		/* Remove followers from rep. */
-		String base = rep.replaceAll("-.", "");
+		String base = rep.replaceAll("\\+.", "");
 		/* Find the base tile into the repository. */
 		BufferedImage img = getImage(base);
 		g.drawImage(img, x, y, tileDim, tileDim, null);
 		/* Case there was a follower in rep . */
-		if (rep.indexOf('-') != -1) {
+		if (rep.indexOf(Constants.FOLLOWER_SEPARATOR) != -1) {
 			paintFollower(rep, g, x, y);
 		}
 	}
