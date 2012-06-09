@@ -120,7 +120,7 @@ public class ClientControllerImplTest {
 		}
 
 		@Override
-		public void reconnect(String matchName, PlayerColor color) {
+		public void reconnect(String matchName, String color) {
 
 		}
 
@@ -204,7 +204,7 @@ public class ClientControllerImplTest {
 
 		@Override
 		public void setDisconnectedPlayer(PlayerColor color) {
-			
+
 		}
 
 	}

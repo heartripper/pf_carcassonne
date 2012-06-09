@@ -98,10 +98,11 @@ public class ClientControllerImpl implements Runnable {
 	 * Manages the client reconnection.
 	 */
 	private void handleReconnection() {
+		String color = clientColor.getFullName();
 		/* Notify GUI we lost connection with server. */
 		for (int i = 0; i < MAX_RECONNECTION_ATTEMPTS; i++) {
 			try {
-				clientInterface.reconnect(matchName, clientColor);
+				clientInterface.reconnect(matchName, color);
 				Message msg = readFromServer();
 				if (!(msg.type == MessageType.UNLOCK)) {
 					throw new RuntimeException(
@@ -150,7 +151,7 @@ public class ClientControllerImpl implements Runnable {
 					initializeMatch(resp.payload);
 					break;
 				case TURN:
-					PlayerColor color = PlayerColor.valueOf(resp.payload);
+					PlayerColor color = PlayerColor.getColorFor(resp.payload);
 					currentColor = color;
 					viewInterface.setCurrentPlayer(color);
 					break;
@@ -187,7 +188,8 @@ public class ClientControllerImpl implements Runnable {
 					break;
 				case LEAVE:
 					handlingLock = false;
-					PlayerColor discColor = PlayerColor.valueOf(resp.payload);
+					PlayerColor discColor = PlayerColor
+							.getColorFor(resp.payload);
 					viewInterface.setDisconnectedPlayer(discColor);
 					break;
 				case END:
@@ -216,7 +218,7 @@ public class ClientControllerImpl implements Runnable {
 			if (color.equals("null")) {
 				clientColor = null;
 			} else {
-				clientColor = PlayerColor.valueOf(color);
+				clientColor = PlayerColor.getColorFor(color);
 				setClientColor(clientColor);
 			}
 			viewInterface.initialize(payload);

@@ -205,15 +205,16 @@ public class Match {
 			throws NotEnoughPlayersException {
 		Player p = players.getByColor(color);
 		p.setInactive();
-		List<Tile> updates = new ArrayList<Tile>();
-		for (Entity e : entities) {
-			updates.addAll(e.removeFollowers(color));
-		}
-
 		/* There are no enough players to play the game. */
 		if (players.getPlayerNumber() < 2) {
 			throw new NotEnoughPlayersException();
 		}
+		
+		List<Tile> updates = new ArrayList<Tile>();
+		for (Entity e : entities) {
+			updates.addAll(e.removeFollowers(color));
+		}
+		
 		return updates;
 	}
 

@@ -114,7 +114,8 @@ public class TextualGamePanel extends GamePanel {
 		 * manages all the colors).
 		 */
 		String color = split[2].trim();
-		clientColor = (color.equals("null") ? null : PlayerColor.valueOf(color));
+		clientColor = (color.equals("null") ? null : PlayerColor
+				.getColorFor(color));
 
 		/*
 		 * Printing on the textArea a String that announces the start of a

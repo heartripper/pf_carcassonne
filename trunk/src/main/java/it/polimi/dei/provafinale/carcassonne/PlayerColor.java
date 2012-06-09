@@ -9,8 +9,8 @@ import java.awt.Color;
  */
 public enum PlayerColor {
 
-	R("Red", "R", Color.RED), B("Blue", "B", Color.BLUE), G("Green", "G",
-			Color.GREEN), Y("Yellow", "Y", Color.YELLOW), K("Black", "K",
+	R("red", "R", Color.RED), B("blue", "B", Color.BLUE), G("green", "G",
+			Color.GREEN), Y("yellow", "Y", Color.YELLOW), K("black", "K",
 			Color.BLACK);
 
 	private String fullName;
@@ -44,13 +44,13 @@ public enum PlayerColor {
 	 *            - a String containing the symbol or the full name of a color.
 	 * @return an instance of PlayerColor
 	 * */
-	public PlayerColor getColorFor(String s) {
+	public static PlayerColor getColorFor(String s) {
 		for (PlayerColor col : values()) {
-			if (s.equals(col.fullName.toLowerCase()) || s.equals(col.symbol)) {
+			if (s.equals(col.fullName) || s.equals(col.symbol)) {
 				return col;
 			}
 		}
-		return null;
+		throw new RuntimeException("No playerColor instance for " + s);
 	}
 
 	/**

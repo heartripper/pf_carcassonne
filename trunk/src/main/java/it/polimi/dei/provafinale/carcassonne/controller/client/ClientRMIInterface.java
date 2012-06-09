@@ -6,7 +6,6 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 import it.polimi.dei.provafinale.carcassonne.Constants;
-import it.polimi.dei.provafinale.carcassonne.PlayerColor;
 import it.polimi.dei.provafinale.carcassonne.controller.ClientInterface;
 import it.polimi.dei.provafinale.carcassonne.controller.RMIClient;
 import it.polimi.dei.provafinale.carcassonne.controller.RMIServer;
@@ -22,7 +21,7 @@ import it.polimi.dei.provafinale.carcassonne.controller.MessageType;
 public class ClientRMIInterface implements ClientInterface, RMIClient {
 
 	private static final int POLL_INTERVAL = 5 * 1000;
-	
+
 	private String host;
 	private Message serverBuffer, clientBuffer;
 	private RMIServer server;
@@ -85,7 +84,7 @@ public class ClientRMIInterface implements ClientInterface, RMIClient {
 	}
 
 	@Override
-	public void reconnect(String matchName, PlayerColor color)
+	public void reconnect(String matchName, String color)
 			throws ConnectionLostException {
 		String payload = String.format("reconnect: %s, %s", color, matchName);
 		Message request = new Message(MessageType.RECONNECT, payload);
