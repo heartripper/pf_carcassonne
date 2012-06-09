@@ -1,8 +1,12 @@
 package it.polimi.dei.provafinale.carcassonne.controller.client;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 import it.polimi.dei.provafinale.carcassonne.PlayerColor;
@@ -21,8 +25,8 @@ public class ClientSocketInterface implements ClientInterface {
 	private final int port;
 
 	private Socket socket;
-	private ObjectInputStream in;
-	private ObjectOutputStream out;
+	private BufferedReader in;
+	private BufferedWriter out;
 
 	/**
 	 * ClientSocketInterface constructor. Creates a new instance of class
@@ -75,7 +79,8 @@ public class ClientSocketInterface implements ClientInterface {
 	 */
 	private void sendToServer(String msg) throws ConnectionLostException {
 		try {
-			out.writeObject(msg);
+			out.write(msg);
+			out.newLine();
 			out.flush();
 		} catch (IOException ioe) {
 			throw new ConnectionLostException();
@@ -90,11 +95,9 @@ public class ClientSocketInterface implements ClientInterface {
 	 */
 	private String readFromServer() throws ConnectionLostException {
 		try {
-			String msg = (String) in.readObject();
+			String msg = in.readLine();
 			System.out.println("SOCKET|READ: " + msg);
 			return msg;
-		} catch (ClassNotFoundException cnf) {
-			throw new RuntimeException(cnf);
 		} catch (IOException e) {
 			throw new ConnectionLostException();
 		}
@@ -109,8 +112,11 @@ public class ClientSocketInterface implements ClientInterface {
 	private void createSocket() throws ConnectionLostException {
 		try {
 			socket = new Socket(addr, port);
-			out = new ObjectOutputStream(socket.getOutputStream());
-			in = new ObjectInputStream(socket.getInputStream());
+			InputStream input = socket.getInputStream();
+			in = new BufferedReader(new InputStreamReader(input));
+
+			OutputStream output = socket.getOutputStream();
+			out = new BufferedWriter(new OutputStreamWriter(output));
 		} catch (IOException ioe) {
 			throw new ConnectionLostException();
 		}
