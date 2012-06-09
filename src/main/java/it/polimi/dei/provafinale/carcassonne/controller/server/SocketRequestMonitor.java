@@ -2,9 +2,13 @@ package it.polimi.dei.provafinale.carcassonne.controller.server;
 
 import it.polimi.dei.provafinale.carcassonne.controller.Message;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;  
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -62,24 +66,22 @@ public class SocketRequestMonitor implements Runnable {
 			Socket socket = serverSocket.accept();
 
 			/* Create streams */
-			ObjectOutputStream output = new ObjectOutputStream(
-					socket.getOutputStream());
-			ObjectInputStream input = new ObjectInputStream(
-					socket.getInputStream());
+			InputStream in = socket.getInputStream();
+			BufferedReader input = new BufferedReader(new InputStreamReader(in));
+			
+			OutputStream out = socket.getOutputStream();
+			BufferedWriter output = new BufferedWriter(new OutputStreamWriter(out));
 
 			RemotePlayer player = new RemoteSocketPlayer(socket, output, input);
 
 			/* Parse request */
-			String message;
-			message = (String) input.readObject();
+			String message = input.readLine();
 			Message request = Message.createFromProtocolMsg(message);
 
 			matchesManager.enqueuePlayer(player, request);
 
 		} catch (IOException e) {
 			System.out.println("Lost connection with uninitialized player.");
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException(e);
 		}
 	}
 }
