@@ -43,6 +43,9 @@ public class RemoteSocketPlayer implements RemotePlayer {
 	public Message readMessage() throws ConnectionLostException {
 		try {
 			String s = in.readLine();
+			if(s == null){
+				throw new RuntimeException("Read null value from socket");
+			}
 			return Message.createFromProtocolMsg(s);
 		} catch (IOException ioe) {
 			throw new ConnectionLostException();

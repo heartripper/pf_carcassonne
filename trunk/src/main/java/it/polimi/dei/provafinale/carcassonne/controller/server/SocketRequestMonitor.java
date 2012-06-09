@@ -76,6 +76,9 @@ public class SocketRequestMonitor implements Runnable {
 
 			/* Parse request */
 			String message = input.readLine();
+			if(message == null){
+				throw new RuntimeException("Read null value from socket");
+			}
 			Message request = Message.createFromProtocolMsg(message);
 
 			matchesManager.enqueuePlayer(player, request);
